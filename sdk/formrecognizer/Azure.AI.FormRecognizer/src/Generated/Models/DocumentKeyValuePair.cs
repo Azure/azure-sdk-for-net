@@ -18,10 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal DocumentKeyValuePair(DocumentKeyValueElement key, float confidence)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Confidence = confidence;

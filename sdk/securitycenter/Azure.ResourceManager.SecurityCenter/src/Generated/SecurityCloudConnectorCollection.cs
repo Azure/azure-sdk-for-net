@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityCloudConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, SecurityCloudConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityCloudConnectorConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, connectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCloudConnectorConnectorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, connectorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityCloudConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, SecurityCloudConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityCloudConnectorConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, connectorName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCloudConnectorConnectorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, connectorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCloudConnectorResource>(Response.FromValue(new SecurityCloudConnectorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<Response<SecurityCloudConnectorResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual Response<SecurityCloudConnectorResource> Get(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityCloudConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual NullableResponse<SecurityCloudConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
         {
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
             scope.Start();

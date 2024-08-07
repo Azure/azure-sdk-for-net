@@ -52,14 +52,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         public PatientDocument(DocumentType type, string id, DocumentContent content)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(content, nameof(content));
 
             Type = type;
             Id = id;

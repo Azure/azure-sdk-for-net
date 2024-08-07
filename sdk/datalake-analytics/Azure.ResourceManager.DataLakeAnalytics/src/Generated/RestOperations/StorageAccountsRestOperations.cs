@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
@@ -35,6 +34,45 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2016-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", count.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
@@ -97,30 +135,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageAccountInformationListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListByAccountRequest(subscriptionId, resourceGroupName, accountName, filter, top, skip, select, orderby, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -153,30 +170,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageAccountInformationListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListByAccountRequest(subscriptionId, resourceGroupName, accountName, filter, top, skip, select, orderby, count);
             _pipeline.Send(message, cancellationToken);
@@ -192,6 +188,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content)
@@ -214,7 +226,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -231,42 +243,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> AddAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -290,42 +271,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Add(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, content);
             _pipeline.Send(message, cancellationToken);
@@ -336,6 +286,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
@@ -370,38 +336,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageAccountInformationData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -431,38 +369,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageAccountInformationData> Get(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -480,6 +390,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch)
@@ -502,7 +428,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -519,42 +445,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -578,42 +473,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -624,6 +488,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
@@ -658,38 +538,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -712,38 +564,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -754,6 +578,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStorageContainersRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStorageContainersRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
@@ -789,38 +630,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageContainerListResult>> ListStorageContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListStorageContainersRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -848,38 +661,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageContainerListResult> ListStorageContainers(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListStorageContainersRequest(subscriptionId, resourceGroupName, accountName, storageAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -895,6 +680,24 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStorageContainerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStorageContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
@@ -932,46 +735,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageContainerData>> GetStorageContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateGetStorageContainerRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1002,46 +770,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageContainerData> GetStorageContainer(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateGetStorageContainerRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);
@@ -1059,6 +792,25 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSasTokensRequestUri(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/listSasTokens", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSasTokensRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
@@ -1097,46 +849,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsSasTokenInformationListResult>> ListSasTokensAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListSasTokensRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1165,46 +882,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsSasTokenInformationListResult> ListSasTokens(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListSasTokensRequest(subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);
@@ -1220,6 +902,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
@@ -1252,34 +942,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageAccountInformationListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListByAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, filter, top, skip, select, orderby, count);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1313,34 +979,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageAccountInformationListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListByAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, filter, top, skip, select, orderby, count);
             _pipeline.Send(message, cancellationToken);
@@ -1356,6 +998,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStorageContainersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStorageContainersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName)
@@ -1383,42 +1033,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsStorageContainerListResult>> ListStorageContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListStorageContainersNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1447,42 +1066,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsStorageContainerListResult> ListStorageContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListStorageContainersNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, storageAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -1498,6 +1086,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSasTokensNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSasTokensNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName)
@@ -1526,50 +1122,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataLakeAnalyticsSasTokenInformationListResult>> ListSasTokensNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListSasTokensNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1599,50 +1157,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataLakeAnalyticsSasTokenInformationListResult> ListSasTokensNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListSasTokensNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,10 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azPowerShellVersion"/> is null. </exception>
         public AzurePowerShellScript(AzureLocation location, TimeSpan retentionInterval, string azPowerShellVersion) : base(location)
         {
-            if (azPowerShellVersion == null)
-            {
-                throw new ArgumentNullException(nameof(azPowerShellVersion));
-            }
+            Argument.AssertNotNull(azPowerShellVersion, nameof(azPowerShellVersion));
 
             SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
@@ -88,6 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Container settings. </summary>
         internal ContainerConfiguration ContainerSettings { get; set; }
         /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a 'containerGroupName' indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use 'containerGroupName' when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. 'containerGroupName' property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a 'containerGroupName', add the following object to properties: { "containerSettings": { "containerGroupName": "contoso-container" } }. If you do not want to specify a 'containerGroupName' then do not add 'containerSettings' property. </summary>
+        [WirePath("properties.containerSettings.containerGroupName")]
         public string ContainerGroupName
         {
             get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
@@ -100,12 +97,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Storage Account settings. </summary>
+        [WirePath("properties.storageAccountSettings")]
         public ScriptStorageConfiguration StorageAccountSettings { get; set; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </summary>
+        [WirePath("properties.cleanupPreference")]
         public ScriptCleanupOptions? CleanupPreference { get; set; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>
+        [WirePath("properties.status")]
         public ScriptStatus Status { get; }
         /// <summary>
         /// List of script outputs.
@@ -137,24 +138,34 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.outputs")]
         public BinaryData Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
+        [WirePath("properties.primaryScriptUri")]
         public Uri PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
+        [WirePath("properties.supportingScriptUris")]
         public IList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
+        [WirePath("properties.scriptContent")]
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location 'West US 2'. </summary>
+        [WirePath("properties.arguments")]
         public string Arguments { get; set; }
         /// <summary> The environment variables to pass over to the script. </summary>
+        [WirePath("properties.environmentVariables")]
         public IList<ScriptEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>
+        [WirePath("properties.retentionInterval")]
         public TimeSpan RetentionInterval { get; set; }
         /// <summary> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </summary>
+        [WirePath("properties.timeout")]
         public TimeSpan? Timeout { get; set; }
         /// <summary> Azure PowerShell module version to be used. </summary>
+        [WirePath("properties.azPowerShellVersion")]
         public string AzPowerShellVersion { get; set; }
     }
 }

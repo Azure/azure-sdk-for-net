@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,18 +20,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         public HDInsightSparkActivity(string name, object rootPath, object entryFilePath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (rootPath == null)
-            {
-                throw new ArgumentNullException(nameof(rootPath));
-            }
-            if (entryFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(entryFilePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(rootPath, nameof(rootPath));
+            Argument.AssertNotNull(entryFilePath, nameof(entryFilePath));
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;

@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CopyActivity : IUtf8JsonSerializable, IJsonModel<CopyActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopyActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,16 +92,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue(Sink);
+            writer.WriteObjectValue(Sink, options);
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue(StagingSettings);
+                writer.WriteObjectValue(StagingSettings, options);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
@@ -143,17 +142,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue(RedirectIncompatibleRowSettings);
+                writer.WriteObjectValue(RedirectIncompatibleRowSettings, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings);
+                writer.WriteObjectValue(LogStorageSettings, options);
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings);
+                writer.WriteObjectValue(LogSettings, options);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue(SkipErrorFile);
+                writer.WriteObjectValue(SkipErrorFile, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivity DeserializeCopyActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -587,7 +586,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -603,7 +602,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeCopyActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

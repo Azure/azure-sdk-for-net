@@ -7,9 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Maps.Rendering
+namespace Azure.Maps.Common
 {
     internal static class Optional
     {

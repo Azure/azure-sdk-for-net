@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/quotas/", false);
+            uri.AppendPath(quotaCounterKey, true);
+            uri.AppendPath("/periods/", false);
+            uri.AppendPath(quotaPeriodKey, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey)
@@ -62,8 +79,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the value of the quota counter associated with the counter-key in the policy for the specific period in service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
@@ -72,46 +89,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaCounterContract>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,8 +112,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the value of the quota counter associated with the counter-key in the policy for the specific period in service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
@@ -140,46 +122,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaCounterContract> Get(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey);
             _pipeline.Send(message, cancellationToken);
@@ -195,6 +142,24 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/quotas/", false);
+            uri.AppendPath(quotaCounterKey, true);
+            uri.AppendPath("/periods/", false);
+            uri.AppendPath(quotaPeriodKey, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content)
@@ -219,15 +184,15 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates an existing quota counter value in the specified service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
@@ -237,50 +202,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaCounterContract>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -299,8 +226,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates an existing quota counter value in the specified service instance. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
@@ -310,50 +237,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaCounterContract> Update(string subscriptionId, string resourceGroupName, string serviceName, string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, quotaCounterKey, quotaPeriodKey, content);
             _pipeline.Send(message, cancellationToken);

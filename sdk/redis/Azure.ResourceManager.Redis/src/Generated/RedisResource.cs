@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
@@ -118,7 +116,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +147,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +214,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +250,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +281,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +319,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +350,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -390,7 +388,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +419,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +457,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,7 +488,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,7 +519,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -561,7 +559,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,7 +599,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -643,7 +641,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -685,7 +683,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -699,10 +697,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisResource>> UpdateAsync(WaitUntil waitUntil, RedisPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.Update");
             scope.Start();
@@ -734,7 +729,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -748,10 +743,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<RedisResource> Update(WaitUntil waitUntil, RedisPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.Update");
             scope.Start();
@@ -783,7 +775,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -814,7 +806,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -845,7 +837,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -883,7 +875,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -921,7 +913,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -934,10 +926,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RedisAccessKeys>> RegenerateKeyAsync(RedisRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.RegenerateKey");
             scope.Start();
@@ -966,7 +955,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -979,10 +968,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RedisAccessKeys> RegenerateKey(RedisRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.RegenerateKey");
             scope.Start();
@@ -1011,7 +997,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1024,10 +1010,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RedisForceRebootResult>> ForceRebootAsync(RedisRebootContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ForceReboot");
             scope.Start();
@@ -1056,7 +1039,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1069,10 +1052,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RedisForceRebootResult> ForceReboot(RedisRebootContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ForceReboot");
             scope.Start();
@@ -1101,7 +1081,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1115,10 +1095,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ImportDataAsync(WaitUntil waitUntil, ImportRdbContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ImportData");
             scope.Start();
@@ -1150,7 +1127,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1164,10 +1141,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ImportData(WaitUntil waitUntil, ImportRdbContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ImportData");
             scope.Start();
@@ -1199,7 +1173,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1213,10 +1187,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ExportDataAsync(WaitUntil waitUntil, ExportRdbContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ExportData");
             scope.Start();
@@ -1248,7 +1219,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1262,10 +1233,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ExportData(WaitUntil waitUntil, ExportRdbContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.ExportData");
             scope.Start();
@@ -1297,7 +1265,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1339,7 +1307,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1381,7 +1349,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1406,7 +1374,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1431,7 +1399,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1445,14 +1413,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<RedisResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.AddTag");
             scope.Start();
@@ -1499,7 +1461,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1513,14 +1475,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<RedisResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.AddTag");
             scope.Start();
@@ -1567,7 +1523,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1580,10 +1536,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<RedisResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.SetTags");
             scope.Start();
@@ -1627,7 +1580,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1640,10 +1593,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<RedisResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.SetTags");
             scope.Start();
@@ -1687,7 +1637,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1700,10 +1650,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<RedisResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.RemoveTag");
             scope.Start();
@@ -1750,7 +1697,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1763,10 +1710,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<RedisResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisResource.RemoveTag");
             scope.Start();

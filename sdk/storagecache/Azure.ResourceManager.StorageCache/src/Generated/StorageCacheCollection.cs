@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StorageCache
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageCacheResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageCacheResource> CreateOrUpdate(WaitUntil waitUntil, string cacheName, StorageCacheData data, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual async Task<Response<StorageCacheResource>> GetAsync(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual Response<StorageCacheResource> Get(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual Response<bool> Exists(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageCacheResource>> GetIfExistsAsync(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         public virtual NullableResponse<StorageCacheResource> GetIfExists(string cacheName, CancellationToken cancellationToken = default)
         {
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.GetIfExists");
             scope.Start();

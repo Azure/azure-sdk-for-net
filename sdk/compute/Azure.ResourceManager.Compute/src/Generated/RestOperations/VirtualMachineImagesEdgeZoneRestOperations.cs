@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -34,8 +33,30 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
@@ -79,54 +100,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineImage>> GetAsync(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
-            if (skus == null)
-            {
-                throw new ArgumentNullException(nameof(skus));
-            }
-            if (skus.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var message = CreateGetRequest(subscriptionId, location, edgeZone, publisherName, offer, skus, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -157,54 +136,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineImage> Get(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
-            if (skus == null)
-            {
-                throw new ArgumentNullException(nameof(skus));
-            }
-            if (skus.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var message = CreateGetRequest(subscriptionId, location, edgeZone, publisherName, offer, skus, version);
             _pipeline.Send(message, cancellationToken);
@@ -220,6 +157,39 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string orderby)
@@ -276,46 +246,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListAsync(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
-            if (skus == null)
-            {
-                throw new ArgumentNullException(nameof(skus));
-            }
-            if (skus.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
             using var message = CreateListRequest(subscriptionId, location, edgeZone, publisherName, offer, skus, expand, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -353,46 +288,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineImageBase>> List(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
-            if (skus == null)
-            {
-                throw new ArgumentNullException(nameof(skus));
-            }
-            if (skus.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skus));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
+            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
             using var message = CreateListRequest(subscriptionId, location, edgeZone, publisherName, offer, skus, expand, top, orderby);
             _pipeline.Send(message, cancellationToken);
@@ -413,6 +313,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOffersRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOffersRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName)
@@ -448,30 +365,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListOffersAsync(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListOffersRequest(subscriptionId, location, edgeZone, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -504,30 +400,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineImageBase>> ListOffers(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListOffersRequest(subscriptionId, location, edgeZone, publisherName);
             _pipeline.Send(message, cancellationToken);
@@ -548,6 +423,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPublishersRequestUri(string subscriptionId, AzureLocation location, string edgeZone)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPublishersRequest(string subscriptionId, AzureLocation location, string edgeZone)
@@ -580,22 +470,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListPublishersAsync(string subscriptionId, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             using var message = CreateListPublishersRequest(subscriptionId, location, edgeZone);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,22 +503,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineImageBase>> ListPublishers(string subscriptionId, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             using var message = CreateListPublishersRequest(subscriptionId, location, edgeZone);
             _pipeline.Send(message, cancellationToken);
@@ -663,6 +525,25 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer)
@@ -701,38 +582,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListSkusAsync(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             using var message = CreateListSkusRequest(subscriptionId, location, edgeZone, publisherName, offer);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -766,38 +619,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineImageBase>> ListSkus(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (edgeZone == null)
-            {
-                throw new ArgumentNullException(nameof(edgeZone));
-            }
-            if (edgeZone.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(edgeZone));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (offer.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offer));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             using var message = CreateListSkusRequest(subscriptionId, location, edgeZone, publisherName, offer);
             _pipeline.Send(message, cancellationToken);

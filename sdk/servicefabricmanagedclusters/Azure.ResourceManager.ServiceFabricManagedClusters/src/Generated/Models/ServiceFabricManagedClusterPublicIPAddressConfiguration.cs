@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -51,13 +50,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ServiceFabricManagedClusterPublicIPAddressConfiguration(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IPTags = new ChangeTrackingList<ServiceFabricManagedClusterIPTag>();
+            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPublicIPAddressConfiguration"/>. </summary>
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="ipTags"> Specifies the list of IP tags associated with the public IP address. </param>
         /// <param name="publicIPAddressVersion"> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedClusterPublicIPAddressConfiguration(string name, IList<ServiceFabricManagedClusterIPTag> ipTags, ServiceFabricManagedClusterPublicIPAddressVersion? publicIPAddressVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedClusterPublicIPAddressConfiguration(string name, IList<ManagedClusterIPTag> ipTags, ServiceFabricManagedClusterPublicIPAddressVersion? publicIPAddressVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IPTags = ipTags;
@@ -81,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Name of the network interface. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the list of IP tags associated with the public IP address. </summary>
-        public IList<ServiceFabricManagedClusterIPTag> IPTags { get; }
+        public IList<ManagedClusterIPTag> IPTags { get; }
         /// <summary> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </summary>
         public ServiceFabricManagedClusterPublicIPAddressVersion? PublicIPAddressVersion { get; set; }
     }

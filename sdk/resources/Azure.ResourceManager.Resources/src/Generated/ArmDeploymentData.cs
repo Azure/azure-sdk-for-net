@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> the location of the deployment. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentPropertiesExtended Properties { get; }
         /// <summary> Deployment tags. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

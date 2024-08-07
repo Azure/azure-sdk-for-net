@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandData data)
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -77,50 +94,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -146,50 +125,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, data);
             _pipeline.Send(message, cancellationToken);
@@ -201,6 +142,24 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand)
@@ -225,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(runCommand);
+            content.JsonWriter.WriteObjectValue(runCommand, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -243,50 +202,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (runCommand == null)
-            {
-                throw new ArgumentNullException(nameof(runCommand));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, runCommand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -311,50 +232,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (runCommand == null)
-            {
-                throw new ArgumentNullException(nameof(runCommand));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, runCommand);
             _pipeline.Send(message, cancellationToken);
@@ -365,6 +248,24 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName)
@@ -402,46 +303,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,46 +333,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName);
             _pipeline.Send(message, cancellationToken);
@@ -519,6 +350,28 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, string expand)
@@ -561,46 +414,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineRunCommandData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -632,46 +450,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineRunCommandData> Get(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, runCommandName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -689,6 +472,27 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/runCommands", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand)
@@ -729,38 +533,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineRunCommandsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -789,38 +565,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineRunCommandsListResult> List(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -836,6 +584,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand)
@@ -864,42 +620,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineRunCommandsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -929,42 +654,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineRunCommandsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-            if (instanceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName, instanceId, expand);
             _pipeline.Send(message, cancellationToken);

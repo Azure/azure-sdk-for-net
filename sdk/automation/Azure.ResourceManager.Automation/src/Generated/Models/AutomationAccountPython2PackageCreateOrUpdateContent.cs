@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
-            if (contentLink == null)
-            {
-                throw new ArgumentNullException(nameof(contentLink));
-            }
+            Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentLink = contentLink;

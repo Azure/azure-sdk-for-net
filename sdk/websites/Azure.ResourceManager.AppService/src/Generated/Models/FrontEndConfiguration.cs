@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the kind. </summary>
+        [WirePath("kind")]
         public FrontEndServiceType? Kind { get; set; }
     }
 }

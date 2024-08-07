@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Whether network address and port translation is enabled. </summary>
+    /// <summary>
+    /// Whether network address and port translation is enabled.
+    /// Serialized Name: NaptEnabled
+    /// </summary>
     public readonly partial struct NaptState : IEquatable<NaptState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> NAPT is enabled. </summary>
+        /// <summary>
+        /// NAPT is enabled
+        /// Serialized Name: NaptEnabled.Enabled
+        /// </summary>
         public static NaptState Enabled { get; } = new NaptState(EnabledValue);
-        /// <summary> NAPT is disabled. </summary>
+        /// <summary>
+        /// NAPT is disabled
+        /// Serialized Name: NaptEnabled.Disabled
+        /// </summary>
         public static NaptState Disabled { get; } = new NaptState(DisabledValue);
         /// <summary> Determines if two <see cref="NaptState"/> values are the same. </summary>
         public static bool operator ==(NaptState left, NaptState right) => left.Equals(right);
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

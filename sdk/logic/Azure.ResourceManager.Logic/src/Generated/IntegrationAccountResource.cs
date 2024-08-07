@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -755,7 +753,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation(response);
+                var uri = _integrationAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -797,7 +797,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LogicArmOperation(response);
+                var uri = _integrationAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -835,10 +837,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> UpdateAsync(IntegrationAccountData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.Update");
             scope.Start();
@@ -880,10 +879,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> Update(IntegrationAccountData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.Update");
             scope.Start();
@@ -925,10 +921,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<ListOperationCallbackUri>> GetCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetCallbackUrl");
             scope.Start();
@@ -970,10 +963,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<ListOperationCallbackUri> GetCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetCallbackUrl");
             scope.Start();
@@ -1016,10 +1006,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationAccountKeyVaultKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeysAsync(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
@@ -1052,10 +1039,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationAccountKeyVaultKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeys(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
@@ -1087,10 +1071,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> LogTrackingEventsAsync(IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.LogTrackingEvents");
             scope.Start();
@@ -1132,10 +1113,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response LogTrackingEvents(IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.LogTrackingEvents");
             scope.Start();
@@ -1177,10 +1155,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> RegenerateAccessKeyAsync(LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RegenerateAccessKey");
             scope.Start();
@@ -1222,10 +1197,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> RegenerateAccessKey(LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RegenerateAccessKey");
             scope.Start();
@@ -1268,14 +1240,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.AddTag");
             scope.Start();
@@ -1336,14 +1302,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.AddTag");
             scope.Start();
@@ -1403,10 +1363,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.SetTags");
             scope.Start();
@@ -1463,10 +1420,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.SetTags");
             scope.Start();
@@ -1523,10 +1477,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RemoveTag");
             scope.Start();
@@ -1586,10 +1537,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RemoveTag");
             scope.Start();

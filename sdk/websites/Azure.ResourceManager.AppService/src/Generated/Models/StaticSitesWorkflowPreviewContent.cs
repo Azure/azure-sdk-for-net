@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL for the repository of the static site. </summary>
+        [WirePath("properties.repositoryUrl")]
         public Uri RepositoryUri { get; set; }
         /// <summary> The target branch in the repository. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> Build properties to configure on the repository. </summary>
+        [WirePath("properties.buildProperties")]
         public StaticSiteBuildProperties BuildProperties { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

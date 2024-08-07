@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -81,14 +78,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name of the SKU, typically, a letter + Number code, e.g. P3. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier or edition of the particular SKU, e.g. Basic, Premium. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
         /// <summary> Size of the particular SKU. </summary>
+        [WirePath("size")]
         public string Size { get; set; }
         /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
         /// <summary> Capacity of the particular SKU. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

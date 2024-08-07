@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     public partial class ServiceFabricServiceData : IUtf8JsonSerializable, IJsonModel<ServiceFabricServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(PartitionDescription))
             {
                 writer.WritePropertyName("partitionDescription"u8);
-                writer.WriteObjectValue(PartitionDescription);
+                writer.WriteObjectValue(PartitionDescription, options);
             }
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ArmServicePackageActivationMode? servicePackageActivationMode = default;
             string serviceDnsName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -364,10 +363,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricServiceData(
                 id,
                 name,
@@ -399,7 +398,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         return DeserializeServiceFabricServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

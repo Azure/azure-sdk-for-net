@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/46e9f311c397352c1f9b60c5277bf6f982c3c172/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1b0e82df2f7f953796af2aee0372e34e00baa2d2/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -167,6 +167,19 @@ directive:
       {
           $[path]["properties"]["labelOperator"]["x-namespace"] = namespace;
           $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsMessageDeliveryStatusUpdatedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
+          $[path]["properties"]["channelType"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterWorkerUpdatedEventData"))
+      {
+          $[path]["properties"]["updatedWorkerProperties"]["items"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsMessageInteractiveContent"))
+      {
+          $[path]["properties"]["type"]["x-namespace"] = namespace;
       }
     }
 ```

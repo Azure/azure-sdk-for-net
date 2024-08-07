@@ -79,12 +79,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebBackupOperationFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebBackupOperationFailedEventData(document.RootElement);
+        }
+
         internal partial class WebBackupOperationFailedEventDataConverter : JsonConverter<WebBackupOperationFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebBackupOperationFailedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override WebBackupOperationFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

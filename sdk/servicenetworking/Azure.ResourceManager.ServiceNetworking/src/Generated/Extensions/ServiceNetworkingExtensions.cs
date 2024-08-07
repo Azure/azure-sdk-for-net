@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceNetworking.Mocking;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="TrafficControllerResource"/> object. </returns>
         public static TrafficControllerResource GetTrafficControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceNetworkingArmClient(client).GetTrafficControllerResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="AssociationResource"/> object. </returns>
         public static AssociationResource GetAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceNetworkingArmClient(client).GetAssociationResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="FrontendResource"/> object. </returns>
         public static FrontendResource GetFrontendResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceNetworkingArmClient(client).GetFrontendResource(id);
         }
@@ -112,10 +101,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
         public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllers();
         }
@@ -153,10 +139,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         [ForwardsClientCalls]
         public static async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllerAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
         }
@@ -194,10 +177,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         [ForwardsClientCalls]
         public static Response<TrafficControllerResource> GetTrafficController(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficController(trafficControllerName, cancellationToken);
         }
@@ -233,10 +213,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An async collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
         }
@@ -272,10 +249,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllers(cancellationToken);
         }

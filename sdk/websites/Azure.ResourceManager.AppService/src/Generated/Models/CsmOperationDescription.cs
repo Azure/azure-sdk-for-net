@@ -68,16 +68,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the is data action. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
         /// <summary> Meta data about operation used for display in portal. </summary>
+        [WirePath("display")]
         public CsmOperationDisplay Display { get; }
         /// <summary> Gets the origin. </summary>
+        [WirePath("origin")]
         public string Origin { get; }
         /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
         internal CsmOperationDescriptionProperties Properties { get; }
         /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
+        [WirePath("properties.serviceSpecification")]
         public ServiceSpecification CsmOperationDescriptionServiceSpecification
         {
             get => Properties?.ServiceSpecification;

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -71,22 +70,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAttachmentAsync(string partyId, string attachmentId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.GetAttachment");
             scope.Start();
@@ -122,22 +107,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachment(string,string,RequestContext)']/*" />
         public virtual Response GetAttachment(string partyId, string attachmentId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.GetAttachment");
             scope.Start();
@@ -166,36 +137,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string attachmentId, RequestContent content, string contentType, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, attachmentId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, attachmentId, content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -218,36 +176,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party resource. </param>
         /// <param name="attachmentId"> Id of the attachment resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string partyId, string attachmentId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string partyId, string attachmentId, RequestContent content, string contentType, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, attachmentId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, attachmentId, content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -277,22 +222,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string attachmentId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.Delete");
             scope.Start();
@@ -328,22 +259,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string attachmentId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.Delete");
             scope.Start();
@@ -379,22 +296,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='DownloadAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DownloadAsync(string partyId, string attachmentId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.Download");
             scope.Start();
@@ -430,22 +333,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='Download(string,string,RequestContext)']/*" />
         public virtual Response Download(string partyId, string attachmentId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (attachmentId == null)
-            {
-                throw new ArgumentNullException(nameof(attachmentId));
-            }
-            if (attachmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
 
             using var scope = ClientDiagnostics.CreateScope("Attachments.Download");
             scope.Start();
@@ -501,14 +390,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyIdAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAttachmentsByPartyIdAsync(string partyId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -555,14 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Attachments.xml" path="doc/members/member[@name='GetAttachmentsByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAttachmentsByPartyId(string partyId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -668,7 +543,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string attachmentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string attachmentId, RequestContent content, string contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -682,7 +557,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }

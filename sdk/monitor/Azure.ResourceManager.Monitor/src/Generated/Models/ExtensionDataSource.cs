@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,10 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public ExtensionDataSource(string extensionName)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
+            Argument.AssertNotNull(extensionName, nameof(extensionName));
 
             Streams = new ChangeTrackingList<ExtensionDataSourceStream>();
             ExtensionName = extensionName;

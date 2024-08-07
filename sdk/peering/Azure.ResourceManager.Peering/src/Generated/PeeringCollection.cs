@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Peering
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeeringResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peeringName, PeeringData data, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _peeringRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeeringResource> CreateOrUpdate(WaitUntil waitUntil, string peeringName, PeeringData data, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _peeringRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<Response<PeeringResource>> GetAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<PeeringResource> Get(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<NullableResponse<PeeringResource>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual NullableResponse<PeeringResource> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _peeringClientDiagnostics.CreateScope("PeeringCollection.GetIfExists");
             scope.Start();

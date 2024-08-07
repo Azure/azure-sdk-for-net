@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public LiveEventOutputTranscriptionTrack(string trackName)
         {
-            if (trackName == null)
-            {
-                throw new ArgumentNullException(nameof(trackName));
-            }
+            Argument.AssertNotNull(trackName, nameof(trackName));
 
             TrackName = trackName;
         }

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
@@ -34,10 +34,26 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
-                    case "customWebApi": return CustomVectorizer.DeserializeCustomVectorizer(element);
+                    case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element);
                 }
             }
             return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +30,10 @@ namespace Azure.Storage.DataMovement.Tests
             Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath-{Guid.NewGuid()}/resource-item-{Guid.NewGuid()}");
         }
 
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -87,6 +91,21 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var slice = length.HasValue ? Buffer.Slice((int)position, (int)length.Value) : Buffer.Slice((int)position);
             return Task.FromResult(new StorageResourceReadStreamResult(new MemoryStream(slice.ToArray())));
+        }
+
+        protected internal override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected internal override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

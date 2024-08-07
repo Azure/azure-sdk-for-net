@@ -51,14 +51,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="to"/> is null. </exception>
         internal MessageReceipt(string messageId, string to)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(to, nameof(to));
 
             MessageId = messageId;
             To = to;

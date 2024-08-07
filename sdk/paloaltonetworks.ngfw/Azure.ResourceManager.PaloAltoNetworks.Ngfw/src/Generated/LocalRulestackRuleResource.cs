@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalRulestackRuleResource>> UpdateAsync(WaitUntil waitUntil, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalRulestackRuleResource> Update(WaitUntil waitUntil, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleResource.Update");
             scope.Start();
@@ -362,7 +354,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_getCounters</description>
+        /// <description>LocalRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +393,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_getCounters</description>
+        /// <description>LocalRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +432,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_refreshCounters</description>
+        /// <description>LocalRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_refreshCounters</description>
+        /// <description>LocalRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -518,7 +510,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_resetCounters</description>
+        /// <description>LocalRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -557,7 +549,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_resetCounters</description>
+        /// <description>LocalRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

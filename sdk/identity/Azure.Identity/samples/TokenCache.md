@@ -1,6 +1,6 @@
 # Token caching in the Azure Identity client library
 
-*Token caching* is a feature provided by the Azure Identity library that allows apps to:
+*Token caching* is a feature provided by the Azure Identity library. The feature allows apps to:
 
 - Improve their resilience and performance.
 - Reduce the number of requests made to Microsoft Entra ID to obtain access tokens.
@@ -85,6 +85,50 @@ By setting `UnsafeAllowUnencryptedStorage` to `true`, the credential will encryp
 If platform data protection is unavailable, it will write and read the persisted token data to an unencrypted local file ACL'd to the current account.
 If `UnsafeAllowUnencryptedStorage` is `false` (the default), a `CredentialUnavailableException` will be raised in the case no data protection is available.
 
+### Silently authenticate a user with AuthenticationRecord and TokenCachePersistenceOptions
+
+When authenticating a user via `InteractiveBrowserCredential`, `DeviceCodeCredential`, or `UsernamePasswordCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
+
+- Returned from the `Authenticate` API and contains data identifying an authenticated account.
+- Needed to identify the appropriate entry in the persisted token cache to silently authenticate on subsequent executions.
+
+There's no sensitive data in the `AuthenticationRecord`, so it can be persisted in a non-protected state.
+
+Once an app has persisted an `AuthenticationRecord`, future authentications can be performed silently by setting `TokenCachePersistenceOptions` and `AuthenticationRecord` on the builder.
+
+Here's an example of an app storing the `AuthenticationRecord` to the local file system after authenticating the user:
+
+```C# Snippet:Identity_ClientSideUserAuthentication_Persist_TokenCache_AuthRecordPath
+private const string AUTH_RECORD_PATH = "./tokencache.bin";
+```
+
+```C# Snippet:Identity_ClientSideUserAuthentication_Persist_AuthRecord
+AuthenticationRecord authRecord = await credential.AuthenticateAsync();
+
+using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Create, FileAccess.Write))
+{
+    await authRecord.SerializeAsync(authRecordStream);
+}
+```
+
+Now that the `AuthenticationRecord` is persisted, the app can silently authenticate the user:
+
+```C# Snippet:Identity_ClientSideUserAuthentication_Persist_SilentAuth
+AuthenticationRecord authRecord;
+
+using (var authRecordStream = new FileStream(AUTH_RECORD_PATH, FileMode.Open, FileAccess.Read))
+{
+    authRecord = await AuthenticationRecord.DeserializeAsync(authRecordStream);
+}
+
+var credential = new InteractiveBrowserCredential(
+    new InteractiveBrowserCredentialOptions
+    {
+        TokenCachePersistenceOptions = new TokenCachePersistenceOptions(),
+        AuthenticationRecord = authRecord
+    });
+```
+
 ## Credentials supporting token caching
 
 The following table indicates the state of in-memory and persistent caching in each credential type.
@@ -96,6 +140,7 @@ The following table indicates the state of in-memory and persistent caching in e
 | `AuthorizationCodeCredential`  | Supported                                                              | Supported                     |
 | `AzureCliCredential`           | Not Supported                                                          | Not Supported                 |
 | `AzureDeveloperCliCredential`  | Not Supported                                                          | Not Supported                 |
+| `AzurePipelinesCredential`     | Supported                                                              | Supported                     |
 | `AzurePowershellCredential`    | Not Supported                                                          | Not Supported                 |
 | `ClientAssertionCredential`    | Supported                                                              | Supported                     |
 | `ClientCertificateCredential`  | Supported                                                              | Supported                     |

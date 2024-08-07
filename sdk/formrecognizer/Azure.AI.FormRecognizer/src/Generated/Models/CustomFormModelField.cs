@@ -18,10 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal CustomFormModelField(string name, float? accuracy)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Accuracy = accuracy;

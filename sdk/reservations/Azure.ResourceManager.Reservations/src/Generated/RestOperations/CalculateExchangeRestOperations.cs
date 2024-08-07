@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -36,6 +35,15 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(CalculateExchangeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/calculateExchange", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(CalculateExchangeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -49,7 +57,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -64,10 +72,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> PostAsync(CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePostRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,10 +95,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response Post(CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePostRequest(content);
             _pipeline.Send(message, cancellationToken);

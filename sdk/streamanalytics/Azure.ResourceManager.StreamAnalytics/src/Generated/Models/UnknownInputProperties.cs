@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The UnknownInputProperties. </summary>
+    /// <summary> Unknown version of InputProperties. </summary>
     internal partial class UnknownInputProperties : StreamingJobInputProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInputProperties"/>. </summary>

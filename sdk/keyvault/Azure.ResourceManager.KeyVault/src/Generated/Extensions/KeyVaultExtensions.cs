@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Mocking;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultResource"/> object. </returns>
         public static KeyVaultResource GetKeyVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetKeyVaultResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedKeyVaultResource"/> object. </returns>
         public static DeletedKeyVaultResource GetDeletedKeyVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetDeletedKeyVaultResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource"/> object. </returns>
         public static KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetKeyVaultPrivateEndpointConnectionResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsmResource"/> object. </returns>
         public static ManagedHsmResource GetManagedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetManagedHsmResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedManagedHsmResource"/> object. </returns>
         public static DeletedManagedHsmResource GetDeletedManagedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetDeletedManagedHsmResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> object. </returns>
         public static ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetManagedHsmPrivateEndpointConnectionResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultSecretResource"/> object. </returns>
         public static KeyVaultSecretResource GetKeyVaultSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKeyVaultArmClient(client).GetKeyVaultSecretResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of KeyVaultResources and their operations over a KeyVaultResource. </returns>
         public static KeyVaultCollection GetKeyVaults(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVaults();
         }
@@ -222,7 +196,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,10 +216,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<KeyVaultResource>> GetKeyVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -263,7 +234,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,10 +254,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<KeyVaultResource> GetKeyVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVault(vaultName, cancellationToken);
         }
@@ -303,10 +271,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of ManagedHsmResources and their operations over a ManagedHsmResource. </returns>
         public static ManagedHsmCollection GetManagedHsms(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsms();
         }
@@ -324,7 +289,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,10 +309,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<ManagedHsmResource>> GetManagedHsmAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsmAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -365,7 +327,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,10 +347,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<ManagedHsmResource> GetManagedHsm(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsm(name, cancellationToken);
         }
@@ -405,10 +364,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of DeletedKeyVaultResources and their operations over a DeletedKeyVaultResource. </returns>
         public static DeletedKeyVaultCollection GetDeletedKeyVaults(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults();
         }
@@ -426,7 +382,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,10 +403,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<DeletedKeyVaultResource>> GetDeletedKeyVaultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -468,7 +421,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -489,10 +442,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<DeletedKeyVaultResource> GetDeletedKeyVault(this SubscriptionResource subscriptionResource, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVault(location, vaultName, cancellationToken);
         }
@@ -509,10 +459,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of DeletedManagedHsmResources and their operations over a DeletedManagedHsmResource. </returns>
         public static DeletedManagedHsmCollection GetDeletedManagedHsms(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms();
         }
@@ -530,7 +477,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,10 +498,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<DeletedManagedHsmResource>> GetDeletedManagedHsmAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsmAsync(location, name, cancellationToken).ConfigureAwait(false);
         }
@@ -572,7 +516,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -593,10 +537,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<DeletedManagedHsmResource> GetDeletedManagedHsm(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsm(location, name, cancellationToken);
         }
@@ -614,7 +555,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -633,10 +574,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KeyVaultResource> GetKeyVaultsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetKeyVaultsAsync(top, cancellationToken);
         }
@@ -654,7 +592,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -673,10 +611,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KeyVaultResource> GetKeyVaults(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetKeyVaults(top, cancellationToken);
         }
@@ -694,7 +629,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -708,10 +643,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultsAsync(cancellationToken);
         }
@@ -729,7 +661,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -743,10 +675,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults(cancellationToken);
         }
@@ -764,7 +693,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -782,10 +711,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -803,7 +729,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -821,10 +747,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailability(content, cancellationToken);
         }
@@ -842,7 +765,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -861,10 +784,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedHsmResource> GetManagedHsmsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetManagedHsmsAsync(top, cancellationToken);
         }
@@ -882,7 +802,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -901,10 +821,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedHsmResource> GetManagedHsms(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetManagedHsms(top, cancellationToken);
         }
@@ -922,7 +839,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -936,10 +853,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedManagedHsmResource> GetDeletedManagedHsmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsmsAsync(cancellationToken);
         }
@@ -957,7 +871,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -971,10 +885,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedManagedHsmResource> GetDeletedManagedHsms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms(cancellationToken);
         }
@@ -988,11 +899,11 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1010,10 +921,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckManagedHsmNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1027,11 +935,11 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1049,10 +957,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckManagedHsmNameAvailability(content, cancellationToken);
         }

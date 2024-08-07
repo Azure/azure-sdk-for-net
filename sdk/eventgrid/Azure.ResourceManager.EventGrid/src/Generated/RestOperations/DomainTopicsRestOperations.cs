@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-15-preview";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(domainTopicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DomainTopicData>> GetAsync(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DomainTopicData> Get(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,22 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(domainTopicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
@@ -213,38 +188,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -267,38 +214,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             _pipeline.Send(message, cancellationToken);
@@ -309,6 +228,22 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(domainTopicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName)
@@ -342,38 +277,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -398,38 +305,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/> or <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string domainName, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, domainName, domainTopicName);
             _pipeline.Send(message, cancellationToken);
@@ -442,6 +321,29 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDomainRequestUri(string subscriptionId, string resourceGroupName, string domainName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByDomainRequest(string subscriptionId, string resourceGroupName, string domainName, string filter, int? top)
@@ -484,30 +386,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DomainTopicsListResult>> ListByDomainAsync(string subscriptionId, string resourceGroupName, string domainName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateListByDomainRequest(subscriptionId, resourceGroupName, domainName, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -536,30 +417,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DomainTopicsListResult> ListByDomain(string subscriptionId, string resourceGroupName, string domainName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateListByDomainRequest(subscriptionId, resourceGroupName, domainName, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -575,6 +435,14 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDomainNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDomainNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string filter, int? top)
@@ -603,34 +471,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DomainTopicsListResult>> ListByDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateListByDomainNextPageRequest(nextLink, subscriptionId, resourceGroupName, domainName, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -660,34 +504,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DomainTopicsListResult> ListByDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateListByDomainNextPageRequest(nextLink, subscriptionId, resourceGroupName, domainName, filter, top);
             _pipeline.Send(message, cancellationToken);

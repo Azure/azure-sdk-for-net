@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendPath("/files", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string fileWorkspaceName)
@@ -61,14 +71,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FilesListResult>> ListAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var message = CreateListRequest(fileWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +96,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FilesListResult> List(string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var message = CreateListRequest(fileWorkspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -116,6 +112,18 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string fileWorkspaceName, string fileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string fileWorkspaceName, string fileName)
@@ -144,22 +152,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportFileDetailData>> GetAsync(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var message = CreateGetRequest(fileWorkspaceName, fileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +181,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportFileDetailData> Get(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using var message = CreateGetRequest(fileWorkspaceName, fileName);
             _pipeline.Send(message, cancellationToken);
@@ -222,6 +202,18 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string fileWorkspaceName, string fileName, SupportFileDetailData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string fileWorkspaceName, string fileName, SupportFileDetailData data)
         {
             var message = _pipeline.CreateMessage();
@@ -238,7 +230,7 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -253,26 +245,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportFileDetailData>> CreateAsync(string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(fileWorkspaceName, fileName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -299,26 +274,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportFileDetailData> Create(string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(fileWorkspaceName, fileName, data);
             _pipeline.Send(message, cancellationToken);
@@ -334,6 +292,19 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUploadRequestUri(string fileWorkspaceName, string fileName, UploadFileContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendPath("/upload", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUploadRequest(string fileWorkspaceName, string fileName, UploadFileContent content)
@@ -353,7 +324,7 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -368,26 +339,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UploadAsync(string fileWorkspaceName, string fileName, UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadRequest(fileWorkspaceName, fileName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -409,26 +363,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Upload(string fileWorkspaceName, string fileName, UploadFileContent content, CancellationToken cancellationToken = default)
         {
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            if (fileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadRequest(fileWorkspaceName, fileName, content);
             _pipeline.Send(message, cancellationToken);
@@ -439,6 +376,14 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string fileWorkspaceName)
@@ -463,18 +408,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FilesListResult>> ListNextPageAsync(string nextLink, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var message = CreateListNextPageRequest(nextLink, fileWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -500,18 +435,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FilesListResult> ListNextPage(string nextLink, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (fileWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(fileWorkspaceName));
-            }
-            if (fileWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
 
             using var message = CreateListNextPageRequest(nextLink, fileWorkspaceName);
             _pipeline.Send(message, cancellationToken);

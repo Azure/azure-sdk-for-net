@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationWebhookResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string webhookName, AutomationWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationWebhookWebhookRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationWebhookResource>(Response.FromValue(new AutomationWebhookResource(Client, response), response.GetRawResponse()));
+                var uri = _automationWebhookWebhookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationWebhookResource>(Response.FromValue(new AutomationWebhookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationWebhookResource> CreateOrUpdate(WaitUntil waitUntil, string webhookName, AutomationWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationWebhookWebhookRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationWebhookResource>(Response.FromValue(new AutomationWebhookResource(Client, response), response.GetRawResponse()));
+                var uri = _automationWebhookWebhookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationWebhookResource>(Response.FromValue(new AutomationWebhookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual async Task<Response<AutomationWebhookResource>> GetAsync(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual Response<AutomationWebhookResource> Get(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.Get");
             scope.Start();
@@ -365,14 +333,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.Exists");
             scope.Start();
@@ -415,14 +376,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual Response<bool> Exists(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.Exists");
             scope.Start();
@@ -465,14 +419,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationWebhookResource>> GetIfExistsAsync(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetIfExists");
             scope.Start();
@@ -517,14 +464,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
         public virtual NullableResponse<AutomationWebhookResource> GetIfExists(string webhookName, CancellationToken cancellationToken = default)
         {
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetIfExists");
             scope.Start();

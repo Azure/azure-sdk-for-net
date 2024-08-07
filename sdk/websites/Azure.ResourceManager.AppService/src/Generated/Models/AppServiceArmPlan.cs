@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The publisher. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; }
         /// <summary> The product. </summary>
+        [WirePath("product")]
         public string Product { get; }
         /// <summary> The promotion code. </summary>
+        [WirePath("promotionCode")]
         public string PromotionCode { get; }
         /// <summary> Version of product. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

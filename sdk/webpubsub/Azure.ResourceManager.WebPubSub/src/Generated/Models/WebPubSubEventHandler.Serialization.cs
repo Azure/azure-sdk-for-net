@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class WebPubSubEventHandler : IUtf8JsonSerializable, IJsonModel<WebPubSubEventHandler>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubEventHandler>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubEventHandler>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebPubSubEventHandler>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth);
+                writer.WriteObjectValue(Auth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             IList<string> systemEvents = default;
             UpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urlTemplate"u8))
@@ -130,11 +131,123 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents ?? new ChangeTrackingList<string>(), auth, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  urlTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlTemplate))
+                {
+                    builder.Append("  urlTemplate: ");
+                    if (UrlTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UrlTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UrlTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserEventPattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userEventPattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserEventPattern))
+                {
+                    builder.Append("  userEventPattern: ");
+                    if (UserEventPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserEventPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserEventPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemEvents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemEvents: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemEvents))
+                {
+                    if (SystemEvents.Any())
+                    {
+                        builder.Append("  systemEvents: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SystemEvents)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  auth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
+                {
+                    builder.Append("  auth: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)
@@ -145,8 +258,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +277,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeWebPubSubEventHandler(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{options.Format}' format.");
             }
         }
 

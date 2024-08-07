@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticSanSnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, ElasticSanSnapshotData data, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticSanSnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, ElasticSanSnapshotData data, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<ElasticSanSnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<ElasticSanSnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticSanSnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual NullableResponse<ElasticSanSnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();

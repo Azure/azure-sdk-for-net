@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleEntries"/> is null. </exception>
         public RedisPatchScheduleData(IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
-            if (scheduleEntries == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleEntries));
-            }
+            Argument.AssertNotNull(scheduleEntries, nameof(scheduleEntries));
 
             ScheduleEntries = scheduleEntries.ToList();
         }
@@ -86,8 +83,10 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> List of patch schedules for a Redis cache. </summary>
+        [WirePath("properties.scheduleEntries")]
         public IList<RedisPatchScheduleSetting> ScheduleEntries { get; }
     }
 }

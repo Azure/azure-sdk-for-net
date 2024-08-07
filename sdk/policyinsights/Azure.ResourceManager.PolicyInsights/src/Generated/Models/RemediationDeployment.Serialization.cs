@@ -9,22 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class RemediationDeployment : IUtf8JsonSerializable, IJsonModel<RemediationDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemediationDeployment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemediationDeployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RemediationDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remediatedResourceId"u8))
@@ -173,10 +171,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RemediationDeployment(
                 remediatedResourceId,
                 deploymentId,
@@ -197,7 +195,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +211,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeRemediationDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

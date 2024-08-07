@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>
+        [WirePath("properties.syncDatabaseId")]
         public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> Last alive time of the sync agent. </summary>
+        [WirePath("properties.lastAliveTime")]
         public DateTimeOffset? LastAliveOn { get; }
         /// <summary> State of the sync agent. </summary>
+        [WirePath("properties.state")]
         public SyncAgentState? State { get; }
         /// <summary> If the sync agent version is up to date. </summary>
+        [WirePath("properties.isUpToDate")]
         public bool? IsUpToDate { get; }
         /// <summary> Expiration time of the sync agent version. </summary>
+        [WirePath("properties.expiryTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Version of the sync agent. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
     }
 }

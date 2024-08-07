@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlPerformanceTierServiceLevelObjectives : IUtf8JsonSerializable, IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlPerformanceTierServiceLevelObjectives DeserializePostgreSqlPerformanceTierServiceLevelObjectives(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             int? maxStorageMB = default;
             int? minStorageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlPerformanceTierServiceLevelObjectives(
                 id,
                 edition,
@@ -195,6 +195,165 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  edition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Edition))
+                {
+                    builder.Append("  edition: ");
+                    if (Edition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Edition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Edition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vCore: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VCores))
+                {
+                    builder.Append("  vCore: ");
+                    builder.AppendLine($"{VCores.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareGeneration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hardwareGeneration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareGeneration))
+                {
+                    builder.Append("  hardwareGeneration: ");
+                    if (HardwareGeneration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HardwareGeneration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HardwareGeneration}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxBackupRetentionDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxBackupRetentionDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxBackupRetentionDays))
+                {
+                    builder.Append("  maxBackupRetentionDays: ");
+                    builder.AppendLine($"{MaxBackupRetentionDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinBackupRetentionDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minBackupRetentionDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinBackupRetentionDays))
+                {
+                    builder.Append("  minBackupRetentionDays: ");
+                    builder.AppendLine($"{MinBackupRetentionDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStorageInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxStorageMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxStorageInMB))
+                {
+                    builder.Append("  maxStorageMB: ");
+                    builder.AppendLine($"{MaxStorageInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinStorageInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minStorageMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinStorageInMB))
+                {
+                    builder.Append("  minStorageMB: ");
+                    builder.AppendLine($"{MinStorageInMB.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
@@ -203,8 +362,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +381,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlPerformanceTierServiceLevelObjectives(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support reading '{options.Format}' format.");
             }
         }
 

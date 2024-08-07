@@ -207,6 +207,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
+        ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
+        /// </summary>
+        ///
+        protected bool EnableBatchTracing { get; set; } = true;
+
+        /// <summary>
         ///   The set of currently active partition processing tasks issued by this event processor and their associated
         ///   token sources that can be used to cancel the operation.  Partition identifiers are used as keys.
         /// </summary>
@@ -582,6 +589,20 @@ namespace Azure.Messaging.EventHubs.Primitives
         public override string ToString() => $"Event Processor<{ typeof(TPartition).Name }>: { Identifier }";
 
         /// <summary>
+        ///   Creates a diagnostic scope associated with a checkpointing activity.
+        /// </summary>
+        ///
+        /// <returns>The diagnostic scope.  The caller is assumed to own the scope once returned and is responsible for disposing it.</returns>
+        ///
+        internal virtual DiagnosticScope StartUpdateCheckpointDiagnosticScope()
+        {
+            var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
+            scope.Start();
+
+            return scope;
+        }
+
+        /// <summary>
         ///   Creates an <see cref="TransportConsumer" /> to use for processing.
         /// </summary>
         ///
@@ -639,45 +660,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
-
-            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-
-            if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
-            {
-                var isBatch = (EventBatchMaximumCount > 1);
-
-                if (isBatch && ActivityExtensions.SupportsActivitySource)
-                {
-                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
-                }
-
-                foreach (var eventData in eventBatch)
-                {
-                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
-                    {
-                        if (isBatch)
-                        {
-                            var attributes = new Dictionary<string, string>(1)
-                            {
-                                { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
-                            };
-
-                            // Use links only when the batch size is not set to a single event.
-
-                            diagnosticScope.AddLink(traceparent, tracestate, attributes);
-                        }
-                        else
-                        {
-                            diagnosticScope.SetTraceContext(traceparent, tracestate);
-                            diagnosticScope.AddAttribute(
-                                DiagnosticProperty.EnqueuedTimeAttribute,
-                                eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
-                        }
-                    }
-                }
-            }
-
-            diagnosticScope.Start();
+            using var diagnosticScope = StartProcessorScope(eventBatch);
 
             // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
             // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
@@ -703,7 +686,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             catch (Exception ex)
             {
                 Logger.EventProcessorProcessingHandlerError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
-                diagnosticScope.Failed(ex);
+                diagnosticScope?.Failed(ex);
 
                 throw new DeveloperCodeException(ex);
             }
@@ -782,7 +765,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
                 var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(Identifier, EventHubName, ConsumerGroup, partition.PartitionId, startingPosition.ToString(), checkpointUsed, checkpointAuthor, checkpointLastModified);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -812,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, true);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options, exclusive: true);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and
@@ -2220,9 +2203,19 @@ namespace Azure.Messaging.EventHubs.Primitives
             var partitionIndex = new Random().Next(0, (properties.PartitionIds.Length - 1));
 
             // To ensure validity of the requested consumer group and that at least one partition exists,
-            // attempt to read from a partition.
+            // attempt to read from a partition.  Create a new set of options that preserves the connection
+            // and retry configuration, but uses a minimal prefetch count to reduce the amount of data transferred.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
+            var options = new EventProcessorOptions
+            {
+                PrefetchCount = 1,
+                Identifier = Identifier,
+                RetryOptions = Options.RetryOptions,
+                ConnectionOptions = Options.ConnectionOptions,
+                TrackLastEnqueuedEventProperties = false
+            };
+
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, options, exclusive: false);
 
             try
             {
@@ -2256,6 +2249,73 @@ namespace Azure.Messaging.EventHubs.Primitives
             // and that a read operation is valid.
 
             await GetCheckpointAsync("-1", cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Creates, starts, and enriches s processing diagnostics scope in case batch tracing is enabled.
+        /// </summary>
+        ///
+        /// <param name="eventBatch">A collection of <see cref="EventData"/> which is being processed.</param>
+        ///
+        /// <returns>An instance of <see cref="DiagnosticScope" />, if tracing is enabled; otherwise, <c>null</c>.</returns>
+        ///
+        private DiagnosticScope? StartProcessorScope(IReadOnlyList<EventData> eventBatch)
+        {
+            // If batch tracing is not enabled, there is no need to create a scope.
+
+            if (!EnableBatchTracing)
+            {
+                return null;
+            }
+
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+
+            if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
+            {
+                var isBatch = (EventBatchMaximumCount > 1);
+
+                if ((isBatch) && (ActivityExtensions.SupportsActivitySource))
+                {
+                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+                }
+
+                foreach (var eventData in eventBatch)
+                {
+                    Dictionary<string, object> linkAttributes = null;
+
+                    if (isBatch)
+                    {
+                        linkAttributes = new Dictionary<string, object>(1)
+                        {
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds() }
+                        };
+                    }
+                    else if (eventData.EnqueuedTime != default)
+                    {
+                        diagnosticScope.AddLongAttribute(
+                            DiagnosticProperty.EnqueuedTimeAttribute,
+                            eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+                    }
+
+                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+                    {
+                        // Set link in all cases.
+
+                        diagnosticScope.AddLink(traceparent, tracestate, linkAttributes);
+
+                        if (!isBatch)
+                        {
+                            // Parent is not required, but allowed when there is just one message.
+                            // It helps to correlate producer and consumers.
+
+                            diagnosticScope.SetTraceContext(traceparent, tracestate);
+                        }
+                    }
+                }
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
         }
 
         /// <summary>

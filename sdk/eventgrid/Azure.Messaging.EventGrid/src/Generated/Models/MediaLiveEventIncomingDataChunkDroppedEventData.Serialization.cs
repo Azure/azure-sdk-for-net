@@ -72,12 +72,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 trackName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIncomingDataChunkDroppedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIncomingDataChunkDroppedEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventIncomingDataChunkDroppedEventDataConverter : JsonConverter<MediaLiveEventIncomingDataChunkDroppedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingDataChunkDroppedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIncomingDataChunkDroppedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

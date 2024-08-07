@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual async Task<Response<FrontendEndpointResource>> GetAsync(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual Response<FrontendEndpointResource> Get(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontendEndpointResource>> GetIfExistsAsync(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
         public virtual NullableResponse<FrontendEndpointResource> GetIfExists(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            if (frontendEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendEndpointName));
-            }
-            if (frontendEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointCollection.GetIfExists");
             scope.Start();

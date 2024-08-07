@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class MonitoringTagRulesProperties : IUtf8JsonSerializable, IJsonModel<MonitoringTagRulesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringTagRulesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +34,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                writer.WriteObjectValue(LogRules, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                writer.WriteObjectValue(MetricRules, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Models
             LogRules logRules = default;
             MetricRules metricRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -116,10 +115,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitoringTagRulesProperties(provisioningState, logRules, metricRules, serializedAdditionalRawData);
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeMonitoringTagRulesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

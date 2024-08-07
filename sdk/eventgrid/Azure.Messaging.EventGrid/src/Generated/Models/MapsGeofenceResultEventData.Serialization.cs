@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -83,12 +82,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MapsGeofenceResultEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MapsGeofenceResultEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsGeofenceResultEventData(document.RootElement);
+        }
+
         internal partial class MapsGeofenceResultEventDataConverter : JsonConverter<MapsGeofenceResultEventData>
         {
             public override void Write(Utf8JsonWriter writer, MapsGeofenceResultEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MapsGeofenceResultEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

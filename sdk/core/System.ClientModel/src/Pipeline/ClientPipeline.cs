@@ -193,6 +193,8 @@ public sealed partial class ClientPipeline
     /// </remarks>
     public void Send(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         policies[0].Process(message, policies, 0);
     }
@@ -212,6 +214,8 @@ public sealed partial class ClientPipeline
     /// </remarks>
     public async ValueTask SendAsync(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }

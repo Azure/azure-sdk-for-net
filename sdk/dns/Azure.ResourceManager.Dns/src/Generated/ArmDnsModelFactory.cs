@@ -5,11 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,6 +18,62 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDnsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Dns.DnssecConfigData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag of the DNSSEC configuration. </param>
+        /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
+        /// <returns> A new <see cref="Dns.DnssecConfigData"/> instance for mocking. </returns>
+        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = null, string provisioningState = null, IEnumerable<DnsSigningKey> signingKeys = null)
+        {
+            signingKeys ??= new List<DnsSigningKey>();
+
+            return new DnssecConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                provisioningState,
+                signingKeys?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DnsSigningKey"/>. </summary>
+        /// <param name="delegationSignerInfo"> The delegation signer information. </param>
+        /// <param name="flags"> The flags specifies how the key is used. </param>
+        /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>
+        /// <param name="protocol"> The protocol value. The value is always 3. </param>
+        /// <param name="publicKey"> The public key, represented as a Base64 encoding. </param>
+        /// <param name="securityAlgorithmType"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
+        /// <returns> A new <see cref="Models.DnsSigningKey"/> instance for mocking. </returns>
+        public static DnsSigningKey DnsSigningKey(IEnumerable<DelegationSignerInfo> delegationSignerInfo = null, int? flags = null, int? keyTag = null, int? protocol = null, string publicKey = null, int? securityAlgorithmType = null)
+        {
+            delegationSignerInfo ??= new List<DelegationSignerInfo>();
+
+            return new DnsSigningKey(
+                delegationSignerInfo?.ToList(),
+                flags,
+                keyTag,
+                protocol,
+                publicKey,
+                securityAlgorithmType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DelegationSignerInfo"/>. </summary>
+        /// <param name="digestAlgorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
+        /// <param name="digestValue"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
+        /// <param name="record"> The record represents a delegation signer (DS) record. </param>
+        /// <returns> A new <see cref="Models.DelegationSignerInfo"/> instance for mocking. </returns>
+        public static DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = null, string digestValue = null, string record = null)
+        {
+            return new DelegationSignerInfo(digestAlgorithmType, digestValue, record, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -33,13 +89,15 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? maxNumberOfRecordsPerRecord = null, long? numberOfRecords = null, IEnumerable<string> nameServers = null, DnsZoneType? zoneType = null, IEnumerable<WritableSubResource> registrationVirtualNetworks = null, IEnumerable<WritableSubResource> resolutionVirtualNetworks = null)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? maxNumberOfRecordsPerRecord = null, long? numberOfRecords = null, IEnumerable<string> nameServers = null, DnsZoneType? zoneType = null, IEnumerable<WritableSubResource> registrationVirtualNetworks = null, IEnumerable<WritableSubResource> resolutionVirtualNetworks = null, IEnumerable<DnsSigningKey> signingKeys = null)
         {
             tags ??= new Dictionary<string, string>();
             nameServers ??= new List<string>();
             registrationVirtualNetworks ??= new List<WritableSubResource>();
             resolutionVirtualNetworks ??= new List<WritableSubResource>();
+            signingKeys ??= new List<DnsSigningKey>();
 
             return new DnsZoneData(
                 id,
@@ -56,6 +114,7 @@ namespace Azure.ResourceManager.Dns.Models
                 zoneType,
                 registrationVirtualNetworks?.ToList(),
                 resolutionVirtualNetworks?.ToList(),
+                signingKeys?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -78,6 +137,28 @@ namespace Azure.ResourceManager.Dns.Models
             dnsResources ??= new List<WritableSubResource>();
 
             return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Dns.DnsZoneData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> The etag of the zone. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
+        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Dns.DnsZoneData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<WritableSubResource> registrationVirtualNetworks, IEnumerable<WritableSubResource> resolutionVirtualNetworks)
+        {
+            return DnsZoneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, maxNumberOfRecords: maxNumberOfRecords, maxNumberOfRecordsPerRecord: maxNumberOfRecordsPerRecord, numberOfRecords: numberOfRecords, nameServers: nameServers, zoneType: zoneType, registrationVirtualNetworks: registrationVirtualNetworks, resolutionVirtualNetworks: resolutionVirtualNetworks, signingKeys: default);
         }
     }
 }

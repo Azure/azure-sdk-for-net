@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownReplicationProviderSpecificSettings. </summary>
+    /// <summary> Unknown version of ReplicationProviderSpecificSettings. </summary>
     internal partial class UnknownReplicationProviderSpecificSettings : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReplicationProviderSpecificSettings"/>. </summary>

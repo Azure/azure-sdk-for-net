@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     [PersistableModelProxy(typeof(UnknownDraModelCustomProperties))]
     public partial class DraModelCustomProperties : IUtf8JsonSerializable, IJsonModel<DraModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DraModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DraModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DraModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DraModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DraModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DraModelCustomProperties DeserializeDraModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDraModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DraModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

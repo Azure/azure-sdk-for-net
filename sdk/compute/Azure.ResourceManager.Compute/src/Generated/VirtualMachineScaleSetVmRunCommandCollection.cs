@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineScaleSetVmRunCommandResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineScaleSetVmRunCommandResource> CreateOrUpdate(WaitUntil waitUntil, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> GetAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<VirtualMachineScaleSetVmRunCommandResource> Get(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Get");
             scope.Start();
@@ -290,7 +254,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +285,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +316,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Exists");
             scope.Start();
@@ -403,7 +360,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<bool> Exists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.Exists");
             scope.Start();
@@ -454,7 +404,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualMachineScaleSetVmRunCommandResource>> GetIfExistsAsync(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetIfExists");
             scope.Start();
@@ -507,7 +450,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual NullableResponse<VirtualMachineScaleSetVmRunCommandResource> GetIfExists(string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (runCommandName == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandName));
-            }
-            if (runCommandName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
-            }
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
             using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandCollection.GetIfExists");
             scope.Start();

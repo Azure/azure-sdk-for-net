@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,25 +83,17 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string zoneName, DnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dnsZoneZonesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsZoneZonesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +118,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,25 +136,17 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string zoneName, DnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dnsZoneZonesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsZoneZonesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, zoneName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsArmOperation<DnsZoneResource>(Response.FromValue(new DnsZoneResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -189,7 +171,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,14 +185,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual async Task<Response<DnsZoneResource>> GetAsync(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.Get");
             scope.Start();
@@ -241,7 +216,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,14 +230,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual Response<DnsZoneResource> Get(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.Get");
             scope.Start();
@@ -293,7 +261,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +292,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +323,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,14 +337,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.Exists");
             scope.Start();
@@ -405,7 +366,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual Response<bool> Exists(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.Exists");
             scope.Start();
@@ -455,7 +409,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsZoneResource>> GetIfExistsAsync(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
             scope.Start();
@@ -507,7 +454,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         public virtual NullableResponse<DnsZoneResource> GetIfExists(string zoneName, CancellationToken cancellationToken = default)
         {
-            if (zoneName == null)
-            {
-                throw new ArgumentNullException(nameof(zoneName));
-            }
-            if (zoneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
-            }
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
 
             using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
             scope.Start();

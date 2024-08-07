@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
 
@@ -58,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -74,18 +72,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -117,7 +105,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,18 +121,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -176,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,14 +168,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<ArmDeploymentResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.Get");
             scope.Start();
@@ -228,7 +199,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,14 +213,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<ArmDeploymentResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.Get");
             scope.Start();
@@ -280,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,7 +308,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,14 +322,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.Exists");
             scope.Start();
@@ -394,7 +351,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -408,14 +365,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.Exists");
             scope.Start();
@@ -444,7 +394,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,14 +408,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArmDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
             scope.Start();
@@ -496,7 +439,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,14 +453,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual NullableResponse<ArmDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
             scope.Start();

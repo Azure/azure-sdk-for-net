@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileList"/> or <paramref name="destinationVolumeId"/> is null. </exception>
         public NetAppVolumeBackupBackupRestoreFilesContent(IEnumerable<string> fileList, ResourceIdentifier destinationVolumeId)
         {
-            if (fileList == null)
-            {
-                throw new ArgumentNullException(nameof(fileList));
-            }
-            if (destinationVolumeId == null)
-            {
-                throw new ArgumentNullException(nameof(destinationVolumeId));
-            }
+            Argument.AssertNotNull(fileList, nameof(fileList));
+            Argument.AssertNotNull(destinationVolumeId, nameof(destinationVolumeId));
 
             FileList = fileList.ToList();
             DestinationVolumeId = destinationVolumeId;

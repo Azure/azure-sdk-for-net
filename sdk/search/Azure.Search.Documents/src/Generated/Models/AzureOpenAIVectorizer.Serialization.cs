@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,13 +15,13 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureOpenAIParameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("azureOpenAIParameters"u8);
-                writer.WriteObjectValue(AzureOpenAIParameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
@@ -34,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            AzureOpenAIParameters azureOpenAIParameters = default;
+            AzureOpenAIVectorizerParameters azureOpenAIParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    azureOpenAIParameters = AzureOpenAIParameters.DeserializeAzureOpenAIParameters(property.Value);
+                    azureOpenAIParameters = AzureOpenAIVectorizerParameters.DeserializeAzureOpenAIVectorizerParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -60,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureOpenAIVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureOpenAIVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

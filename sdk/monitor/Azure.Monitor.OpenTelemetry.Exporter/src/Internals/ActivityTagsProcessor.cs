@@ -52,12 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeComponent,
             "otel.status_code",
 
-            SemanticConventions.AttributeRpcService,
             // required - RPC
-            SemanticConventions.AttributeRpcSystem,
-            SemanticConventions.AttributeRpcStatus,
+            // SemanticConventions.AttributeRpcService,
+            // SemanticConventions.AttributeRpcSystem,
+            // SemanticConventions.AttributeRpcStatus,
+            // SemanticConventions.AttributeEndpointAddress,
 
-            SemanticConventions.AttributeEndpointAddress,
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
             SemanticConventions.AttributeMessagingDestinationName,
@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeEnduserId
         };
 
-        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;

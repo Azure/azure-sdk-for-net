@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The path to the app code within the repository. </summary>
+        [WirePath("appLocation")]
         public string AppLocation { get; set; }
         /// <summary> The path to the api code within the repository. </summary>
+        [WirePath("apiLocation")]
         public string ApiLocation { get; set; }
         /// <summary> Deprecated: The path of the app artifacts after building (deprecated in favor of OutputLocation). </summary>
+        [WirePath("appArtifactLocation")]
         public string AppArtifactLocation { get; set; }
         /// <summary> The output path of the app after building. </summary>
+        [WirePath("outputLocation")]
         public string OutputLocation { get; set; }
         /// <summary> A custom command to run during deployment of the static content application. </summary>
+        [WirePath("appBuildCommand")]
         public string AppBuildCommand { get; set; }
         /// <summary> A custom command to run during deployment of the Azure Functions API application. </summary>
+        [WirePath("apiBuildCommand")]
         public string ApiBuildCommand { get; set; }
         /// <summary> Skip Github Action workflow generation. </summary>
+        [WirePath("skipGithubActionWorkflowGeneration")]
         public bool? SkipGithubActionWorkflowGeneration { get; set; }
         /// <summary> Github Action secret name override. </summary>
+        [WirePath("githubActionSecretNameOverride")]
         public string GithubActionSecretNameOverride { get; set; }
     }
 }

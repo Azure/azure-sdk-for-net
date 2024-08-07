@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
@@ -117,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +184,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +215,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +246,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +286,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +326,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,7 +343,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _keyVaultVaultsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation(response);
+                var uri = _keyVaultVaultsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +387,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _keyVaultVaultsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation(response);
+                var uri = _keyVaultVaultsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -412,7 +414,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -425,10 +427,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> UpdateAsync(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -457,7 +456,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,10 +469,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<KeyVaultResource> Update(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -502,7 +498,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,10 +508,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
         public virtual async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            if (keyVaultAccessPolicyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultAccessPolicyParameters));
-            }
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -544,7 +537,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,10 +547,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
         public virtual Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            if (keyVaultAccessPolicyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultAccessPolicyParameters));
-            }
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -586,7 +576,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,7 +601,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -636,7 +626,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -650,14 +640,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.AddTag");
             scope.Start();
@@ -704,7 +688,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -718,14 +702,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<KeyVaultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.AddTag");
             scope.Start();
@@ -772,7 +750,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -785,10 +763,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.SetTags");
             scope.Start();
@@ -832,7 +807,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -845,10 +820,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<KeyVaultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.SetTags");
             scope.Start();
@@ -892,7 +864,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -905,10 +877,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.RemoveTag");
             scope.Start();
@@ -955,7 +924,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -968,10 +937,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<KeyVaultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.RemoveTag");
             scope.Start();

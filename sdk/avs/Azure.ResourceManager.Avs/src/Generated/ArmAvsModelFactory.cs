@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -412,12 +411,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkDhcpEntity"/> instance for mocking. </returns>
-        public static WorkloadNetworkDhcpEntity WorkloadNetworkDhcpEntity(string dhcpType = "Unknown", string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null)
+        public static WorkloadNetworkDhcpEntity WorkloadNetworkDhcpEntity(string dhcpType = null, string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null)
         {
             segments ??= new List<string>();
 
             return new UnknownWorkloadNetworkDhcpEntity(
-                dhcpType,
+                dhcpType == null ? default : new DhcpTypeEnum(dhcpType),
                 displayName,
                 segments?.ToList(),
                 provisioningState,
@@ -660,9 +659,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <returns> A new <see cref="Models.AvsPrivateCloudAddonProperties"/> instance for mocking. </returns>
-        public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = "Unknown", AddonProvisioningState? provisioningState = null)
+        public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = null, AddonProvisioningState? provisioningState = null)
         {
-            return new UnknownAddonProperties(addonType, provisioningState, serializedAdditionalRawData: null);
+            return new UnknownAddonProperties(addonType == null ? default : new AddonType(addonType), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
@@ -717,9 +716,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.PlacementPolicyProperties"/> instance for mocking. </returns>
-        public static PlacementPolicyProperties PlacementPolicyProperties(string policyType = "Unknown", PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null)
+        public static PlacementPolicyProperties PlacementPolicyProperties(string policyType = null, PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null)
         {
-            return new UnknownPlacementPolicyProperties(policyType, state, displayName, provisioningState, serializedAdditionalRawData: null);
+            return new UnknownPlacementPolicyProperties(policyType == null ? default : new PlacementPolicyType(policyType), state, displayName, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>

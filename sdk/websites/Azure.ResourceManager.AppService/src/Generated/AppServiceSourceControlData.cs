@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> OAuth access token. </summary>
+        [WirePath("properties.token")]
         public string Token { get; set; }
         /// <summary> OAuth access token secret. </summary>
+        [WirePath("properties.tokenSecret")]
         public string TokenSecret { get; set; }
         /// <summary> OAuth refresh token. </summary>
+        [WirePath("properties.refreshToken")]
         public string RefreshToken { get; set; }
         /// <summary> OAuth token expiration. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

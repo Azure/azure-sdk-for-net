@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridNamespaceClientGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clientGroupName, EventGridNamespaceClientGroupData data, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridNamespaceClientGroupResource> CreateOrUpdate(WaitUntil waitUntil, string clientGroupName, EventGridNamespaceClientGroupData data, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual async Task<Response<EventGridNamespaceClientGroupResource>> GetAsync(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual Response<EventGridNamespaceClientGroupResource> Get(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +284,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.Exists");
             scope.Start();
@@ -402,7 +359,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.Exists");
             scope.Start();
@@ -452,7 +402,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridNamespaceClientGroupResource>> GetIfExistsAsync(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.GetIfExists");
             scope.Start();
@@ -504,7 +447,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
         public virtual NullableResponse<EventGridNamespaceClientGroupResource> GetIfExists(string clientGroupName, CancellationToken cancellationToken = default)
         {
-            if (clientGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(clientGroupName));
-            }
-            if (clientGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(clientGroupName, nameof(clientGroupName));
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupCollection.GetIfExists");
             scope.Start();

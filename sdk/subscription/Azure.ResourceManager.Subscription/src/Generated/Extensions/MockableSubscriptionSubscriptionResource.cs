@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription.Mocking
@@ -134,10 +131,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.RenameSubscription");
             scope.Start();
@@ -175,10 +169,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<RenamedSubscriptionId> RenameSubscription(SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = SubscriptionClientDiagnostics.CreateScope("MockableSubscriptionSubscriptionResource.RenameSubscription");
             scope.Start();

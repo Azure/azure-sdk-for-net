@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkSimData : IUtf8JsonSerializable, IJsonModel<MobileNetworkSimData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkSimData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkSimData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkSimData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileNetworkSimData DeserializeMobileNetworkSimData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +177,7 @@ namespace Azure.ResourceManager.MobileNetwork
             string authenticationKey = default;
             string operatorKeyCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -306,10 +308,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MobileNetworkSimData(
                 id,
                 name,
@@ -330,6 +332,335 @@ namespace Azure.ResourceManager.MobileNetwork
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SimState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    simState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SimState))
+                {
+                    builder.Append("    simState: ");
+                    builder.AppendLine($"'{SimState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    siteProvisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SiteProvisioningState))
+                {
+                    if (SiteProvisioningState.Any())
+                    {
+                        builder.Append("    siteProvisioningState: ");
+                        builder.AppendLine("{");
+                        foreach (var item in SiteProvisioningState)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternationalMobileSubscriberIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    internationalMobileSubscriberIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InternationalMobileSubscriberIdentity))
+                {
+                    builder.Append("    internationalMobileSubscriberIdentity: ");
+                    if (InternationalMobileSubscriberIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InternationalMobileSubscriberIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InternationalMobileSubscriberIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntegratedCircuitCardIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    integratedCircuitCardIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
+                {
+                    builder.Append("    integratedCircuitCardIdentifier: ");
+                    if (IntegratedCircuitCardIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IntegratedCircuitCardIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IntegratedCircuitCardIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deviceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeviceType))
+                {
+                    builder.Append("    deviceType: ");
+                    if (DeviceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeviceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeviceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SimPolicyId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    simPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      simPolicy: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SimPolicy))
+                {
+                    builder.Append("    simPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SimPolicy, options, 4, false, "    simPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StaticIPConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    staticIpConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StaticIPConfiguration))
+                {
+                    if (StaticIPConfiguration.Any())
+                    {
+                        builder.Append("    staticIpConfiguration: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StaticIPConfiguration)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    staticIpConfiguration: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VendorName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vendorName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VendorName))
+                {
+                    builder.Append("    vendorName: ");
+                    if (VendorName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VendorName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VendorName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VendorKeyFingerprint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vendorKeyFingerprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VendorKeyFingerprint))
+                {
+                    builder.Append("    vendorKeyFingerprint: ");
+                    if (VendorKeyFingerprint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VendorKeyFingerprint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VendorKeyFingerprint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationKey))
+                {
+                    builder.Append("    authenticationKey: ");
+                    if (AuthenticationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthenticationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthenticationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorKeyCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operatorKeyCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperatorKeyCode))
+                {
+                    builder.Append("    operatorKeyCode: ");
+                    if (OperatorKeyCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OperatorKeyCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OperatorKeyCode}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MobileNetworkSimData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
@@ -338,8 +669,10 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +688,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkSimData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{options.Format}' format.");
             }
         }
 

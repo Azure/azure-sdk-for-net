@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Commitment meter Id. </summary>
+        [WirePath("commitmentMeterId")]
         public string CommitmentMeterId { get; }
         /// <summary> Overage meter Id. </summary>
+        [WirePath("overageMeterId")]
         public string OverageMeterId { get; }
     }
 }

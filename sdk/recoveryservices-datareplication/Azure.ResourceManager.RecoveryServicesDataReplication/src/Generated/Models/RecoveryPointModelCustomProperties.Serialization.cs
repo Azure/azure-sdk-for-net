@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     [PersistableModelProxy(typeof(UnknownRecoveryPointModelCustomProperties))]
     public partial class RecoveryPointModelCustomProperties : IUtf8JsonSerializable, IJsonModel<RecoveryPointModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPointModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPointModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryPointModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static RecoveryPointModelCustomProperties DeserializeRecoveryPointModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeRecoveryPointModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

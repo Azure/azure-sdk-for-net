@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,25 +73,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DomainTopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,25 +122,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DomainTopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,20 +170,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<DomainTopicEventSubscriptionResource>> GetAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,20 +215,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual Response<DomainTopicEventSubscriptionResource> Get(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +284,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,20 +324,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.Exists");
             scope.Start();
@@ -402,7 +359,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,20 +367,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.Exists");
             scope.Start();
@@ -452,7 +402,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,20 +410,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<NullableResponse<DomainTopicEventSubscriptionResource>> GetIfExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -504,7 +447,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -512,20 +455,13 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual NullableResponse<DomainTopicEventSubscriptionResource> GetIfExists(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (eventSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(eventSubscriptionName));
-            }
-            if (eventSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
             using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetIfExists");
             scope.Start();

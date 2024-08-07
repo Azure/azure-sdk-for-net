@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountSessionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sessionName, IntegrationAccountSessionData data, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _integrationAccountSessionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountSessionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountSessionResource> CreateOrUpdate(WaitUntil waitUntil, string sessionName, IntegrationAccountSessionData data, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _integrationAccountSessionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountSessionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountSessionResource>> GetAsync(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual Response<IntegrationAccountSessionResource> Get(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.Get");
             scope.Start();
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.Exists");
             scope.Start();
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual Response<bool> Exists(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.Exists");
             scope.Start();
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountSessionResource>> GetIfExistsAsync(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.GetIfExists");
             scope.Start();
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="sessionName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountSessionResource> GetIfExists(string sessionName, CancellationToken cancellationToken = default)
         {
-            if (sessionName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionName));
-            }
-            if (sessionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionName));
-            }
+            Argument.AssertNotNullOrEmpty(sessionName, nameof(sessionName));
 
             using var scope = _integrationAccountSessionClientDiagnostics.CreateScope("IntegrationAccountSessionCollection.GetIfExists");
             scope.Start();

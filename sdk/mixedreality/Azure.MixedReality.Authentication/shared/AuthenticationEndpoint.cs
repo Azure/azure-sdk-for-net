@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.MixedReality.Common;
 using System;
 
 #nullable enable

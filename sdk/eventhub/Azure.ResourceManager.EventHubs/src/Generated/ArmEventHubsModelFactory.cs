@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,12 +34,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
         /// <param name="createdOn"> The UTC time when the Event Hubs Cluster was created. </param>
+        /// <param name="provisioningState"> Provisioning state of the Cluster. </param>
         /// <param name="updatedOn"> The UTC time when the Event Hubs Cluster was last updated. </param>
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsClusterData"/> instance for mocking. </returns>
-        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EventHubsClusterSku sku = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string metricId = null, string status = null, bool? supportsScaling = null)
+        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EventHubsClusterSku sku = null, DateTimeOffset? createdOn = null, EventHubsClusterProvisioningState? provisioningState = null, DateTimeOffset? updatedOn = null, string metricId = null, string status = null, bool? supportsScaling = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 location,
                 sku,
                 createdOn,
+                provisioningState,
                 updatedOn,
                 metricId,
                 status,
@@ -176,31 +176,37 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
         /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
         /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about current network profile. </param>
+        /// <param name="isBackingResource"> True if the EventHub namespace is backed by another Azure resource and not visible to end users. </param>
+        /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
+        /// <param name="parentAssociationName"> Source Resource Association name. </param>
+        /// <param name="sourceResourceId"> ARM Id of source resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.EventHubsNetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static EventHubsNetworkSecurityPerimeterConfiguration EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<EventHubsProvisioningIssue> provisioningIssues = null, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = null, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null)
+        public static EventHubsNetworkSecurityPerimeterConfiguration EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<EventHubsProvisioningIssue> provisioningIssues = null, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = null, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = null, IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, ResourceIdentifier sourceResourceId = null, AzureLocation? location = null)
         {
-            tags ??= new Dictionary<string, string>();
             provisioningIssues ??= new List<EventHubsProvisioningIssue>();
+            applicableFeatures ??= new List<string>();
 
             return new EventHubsNetworkSecurityPerimeterConfiguration(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 provisioningState,
                 provisioningIssues?.ToList(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
+                isBackingResource,
+                applicableFeatures?.ToList(),
+                parentAssociationName,
+                sourceResourceId,
+                location,
                 serializedAdditionalRawData: null);
         }
 
@@ -450,11 +456,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
+        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
         /// <param name="retentionDescription"> Event Hub retention settings. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubData"/> instance for mocking. </returns>
-        public static EventHubData EventHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> partitionIds = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, long? partitionCount = null, EventHubEntityStatus? status = null, CaptureDescription captureDescription = null, RetentionDescription retentionDescription = null, AzureLocation? location = null)
+        public static EventHubData EventHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> partitionIds = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, long? partitionCount = null, EventHubEntityStatus? status = null, string userMetadata = null, CaptureDescription captureDescription = null, RetentionDescription retentionDescription = null, AzureLocation? location = null)
         {
             partitionIds ??= new List<string>();
 
@@ -468,6 +475,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 updatedOn,
                 partitionCount,
                 status,
+                userMetadata,
                 captureDescription,
                 retentionDescription,
                 location,

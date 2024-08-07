@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -92,18 +91,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                if (NormalizerName != null)
-                {
-                    writer.WritePropertyName("normalizer"u8);
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("normalizer");
-                }
-            }
             if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
@@ -128,6 +115,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
+            if (Optional.IsDefined(VectorEncodingFormat))
+            {
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding");
+                }
+            }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
@@ -144,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -169,9 +168,9 @@ namespace Azure.Search.Documents.Indexes.Models
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
-            LexicalNormalizerName? normalizer = default;
             int? dimensions = default;
             string vectorSearchProfile = default;
+            VectorEncodingFormat? vectorEncoding = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -279,16 +278,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("normalizer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        normalizer = null;
-                        continue;
-                    }
-                    normalizer = new LexicalNormalizerName(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -307,6 +296,16 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     vectorSearchProfile = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vectorEncoding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vectorEncoding = null;
+                        continue;
+                    }
+                    vectorEncoding = new VectorEncodingFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"u8))
@@ -351,11 +350,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,
-                normalizer,
                 dimensions,
                 vectorSearchProfile,
+                vectorEncoding,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchField(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -490,10 +488,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsPrivateCloudClusterResource>> UpdateAsync(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.Update");
             scope.Start();
@@ -539,10 +534,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<AvsPrivateCloudClusterResource> Update(WaitUntil waitUntil, AvsPrivateCloudClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.Update");
             scope.Start();

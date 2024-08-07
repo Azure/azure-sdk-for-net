@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Analysis
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalysisServerResource : Azure.ResourceManager.ArmResource
+    public partial class AnalysisServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AnalysisServerResource() { }
@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.Analysis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Suspend(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

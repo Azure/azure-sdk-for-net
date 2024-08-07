@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     [PersistableModelProxy(typeof(UnknownConnectionInfo))]
     public partial class ConnectionInfo : IUtf8JsonSerializable, IJsonModel<ConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectionInfo DeserializeConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

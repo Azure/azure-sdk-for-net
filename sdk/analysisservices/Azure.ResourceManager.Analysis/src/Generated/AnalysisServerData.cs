@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="analysisSku"/> is null. </exception>
         public AnalysisServerData(AzureLocation location, AnalysisResourceSku analysisSku) : base(location)
         {
-            if (analysisSku == null)
-            {
-                throw new ArgumentNullException(nameof(analysisSku));
-            }
+            Argument.AssertNotNull(analysisSku, nameof(analysisSku));
 
             AnalysisSku = analysisSku;
         }

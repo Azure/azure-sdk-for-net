@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
         public static ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupSchemaResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="ConfigurationGroupValueResource"/> object. </returns>
         public static ConfigurationGroupValueResource GetConfigurationGroupValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupValueResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="NetworkFunctionResource"/> object. </returns>
         public static NetworkFunctionResource GetNetworkFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="ComponentResource"/> object. </returns>
         public static ComponentResource GetComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetComponentResource(id);
         }
@@ -136,10 +122,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource"/> object. </returns>
         public static NetworkFunctionDefinitionGroupResource GetNetworkFunctionDefinitionGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionDefinitionGroupResource(id);
         }
@@ -158,10 +141,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource"/> object. </returns>
         public static NetworkFunctionDefinitionVersionResource GetNetworkFunctionDefinitionVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionDefinitionVersionResource(id);
         }
@@ -180,10 +160,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource"/> object. </returns>
         public static NetworkServiceDesignGroupResource GetNetworkServiceDesignGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetNetworkServiceDesignGroupResource(id);
         }
@@ -202,10 +179,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource"/> object. </returns>
         public static NetworkServiceDesignVersionResource GetNetworkServiceDesignVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetNetworkServiceDesignVersionResource(id);
         }
@@ -224,10 +198,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetPublisherResource(id);
         }
@@ -246,10 +217,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
         public static ArtifactStoreResource GetArtifactStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetArtifactStoreResource(id);
         }
@@ -268,10 +236,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
         public static ArtifactManifestResource GetArtifactManifestResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetArtifactManifestResource(id);
         }
@@ -290,10 +255,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
         public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetSiteResource(id);
         }
@@ -312,10 +274,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
         public static SiteNetworkServiceResource GetSiteNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetSiteNetworkServiceResource(id);
         }
@@ -332,10 +291,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of ConfigurationGroupValueResources and their operations over a ConfigurationGroupValueResource. </returns>
         public static ConfigurationGroupValueCollection GetConfigurationGroupValues(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValues();
         }
@@ -373,10 +329,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static async Task<Response<ConfigurationGroupValueResource>> GetConfigurationGroupValueAsync(this ResourceGroupResource resourceGroupResource, string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValueAsync(configurationGroupValueName, cancellationToken).ConfigureAwait(false);
         }
@@ -414,10 +367,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static Response<ConfigurationGroupValueResource> GetConfigurationGroupValue(this ResourceGroupResource resourceGroupResource, string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValue(configurationGroupValueName, cancellationToken);
         }
@@ -434,10 +384,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of NetworkFunctionResources and their operations over a NetworkFunctionResource. </returns>
         public static NetworkFunctionCollection GetNetworkFunctions(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunctions();
         }
@@ -475,10 +422,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFunctionResource>> GetNetworkFunctionAsync(this ResourceGroupResource resourceGroupResource, string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunctionAsync(networkFunctionName, cancellationToken).ConfigureAwait(false);
         }
@@ -516,10 +460,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static Response<NetworkFunctionResource> GetNetworkFunction(this ResourceGroupResource resourceGroupResource, string networkFunctionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunction(networkFunctionName, cancellationToken);
         }
@@ -536,10 +477,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
         public static PublisherCollection GetPublishers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublishers();
         }
@@ -577,10 +515,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static async Task<Response<PublisherResource>> GetPublisherAsync(this ResourceGroupResource resourceGroupResource, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublisherAsync(publisherName, cancellationToken).ConfigureAwait(false);
         }
@@ -618,10 +553,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static Response<PublisherResource> GetPublisher(this ResourceGroupResource resourceGroupResource, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublisher(publisherName, cancellationToken);
         }
@@ -638,10 +570,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of SiteResources and their operations over a SiteResource. </returns>
         public static SiteCollection GetSites(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSites();
         }
@@ -679,10 +608,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static async Task<Response<SiteResource>> GetSiteAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
@@ -720,10 +646,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static Response<SiteResource> GetSite(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSite(siteName, cancellationToken);
         }
@@ -740,10 +663,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
         public static SiteNetworkServiceCollection GetSiteNetworkServices(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServices();
         }
@@ -781,10 +701,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServiceAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
         }
@@ -822,10 +739,7 @@ namespace Azure.ResourceManager.HybridNetwork
         [ForwardsClientCalls]
         public static Response<SiteNetworkServiceResource> GetSiteNetworkService(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkService(siteNetworkServiceName, cancellationToken);
         }
@@ -861,10 +775,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValuesAsync(cancellationToken);
         }
@@ -900,10 +811,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValues(cancellationToken);
         }
@@ -939,10 +847,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFunctionResource> GetNetworkFunctionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctionsAsync(cancellationToken);
         }
@@ -978,10 +883,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFunctionResource> GetNetworkFunctions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctions(cancellationToken);
         }
@@ -1017,10 +919,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublisherResource> GetPublishersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishersAsync(cancellationToken);
         }
@@ -1056,10 +955,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublisherResource> GetPublishers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishers(cancellationToken);
         }
@@ -1095,10 +991,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SiteResource> GetSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSitesAsync(cancellationToken);
         }
@@ -1134,10 +1027,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SiteResource> GetSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSites(cancellationToken);
         }
@@ -1173,10 +1063,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An async collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SiteNetworkServiceResource> GetSiteNetworkServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSiteNetworkServicesAsync(cancellationToken);
         }
@@ -1212,10 +1099,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SiteNetworkServiceResource> GetSiteNetworkServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSiteNetworkServices(cancellationToken);
         }

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WorkbookTemplateGallery : IUtf8JsonSerializable, IJsonModel<WorkbookTemplateGallery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateGallery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateGallery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkbookTemplateGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(WorkbookTemplateGalleryType))
+            if (Optional.IsDefined(WorkbookType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(WorkbookTemplateGalleryType);
+                writer.WriteStringValue(WorkbookType);
             }
             if (Optional.IsDefined(Order))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WorkbookTemplateGallery DeserializeWorkbookTemplateGallery(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             int? order = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkbookTemplateGallery(
                 name,
                 category,
@@ -141,6 +141,128 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 order,
                 resourceType,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  category: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    builder.Append("  category: ");
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkbookType))
+                {
+                    builder.Append("  type: ");
+                    if (WorkbookType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkbookType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkbookType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  order: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Order))
+                {
+                    builder.Append("  order: ");
+                    builder.AppendLine($"{Order.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    builder.Append("  resourceType: ");
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<WorkbookTemplateGallery>.Write(ModelReaderWriterOptions options)
@@ -151,8 +273,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +292,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkbookTemplateGallery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support reading '{options.Format}' format.");
             }
         }
 

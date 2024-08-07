@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -22,14 +21,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kustoDatabaseResourceId"/> or <paramref name="tableLevelSharingProperties"/> is null. </exception>
         public KustoTableDataSet(ResourceIdentifier kustoDatabaseResourceId, TableLevelSharingProperties tableLevelSharingProperties)
         {
-            if (kustoDatabaseResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoDatabaseResourceId));
-            }
-            if (tableLevelSharingProperties == null)
-            {
-                throw new ArgumentNullException(nameof(tableLevelSharingProperties));
-            }
+            Argument.AssertNotNull(kustoDatabaseResourceId, nameof(kustoDatabaseResourceId));
+            Argument.AssertNotNull(tableLevelSharingProperties, nameof(tableLevelSharingProperties));
 
             KustoDatabaseResourceId = kustoDatabaseResourceId;
             TableLevelSharingProperties = tableLevelSharingProperties;

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PlaywrightTesting.Mocking;
 using Azure.ResourceManager.PlaywrightTesting.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> Returns a <see cref="PlaywrightTestingAccountResource"/> object. </returns>
         public static PlaywrightTestingAccountResource GetPlaywrightTestingAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePlaywrightTestingArmClient(client).GetPlaywrightTestingAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> Returns a <see cref="PlaywrightTestingQuotaResource"/> object. </returns>
         public static PlaywrightTestingQuotaResource GetPlaywrightTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePlaywrightTestingArmClient(client).GetPlaywrightTestingQuotaResource(id);
         }
@@ -91,10 +83,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> An object representing collection of PlaywrightTestingAccountResources and their operations over a PlaywrightTestingAccountResource. </returns>
         public static PlaywrightTestingAccountCollection GetPlaywrightTestingAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePlaywrightTestingResourceGroupResource(resourceGroupResource).GetPlaywrightTestingAccounts();
         }
@@ -132,10 +121,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         [ForwardsClientCalls]
         public static async Task<Response<PlaywrightTestingAccountResource>> GetPlaywrightTestingAccountAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockablePlaywrightTestingResourceGroupResource(resourceGroupResource).GetPlaywrightTestingAccountAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -173,10 +159,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         [ForwardsClientCalls]
         public static Response<PlaywrightTestingAccountResource> GetPlaywrightTestingAccount(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePlaywrightTestingResourceGroupResource(resourceGroupResource).GetPlaywrightTestingAccount(name, cancellationToken);
         }
@@ -194,10 +177,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> An object representing collection of PlaywrightTestingQuotaResources and their operations over a PlaywrightTestingQuotaResource. </returns>
         public static PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).GetAllPlaywrightTestingQuota(location);
         }
@@ -235,10 +215,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         [ForwardsClientCalls]
         public static async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).GetPlaywrightTestingQuotaAsync(location, name, cancellationToken).ConfigureAwait(false);
         }
@@ -276,10 +253,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         [ForwardsClientCalls]
         public static Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).GetPlaywrightTestingQuota(location, name, cancellationToken);
         }
@@ -315,10 +289,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> An async collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PlaywrightTestingAccountResource> GetPlaywrightTestingAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).GetPlaywrightTestingAccountsAsync(cancellationToken);
         }
@@ -354,10 +325,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> A collection of <see cref="PlaywrightTestingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PlaywrightTestingAccountResource> GetPlaywrightTestingAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).GetPlaywrightTestingAccounts(cancellationToken);
         }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string siteName, string summaryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OffAzureSpringBoot/springbootsites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/summaries/", false);
+            uri.AppendPath(summaryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string siteName, string summaryName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="summaryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SpringBootSiteSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string siteName, string summaryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, siteName, summaryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="summaryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SpringBootSiteSummaryData> Get(string subscriptionId, string resourceGroupName, string siteName, string summaryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, siteName, summaryName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySiteRequestUri(string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OffAzureSpringBoot/springbootsites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/summaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySiteRequest(string subscriptionId, string resourceGroupName, string siteName)
@@ -211,30 +185,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SummaryList>> ListBySiteAsync(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateListBySiteRequest(subscriptionId, resourceGroupName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -261,30 +214,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SummaryList> ListBySite(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateListBySiteRequest(subscriptionId, resourceGroupName, siteName);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +232,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySiteNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySiteNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string siteName)
@@ -326,34 +266,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SummaryList>> ListBySiteNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateListBySiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -381,34 +297,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SummaryList> ListBySiteNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateListBySiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, siteName);
             _pipeline.Send(message, cancellationToken);

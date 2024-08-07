@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -34,8 +33,20 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2023-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetDeletedWebAppRequestUri(string subscriptionId, string deletedSiteId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/deletedSites/", false);
+            uri.AppendPath(deletedSiteId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedWebAppRequest(string subscriptionId, string deletedSiteId)
@@ -64,22 +75,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeletedSiteData>> GetDeletedWebAppAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var message = CreateGetDeletedWebAppRequest(subscriptionId, deletedSiteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,22 +104,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeletedSiteData> GetDeletedWebApp(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var message = CreateGetDeletedWebAppRequest(subscriptionId, deletedSiteId);
             _pipeline.Send(message, cancellationToken);
@@ -140,6 +123,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedWebAppSnapshotsRequestUri(string subscriptionId, string deletedSiteId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/deletedSites/", false);
+            uri.AppendPath(deletedSiteId, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedWebAppSnapshotsRequest(string subscriptionId, string deletedSiteId)
@@ -169,22 +165,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<AppSnapshot>>> GetDeletedWebAppSnapshotsAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var message = CreateGetDeletedWebAppSnapshotsRequest(subscriptionId, deletedSiteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -215,22 +197,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<AppSnapshot>> GetDeletedWebAppSnapshots(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var message = CreateGetDeletedWebAppSnapshotsRequest(subscriptionId, deletedSiteId);
             _pipeline.Send(message, cancellationToken);

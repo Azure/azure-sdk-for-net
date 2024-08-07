@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class InstanceFailoverGroupReadOnlyEndpoint : IUtf8JsonSerializable, IJsonModel<InstanceFailoverGroupReadOnlyEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupReadOnlyEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupReadOnlyEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InstanceFailoverGroupReadOnlyEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadOnlyEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadOnlyEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static InstanceFailoverGroupReadOnlyEndpoint DeserializeInstanceFailoverGroupReadOnlyEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             ReadOnlyEndpointFailoverPolicy? failoverPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -86,11 +86,41 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InstanceFailoverGroupReadOnlyEndpoint(failoverPolicy, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failoverPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverPolicy))
+                {
+                    builder.Append("  failoverPolicy: ");
+                    builder.AppendLine($"'{FailoverPolicy.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<InstanceFailoverGroupReadOnlyEndpoint>.Write(ModelReaderWriterOptions options)
@@ -101,8 +131,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeInstanceFailoverGroupReadOnlyEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadOnlyEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

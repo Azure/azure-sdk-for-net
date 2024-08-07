@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table column. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Type of the Cosmos DB Cassandra table column. </summary>
+        [WirePath("type")]
         public string CassandraColumnType { get; set; }
     }
 }

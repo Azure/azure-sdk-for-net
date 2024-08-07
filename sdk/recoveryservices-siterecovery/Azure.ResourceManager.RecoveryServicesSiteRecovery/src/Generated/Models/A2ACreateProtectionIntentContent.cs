@@ -24,18 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/>, <paramref name="recoverySubscriptionId"/> or <paramref name="recoveryResourceGroupId"/> is null. </exception>
         public A2ACreateProtectionIntentContent(ResourceIdentifier fabricObjectId, AzureLocation primaryLocation, AzureLocation recoveryLocation, string recoverySubscriptionId, A2ARecoveryAvailabilityType recoveryAvailabilityType, ResourceIdentifier recoveryResourceGroupId)
         {
-            if (fabricObjectId == null)
-            {
-                throw new ArgumentNullException(nameof(fabricObjectId));
-            }
-            if (recoverySubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(recoverySubscriptionId));
-            }
-            if (recoveryResourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryResourceGroupId));
-            }
+            Argument.AssertNotNull(fabricObjectId, nameof(fabricObjectId));
+            Argument.AssertNotNull(recoverySubscriptionId, nameof(recoverySubscriptionId));
+            Argument.AssertNotNull(recoveryResourceGroupId, nameof(recoveryResourceGroupId));
 
             FabricObjectId = fabricObjectId;
             PrimaryLocation = primaryLocation;

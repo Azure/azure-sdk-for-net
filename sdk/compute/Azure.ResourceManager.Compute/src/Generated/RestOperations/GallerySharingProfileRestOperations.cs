@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -36,6 +35,21 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/share", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate)
         {
             var message = _pipeline.CreateMessage();
@@ -55,7 +69,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sharingUpdate);
+            content.JsonWriter.WriteObjectValue(sharingUpdate, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -71,34 +85,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (galleryName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryName));
-            }
-            if (galleryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
-            }
-            if (sharingUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(sharingUpdate));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, sharingUpdate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -122,34 +112,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string galleryName, SharingUpdate sharingUpdate, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (galleryName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryName));
-            }
-            if (galleryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
-            }
-            if (sharingUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(sharingUpdate));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNull(sharingUpdate, nameof(sharingUpdate));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, sharingUpdate);
             _pipeline.Send(message, cancellationToken);

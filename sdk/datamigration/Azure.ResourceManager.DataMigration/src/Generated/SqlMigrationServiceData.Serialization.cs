@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class SqlMigrationServiceData : IUtf8JsonSerializable, IJsonModel<SqlMigrationServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMigrationServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMigrationServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMigrationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMigrationServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<SqlMigrationServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static SqlMigrationServiceData DeserializeSqlMigrationServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration
             string provisioningState = default;
             string integrationRuntimeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlMigrationServiceData(
                 id,
                 name,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataMigration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataMigration
                         return DeserializeSqlMigrationServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

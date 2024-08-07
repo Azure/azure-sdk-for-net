@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The UnknownAzureResourcePropertiesBase. </summary>
+    /// <summary> Unknown version of AzureResourcePropertiesBase. </summary>
     internal partial class UnknownAzureResourcePropertiesBase : AzureResourceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureResourcePropertiesBase"/>. </summary>

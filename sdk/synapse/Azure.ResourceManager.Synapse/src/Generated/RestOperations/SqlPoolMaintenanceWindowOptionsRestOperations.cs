@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,6 +33,24 @@ namespace Azure.ResourceManager.Synapse
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowOptionsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/sqlPools/", false);
+            uri.AppendPath(sqlPoolName, true);
+            uri.AppendPath("/maintenanceWindowOptions/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("maintenanceWindowOptionsName", maintenanceWindowOptionsName, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowOptionsName)
@@ -71,42 +88,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseMaintenanceWindowOptionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (maintenanceWindowOptionsName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, maintenanceWindowOptionsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -137,42 +123,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseMaintenanceWindowOptionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (maintenanceWindowOptionsName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, maintenanceWindowOptionsName);
             _pipeline.Send(message, cancellationToken);

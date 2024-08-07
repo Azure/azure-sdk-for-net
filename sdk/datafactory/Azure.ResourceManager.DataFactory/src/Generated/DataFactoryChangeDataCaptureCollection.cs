@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryChangeDataCaptureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string changeDataCaptureName, DataFactoryChangeDataCaptureData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryChangeDataCaptureResource>(Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryChangeDataCaptureResource>(Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryChangeDataCaptureResource> CreateOrUpdate(WaitUntil waitUntil, string changeDataCaptureName, DataFactoryChangeDataCaptureData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryChangeDataCaptureResource>(Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, changeDataCaptureName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryChangeDataCaptureResource>(Response.FromValue(new DataFactoryChangeDataCaptureResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryChangeDataCaptureResource>> GetAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual Response<DataFactoryChangeDataCaptureResource> Get(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.Get");
             scope.Start();
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual Response<bool> Exists(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryChangeDataCaptureResource>> GetIfExistsAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.GetIfExists");
             scope.Start();
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryChangeDataCaptureResource> GetIfExists(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (changeDataCaptureName == null)
-            {
-                throw new ArgumentNullException(nameof(changeDataCaptureName));
-            }
-            if (changeDataCaptureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(changeDataCaptureName));
-            }
+            Argument.AssertNotNullOrEmpty(changeDataCaptureName, nameof(changeDataCaptureName));
 
             using var scope = _dataFactoryChangeDataCaptureChangeDataCaptureClientDiagnostics.CreateScope("DataFactoryChangeDataCaptureCollection.GetIfExists");
             scope.Start();

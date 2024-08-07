@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
@@ -34,8 +33,68 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2024-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<LogMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (groupBy != null && !(groupBy is ChangeTrackingList<LogMetricsGroupBy> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in continents)
+                {
+                    uri.AppendQuery("continents", param, true);
+                }
+            }
+            if (countryOrRegions != null && !(countryOrRegions is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in countryOrRegions)
+                {
+                    uri.AppendQuery("countryOrRegions", param, true);
+                }
+            }
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            if (protocols != null && !(protocols is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var param in protocols)
+                {
+                    uri.AppendQuery("protocols", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
@@ -122,42 +181,12 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -193,42 +222,12 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MetricsResponse> GetLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (customDomains == null)
-            {
-                throw new ArgumentNullException(nameof(customDomains));
-            }
-            if (protocols == null)
-            {
-                throw new ArgumentNullException(nameof(protocols));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(customDomains, nameof(customDomains));
+            Argument.AssertNotNull(protocols, nameof(protocols));
 
             using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
             _pipeline.Send(message, cancellationToken);
@@ -244,6 +243,45 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (rankings != null && !(rankings is ChangeTrackingList<LogRanking> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
@@ -306,38 +344,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -370,38 +381,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RankingsResponse> GetLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(rankings, nameof(rankings));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
             _pipeline.Send(message, cancellationToken);
@@ -417,6 +401,21 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -449,30 +448,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -499,30 +477,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContinentsResponse> GetLogAnalyticsLocations(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
@@ -538,6 +495,21 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLogAnalyticsResourcesRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLogAnalyticsResourcesRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -570,30 +542,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -620,30 +571,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourcesResponse> GetLogAnalyticsResources(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
@@ -659,6 +589,52 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
@@ -729,34 +705,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -790,34 +742,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
 
             using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
             _pipeline.Send(message, cancellationToken);
@@ -833,6 +761,52 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            if (rankings != null && !(rankings is ChangeTrackingList<WafRankingType> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
@@ -903,38 +877,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -968,38 +915,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WafRankingsResponse> GetWafLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
             _pipeline.Send(message, cancellationToken);

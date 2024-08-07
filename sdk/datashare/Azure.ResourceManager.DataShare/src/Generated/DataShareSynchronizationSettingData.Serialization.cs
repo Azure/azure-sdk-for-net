@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareSynchronizationSettingData : IUtf8JsonSerializable, IJsonModel<DataShareSynchronizationSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareSynchronizationSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareSynchronizationSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataShareSynchronizationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataShareSynchronizationSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataShare
             var format = options.Format == "W" ? ((IPersistableModel<DataShareSynchronizationSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareSynchronizationSettingData DeserializeDataShareSynchronizationSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataShare
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataShare
                         return DeserializeDataShareSynchronizationSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

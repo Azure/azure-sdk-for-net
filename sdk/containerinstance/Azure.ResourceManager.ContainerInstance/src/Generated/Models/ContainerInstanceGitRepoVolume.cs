@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
         public ContainerInstanceGitRepoVolume(string repository)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
+            Argument.AssertNotNull(repository, nameof(repository));
 
             Repository = repository;
         }

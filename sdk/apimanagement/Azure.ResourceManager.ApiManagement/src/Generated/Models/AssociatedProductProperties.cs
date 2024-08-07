@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal AssociatedProductProperties(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -48,8 +45,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier of the product in the form of /products/{productId}. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Product name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

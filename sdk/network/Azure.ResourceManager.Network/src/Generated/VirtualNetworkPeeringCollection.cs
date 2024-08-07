@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualNetworkPeeringResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkPeeringName, VirtualNetworkPeeringData data, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.CreateOrUpdate");
             scope.Start();
@@ -127,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualNetworkPeeringResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkPeeringName, VirtualNetworkPeeringData data, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.CreateOrUpdate");
             scope.Start();
@@ -187,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkPeeringResource>> GetAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Get");
             scope.Start();
@@ -239,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual Response<VirtualNetworkPeeringResource> Get(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Get");
             scope.Start();
@@ -291,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +285,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Exists");
             scope.Start();
@@ -401,7 +358,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.Exists");
             scope.Start();
@@ -451,7 +401,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -465,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualNetworkPeeringResource>> GetIfExistsAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.GetIfExists");
             scope.Start();
@@ -503,7 +446,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -517,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
         public virtual NullableResponse<VirtualNetworkPeeringResource> GetIfExists(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkPeeringName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkPeeringName, nameof(virtualNetworkPeeringName));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringCollection.GetIfExists");
             scope.Start();

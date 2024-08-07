@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL for the zipped app content. </summary>
+        [WirePath("properties.appZipUrl")]
         public Uri AppZipUri { get; set; }
         /// <summary> URL for the zipped api content. </summary>
+        [WirePath("properties.apiZipUrl")]
         public Uri ApiZipUri { get; set; }
         /// <summary> A title to label the deployment. </summary>
+        [WirePath("properties.deploymentTitle")]
         public string DeploymentTitle { get; set; }
         /// <summary> The provider submitting this deployment. </summary>
+        [WirePath("properties.provider")]
         public string Provider { get; set; }
         /// <summary> The language of the api content, if it exists. </summary>
+        [WirePath("properties.functionLanguage")]
         public string FunctionLanguage { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

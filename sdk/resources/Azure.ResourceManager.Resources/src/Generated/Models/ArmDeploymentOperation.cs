@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Full deployment operation ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Deployment operation ID. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
         /// <summary> Deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentOperationProperties Properties { get; }
     }
 }

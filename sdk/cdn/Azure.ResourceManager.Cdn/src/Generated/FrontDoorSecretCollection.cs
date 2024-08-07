@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorSecretResource>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<FrontDoorSecretResource> Get(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +282,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +312,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
@@ -398,7 +355,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.Exists");
             scope.Start();
@@ -448,7 +398,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();
@@ -500,7 +443,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
             scope.Start();

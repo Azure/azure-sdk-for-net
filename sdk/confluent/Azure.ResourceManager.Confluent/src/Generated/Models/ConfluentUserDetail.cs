@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <exception cref="ArgumentNullException"> <paramref name="emailAddress"/> is null. </exception>
         public ConfluentUserDetail(string emailAddress)
         {
-            if (emailAddress == null)
-            {
-                throw new ArgumentNullException(nameof(emailAddress));
-            }
+            Argument.AssertNotNull(emailAddress, nameof(emailAddress));
 
             EmailAddress = emailAddress;
         }
@@ -62,12 +59,16 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> Email address. </param>
+        /// <param name="userPrincipalName"> User principal name. </param>
+        /// <param name="aadEmail"> AAD email address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentUserDetail(string firstName, string lastName, string emailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfluentUserDetail(string firstName, string lastName, string emailAddress, string userPrincipalName, string aadEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
+            UserPrincipalName = userPrincipalName;
+            AadEmail = aadEmail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,5 +83,9 @@ namespace Azure.ResourceManager.Confluent.Models
         public string LastName { get; set; }
         /// <summary> Email address. </summary>
         public string EmailAddress { get; set; }
+        /// <summary> User principal name. </summary>
+        public string UserPrincipalName { get; set; }
+        /// <summary> AAD email address. </summary>
+        public string AadEmail { get; set; }
     }
 }

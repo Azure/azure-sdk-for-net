@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The principal id of user assigned identity. </summary>
+        [WirePath("principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The tenant id of user assigned identity. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }
 }

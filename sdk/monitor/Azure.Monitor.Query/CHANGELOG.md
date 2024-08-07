@@ -1,15 +1,34 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Enable national cloud support for US Gov and China clouds
 
 ### Other Changes
+
+## 1.4.0 (2024-06-12)
+
+### Features Added
+- Add sovereign cloud support to `MetricsClient` for US Gov and China clouds
+
+## 1.3.1 (2024-04-03)
+
+### Bugs Fixed
+- Fix bug in `LogsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+- Fix bug in `MetricsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+
+## 1.3.0 (2024-03-28)
+
+### Other Changes
+- Enable national cloud support for US Gov and China clouds
+- `MetricsBatchQueryClient` renamed to `MetricsClient`
+- `QueryBatch` renamed to `QueryResources` in `MetricsClient`
+- `MetricsBatchResult` renamed to `MetricsQueryResourcesResult` in `MetricsClient`
+- Added `MetricsClientBuilderExtensions` methods
 
 ## 1.3.0-beta.2 (2023-12-05)
 

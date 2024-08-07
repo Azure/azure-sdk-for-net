@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
         public MongoDBLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> databaseName)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             Server = server;
             DatabaseName = databaseName;
@@ -51,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MongoDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, MongoDBAuthenticationType? authenticationType, DataFactoryElement<string> databaseName, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> authSource, DataFactoryElement<int> port, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, MongoDBAuthenticationType? authenticationType, DataFactoryElement<string> databaseName, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> authSource, DataFactoryElement<int> port, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             AuthenticationType = authenticationType;
@@ -80,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> Database to verify the username and password. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AuthSource { get; set; }
         /// <summary> The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0. </summary>

@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public string SkuAvailabilityType { get; }
         /// <summary> The SKU of Cognitive Services account. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; }
         /// <summary> Indicates the given SKU is available or not. </summary>
+        [WirePath("skuAvailable")]
         public bool? IsSkuAvailable { get; }
         /// <summary> Reason why the SKU is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> Additional error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

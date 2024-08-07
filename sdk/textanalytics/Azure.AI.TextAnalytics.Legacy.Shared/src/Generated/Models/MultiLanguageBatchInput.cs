@@ -19,10 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public MultiLanguageBatchInput(IEnumerable<MultiLanguageInput> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
+            Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
         }

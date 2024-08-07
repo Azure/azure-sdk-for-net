@@ -40,7 +40,7 @@ namespace Azure.Identity.Broker.Tests
         {
             IntPtr parentWindowHandle = new(1234);
             IMsalPublicClientInitializerOptions credentialOptions;
-                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseOperatingSystemAccount = enableUseOperatingSystemAccount };
+                credentialOptions = new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseDefaultBrokerAccount = enableUseOperatingSystemAccount };
             PublicClientApplicationBuilder builder = PublicClientApplicationBuilder
                 .Create(Guid.NewGuid().ToString());
 

@@ -17,10 +17,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             UserId = userId;
         }

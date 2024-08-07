@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string key = default;
             AcsRouterLabelOperator? labelOperator = default;
-            object labelValue = default;
+            object value = default;
             float? ttlSeconds = default;
             AcsRouterWorkerSelectorState? state = default;
             DateTimeOffset? expirationTime = default;
@@ -41,13 +40,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     labelOperator = new AcsRouterLabelOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labelValue"u8))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    labelValue = property.Value.GetObject();
+                    value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("ttlSeconds"u8))
@@ -81,10 +80,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsRouterWorkerSelector(
                 key,
                 labelOperator,
-                labelValue,
+                value,
                 ttlSeconds,
                 state,
                 expirationTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterWorkerSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerSelector(document.RootElement);
         }
     }
 }

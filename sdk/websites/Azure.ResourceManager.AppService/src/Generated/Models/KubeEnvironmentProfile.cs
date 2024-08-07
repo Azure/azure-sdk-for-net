@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the Kubernetes Environment. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the Kubernetes Environment. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type of the Kubernetes Environment. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }
 }

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nameServers"/> is null. </exception>
         public ContainerGroupDnsConfiguration(IEnumerable<string> nameServers)
         {
-            if (nameServers == null)
-            {
-                throw new ArgumentNullException(nameof(nameServers));
-            }
+            Argument.AssertNotNull(nameServers, nameof(nameServers));
 
             NameServers = nameServers.ToList();
         }

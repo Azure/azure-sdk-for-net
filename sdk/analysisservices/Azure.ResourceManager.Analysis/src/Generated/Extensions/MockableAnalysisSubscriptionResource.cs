@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Analysis.Models;
 
 namespace Azure.ResourceManager.Analysis.Mocking
@@ -188,10 +185,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = AnalysisServerServersClientDiagnostics.CreateScope("MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability");
             scope.Start();
@@ -234,10 +228,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = AnalysisServerServersClientDiagnostics.CreateScope("MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability");
             scope.Start();

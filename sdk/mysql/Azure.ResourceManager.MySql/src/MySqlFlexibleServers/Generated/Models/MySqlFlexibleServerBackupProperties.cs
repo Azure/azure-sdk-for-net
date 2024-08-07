@@ -52,12 +52,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
+        /// <param name="backupIntervalHours"> Backup interval hours for the server. </param>
         /// <param name="geoRedundantBackup"> Whether or not geo redundant backup is enabled. </param>
         /// <param name="earliestRestoreOn"> Earliest restore point creation time (ISO8601 format). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupProperties(int? backupRetentionDays, MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerBackupProperties(int? backupRetentionDays, int? backupIntervalHours, MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupRetentionDays = backupRetentionDays;
+            BackupIntervalHours = backupIntervalHours;
             GeoRedundantBackup = geoRedundantBackup;
             EarliestRestoreOn = earliestRestoreOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Backup retention days for the server. </summary>
         public int? BackupRetentionDays { get; set; }
+        /// <summary> Backup interval hours for the server. </summary>
+        public int? BackupIntervalHours { get; set; }
         /// <summary> Whether or not geo redundant backup is enabled. </summary>
         public MySqlFlexibleServerEnableStatusEnum? GeoRedundantBackup { get; set; }
         /// <summary> Earliest restore point creation time (ISO8601 format). </summary>

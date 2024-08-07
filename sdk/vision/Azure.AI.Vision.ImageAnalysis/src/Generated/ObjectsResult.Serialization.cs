@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class ObjectsResult : IUtf8JsonSerializable, IJsonModel<ObjectsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ObjectsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ObjectsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -57,7 +56,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<ObjectsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +65,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static ObjectsResult DeserializeObjectsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +73,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             IReadOnlyList<DetectedObject> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -89,10 +88,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ObjectsResult(values, serializedAdditionalRawData);
         }
 
@@ -105,7 +104,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ObjectsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +120,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeObjectsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObjectsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -135,11 +134,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeObjectsResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

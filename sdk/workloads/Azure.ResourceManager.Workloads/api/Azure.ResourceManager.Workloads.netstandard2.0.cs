@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapApplicationServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapApplicationServerInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapApplicationServerInstanceResource() { }
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapApplicationServerInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapApplicationServerInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapApplicationServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -105,7 +110,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapCentralServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapCentralServerInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapCentralServerInstanceResource() { }
@@ -126,6 +131,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapCentralServerInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapCentralServerInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapCentralServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapCentralServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -164,7 +174,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapDatabaseInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapDatabaseInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapDatabaseInstanceResource() { }
@@ -185,6 +195,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartInstanceAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> StopInstance(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopInstanceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapDatabaseInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapDatabaseInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapDatabaseInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapDatabaseInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -200,7 +215,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapLandscapeMonitorResource : Azure.ResourceManager.ArmResource
+    public partial class SapLandscapeMonitorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapLandscapeMonitorResource() { }
@@ -213,6 +228,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapLandscapeMonitorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapLandscapeMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapLandscapeMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource> Update(Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapLandscapeMonitorResource>> UpdateAsync(Azure.ResourceManager.Workloads.SapLandscapeMonitorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -253,7 +273,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapMonitorResource : Azure.ResourceManager.ArmResource
+    public partial class SapMonitorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapMonitorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapMonitorResource() { }
@@ -274,6 +294,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapMonitorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapMonitorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapMonitorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource> Update(Azure.ResourceManager.Workloads.Models.SapMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.SapMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -307,7 +332,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapProviderInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapProviderInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapProviderInstanceResource() { }
@@ -318,6 +343,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapProviderInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapProviderInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapProviderInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapProviderInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapProviderInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapProviderInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.SapProviderInstanceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.SapProviderInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.SapProviderInstanceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -357,7 +387,7 @@ namespace Azure.ResourceManager.Workloads
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapVirtualInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapVirtualInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapVirtualInstanceResource() { }
@@ -387,6 +417,11 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.Models.SapStopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Workloads.SapVirtualInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Workloads.SapVirtualInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Workloads.SapVirtualInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> Update(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

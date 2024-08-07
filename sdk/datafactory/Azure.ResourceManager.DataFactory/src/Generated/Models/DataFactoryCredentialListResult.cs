@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -50,12 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialListResult"/>. </summary>
         /// <param name="value"> List of credentials. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataFactoryCredentialListResult(IEnumerable<DataFactoryManagedIdentityCredentialData> value)
+        internal DataFactoryCredentialListResult(IEnumerable<DataFactoryServiceCredentialData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -64,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="value"> List of credentials. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryCredentialListResult(IReadOnlyList<DataFactoryManagedIdentityCredentialData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataFactoryCredentialListResult(IReadOnlyList<DataFactoryServiceCredentialData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -77,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of credentials. </summary>
-        public IReadOnlyList<DataFactoryManagedIdentityCredentialData> Value { get; }
+        public IReadOnlyList<DataFactoryServiceCredentialData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

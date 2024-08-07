@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryPipelineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryPipelinePipelinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPipelinePipelinesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryPipelineResource> CreateOrUpdate(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryPipelinePipelinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPipelinePipelinesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryPipelineResource>> GetAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual Response<DataFactoryPipelineResource> Get(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
             scope.Start();
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual Response<bool> Exists(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryPipelineResource>> GetIfExistsAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
             scope.Start();
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryPipelineResource> GetIfExists(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (pipelineName == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineName));
-            }
-            if (pipelineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pipelineName));
-            }
+            Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
             scope.Start();

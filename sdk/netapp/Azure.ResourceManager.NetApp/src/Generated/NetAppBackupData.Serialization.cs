@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppBackupData : IUtf8JsonSerializable, IJsonModel<NetAppBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppBackupData DeserializeNetAppBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp
             string snapshotName = default;
             string backupPolicyResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppBackupData(
                 id,
                 name,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NetApp
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetApp
                         return DeserializeNetAppBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -25,6 +25,7 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task FromCertificatePath(bool usePem)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
@@ -60,6 +61,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task FromX509Certificate2()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
@@ -95,6 +97,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("To be run manually. Unit test coverage exists.")]
         public async Task IncludeX5CClaimHeader()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;

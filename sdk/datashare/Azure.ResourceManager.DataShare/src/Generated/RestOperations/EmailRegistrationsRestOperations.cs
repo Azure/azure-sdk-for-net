@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.DataShare
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateActivateEmailRequestUri(AzureLocation location, DataShareEmailRegistration emailRegistration)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/activateEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateActivateEmailRequest(AzureLocation location, DataShareEmailRegistration emailRegistration)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(emailRegistration);
+            content.JsonWriter.WriteObjectValue(emailRegistration, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -65,10 +75,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var message = CreateActivateEmailRequest(location, emailRegistration);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,10 +100,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public Response<DataShareEmailRegistration> ActivateEmail(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var message = CreateActivateEmailRequest(location, emailRegistration);
             _pipeline.Send(message, cancellationToken);
@@ -112,6 +116,17 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterEmailRequestUri(AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/registerEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterEmailRequest(AzureLocation location)

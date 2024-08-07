@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -89,34 +88,49 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
+        [WirePath("status")]
         public MachineOperationStatus? Status { get; }
         /// <summary> The activity ID of the operation that produced this result. </summary>
+        [WirePath("installationActivityId")]
         public string InstallationActivityId { get; }
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
+        [WirePath("rebootStatus")]
         public VmGuestPatchRebootStatus? RebootStatus { get; }
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
+        [WirePath("maintenanceWindowExceeded")]
         public bool? MaintenanceWindowExceeded { get; }
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
+        [WirePath("excludedPatchCount")]
         public int? ExcludedPatchCount { get; }
         /// <summary> The number of patches that were detected as available for install, but did not meet the operation's criteria. </summary>
+        [WirePath("notSelectedPatchCount")]
         public int? NotSelectedPatchCount { get; }
         /// <summary> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </summary>
+        [WirePath("pendingPatchCount")]
         public int? PendingPatchCount { get; }
         /// <summary> The number of patches successfully installed. </summary>
+        [WirePath("installedPatchCount")]
         public int? InstalledPatchCount { get; }
         /// <summary> The number of patches that could not be installed due to some issue. See errors for details. </summary>
+        [WirePath("failedPatchCount")]
         public int? FailedPatchCount { get; }
         /// <summary> The UTC timestamp when the operation began. </summary>
+        [WirePath("startDateTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The UTC timestamp when the operation finished. </summary>
+        [WirePath("lastModifiedDateTime")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Indicates if operation was triggered by user or by platform. </summary>
+        [WirePath("startedBy")]
         public PatchOperationStartedBy? StartedBy { get; }
         /// <summary> Specifies the patch service used for the operation. </summary>
+        [WirePath("patchServiceUsed")]
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
+        [WirePath("osType")]
         public HybridComputeOSType? OSType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
+        [WirePath("errorDetails")]
         public ResponseError ErrorDetails { get; }
     }
 }

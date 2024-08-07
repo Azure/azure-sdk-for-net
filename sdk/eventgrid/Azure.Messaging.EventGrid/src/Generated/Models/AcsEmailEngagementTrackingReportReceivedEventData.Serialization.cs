@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -24,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string sender = default;
             string recipient = default;
             string messageId = default;
-            DateTimeOffset? userActionTimeStamp = default;
+            DateTimeOffset? userActionTimestamp = default;
             string engagementContext = default;
             string userAgent = default;
             AcsUserEngagement? engagementType = default;
@@ -45,13 +44,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userActionTimeStamp"u8))
+                if (property.NameEquals("userActionTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userActionTimeStamp = property.Value.GetDateTimeOffset("O");
+                    userActionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("engagementContext"u8))
@@ -78,10 +77,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 sender,
                 recipient,
                 messageId,
-                userActionTimeStamp,
+                userActionTimestamp,
                 engagementContext,
                 userAgent,
                 engagementType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsEmailEngagementTrackingReportReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement);
         }
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
@@ -90,6 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public MoverResourceProperties(ResourceIdentifier sourceId)
         {
-            if (sourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceId));
-            }
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             SourceId = sourceId;
             DependsOn = new ChangeTrackingList<MoverResourceDependency>();

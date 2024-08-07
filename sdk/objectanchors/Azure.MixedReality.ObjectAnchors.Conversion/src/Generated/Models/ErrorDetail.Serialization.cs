@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
@@ -66,6 +66,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                 }
             }
             return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorDetail(document.RootElement);
         }
     }
 }

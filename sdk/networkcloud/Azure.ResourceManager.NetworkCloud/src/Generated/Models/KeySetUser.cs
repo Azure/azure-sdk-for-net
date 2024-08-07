@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureUserName"/> or <paramref name="sshPublicKey"/> is null. </exception>
         public KeySetUser(string azureUserName, NetworkCloudSshPublicKey sshPublicKey)
         {
-            if (azureUserName == null)
-            {
-                throw new ArgumentNullException(nameof(azureUserName));
-            }
-            if (sshPublicKey == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKey));
-            }
+            Argument.AssertNotNull(azureUserName, nameof(azureUserName));
+            Argument.AssertNotNull(sshPublicKey, nameof(sshPublicKey));
 
             AzureUserName = azureUserName;
             SshPublicKey = sshPublicKey;

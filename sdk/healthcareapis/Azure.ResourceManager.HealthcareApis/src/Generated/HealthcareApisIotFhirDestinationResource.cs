@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +182,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +224,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +266,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisIotFhirDestinationResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();
@@ -317,7 +312,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisIotFhirDestinationResource> Update(WaitUntil waitUntil, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics.CreateScope("HealthcareApisIotFhirDestinationResource.Update");
             scope.Start();

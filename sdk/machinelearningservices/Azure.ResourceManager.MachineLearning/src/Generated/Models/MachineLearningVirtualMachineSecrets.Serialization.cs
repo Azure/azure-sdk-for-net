@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningVirtualMachineSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningVirtualMachineSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVirtualMachineSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVirtualMachineSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningVirtualMachineSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorAccount))
             {
                 writer.WritePropertyName("administratorAccount"u8);
-                writer.WriteObjectValue(AdministratorAccount);
+                writer.WriteObjectValue(AdministratorAccount, options);
             }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningVirtualMachineSecrets DeserializeMachineLearningVirtualMachineSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningVmSshCredentials administratorAccount = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorAccount"u8))
@@ -94,10 +93,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData, administratorAccount);
         }
 
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningVirtualMachineSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

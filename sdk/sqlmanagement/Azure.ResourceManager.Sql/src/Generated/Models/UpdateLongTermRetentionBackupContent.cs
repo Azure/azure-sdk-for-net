@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The storage redundancy type of the copied backup. </summary>
+        [WirePath("properties.requestedBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
     }
 }

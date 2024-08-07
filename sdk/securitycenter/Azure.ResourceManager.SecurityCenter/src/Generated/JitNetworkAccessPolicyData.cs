@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyData(IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines)
         {
-            if (virtualMachines == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachines));
-            }
+            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
 
             VirtualMachines = virtualMachines.ToList();
             Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();

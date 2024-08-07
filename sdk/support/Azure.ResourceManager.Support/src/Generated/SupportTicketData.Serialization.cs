@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportTicketData : IUtf8JsonSerializable, IJsonModel<SupportTicketData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportTicketData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,27 +55,18 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ProblemClassificationId))
-            {
-                writer.WritePropertyName("problemClassificationId"u8);
-                writer.WriteStringValue(ProblemClassificationId);
-            }
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            writer.WritePropertyName("problemClassificationId"u8);
+            writer.WriteStringValue(ProblemClassificationId);
             if (options.Format != "W" && Optional.IsDefined(ProblemClassificationDisplayName))
             {
                 writer.WritePropertyName("problemClassificationDisplayName"u8);
                 writer.WriteStringValue(ProblemClassificationDisplayName);
             }
-            if (Optional.IsDefined(Severity))
-            {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentId))
+            writer.WritePropertyName("severity"u8);
+            writer.WriteStringValue(Severity.ToString());
+            if (Optional.IsDefined(EnrollmentId))
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
@@ -85,11 +76,8 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
-            if (Optional.IsDefined(AdvancedDiagnosticConsent))
-            {
-                writer.WritePropertyName("advancedDiagnosticConsent"u8);
-                writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
-            }
+            writer.WritePropertyName("advancedDiagnosticConsent"u8);
+            writer.WriteStringValue(AdvancedDiagnosticConsent.ToString());
             if (Optional.IsDefined(ProblemScopingQuestions))
             {
                 writer.WritePropertyName("problemScopingQuestions"u8);
@@ -100,20 +88,17 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportPlanId"u8);
                 writer.WriteStringValue(SupportPlanId);
             }
-            if (Optional.IsDefined(ContactDetails))
-            {
-                writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
-            }
+            writer.WritePropertyName("contactDetails"u8);
+            writer.WriteObjectValue(ContactDetails, options);
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement);
+                writer.WriteObjectValue(ServiceLevelAgreement, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer);
+                writer.WriteObjectValue(SupportEngineer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -125,21 +110,15 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("supportPlanDisplayName"u8);
                 writer.WriteStringValue(SupportPlanDisplayName);
             }
-            if (Optional.IsDefined(Title))
-            {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
-            }
+            writer.WritePropertyName("title"u8);
+            writer.WriteStringValue(Title);
             if (Optional.IsDefined(ProblemStartOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ServiceId))
-            {
-                writer.WritePropertyName("serviceId"u8);
-                writer.WriteStringValue(ServiceId);
-            }
+            writer.WritePropertyName("serviceId"u8);
+            writer.WriteStringValue(ServiceId);
             if (options.Format != "W" && Optional.IsDefined(ServiceDisplayName))
             {
                 writer.WritePropertyName("serviceDisplayName"u8);
@@ -165,15 +144,20 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("fileWorkspaceName"u8);
                 writer.WriteStringValue(FileWorkspaceName);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsTemporaryTicket))
+            {
+                writer.WritePropertyName("isTemporaryTicket"u8);
+                writer.WriteStringValue(IsTemporaryTicket.Value.ToString());
+            }
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails);
+                writer.WriteObjectValue(TechnicalTicketDetails, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails);
+                writer.WriteObjectValue(QuotaTicketDetails, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -181,7 +165,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +193,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +202,7 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportTicketData DeserializeSupportTicketData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -232,10 +216,10 @@ namespace Azure.ResourceManager.Support
             string description = default;
             string problemClassificationId = default;
             string problemClassificationDisplayName = default;
-            SupportSeverityLevel? severity = default;
+            SupportSeverityLevel severity = default;
             string enrollmentId = default;
             bool? require24X7Response = default;
-            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
+            AdvancedDiagnosticConsent advancedDiagnosticConsent = default;
             string problemScopingQuestions = default;
             string supportPlanId = default;
             SupportContactProfile contactDetails = default;
@@ -251,11 +235,12 @@ namespace Azure.ResourceManager.Support
             DateTimeOffset? createdDate = default;
             DateTimeOffset? modifiedDate = default;
             string fileWorkspaceName = default;
+            IsTemporaryTicket? isTemporaryTicket = default;
             TechnicalTicketDetails technicalTicketDetails = default;
             QuotaTicketDetails quotaTicketDetails = default;
             IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -313,10 +298,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("severity"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             severity = new SupportSeverityLevel(property0.Value.GetString());
                             continue;
                         }
@@ -336,10 +317,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("advancedDiagnosticConsent"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             advancedDiagnosticConsent = new AdvancedDiagnosticConsent(property0.Value.GetString());
                             continue;
                         }
@@ -355,10 +332,6 @@ namespace Azure.ResourceManager.Support
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value, options);
                             continue;
                         }
@@ -442,6 +415,15 @@ namespace Azure.ResourceManager.Support
                             fileWorkspaceName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("isTemporaryTicket"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isTemporaryTicket = new IsTemporaryTicket(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("technicalTicketDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -479,10 +461,10 @@ namespace Azure.ResourceManager.Support
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SupportTicketData(
                 id,
                 name,
@@ -511,6 +493,7 @@ namespace Azure.ResourceManager.Support
                 createdDate,
                 modifiedDate,
                 fileWorkspaceName,
+                isTemporaryTicket,
                 technicalTicketDetails,
                 quotaTicketDetails,
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
@@ -526,7 +509,7 @@ namespace Azure.ResourceManager.Support
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -542,7 +525,7 @@ namespace Azure.ResourceManager.Support
                         return DeserializeSupportTicketData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{options.Format}' format.");
             }
         }
 

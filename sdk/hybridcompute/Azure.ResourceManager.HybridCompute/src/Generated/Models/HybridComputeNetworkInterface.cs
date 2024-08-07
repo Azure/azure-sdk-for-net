@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of IP addresses in this interface. </summary>
+        [WirePath("ipAddresses")]
         public IReadOnlyList<HybridComputeIPAddress> IPAddresses { get; }
     }
 }

@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     internal partial class RenewProperties : IUtf8JsonSerializable, IJsonModel<RenewProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RenewProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties);
+                writer.WriteObjectValue(PurchaseProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static RenewProperties DeserializeRenewProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             BillingBenefitsPurchaseContent purchaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"u8))
@@ -86,10 +85,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RenewProperties(purchaseProperties, serializedAdditionalRawData);
         }
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeRenewProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

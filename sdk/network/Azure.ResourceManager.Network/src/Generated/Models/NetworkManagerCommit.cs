@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,10 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocations"/> is null. </exception>
         public NetworkManagerCommit(IEnumerable<string> targetLocations, NetworkConfigurationDeploymentType commitType)
         {
-            if (targetLocations == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocations));
-            }
+            Argument.AssertNotNull(targetLocations, nameof(targetLocations));
 
             TargetLocations = targetLocations.ToList();
             ConfigurationIds = new ChangeTrackingList<string>();

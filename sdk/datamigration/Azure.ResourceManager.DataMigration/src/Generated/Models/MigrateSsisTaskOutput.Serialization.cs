@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     [PersistableModelProxy(typeof(UnknownMigrateSsisTaskOutput))]
     public partial class MigrateSsisTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSsisTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSsisTaskOutput DeserializeMigrateSsisTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSsisTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

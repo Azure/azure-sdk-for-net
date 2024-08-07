@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
+        [WirePath("properties.queryPackId")]
         public Guid? QueryPackId { get; }
         /// <summary> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </summary>
+        [WirePath("properties.timeCreated")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </summary>
+        [WirePath("properties.timeModified")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

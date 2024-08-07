@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AlertsManagement.Models;
@@ -35,6 +34,16 @@ namespace Azure.ResourceManager.AlertsManagement
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-05-05-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateMetaDataRequestUri(RetrievedInformationIdentifier identifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alertsMetaData", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("identifier", identifier.ToString(), true);
+            return uri;
         }
 
         internal HttpMessage CreateMetaDataRequest(RetrievedInformationIdentifier identifier)
@@ -93,6 +102,85 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAllRequestUri(string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts", false);
+            if (targetResource != null)
+            {
+                uri.AppendQuery("targetResource", targetResource, true);
+            }
+            if (targetResourceType != null)
+            {
+                uri.AppendQuery("targetResourceType", targetResourceType, true);
+            }
+            if (targetResourceGroup != null)
+            {
+                uri.AppendQuery("targetResourceGroup", targetResourceGroup, true);
+            }
+            if (monitorService != null)
+            {
+                uri.AppendQuery("monitorService", monitorService.Value.ToString(), true);
+            }
+            if (monitorCondition != null)
+            {
+                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToString(), true);
+            }
+            if (severity != null)
+            {
+                uri.AppendQuery("severity", severity.Value.ToString(), true);
+            }
+            if (alertState != null)
+            {
+                uri.AppendQuery("alertState", alertState.Value.ToString(), true);
+            }
+            if (alertRule != null)
+            {
+                uri.AppendQuery("alertRule", alertRule, true);
+            }
+            if (smartGroupId != null)
+            {
+                uri.AppendQuery("smartGroupId", smartGroupId, true);
+            }
+            if (includeContext != null)
+            {
+                uri.AppendQuery("includeContext", includeContext.Value, true);
+            }
+            if (includeEgressConfig != null)
+            {
+                uri.AppendQuery("includeEgressConfig", includeEgressConfig.Value, true);
+            }
+            if (pageCount != null)
+            {
+                uri.AppendQuery("pageCount", pageCount.Value, true);
+            }
+            if (sortBy != null)
+            {
+                uri.AppendQuery("sortBy", sortBy.Value.ToString(), true);
+            }
+            if (sortOrder != null)
+            {
+                uri.AppendQuery("sortOrder", sortOrder.Value.ToString(), true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("select", select, true);
+            }
+            if (timeRange != null)
+            {
+                uri.AppendQuery("timeRange", timeRange.Value.ToString(), true);
+            }
+            if (customTimeRange != null)
+            {
+                uri.AppendQuery("customTimeRange", customTimeRange, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllRequest(string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
@@ -204,14 +292,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertListResult>> GetAllAsync(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAllRequest(subscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -253,14 +334,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertListResult> GetAll(string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAllRequest(subscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
             _pipeline.Send(message, cancellationToken);
@@ -276,6 +350,18 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByIdRequestUri(string subscriptionId, Guid alertId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
+            uri.AppendPath(alertId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByIdRequest(string subscriptionId, Guid alertId)
@@ -304,14 +390,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertData>> GetByIdAsync(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetByIdRequest(subscriptionId, alertId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -339,14 +418,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertData> GetById(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetByIdRequest(subscriptionId, alertId);
             _pipeline.Send(message, cancellationToken);
@@ -364,6 +436,20 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateChangeStateRequestUri(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
+            uri.AppendPath(alertId, true);
+            uri.AppendPath("/changestate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("newState", newState.ToString(), true);
+            return uri;
         }
 
         internal HttpMessage CreateChangeStateRequest(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment)
@@ -403,14 +489,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertData>> ChangeStateAsync(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateChangeStateRequest(subscriptionId, alertId, newState, comment);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,14 +517,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertData> ChangeState(string subscriptionId, Guid alertId, ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateChangeStateRequest(subscriptionId, alertId, newState, comment);
             _pipeline.Send(message, cancellationToken);
@@ -461,6 +533,19 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetHistoryRequestUri(string subscriptionId, Guid alertId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
+            uri.AppendPath(alertId, true);
+            uri.AppendPath("/history", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetHistoryRequest(string subscriptionId, Guid alertId)
@@ -490,14 +575,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertModification>> GetHistoryAsync(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetHistoryRequest(subscriptionId, alertId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -523,14 +601,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertModification> GetHistory(string subscriptionId, Guid alertId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetHistoryRequest(subscriptionId, alertId);
             _pipeline.Send(message, cancellationToken);
@@ -546,6 +617,62 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSummaryRequestUri(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, TimeRangeFilter? timeRange, string customTimeRange)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/alertsSummary", false);
+            uri.AppendQuery("groupby", groupby.ToString(), true);
+            if (includeSmartGroupsCount != null)
+            {
+                uri.AppendQuery("includeSmartGroupsCount", includeSmartGroupsCount.Value, true);
+            }
+            if (targetResource != null)
+            {
+                uri.AppendQuery("targetResource", targetResource, true);
+            }
+            if (targetResourceType != null)
+            {
+                uri.AppendQuery("targetResourceType", targetResourceType, true);
+            }
+            if (targetResourceGroup != null)
+            {
+                uri.AppendQuery("targetResourceGroup", targetResourceGroup, true);
+            }
+            if (monitorService != null)
+            {
+                uri.AppendQuery("monitorService", monitorService.Value.ToString(), true);
+            }
+            if (monitorCondition != null)
+            {
+                uri.AppendQuery("monitorCondition", monitorCondition.Value.ToString(), true);
+            }
+            if (severity != null)
+            {
+                uri.AppendQuery("severity", severity.Value.ToString(), true);
+            }
+            if (alertState != null)
+            {
+                uri.AppendQuery("alertState", alertState.Value.ToString(), true);
+            }
+            if (alertRule != null)
+            {
+                uri.AppendQuery("alertRule", alertRule, true);
+            }
+            if (timeRange != null)
+            {
+                uri.AppendQuery("timeRange", timeRange.Value.ToString(), true);
+            }
+            if (customTimeRange != null)
+            {
+                uri.AppendQuery("customTimeRange", customTimeRange, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSummaryRequest(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, TimeRangeFilter? timeRange, string customTimeRange)
@@ -629,14 +756,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertSummary>> GetSummaryAsync(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetSummaryRequest(subscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -673,14 +793,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertSummary> GetSummary(string subscriptionId, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetSummaryRequest(subscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange);
             _pipeline.Send(message, cancellationToken);
@@ -696,6 +809,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAllNextPageRequestUri(string nextLink, string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string subscriptionId, string targetResource, string targetResourceType, string targetResourceGroup, MonitorServiceSourceForAlert? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, ServiceAlertState? alertState, string alertRule, string smartGroupId, bool? includeContext, bool? includeEgressConfig, long? pageCount, ListServiceAlertsSortByField? sortBy, AlertsManagementQuerySortOrder? sortOrder, string select, TimeRangeFilter? timeRange, string customTimeRange)
@@ -737,18 +858,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceAlertListResult>> GetAllNextPageAsync(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAllNextPageRequest(nextLink, subscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -791,18 +902,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceAlertListResult> GetAllNextPage(string nextLink, string subscriptionId, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAllNextPageRequest(nextLink, subscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange);
             _pipeline.Send(message, cancellationToken);

@@ -4,13 +4,28 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.3 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.3.2 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
 
 ## 1.3.1 (2023-11-27)
 

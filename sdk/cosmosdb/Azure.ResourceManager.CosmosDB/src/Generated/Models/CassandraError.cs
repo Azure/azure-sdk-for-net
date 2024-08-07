@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The code of error that occurred. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
         /// <summary> The message of the error. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> The target resource of the error. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
         /// <summary> Additional information about the error. </summary>
+        [WirePath("additionalErrorInfo")]
         public string AdditionalErrorInfo { get; set; }
     }
 }

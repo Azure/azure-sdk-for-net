@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable, IJsonModel<DataFactoryChangeDataCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryChangeDataCaptureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryChangeDataCaptureData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryChangeDataCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue(Folder, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -70,18 +69,18 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartArray();
             foreach (var item in SourceConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionsInfo"u8);
             writer.WriteStartArray();
             foreach (var item in TargetConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy);
+            writer.WriteObjectValue(Policy, options);
             if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryChangeDataCaptureData DeserializeDataFactoryChangeDataCaptureData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory
                         return DeserializeDataFactoryChangeDataCaptureData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support reading '{options.Format}' format.");
             }
         }
 

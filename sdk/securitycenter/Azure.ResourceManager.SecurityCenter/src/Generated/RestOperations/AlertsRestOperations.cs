@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -61,14 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -116,6 +112,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -145,22 +154,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,22 +181,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -217,6 +198,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSubscriptionLevelByRegionRequestUri(string subscriptionId, AzureLocation ascLocation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSubscriptionLevelByRegionRequest(string subscriptionId, AzureLocation ascLocation)
@@ -246,14 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListSubscriptionLevelByRegionAsync(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSubscriptionLevelByRegionRequest(subscriptionId, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -279,14 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListSubscriptionLevelByRegion(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSubscriptionLevelByRegionRequest(subscriptionId, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -302,6 +282,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListResourceGroupLevelByRegionRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListResourceGroupLevelByRegionRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
@@ -334,22 +329,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListResourceGroupLevelByRegionAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListResourceGroupLevelByRegionRequest(subscriptionId, resourceGroupName, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -376,22 +357,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListResourceGroupLevelByRegion(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListResourceGroupLevelByRegionRequest(subscriptionId, resourceGroupName, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -407,6 +374,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionLevelRequestUri(string subscriptionId, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionLevelRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
@@ -438,22 +419,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAlertData>> GetSubscriptionLevelAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetSubscriptionLevelRequest(subscriptionId, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -482,22 +449,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAlertData> GetSubscriptionLevel(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetSubscriptionLevelRequest(subscriptionId, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -515,6 +468,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
@@ -549,30 +518,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAlertData>> GetResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetResourceGroupLevelRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -602,30 +550,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAlertData> GetResourceGroupLevel(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetResourceGroupLevelRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -643,6 +570,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSubscriptionLevelStateToDismissRequestUri(string subscriptionId, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/dismiss", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSubscriptionLevelStateToDismissRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
@@ -675,22 +617,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateSubscriptionLevelStateToDismissAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToDismissRequest(subscriptionId, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -712,22 +640,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateSubscriptionLevelStateToDismiss(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToDismissRequest(subscriptionId, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -738,6 +652,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSubscriptionLevelStateToResolveRequestUri(string subscriptionId, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/resolve", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSubscriptionLevelStateToResolveRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
@@ -770,22 +699,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateSubscriptionLevelStateToResolveAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToResolveRequest(subscriptionId, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -807,22 +722,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateSubscriptionLevelStateToResolve(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToResolveRequest(subscriptionId, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -833,6 +734,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSubscriptionLevelStateToActivateRequestUri(string subscriptionId, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/activate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSubscriptionLevelStateToActivateRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
@@ -865,22 +781,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateSubscriptionLevelStateToActivateAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToActivateRequest(subscriptionId, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -902,22 +804,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateSubscriptionLevelStateToActivate(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToActivateRequest(subscriptionId, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -928,6 +816,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSubscriptionLevelStateToInProgressRequestUri(string subscriptionId, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/inProgress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSubscriptionLevelStateToInProgressRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
@@ -960,22 +863,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateSubscriptionLevelStateToInProgressAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToInProgressRequest(subscriptionId, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -997,22 +886,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateSubscriptionLevelStateToInProgress(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToInProgressRequest(subscriptionId, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -1023,6 +898,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateResourceGroupLevelStateToResolveRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/resolve", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateResourceGroupLevelStateToResolveRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
@@ -1058,30 +950,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateResourceGroupLevelStateToResolveAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToResolveRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1104,30 +975,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateResourceGroupLevelStateToResolve(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToResolveRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -1138,6 +988,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateResourceGroupLevelStateToDismissRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/dismiss", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateResourceGroupLevelStateToDismissRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
@@ -1173,30 +1040,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateResourceGroupLevelStateToDismissAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToDismissRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1219,30 +1065,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateResourceGroupLevelStateToDismiss(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToDismissRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -1253,6 +1078,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateResourceGroupLevelStateToActivateRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/activate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateResourceGroupLevelStateToActivateRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
@@ -1288,30 +1130,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateResourceGroupLevelStateToActivateAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToActivateRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1334,30 +1155,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateResourceGroupLevelStateToActivate(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToActivateRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -1368,6 +1168,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateResourceGroupLevelStateToInProgressRequestUri(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertName, true);
+            uri.AppendPath("/inProgress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateResourceGroupLevelStateToInProgressRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
@@ -1403,30 +1220,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateResourceGroupLevelStateToInProgressAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToInProgressRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1449,30 +1245,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateResourceGroupLevelStateToInProgress(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (alertName == null)
-            {
-                throw new ArgumentNullException(nameof(alertName));
-            }
-            if (alertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToInProgressRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
             _pipeline.Send(message, cancellationToken);
@@ -1483,6 +1258,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSimulateRequestUri(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/locations/", false);
+            uri.AppendPath(ascLocation, true);
+            uri.AppendPath("/alerts/default/simulate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSimulateRequest(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content)
@@ -1502,7 +1290,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1517,18 +1305,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SimulateAsync(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1550,18 +1328,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Simulate(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             _pipeline.Send(message, cancellationToken);
@@ -1572,6 +1340,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -1596,18 +1372,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1633,18 +1399,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1660,6 +1416,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1685,26 +1449,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1731,26 +1478,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1766,6 +1496,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSubscriptionLevelByRegionNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation ascLocation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSubscriptionLevelByRegionNextPageRequest(string nextLink, string subscriptionId, AzureLocation ascLocation)
@@ -1791,18 +1529,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListSubscriptionLevelByRegionNextPageAsync(string nextLink, string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, subscriptionId, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1829,18 +1557,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListSubscriptionLevelByRegionNextPage(string nextLink, string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, subscriptionId, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -1856,6 +1574,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListResourceGroupLevelByRegionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListResourceGroupLevelByRegionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
@@ -1882,26 +1608,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AlertList>> ListResourceGroupLevelByRegionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1929,26 +1638,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AlertList> ListResourceGroupLevelByRegionNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation);
             _pipeline.Send(message, cancellationToken);

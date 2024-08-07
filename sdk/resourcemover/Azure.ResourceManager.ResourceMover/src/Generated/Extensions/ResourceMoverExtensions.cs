@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceMover.Mocking;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
@@ -54,10 +52,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> Returns a <see cref="MoverResourceSetResource"/> object. </returns>
         public static MoverResourceSetResource GetMoverResourceSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourceMoverArmClient(client).GetMoverResourceSetResource(id);
         }
@@ -76,10 +71,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> Returns a <see cref="MoverResource"/> object. </returns>
         public static MoverResource GetMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourceMoverArmClient(client).GetMoverResource(id);
         }
@@ -96,10 +88,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
         public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSets();
         }
@@ -137,10 +126,7 @@ namespace Azure.ResourceManager.ResourceMover
         [ForwardsClientCalls]
         public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSetAsync(moverResourceSetName, cancellationToken).ConfigureAwait(false);
         }
@@ -178,10 +164,7 @@ namespace Azure.ResourceManager.ResourceMover
         [ForwardsClientCalls]
         public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSet(moverResourceSetName, cancellationToken);
         }
@@ -217,10 +200,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverResourceSetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResourceMoverSubscriptionResource(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
         }
@@ -256,10 +236,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverResourceSetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResourceMoverSubscriptionResource(subscriptionResource).GetMoverResourceSets(cancellationToken);
         }
@@ -290,10 +267,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverOperationsDiscovery"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourceMoverTenantResource(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
         }
@@ -324,10 +298,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverOperationsDiscovery"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourceMoverTenantResource(tenantResource).GetOperationsDiscoveries(cancellationToken);
         }

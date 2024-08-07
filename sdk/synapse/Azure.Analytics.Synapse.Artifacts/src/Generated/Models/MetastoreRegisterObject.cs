@@ -17,10 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputFolder"/> is null. </exception>
         public MetastoreRegisterObject(string inputFolder)
         {
-            if (inputFolder == null)
-            {
-                throw new ArgumentNullException(nameof(inputFolder));
-            }
+            Argument.AssertNotNull(inputFolder, nameof(inputFolder));
 
             InputFolder = inputFolder;
         }

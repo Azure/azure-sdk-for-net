@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/>, <paramref name="targetNetworkId"/> or <paramref name="testNetworkId"/> is null. </exception>
         public HyperVToAzStackHciNicInput(string nicId, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover)
         {
-            if (nicId == null)
-            {
-                throw new ArgumentNullException(nameof(nicId));
-            }
-            if (targetNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(targetNetworkId));
-            }
-            if (testNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(testNetworkId));
-            }
+            Argument.AssertNotNull(nicId, nameof(nicId));
+            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
+            Argument.AssertNotNull(testNetworkId, nameof(testNetworkId));
 
             NicId = nicId;
             TargetNetworkId = targetNetworkId;

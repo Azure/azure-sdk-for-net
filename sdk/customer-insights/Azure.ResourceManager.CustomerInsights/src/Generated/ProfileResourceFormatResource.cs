@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CustomerInsights.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProfileResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, ProfileResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatResource.Update");
             scope.Start();
@@ -336,10 +331,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProfileResourceFormatResource> Update(WaitUntil waitUntil, ProfileResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatResource.Update");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.PolicyInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListForResourceRequestUri(string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/attestations", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceRequest(string resourceId, PolicyQuerySettings policyQuerySettings)
@@ -69,10 +87,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<AttestationListResult>> ListForResourceAsync(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,10 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<AttestationListResult> ListForResource(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -116,6 +128,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtResourceRequestUri(string resourceId, string attestationName, PolicyAttestationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/attestations/", false);
+            uri.AppendPath(attestationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string attestationName, PolicyAttestationData data)
@@ -134,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -149,22 +173,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAtResourceAsync(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, attestationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +198,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateAtResource(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, attestationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -214,6 +212,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtResourceRequestUri(string resourceId, string attestationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/attestations/", false);
+            uri.AppendPath(attestationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAtResourceRequest(string resourceId, string attestationName)
@@ -242,18 +252,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyAttestationData>> GetAtResourceAsync(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
             using var message = CreateGetAtResourceRequest(resourceId, attestationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -281,18 +281,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyAttestationData> GetAtResource(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
             using var message = CreateGetAtResourceRequest(resourceId, attestationName);
             _pipeline.Send(message, cancellationToken);
@@ -310,6 +300,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtResourceRequestUri(string resourceId, string attestationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/attestations/", false);
+            uri.AppendPath(attestationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtResourceRequest(string resourceId, string attestationName)
@@ -338,18 +340,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAtResourceAsync(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
             using var message = CreateDeleteAtResourceRequest(resourceId, attestationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,18 +363,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteAtResource(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (attestationName == null)
-            {
-                throw new ArgumentNullException(nameof(attestationName));
-            }
-            if (attestationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attestationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
             using var message = CreateDeleteAtResourceRequest(resourceId, attestationName);
             _pipeline.Send(message, cancellationToken);
@@ -394,6 +376,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForResourceNextPageRequestUri(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
@@ -418,14 +408,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<AttestationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -451,14 +435,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public Response<AttestationListResult> ListForResourceNextPage(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);

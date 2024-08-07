@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridConnectionListResult(IEnumerable<HybridConnectionData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -77,8 +73,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Collection of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<HybridConnectionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

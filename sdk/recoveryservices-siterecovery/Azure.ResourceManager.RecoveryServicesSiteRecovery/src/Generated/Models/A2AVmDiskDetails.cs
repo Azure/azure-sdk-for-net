@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/>, <paramref name="recoveryAzureStorageAccountId"/> or <paramref name="primaryStagingAzureStorageAccountId"/> is null. </exception>
         public A2AVmDiskDetails(Uri diskUri, ResourceIdentifier recoveryAzureStorageAccountId, ResourceIdentifier primaryStagingAzureStorageAccountId)
         {
-            if (diskUri == null)
-            {
-                throw new ArgumentNullException(nameof(diskUri));
-            }
-            if (recoveryAzureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryAzureStorageAccountId));
-            }
-            if (primaryStagingAzureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(primaryStagingAzureStorageAccountId));
-            }
+            Argument.AssertNotNull(diskUri, nameof(diskUri));
+            Argument.AssertNotNull(recoveryAzureStorageAccountId, nameof(recoveryAzureStorageAccountId));
+            Argument.AssertNotNull(primaryStagingAzureStorageAccountId, nameof(primaryStagingAzureStorageAccountId));
 
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;

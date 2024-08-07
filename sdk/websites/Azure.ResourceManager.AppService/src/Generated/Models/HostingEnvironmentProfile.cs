@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the App Service Environment. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the App Service Environment. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type of the App Service Environment. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }
 }

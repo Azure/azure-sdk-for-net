@@ -86,10 +86,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </summary>
+        [WirePath("identity")]
         public ArmDeploymentScriptManagedIdentity Identity { get; set; }
         /// <summary> The location of the ACI and the storage account for the deployment script. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Type of the script. </summary>
         internal ScriptType Kind { get; set; }

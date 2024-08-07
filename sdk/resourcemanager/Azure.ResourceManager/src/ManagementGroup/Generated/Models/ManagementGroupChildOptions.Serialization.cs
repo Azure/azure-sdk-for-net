@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupChildOptions : IUtf8JsonSerializable, IJsonModel<ManagementGroupChildOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupChildOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupChildOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementGroupChildOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupChildOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupChildOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static ManagementGroupChildOptions DeserializeManagementGroupChildOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             string displayName = default;
             IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -144,10 +143,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagementGroupChildOptions(
                 type,
                 id,
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeManagementGroupChildOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

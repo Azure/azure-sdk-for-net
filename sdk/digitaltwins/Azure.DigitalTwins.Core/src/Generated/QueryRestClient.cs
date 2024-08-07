@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -38,7 +37,7 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
+        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -48,9 +47,9 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/query", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (queryTwinsOptions?.MaxItemsPerPage != null)
+            if (queryOptions?.MaxItemsPerPage != null)
             {
-                request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage.Value);
+                request.Headers.Add("max-items-per-page", queryOptions.MaxItemsPerPage.Value);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

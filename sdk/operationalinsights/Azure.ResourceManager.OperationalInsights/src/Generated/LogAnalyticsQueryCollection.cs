@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogAnalyticsQueryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _logAnalyticsQueryQueriesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
+                var uri = _logAnalyticsQueryQueriesRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogAnalyticsQueryResource> CreateOrUpdate(WaitUntil waitUntil, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _logAnalyticsQueryQueriesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()));
+                var uri = _logAnalyticsQueryQueriesRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryResource>(Response.FromValue(new LogAnalyticsQueryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<LogAnalyticsQueryResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<LogAnalyticsQueryResource> Get(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<NullableResponse<LogAnalyticsQueryResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual NullableResponse<LogAnalyticsQueryResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetIfExists");
             scope.Start();

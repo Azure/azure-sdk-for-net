@@ -54,18 +54,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkSiblingSetId"/>, <paramref name="subnetId"/> or <paramref name="networkSiblingSetStateId"/> is null. </exception>
         public UpdateNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature networkFeatures)
         {
-            if (networkSiblingSetId == null)
-            {
-                throw new ArgumentNullException(nameof(networkSiblingSetId));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
-            if (networkSiblingSetStateId == null)
-            {
-                throw new ArgumentNullException(nameof(networkSiblingSetStateId));
-            }
+            Argument.AssertNotNull(networkSiblingSetId, nameof(networkSiblingSetId));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(networkSiblingSetStateId, nameof(networkSiblingSetStateId));
 
             NetworkSiblingSetId = networkSiblingSetId;
             SubnetId = subnetId;

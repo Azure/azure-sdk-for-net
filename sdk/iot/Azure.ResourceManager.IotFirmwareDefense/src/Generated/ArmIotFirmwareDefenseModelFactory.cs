@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="properties">
         /// Properties of an analysis summary.
         /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/> and <see cref="Models.FirmwareSummary"/>.
+        /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveSummary"/> and <see cref="Models.FirmwareSummary"/>.
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisSummaryData"/> instance for mocking. </returns>
         public static FirmwareAnalysisSummaryData FirmwareAnalysisSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirmwareAnalysisSummaryProperties properties = null)

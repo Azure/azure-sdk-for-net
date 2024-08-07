@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.HybridNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPublisherRequestUri(string subscriptionId, string resourceGroupName, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByPublisherRequest(string subscriptionId, string resourceGroupName, string publisherName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfigurationGroupSchemaListResult>> ListByPublisherAsync(string subscriptionId, string resourceGroupName, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherRequest(subscriptionId, resourceGroupName, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfigurationGroupSchemaListResult> ListByPublisher(string subscriptionId, string resourceGroupName, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherRequest(subscriptionId, resourceGroupName, publisherName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas/", false);
+            uri.AppendPath(configurationGroupSchemaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName)
@@ -190,38 +178,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -245,38 +205,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName);
             _pipeline.Send(message, cancellationToken);
@@ -288,6 +220,22 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas/", false);
+            uri.AppendPath(configurationGroupSchemaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaData data)
@@ -310,7 +258,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -327,42 +275,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -387,42 +304,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, data);
             _pipeline.Send(message, cancellationToken);
@@ -434,6 +320,22 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas/", false);
+            uri.AppendPath(configurationGroupSchemaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName)
@@ -468,38 +370,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfigurationGroupSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -529,38 +403,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfigurationGroupSchemaData> Get(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName);
             _pipeline.Send(message, cancellationToken);
@@ -578,6 +424,22 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, TagsObject tagsObject)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas/", false);
+            uri.AppendPath(configurationGroupSchemaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, TagsObject tagsObject)
@@ -600,7 +462,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject);
+            content.JsonWriter.WriteObjectValue(tagsObject, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -617,42 +479,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfigurationGroupSchemaData>> UpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -681,42 +512,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfigurationGroupSchemaData> Update(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, tagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -732,6 +532,23 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/configurationGroupSchemas/", false);
+            uri.AppendPath(configurationGroupSchemaName, true);
+            uri.AppendPath("/updateState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState)
@@ -755,7 +572,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationGroupSchemaVersionUpdateState);
+            content.JsonWriter.WriteObjectValue(configurationGroupSchemaVersionUpdateState, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -772,42 +589,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaVersionUpdateState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(configurationGroupSchemaVersionUpdateState, nameof(configurationGroupSchemaVersionUpdateState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, configurationGroupSchemaVersionUpdateState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -832,42 +618,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (configurationGroupSchemaName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
-            }
-            if (configurationGroupSchemaVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaVersionUpdateState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            Argument.AssertNotNull(configurationGroupSchemaVersionUpdateState, nameof(configurationGroupSchemaVersionUpdateState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, configurationGroupSchemaName, configurationGroupSchemaVersionUpdateState);
             _pipeline.Send(message, cancellationToken);
@@ -879,6 +634,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPublisherNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPublisherNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName)
@@ -905,34 +668,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfigurationGroupSchemaListResult>> ListByPublisherNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -960,34 +699,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfigurationGroupSchemaListResult> ListByPublisherNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName);
             _pipeline.Send(message, cancellationToken);

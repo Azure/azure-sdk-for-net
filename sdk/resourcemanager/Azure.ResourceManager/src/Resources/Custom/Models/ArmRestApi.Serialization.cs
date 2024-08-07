@@ -6,7 +6,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {

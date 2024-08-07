@@ -19,7 +19,7 @@ namespace Azure.Identity
                 : null;
         }
 
-        private AppServiceV2017ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
+        internal AppServiceV2017ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
             ManagedIdentityClientOptions options) : base(pipeline, endpoint, secret, options)
         {
         }

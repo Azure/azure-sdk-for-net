@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
@@ -202,7 +200,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _roleAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, tenantId, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name, tenantId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,7 +245,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _roleAssignmentRestClient.Delete(Id.Parent, Id.Name, tenantId, cancellationToken);
-                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name, tenantId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -284,17 +286,16 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = await _roleAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -333,17 +334,16 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RoleAssignmentResource> Update(WaitUntil waitUntil, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = _roleAssignmentRestClient.Create(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

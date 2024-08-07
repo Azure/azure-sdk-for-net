@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public SqlPool(string location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNull(location, nameof(location));
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlPool"/>. </summary>

@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultData(AzureLocation location, Models.KeyVaultProperties properties) : base(location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -86,6 +83,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public Models.KeyVaultProperties Properties { get; set; }
     }
 }

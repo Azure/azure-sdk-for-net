@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobExecutionData : IUtf8JsonSerializable, IJsonModel<SqlServerJobExecutionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerJobExecutionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerJobExecutionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerJobExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                writer.WriteObjectValue(Target, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerJobExecutionData DeserializeSqlServerJobExecutionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Sql
             string lastMessage = default;
             JobExecutionTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -322,10 +323,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlServerJobExecutionData(
                 id,
                 name,
@@ -347,6 +348,292 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    jobVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobVersion))
+                {
+                    builder.Append("    jobVersion: ");
+                    builder.AppendLine($"{JobVersion.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    stepName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepName))
+                {
+                    builder.Append("    stepName: ");
+                    if (StepName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StepName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StepName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    stepId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepId))
+                {
+                    builder.Append("    stepId: ");
+                    builder.AppendLine($"{StepId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobExecutionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    jobExecutionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JobExecutionId))
+                {
+                    builder.Append("    jobExecutionId: ");
+                    builder.AppendLine($"'{JobExecutionId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Lifecycle), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lifecycle: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Lifecycle))
+                {
+                    builder.Append("    lifecycle: ");
+                    builder.AppendLine($"'{Lifecycle.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreateOn))
+                {
+                    builder.Append("    createTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreateOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("    startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("    endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentAttempts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    currentAttempts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentAttempts))
+                {
+                    builder.Append("    currentAttempts: ");
+                    builder.AppendLine($"{CurrentAttempts.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentAttemptStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    currentAttemptStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentAttemptStartOn))
+                {
+                    builder.Append("    currentAttemptStartTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CurrentAttemptStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastMessage))
+                {
+                    builder.Append("    lastMessage: ");
+                    if (LastMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    target: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    builder.Append("    target: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Target, options, 4, false, "    target: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobExecutionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -355,8 +642,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +661,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlServerJobExecutionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobExecutionData)} does not support reading '{options.Format}' format.");
             }
         }
 

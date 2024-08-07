@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownRestoreTargetInfoBase. </summary>
+    /// <summary> Unknown version of RestoreTargetInfoBase. </summary>
     internal partial class UnknownRestoreTargetInfoBase : RestoreTargetInfoBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRestoreTargetInfoBase"/>. </summary>

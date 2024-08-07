@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("categories")]
         public IList<ResourceLogCategory> Categories { get; }
     }
 }

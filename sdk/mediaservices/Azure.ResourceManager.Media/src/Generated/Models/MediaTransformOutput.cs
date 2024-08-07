@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="preset"/> is null. </exception>
         public MediaTransformOutput(MediaTransformPreset preset)
         {
-            if (preset == null)
-            {
-                throw new ArgumentNullException(nameof(preset));
-            }
+            Argument.AssertNotNull(preset, nameof(preset));
 
             Preset = preset;
         }

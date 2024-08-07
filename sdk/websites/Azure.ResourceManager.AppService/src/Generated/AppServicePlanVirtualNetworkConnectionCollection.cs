@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<Response<AppServicePlanVirtualNetworkConnectionResource>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<AppServicePlanVirtualNetworkConnectionResource> Get(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,7 +183,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -278,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.Exists");
             scope.Start();
@@ -328,7 +298,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppServicePlanVirtualNetworkConnectionResource>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();
@@ -380,7 +343,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual NullableResponse<AppServicePlanVirtualNetworkConnectionResource> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
         {
-            if (vnetName == null)
-            {
-                throw new ArgumentNullException(nameof(vnetName));
-            }
-            if (vnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vnetName));
-            }
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionCollection.GetIfExists");
             scope.Start();

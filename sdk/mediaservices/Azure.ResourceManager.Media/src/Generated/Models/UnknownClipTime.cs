@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownClipTime. </summary>
+    /// <summary> Unknown version of ClipTime. </summary>
     internal partial class UnknownClipTime : ClipTime
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClipTime"/>. </summary>

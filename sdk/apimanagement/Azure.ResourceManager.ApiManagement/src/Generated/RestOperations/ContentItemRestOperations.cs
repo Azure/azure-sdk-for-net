@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByServiceRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/contentTypes/", false);
+            uri.AppendPath(contentTypeId, true);
+            uri.AppendPath("/contentItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByServiceRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId)
@@ -61,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists developer portal's content items specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -70,38 +86,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContentItemListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var message = CreateListByServiceRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -120,8 +108,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists developer portal's content items specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,38 +117,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContentItemListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var message = CreateListByServiceRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId);
             _pipeline.Send(message, cancellationToken);
@@ -176,6 +136,24 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEntityTagRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/contentTypes/", false);
+            uri.AppendPath(contentTypeId, true);
+            uri.AppendPath("/contentItems/", false);
+            uri.AppendPath(contentItemId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEntityTagRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId)
@@ -203,8 +181,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns the entity state (ETag) version of the developer portal's content item specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -213,46 +191,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<bool>> GetEntityTagAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -274,8 +217,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns the entity state (ETag) version of the developer portal's content item specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -284,46 +227,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<bool> GetEntityTag(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId);
             _pipeline.Send(message, cancellationToken);
@@ -342,6 +250,24 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/contentTypes/", false);
+            uri.AppendPath(contentTypeId, true);
+            uri.AppendPath("/contentItems/", false);
+            uri.AppendPath(contentItemId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId)
@@ -369,8 +295,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns the developer portal's content item specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -379,46 +305,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApiManagementContentItem>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -437,8 +328,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Returns the developer portal's content item specified by its identifier. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -447,46 +338,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApiManagementContentItem> Get(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId);
             _pipeline.Send(message, cancellationToken);
@@ -502,6 +358,24 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag? ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/contentTypes/", false);
+            uri.AppendPath(contentTypeId, true);
+            uri.AppendPath("/contentItems/", false);
+            uri.AppendPath(contentItemId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag? ifMatch)
@@ -533,8 +407,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new developer portal's content item specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -544,46 +418,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApiManagementContentItem>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -603,8 +442,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates a new developer portal's content item specified by the provided content type. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -614,46 +453,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApiManagementContentItem> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -670,6 +474,24 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/contentTypes/", false);
+            uri.AppendPath(contentTypeId, true);
+            uri.AppendPath("/contentItems/", false);
+            uri.AppendPath(contentItemId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag ifMatch)
@@ -698,8 +520,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the specified developer portal's content item. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -709,46 +531,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -763,8 +550,8 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Removes the specified developer portal's content item. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
@@ -774,46 +561,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, contentTypeId, contentItemId, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -825,6 +577,14 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServiceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServiceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId)
@@ -843,8 +603,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists developer portal's content items specified by the provided content type. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -852,42 +612,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContentItemListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var message = CreateListByServiceNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, contentTypeId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -907,8 +636,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists developer portal's content items specified by the provided content type. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -916,42 +645,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContentItemListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var message = CreateListByServiceNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, contentTypeId);
             _pipeline.Send(message, cancellationToken);

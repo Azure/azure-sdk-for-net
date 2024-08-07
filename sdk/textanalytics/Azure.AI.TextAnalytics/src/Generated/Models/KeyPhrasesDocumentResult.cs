@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -22,18 +21,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="keyPhrases"/> is null. </exception>
         public KeyPhrasesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<string> keyPhrases) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (keyPhrases == null)
-            {
-                throw new ArgumentNullException(nameof(keyPhrases));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(keyPhrases, nameof(keyPhrases));
 
             KeyPhrases = keyPhrases.ToList();
         }

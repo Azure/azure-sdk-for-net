@@ -54,22 +54,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/>, <paramref name="objectId"/>, <paramref name="audience"/> or <paramref name="aadAuthority"/> is null. </exception>
         public IdentityProviderContent(Guid tenantId, string applicationId, string objectId, string audience, string aadAuthority)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (audience == null)
-            {
-                throw new ArgumentNullException(nameof(audience));
-            }
-            if (aadAuthority == null)
-            {
-                throw new ArgumentNullException(nameof(aadAuthority));
-            }
+            Argument.AssertNotNull(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(objectId, nameof(objectId));
+            Argument.AssertNotNull(audience, nameof(audience));
+            Argument.AssertNotNull(aadAuthority, nameof(aadAuthority));
 
             TenantId = tenantId;
             ApplicationId = applicationId;

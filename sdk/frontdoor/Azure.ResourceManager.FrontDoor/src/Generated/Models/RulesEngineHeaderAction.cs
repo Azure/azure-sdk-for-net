@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
         public RulesEngineHeaderAction(RulesEngineHeaderActionType headerActionType, string headerName)
         {
-            if (headerName == null)
-            {
-                throw new ArgumentNullException(nameof(headerName));
-            }
+            Argument.AssertNotNull(headerName, nameof(headerName));
 
             HeaderActionType = headerActionType;
             HeaderName = headerName;

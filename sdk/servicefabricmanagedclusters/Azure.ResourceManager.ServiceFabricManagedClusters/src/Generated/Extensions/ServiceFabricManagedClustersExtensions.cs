@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Mocking;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -36,94 +34,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationTypeResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeResource"/> object. </returns>
-        public static ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationTypeResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedApplicationTypeVersionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationTypeVersionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> object. </returns>
-        public static ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationTypeVersionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource"/> object. </returns>
-        public static ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedServiceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedServiceResource"/> object. </returns>
-        public static ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedServiceResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -137,10 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
         public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedClusterResource(id);
         }
@@ -159,12 +66,85 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
         public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedNodeTypeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeResource"/> object. </returns>
+        public static ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationTypeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeVersionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationTypeVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> object. </returns>
+        public static ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationTypeVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedApplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource"/> object. </returns>
+        public static ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedApplicationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedServiceResource"/> object. </returns>
+        public static ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedServiceResource(id);
         }
 
         /// <summary>
@@ -179,10 +159,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An object representing collection of ServiceFabricManagedClusterResources and their operations over a ServiceFabricManagedClusterResource. </returns>
         public static ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetServiceFabricManagedClusters();
         }
@@ -200,7 +177,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,10 +197,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         [ForwardsClientCalls]
         public static async Task<Response<ServiceFabricManagedClusterResource>> GetServiceFabricManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetServiceFabricManagedClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -241,7 +215,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -261,10 +235,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         [ForwardsClientCalls]
         public static Response<ServiceFabricManagedClusterResource> GetServiceFabricManagedCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceFabricManagedClustersResourceGroupResource(resourceGroupResource).GetServiceFabricManagedCluster(clusterName, cancellationToken);
         }
@@ -282,7 +253,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -300,10 +271,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetServiceFabricManagedClustersAsync(cancellationToken);
         }
@@ -321,7 +289,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,10 +307,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetServiceFabricManagedClusters(cancellationToken);
         }
@@ -360,7 +325,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -376,10 +341,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="clusterVersion"/> is null. </exception>
         public static async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionAsync(location, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
@@ -397,7 +359,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -413,10 +375,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="clusterVersion"/> is null. </exception>
         public static Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersion(location, clusterVersion, cancellationToken);
         }
@@ -434,7 +393,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -451,10 +410,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="clusterVersion"/> is null. </exception>
         public static async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
@@ -472,7 +428,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -489,10 +445,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="clusterVersion"/> is null. </exception>
         public static Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionByEnvironment(location, environment, clusterVersion, cancellationToken);
         }
@@ -510,7 +463,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -525,10 +478,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionsAsync(location, cancellationToken);
         }
@@ -546,7 +496,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -561,10 +511,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersions(location, cancellationToken);
         }
@@ -582,7 +529,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -598,10 +545,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
         }
@@ -619,7 +563,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -635,10 +579,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedClusterVersionsByEnvironment(location, environment, cancellationToken);
         }
@@ -656,7 +597,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -671,10 +612,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedUnsupportedVmSizesAsync(location, cancellationToken);
         }
@@ -692,7 +630,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -707,10 +645,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedUnsupportedVmSizes(location, cancellationToken);
         }
@@ -728,7 +663,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -744,10 +679,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="vmSize"/> is null. </exception>
         public static async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedUnsupportedVmSizeAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
         }
@@ -765,7 +697,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -781,10 +713,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="vmSize"/> is null. </exception>
         public static Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricManagedClustersSubscriptionResource(subscriptionResource).GetManagedUnsupportedVmSize(location, vmSize, cancellationToken);
         }

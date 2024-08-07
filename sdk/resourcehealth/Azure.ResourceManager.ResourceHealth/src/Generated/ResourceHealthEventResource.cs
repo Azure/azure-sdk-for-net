@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -310,7 +308,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// <description>Event_FetchDetailsBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -348,7 +346,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// <description>Event_FetchDetailsBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

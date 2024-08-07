@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownSecretBase. </summary>
+    /// <summary> Unknown version of SecretBase. </summary>
     internal partial class UnknownSecretBase : SecretBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecretBase"/>. </summary>

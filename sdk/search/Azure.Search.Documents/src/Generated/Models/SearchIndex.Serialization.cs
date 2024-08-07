@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in _fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchField>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ScoringProfiles))
@@ -32,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringProfile>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchSuggester>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalAnalyzer>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalTokenizer>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TokenFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -99,17 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Normalizers))
-            {
-                writer.WritePropertyName("normalizers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Normalizers)
-                {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CharFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +167,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
-            IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
             SemanticSearch semantic = default;
@@ -300,20 +288,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     charFilters = array;
                     continue;
                 }
-                if (property.NameEquals("normalizers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<LexicalNormalizer> array = new List<LexicalNormalizer>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
-                    }
-                    normalizers = array;
-                    continue;
-                }
                 if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -370,12 +344,27 @@ namespace Azure.Search.Documents.Indexes.Models
                 tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
                 tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
                 charFilters ?? new ChangeTrackingList<CharFilter>(),
-                normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
                 semantic,
                 vectorSearch,
                 odataEtag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndex FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndex(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

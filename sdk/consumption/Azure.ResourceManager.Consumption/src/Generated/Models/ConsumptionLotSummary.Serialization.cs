@@ -9,23 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionLotSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionLotSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLotSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLotSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionLotSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,12 +57,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount);
+                writer.WriteObjectValue(OriginalAmount, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                writer.WriteObjectValue(ClosedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -109,17 +107,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency);
+                writer.WriteObjectValue(OriginalAmountInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue(Reseller, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,13 +152,13 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -179,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             ConsumptionReseller reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -334,10 +332,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionLotSummary(
                 id,
                 name,
@@ -356,7 +354,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 originalAmountInBillingCurrency,
                 closedBalanceInBillingCurrency,
                 reseller,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 
@@ -369,7 +367,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -385,7 +383,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionLotSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, EventGridDomainData data, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, EventGridDomainData data, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<EventGridDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<EventGridDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +285,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +317,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.Exists");
             scope.Start();
@@ -403,7 +360,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.Exists");
             scope.Start();
@@ -453,7 +403,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.GetIfExists");
             scope.Start();
@@ -505,7 +448,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual NullableResponse<EventGridDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _eventGridDomainDomainsClientDiagnostics.CreateScope("EventGridDomainCollection.GetIfExists");
             scope.Start();

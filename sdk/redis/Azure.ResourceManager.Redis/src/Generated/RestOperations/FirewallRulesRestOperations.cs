@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Redis.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-08-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string cacheName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cacheName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisFirewallRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisFirewallRuleListResult> List(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.Redis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data)
@@ -178,7 +166,7 @@ namespace Azure.ResourceManager.Redis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -195,42 +183,11 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisFirewallRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, ruleName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -260,42 +217,11 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisFirewallRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, ruleName, data);
             _pipeline.Send(message, cancellationToken);
@@ -312,6 +238,22 @@ namespace Azure.ResourceManager.Redis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
@@ -346,38 +288,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisFirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -407,38 +321,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisFirewallRuleData> Get(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             _pipeline.Send(message, cancellationToken);
@@ -456,6 +342,22 @@ namespace Azure.ResourceManager.Redis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cache/redis/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/firewallRules/", false);
+            uri.AppendPath(ruleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cacheName, string ruleName)
@@ -490,38 +392,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -545,38 +419,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string cacheName, string ruleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, ruleName);
             _pipeline.Send(message, cancellationToken);
@@ -588,6 +434,14 @@ namespace Azure.ResourceManager.Redis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
@@ -614,34 +468,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisFirewallRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -669,34 +499,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisFirewallRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Mocking
 {
@@ -34,6 +32,18 @@ namespace Azure.ResourceManager.Dns.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnssecConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnssecConfigResource.CreateResourceIdentifier" /> to create a <see cref="DnssecConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
+        public virtual DnssecConfigResource GetDnssecConfigResource(ResourceIdentifier id)
+        {
+            DnssecConfigResource.ValidateResourceId(id);
+            return new DnssecConfigResource(Client, id);
         }
 
         /// <summary>
@@ -154,6 +164,42 @@ namespace Azure.ResourceManager.Dns.Mocking
         {
             DnsTxtRecordResource.ValidateResourceId(id);
             return new DnsTxtRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsTlsaRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTlsaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTlsaRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsTlsaRecordResource"/> object. </returns>
+        public virtual DnsTlsaRecordResource GetDnsTlsaRecordResource(ResourceIdentifier id)
+        {
+            DnsTlsaRecordResource.ValidateResourceId(id);
+            return new DnsTlsaRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsDSRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsDSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsDSRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsDSRecordResource"/> object. </returns>
+        public virtual DnsDSRecordResource GetDnsDSRecordResource(ResourceIdentifier id)
+        {
+            DnsDSRecordResource.ValidateResourceId(id);
+            return new DnsDSRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsNaptrRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNaptrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNaptrRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsNaptrRecordResource"/> object. </returns>
+        public virtual DnsNaptrRecordResource GetDnsNaptrRecordResource(ResourceIdentifier id)
+        {
+            DnsNaptrRecordResource.ValidateResourceId(id);
+            return new DnsNaptrRecordResource(Client, id);
         }
 
         /// <summary>

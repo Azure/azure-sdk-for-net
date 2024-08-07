@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +184,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,7 +227,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +270,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();
@@ -322,7 +317,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,10 +332,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SharedSearchServicePrivateLinkResource> Update(WaitUntil waitUntil, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResource.Update");
             scope.Start();

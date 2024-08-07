@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogHost : IUtf8JsonSerializable, IJsonModel<DatadogHost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHost>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogHost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                writer.WriteObjectValue(Meta, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogHost DeserializeDatadogHost(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Datadog.Models
             IReadOnlyList<string> apps = default;
             DatadogHostMetadata meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -147,10 +146,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatadogHost(name, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta, serializedAdditionalRawData);
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogHost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{options.Format}' format.");
             }
         }
 

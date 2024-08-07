@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of this SKU. </summary>
+        [WirePath("name")]
         public EventHubsClusterSkuName Name { get; set; }
         /// <summary> The quantity of Event Hubs Cluster Capacity Units contained in this cluster. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

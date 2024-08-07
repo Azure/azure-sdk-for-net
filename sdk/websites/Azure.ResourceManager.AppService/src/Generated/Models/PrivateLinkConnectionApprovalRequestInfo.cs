@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The state of a private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

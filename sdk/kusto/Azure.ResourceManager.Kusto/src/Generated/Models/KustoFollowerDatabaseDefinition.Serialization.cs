@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoFollowerDatabaseDefinition : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabaseDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoFollowerDatabaseDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
             KustoDatabaseShareOrigin? databaseShareOrigin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"u8))
@@ -128,10 +127,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoFollowerDatabaseDefinition(
                 clusterResourceId,
                 attachedDatabaseConfigurationName,
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoFollowerDatabaseDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

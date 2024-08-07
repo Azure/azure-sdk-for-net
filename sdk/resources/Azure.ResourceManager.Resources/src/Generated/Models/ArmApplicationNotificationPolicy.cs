@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="notificationEndpoints"/> is null. </exception>
         public ArmApplicationNotificationPolicy(IEnumerable<ArmApplicationNotificationEndpoint> notificationEndpoints)
         {
-            if (notificationEndpoints == null)
-            {
-                throw new ArgumentNullException(nameof(notificationEndpoints));
-            }
+            Argument.AssertNotNull(notificationEndpoints, nameof(notificationEndpoints));
 
             NotificationEndpoints = notificationEndpoints.ToList();
         }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application notification endpoint. </summary>
+        [WirePath("notificationEndpoints")]
         public IList<ArmApplicationNotificationEndpoint> NotificationEndpoints { get; }
     }
 }

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable, IJsonModel<DeviceUpdateInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdateInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
-                writer.WriteObjectValue(DiagnosticStorageProperties);
+                writer.WriteObjectValue(DiagnosticStorageProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             bool? enableDiagnostics = default;
             DiagnosticStorageProperties diagnosticStorageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceUpdateInstanceData(
                 id,
                 name,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         return DeserializeDeviceUpdateInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

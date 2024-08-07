@@ -48,12 +48,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new IotHubDeviceCreatedEventData(deviceId, hubName, twin);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceCreatedEventData(document.RootElement);
+        }
+
         internal partial class IotHubDeviceCreatedEventDataConverter : JsonConverter<IotHubDeviceCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, IotHubDeviceCreatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override IotHubDeviceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

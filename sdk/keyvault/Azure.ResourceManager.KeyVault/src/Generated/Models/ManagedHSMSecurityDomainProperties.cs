@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Activation Status. </summary>
+        [WirePath("activationStatus")]
         public ManagedHSMSecurityDomainActivationStatus? ActivationStatus { get; }
         /// <summary> Activation Status Message. </summary>
+        [WirePath("activationStatusMessage")]
         public string ActivationStatusMessage { get; }
     }
 }

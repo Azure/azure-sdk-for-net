@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class LakeHouseTableDataset : IUtf8JsonSerializable, IJsonModel<LakeHouseTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseTableDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LakeHouseTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -83,10 +82,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(SchemaTypePropertiesSchema))
+            {
+                writer.WritePropertyName("schema"u8);
+                JsonSerializer.Serialize(writer, SchemaTypePropertiesSchema);
+            }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LakeHouseTableDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LakeHouseTableDataset DeserializeLakeHouseTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,6 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
+            DataFactoryElement<string> schema0 = default;
             DataFactoryElement<string> table = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -227,6 +232,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("schema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schema0 = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("table"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -252,6 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,
                 additionalProperties,
+                schema0,
                 table);
         }
 
@@ -264,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeLakeHouseTableDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LakeHouseTableDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

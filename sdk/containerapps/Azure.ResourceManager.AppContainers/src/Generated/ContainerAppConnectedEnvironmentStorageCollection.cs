@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentStorageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageName, ContainerAppConnectedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppConnectedEnvironmentStorageResource> CreateOrUpdate(WaitUntil waitUntil, string storageName, ContainerAppConnectedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentStorageResource>> GetAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
             scope.Start();
@@ -236,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentStorageResource> Get(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
             scope.Start();
@@ -288,7 +256,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +285,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,14 +328,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
             scope.Start();
@@ -396,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,14 +371,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
             scope.Start();
@@ -446,7 +400,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,14 +414,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppConnectedEnvironmentStorageResource>> GetIfExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
             scope.Start();
@@ -498,7 +445,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -512,14 +459,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppConnectedEnvironmentStorageResource> GetIfExists(string storageName, CancellationToken cancellationToken = default)
         {
-            if (storageName == null)
-            {
-                throw new ArgumentNullException(nameof(storageName));
-            }
-            if (storageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageName));
-            }
+            Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
             using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
             scope.Start();

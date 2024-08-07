@@ -9,20 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningOnlineDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataCollector != null)
                 {
                     writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector);
+                    writer.WriteObjectValue(DataCollector, options);
                 }
                 else
                 {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe);
+                    writer.WriteObjectValue(LivenessProbe, options);
                 }
                 else
                 {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe);
+                    writer.WriteObjectValue(ReadinessProbe, options);
                 }
                 else
                 {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings);
+                    writer.WriteObjectValue(RequestSettings, options);
                 }
                 else
                 {
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings);
+                    writer.WriteObjectValue(ScaleSettings, options);
                 }
                 else
                 {
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue(CodeConfiguration, options);
                 }
                 else
                 {
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

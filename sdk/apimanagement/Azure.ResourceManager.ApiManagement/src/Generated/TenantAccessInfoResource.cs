@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,10 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<TenantAccessInfoResource>> UpdateAsync(ETag ifMatch, TenantAccessInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoResource.Update");
             scope.Start();
@@ -234,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,10 +243,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<TenantAccessInfoResource> Update(ETag ifMatch, TenantAccessInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoResource.Update");
             scope.Start();
@@ -280,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +310,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,7 +386,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,7 +462,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,7 +500,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -542,7 +534,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -576,7 +568,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,7 +602,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -644,7 +636,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -682,7 +674,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

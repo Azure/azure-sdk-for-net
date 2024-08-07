@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
@@ -278,17 +276,16 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.PutAsync(Id.Parent.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreatePutRequestUri(Id.Parent.Parent, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -327,17 +324,16 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Put(Id.Parent.Parent, data, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreatePutRequestUri(Id.Parent.Parent, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

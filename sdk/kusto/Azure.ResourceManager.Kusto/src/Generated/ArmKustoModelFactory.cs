@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -430,7 +428,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
-        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
             return new KustoDatabaseData(
                 id,
@@ -438,7 +436,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                kind,
+                kind == null ? default : new KustoKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -704,7 +702,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
-        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
+        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
             return new KustoDataConnectionData(
                 id,
@@ -712,7 +710,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                kind,
+                kind == null ? default : new DataConnectionKind(kind),
                 serializedAdditionalRawData: null);
         }
 

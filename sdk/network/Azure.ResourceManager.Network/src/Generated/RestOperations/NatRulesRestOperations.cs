@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/natRules/", false);
+            uri.AppendPath(natRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VpnGatewayNatRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VpnGatewayNatRuleData> Get(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/natRules/", false);
+            uri.AppendPath(natRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData data)
@@ -201,7 +176,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -218,42 +193,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,42 +222,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, VpnGatewayNatRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName, data);
             _pipeline.Send(message, cancellationToken);
@@ -325,6 +238,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/natRules/", false);
+            uri.AppendPath(natRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName)
@@ -359,38 +288,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,38 +316,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string gatewayName, string natRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (natRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(natRuleName));
-            }
-            if (natRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(natRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, gatewayName, natRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVpnGatewayRequestUri(string subscriptionId, string resourceGroupName, string gatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/natRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByVpnGatewayRequest(string subscriptionId, string resourceGroupName, string gatewayName)
@@ -491,30 +379,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListVpnGatewayNatRulesResult>> ListByVpnGatewayAsync(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var message = CreateListByVpnGatewayRequest(subscriptionId, resourceGroupName, gatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +408,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListVpnGatewayNatRulesResult> ListByVpnGateway(string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var message = CreateListByVpnGatewayRequest(subscriptionId, resourceGroupName, gatewayName);
             _pipeline.Send(message, cancellationToken);
@@ -580,6 +426,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVpnGatewayNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVpnGatewayNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName)
@@ -606,34 +460,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListVpnGatewayNatRulesResult>> ListByVpnGatewayNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var message = CreateListByVpnGatewayNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +491,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListVpnGatewayNatRulesResult> ListByVpnGatewayNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var message = CreateListByVpnGatewayNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName);
             _pipeline.Send(message, cancellationToken);

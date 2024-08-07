@@ -79,16 +79,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The workload classifier member name. </summary>
+        [WirePath("properties.memberName")]
         public string MemberName { get; set; }
         /// <summary> The workload classifier label. </summary>
+        [WirePath("properties.label")]
         public string Label { get; set; }
         /// <summary> The workload classifier context. </summary>
+        [WirePath("properties.context")]
         public string Context { get; set; }
         /// <summary> The workload classifier start time for classification. </summary>
+        [WirePath("properties.startTime")]
         public string StartTime { get; set; }
         /// <summary> The workload classifier end time for classification. </summary>
+        [WirePath("properties.endTime")]
         public string EndTime { get; set; }
         /// <summary> The workload classifier importance. </summary>
+        [WirePath("properties.importance")]
         public string Importance { get; set; }
     }
 }

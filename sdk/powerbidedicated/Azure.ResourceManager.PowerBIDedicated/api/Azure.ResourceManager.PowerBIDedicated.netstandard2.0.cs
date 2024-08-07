@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutoScaleVCoreResource : Azure.ResourceManager.ArmResource
+    public partial class AutoScaleVCoreResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AutoScaleVCoreResource() { }
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> Update(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource>> UpdateAsync(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DedicatedCapacityResource : Azure.ResourceManager.ArmResource
+    public partial class DedicatedCapacityResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DedicatedCapacityResource() { }
@@ -106,6 +111,11 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Suspend(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PowerBIDedicated.Models.DedicatedCapacityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PowerBIDedicated.Models.DedicatedCapacityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

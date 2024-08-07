@@ -103,12 +103,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 httpRequest);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceActionCancelEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceActionCancelEventData(document.RootElement);
+        }
+
         internal partial class ResourceActionCancelEventDataConverter : JsonConverter<ResourceActionCancelEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceActionCancelEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ResourceActionCancelEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

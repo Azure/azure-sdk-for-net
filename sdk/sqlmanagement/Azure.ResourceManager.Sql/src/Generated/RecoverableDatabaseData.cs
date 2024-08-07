@@ -79,14 +79,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The edition of the database. </summary>
+        [WirePath("properties.edition")]
         public string Edition { get; }
         /// <summary> The service level objective name of the database. </summary>
+        [WirePath("properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; }
         /// <summary> The elastic pool name of the database. </summary>
+        [WirePath("properties.elasticPoolName")]
         public string ElasticPoolName { get; }
         /// <summary> The last available backup date. </summary>
+        [WirePath("properties.lastAvailableBackupDate")]
         public DateTimeOffset? LastAvailableBackupOn { get; }
         /// <summary> The resource ids of the user assigned identities to use. </summary>
+        [WirePath("properties.keys")]
         public IDictionary<string, SqlDatabaseKey> Keys { get; }
     }
 }

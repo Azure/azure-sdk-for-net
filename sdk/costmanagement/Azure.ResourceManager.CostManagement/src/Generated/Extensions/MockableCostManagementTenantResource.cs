@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Mocking
@@ -261,14 +258,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -301,14 +291,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -342,22 +325,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -391,22 +360,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -439,14 +394,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -479,14 +427,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -520,22 +461,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
@@ -569,22 +496,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
@@ -616,18 +529,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = BillingAccountScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
@@ -671,18 +574,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = BillingAccountScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
@@ -727,26 +620,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = BillingProfileScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
@@ -791,26 +667,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = BillingProfileScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
@@ -854,18 +713,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
@@ -909,18 +758,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ReservationOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
@@ -965,26 +804,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ReservationScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
@@ -1029,26 +851,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ReservationScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
@@ -1092,18 +897,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
@@ -1147,18 +942,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SavingsPlanOrderScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
@@ -1203,26 +988,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
@@ -1267,26 +1035,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SavingsPlanScopeClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
@@ -1334,14 +1085,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
@@ -1376,14 +1120,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
@@ -1415,18 +1152,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (forecastDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(forecastDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope = ForecastClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast");
             scope.Start();
@@ -1468,18 +1195,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual Response<ForecastResult> ExternalCloudProviderUsageForecast(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (forecastDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(forecastDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope = ForecastClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast");
             scope.Start();
@@ -1518,10 +1235,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
@@ -1550,10 +1264,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
@@ -1584,18 +1295,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope = QueryClientDiagnostics.CreateScope("MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery");
             scope.Start();
@@ -1636,18 +1337,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual Response<QueryResult> UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope = QueryClientDiagnostics.CreateScope("MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery");
             scope.Start();
@@ -1689,22 +1380,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
             scope.Start();
@@ -1749,22 +1427,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport");
             scope.Start();
@@ -1810,30 +1475,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport");
             scope.Start();
@@ -1879,30 +1524,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public virtual ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             using var scope = GenerateReservationDetailsReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport");
             scope.Start();
@@ -1947,30 +1572,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
-            if (invoiceName == null)
-            {
-                throw new ArgumentNullException(nameof(invoiceName));
-            }
-            if (invoiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invoiceName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
             using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
             scope.Start();
@@ -2015,30 +1619,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
-            if (invoiceName == null)
-            {
-                throw new ArgumentNullException(nameof(invoiceName));
-            }
-            if (invoiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invoiceName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
             using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
             scope.Start();
@@ -2082,22 +1665,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public virtual async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
             using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
             scope.Start();
@@ -2141,22 +1710,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public virtual ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
             using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
             scope.Start();
@@ -2197,10 +1752,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();
@@ -2238,10 +1790,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();

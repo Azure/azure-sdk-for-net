@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TemplateSpecResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string templateSpecName, TemplateSpecData data, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _templateSpecRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()));
+                var uri = _templateSpecRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TemplateSpecResource> CreateOrUpdate(WaitUntil waitUntil, string templateSpecName, TemplateSpecData data, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _templateSpecRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()));
+                var uri = _templateSpecRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual async Task<Response<TemplateSpecResource>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
@@ -253,14 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<TemplateSpecResource> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual Response<bool> Exists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.Exists");
             scope.Start();
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual async Task<NullableResponse<TemplateSpecResource>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();
@@ -523,14 +470,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
         public virtual NullableResponse<TemplateSpecResource> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            if (templateSpecName == null)
-            {
-                throw new ArgumentNullException(nameof(templateSpecName));
-            }
-            if (templateSpecName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
-            }
+            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
             using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetIfExists");
             scope.Start();

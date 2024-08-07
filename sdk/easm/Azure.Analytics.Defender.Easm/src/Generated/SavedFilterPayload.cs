@@ -51,14 +51,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
         public SavedFilterPayload(string filter, string description)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(description, nameof(description));
 
             Filter = filter;
             Description = description;

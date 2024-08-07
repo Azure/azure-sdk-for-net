@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public DataFactoryBlobEventsTrigger(IEnumerable<DataFactoryBlobEventType> events, string scope)
         {
-            if (events == null)
-            {
-                throw new ArgumentNullException(nameof(events));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(events, nameof(events));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             Events = events.ToList();
             Scope = scope;

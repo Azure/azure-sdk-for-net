@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppConnectedEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> GetAsync(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentResource> Get(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppConnectedEnvironmentResource>> GetIfExistsAsync(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="connectedEnvironmentName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppConnectedEnvironmentResource> GetIfExists(string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (connectedEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(connectedEnvironmentName));
-            }
-            if (connectedEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectedEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentCollection.GetIfExists");
             scope.Start();

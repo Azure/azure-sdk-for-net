@@ -20,14 +20,8 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="phrases"/> is null. </exception>
         public RecognitionChoice(string label, IEnumerable<string> phrases)
         {
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
-            if (phrases == null)
-            {
-                throw new ArgumentNullException(nameof(phrases));
-            }
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(phrases, nameof(phrases));
 
             Label = label;
             Phrases = phrases.ToList();

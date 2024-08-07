@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ApplicationUserAssignedIdentity(string name, Guid principalId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             PrincipalId = principalId;

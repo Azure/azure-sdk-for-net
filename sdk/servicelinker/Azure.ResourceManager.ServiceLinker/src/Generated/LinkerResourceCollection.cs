@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
@@ -72,18 +70,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,18 +119,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LinkerResource> CreateOrUpdate(WaitUntil waitUntil, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +166,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<Response<LinkerResource>> GetAsync(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
             scope.Start();
@@ -240,14 +211,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual Response<LinkerResource> Get(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
             scope.Start();
@@ -352,14 +316,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
             scope.Start();
@@ -402,14 +359,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
             scope.Start();
@@ -452,14 +402,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<NullableResponse<LinkerResource>> GetIfExistsAsync(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
             scope.Start();
@@ -504,14 +447,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual NullableResponse<LinkerResource> GetIfExists(string linkerName, CancellationToken cancellationToken = default)
         {
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
             scope.Start();

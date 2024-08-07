@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </summary>
+        [WirePath("clientRequestId")]
         public Guid? ClientRequestId { get; set; }
     }
 }

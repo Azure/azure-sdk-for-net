@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,25 +82,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, ApiManagementGroupCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiManagementGroupGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementGroupResource>(Response.FromValue(new ApiManagementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementGroupGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementGroupResource>(Response.FromValue(new ApiManagementGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,25 +134,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupId, ApiManagementGroupCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiManagementGroupGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementGroupResource>(Response.FromValue(new ApiManagementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementGroupGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementGroupResource>(Response.FromValue(new ApiManagementGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -187,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGroupResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.Get");
             scope.Start();
@@ -239,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<ApiManagementGroupResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.Get");
             scope.Start();
@@ -291,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +325,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,14 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.Exists");
             scope.Start();
@@ -407,7 +368,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,14 +382,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.Exists");
             scope.Start();
@@ -457,7 +411,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,14 +425,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementGroupResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.GetIfExists");
             scope.Start();
@@ -509,7 +456,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -523,14 +470,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementGroupResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.GetIfExists");
             scope.Start();

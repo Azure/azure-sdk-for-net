@@ -52,14 +52,8 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> or <paramref name="modelVersion"/> is null. </exception>
         internal OncoPhenotypeResults(IEnumerable<OncoPhenotypePatientResult> patients, string modelVersion)
         {
-            if (patients == null)
-            {
-                throw new ArgumentNullException(nameof(patients));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
+            Argument.AssertNotNull(patients, nameof(patients));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             Patients = patients.ToList();
             ModelVersion = modelVersion;

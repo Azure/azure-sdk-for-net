@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="subject"/> is null. </exception>
         public CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject)
         {
-            if (thumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(thumbprint));
-            }
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+            Argument.AssertNotNull(subject, nameof(subject));
 
             ExpireOn = expireOn;
             Thumbprint = thumbprint;
@@ -85,10 +79,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset ExpireOn { get; set; }
         /// <summary> Thumbprint of the certificate. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
         /// <summary> Subject of the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; set; }
     }
 }

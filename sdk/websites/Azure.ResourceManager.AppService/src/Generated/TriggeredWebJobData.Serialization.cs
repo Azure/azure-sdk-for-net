@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class TriggeredWebJobData : IUtf8JsonSerializable, IJsonModel<TriggeredWebJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredWebJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredWebJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggeredWebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredWebJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
-                writer.WriteObjectValue(LatestRun);
+                writer.WriteObjectValue(LatestRun, options);
             }
             if (Optional.IsDefined(HistoryUri))
             {
@@ -99,6 +101,16 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess);
+            }
+            if (Optional.IsDefined(IsStorageAccountRequired))
+            {
+                writer.WritePropertyName("storageAccountRequired"u8);
+                writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -147,7 +159,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredWebJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +168,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static TriggeredWebJobData DeserializeTriggeredWebJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,9 +188,11 @@ namespace Azure.ResourceManager.AppService
             WebJobType? webJobType = default;
             string error = default;
             bool? usingSdk = default;
+            string publicNetworkAccess = default;
+            bool? storageAccountRequired = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -292,6 +306,20 @@ namespace Azure.ResourceManager.AppService
                             usingSdk = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            publicNetworkAccess = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountRequired"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountRequired = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("settings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -318,10 +346,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TriggeredWebJobData(
                 id,
                 name,
@@ -336,9 +364,325 @@ namespace Azure.ResourceManager.AppService
                 webJobType,
                 error,
                 usingSdk,
+                publicNetworkAccess,
+                storageAccountRequired,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 kind,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestRun), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    latest_run: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestRun))
+                {
+                    builder.Append("    latest_run: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LatestRun, options, 4, false, "    latest_run: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HistoryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    history_url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HistoryUri))
+                {
+                    builder.Append("    history_url: ");
+                    builder.AppendLine($"'{HistoryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchedulerLogsUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scheduler_logs_url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SchedulerLogsUri))
+                {
+                    builder.Append("    scheduler_logs_url: ");
+                    builder.AppendLine($"'{SchedulerLogsUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunCommand), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    run_command: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunCommand))
+                {
+                    builder.Append("    run_command: ");
+                    if (RunCommand.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RunCommand}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RunCommand}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("    url: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtraInfoUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    extra_info_url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtraInfoUri))
+                {
+                    builder.Append("    extra_info_url: ");
+                    builder.AppendLine($"'{ExtraInfoUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebJobType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    web_job_type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebJobType))
+                {
+                    builder.Append("    web_job_type: ");
+                    builder.AppendLine($"'{WebJobType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    error: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    builder.Append("    error: ");
+                    if (Error.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Error}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Error}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUsingSdk), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    using_sdk: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUsingSdk))
+                {
+                    builder.Append("    using_sdk: ");
+                    var boolValue = IsUsingSdk.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    if (PublicNetworkAccess.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicNetworkAccess}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicNetworkAccess}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageAccountRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageAccountRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStorageAccountRequired))
+                {
+                    builder.Append("    storageAccountRequired: ");
+                    var boolValue = IsStorageAccountRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    settings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Settings))
+                {
+                    if (Settings.Any())
+                    {
+                        builder.Append("    settings: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Settings)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<TriggeredWebJobData>.Write(ModelReaderWriterOptions options)
@@ -349,8 +693,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -366,7 +712,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeTriggeredWebJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

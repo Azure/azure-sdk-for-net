@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
 
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ControllerResource>> UpdateAsync(ControllerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.Update");
             scope.Start();
@@ -327,10 +322,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ControllerResource> Update(ControllerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.Update");
             scope.Start();
@@ -372,10 +364,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ControllerConnectionDetailsList>> GetConnectionDetailsAsync(ListConnectionDetailsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.GetConnectionDetails");
             scope.Start();
@@ -417,10 +406,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ControllerConnectionDetailsList> GetConnectionDetails(ListConnectionDetailsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.GetConnectionDetails");
             scope.Start();
@@ -463,14 +449,8 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ControllerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.AddTag");
             scope.Start();
@@ -531,14 +511,8 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ControllerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.AddTag");
             scope.Start();
@@ -598,10 +572,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ControllerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.SetTags");
             scope.Start();
@@ -658,10 +629,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ControllerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.SetTags");
             scope.Start();
@@ -718,10 +686,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ControllerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.RemoveTag");
             scope.Start();
@@ -781,10 +746,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ControllerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _controllerClientDiagnostics.CreateScope("ControllerResource.RemoveTag");
             scope.Start();

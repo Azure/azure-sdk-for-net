@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanTestFailoverCleanupProperties : IUtf8JsonSerializable, IJsonModel<RecoveryPlanTestFailoverCleanupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanTestFailoverCleanupProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanTestFailoverCleanupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryPlanTestFailoverCleanupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanTestFailoverCleanupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanTestFailoverCleanupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanTestFailoverCleanupProperties DeserializeRecoveryPlanTestFailoverCleanupProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string comments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("comments"u8))
@@ -82,10 +81,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryPlanTestFailoverCleanupProperties(comments, serializedAdditionalRawData);
         }
 
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanTestFailoverCleanupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanTestFailoverCleanupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

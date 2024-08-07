@@ -111,12 +111,16 @@ namespace Azure.ResourceManager.Sql
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </summary>
+        [WirePath("properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
+        [WirePath("properties.isManagedIdentityInUse")]
         public bool? IsManagedIdentityInUse { get; set; }
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
+        [WirePath("properties.state")]
         public BlobAuditingPolicyState? State { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
+        [WirePath("properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
         /// <summary>
         /// Specifies the identifier key of the auditing storage account.
@@ -126,8 +130,10 @@ namespace Azure.ResourceManager.Sql
         /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </summary>
+        [WirePath("properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
         /// <summary> Specifies the blob storage subscription Id. </summary>
+        [WirePath("properties.storageAccountSubscriptionId")]
         public Guid? StorageAccountSubscriptionId { get; set; }
     }
 }

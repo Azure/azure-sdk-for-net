@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public TrailingInputData(JobInputType jobInputType, Uri uri, TimeSpan windowOffset, TimeSpan windowSize) : base(jobInputType, uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             WindowOffset = windowOffset;
             WindowSize = windowSize;

@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Server version. </summary>
+        [WirePath("version")]
         public PostgreSqlServerVersion? Version { get; set; }
         /// <summary> Enable ssl enforcement or not when connect to server. </summary>
+        [WirePath("sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
+        [WirePath("minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
+        [WirePath("infrastructureEncryption")]
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> Storage profile of a server. </summary>
+        [WirePath("storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
         /// <summary> The mode to create a new server. </summary>
         internal PostgreSqlCreateMode CreateMode { get; set; }

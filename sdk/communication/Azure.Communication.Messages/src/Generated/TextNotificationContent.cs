@@ -20,14 +20,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
         public TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(content, nameof(content));
 
             Kind = CommunicationMessageKind.Text;
             Content = content;

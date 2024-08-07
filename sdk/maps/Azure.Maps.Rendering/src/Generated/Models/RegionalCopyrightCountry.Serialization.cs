@@ -34,5 +34,13 @@ namespace Azure.Maps.Rendering
             }
             return new RegionalCopyrightCountry(isO3, label);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RegionalCopyrightCountry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRegionalCopyrightCountry(document.RootElement);
+        }
     }
 }

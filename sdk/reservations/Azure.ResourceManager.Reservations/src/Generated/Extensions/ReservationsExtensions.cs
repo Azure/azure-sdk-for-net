@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Reservations.Mocking;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
         public static ReservationDetailResource GetReservationDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableReservationsArmClient(client).GetReservationDetailResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
         public static ReservationOrderResource GetReservationOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableReservationsArmClient(client).GetReservationOrderResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> Returns a <see cref="ReservationQuotaResource"/> object. </returns>
         public static ReservationQuotaResource GetReservationQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableReservationsArmClient(client).GetReservationQuotaResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableReservationsArmClient(client).GetQuotaRequestDetailResource(id);
         }
@@ -138,10 +124,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
         public static ReservationQuotaCollection GetAllReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetAllReservationQuota(providerId, location);
         }
@@ -181,10 +164,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static async Task<Response<ReservationQuotaResource>> GetReservationQuotaAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetReservationQuotaAsync(providerId, location, resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -224,10 +204,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static Response<ReservationQuotaResource> GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetReservationQuota(providerId, location, resourceName, cancellationToken);
         }
@@ -247,10 +224,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetails(providerId, location);
         }
@@ -290,10 +264,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetailAsync(providerId, location, id, cancellationToken).ConfigureAwait(false);
         }
@@ -333,10 +304,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetail(providerId, location, id, cancellationToken);
         }
@@ -369,10 +337,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
@@ -405,10 +370,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalog(options, cancellationToken);
         }
@@ -439,10 +401,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -473,10 +432,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableReservationsSubscriptionResource(subscriptionResource).GetAppliedReservations(cancellationToken);
         }
@@ -493,10 +449,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
         public static ReservationOrderCollection GetReservationOrders(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).GetReservationOrders();
         }
@@ -534,10 +487,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -575,10 +525,7 @@ namespace Azure.ResourceManager.Reservations
         [ForwardsClientCalls]
         public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).GetReservationOrder(reservationOrderId, expand, cancellationToken);
         }
@@ -615,10 +562,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
         }
@@ -655,10 +599,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).GetReservationDetails(options, cancellationToken);
         }
@@ -694,10 +635,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableReservationsTenantResource(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -733,10 +671,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).CalculateReservationOrder(content, cancellationToken);
         }
@@ -770,10 +705,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableReservationsTenantResource(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
@@ -807,10 +739,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<CalculateExchangeResult> CalculateReservationExchange(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
         }
@@ -844,10 +773,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<ExchangeResult>> ExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableReservationsTenantResource(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
@@ -881,10 +807,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<ExchangeResult> Exchange(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableReservationsTenantResource(tenantResource).Exchange(waitUntil, content, cancellationToken);
         }

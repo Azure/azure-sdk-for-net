@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationVariableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string variableName, AutomationVariableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationVariableVariableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()));
+                var uri = _automationVariableVariableRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationVariableResource> CreateOrUpdate(WaitUntil waitUntil, string variableName, AutomationVariableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationVariableVariableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()));
+                var uri = _automationVariableVariableRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, variableName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationVariableResource>(Response.FromValue(new AutomationVariableResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual async Task<Response<AutomationVariableResource>> GetAsync(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual Response<AutomationVariableResource> Get(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual Response<bool> Exists(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationVariableResource>> GetIfExistsAsync(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
         public virtual NullableResponse<AutomationVariableResource> GetIfExists(string variableName, CancellationToken cancellationToken = default)
         {
-            if (variableName == null)
-            {
-                throw new ArgumentNullException(nameof(variableName));
-            }
-            if (variableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(variableName));
-            }
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
 
             using var scope = _automationVariableVariableClientDiagnostics.CreateScope("AutomationVariableCollection.GetIfExists");
             scope.Start();

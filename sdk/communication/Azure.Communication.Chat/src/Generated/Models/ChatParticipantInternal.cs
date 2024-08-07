@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -18,10 +17,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
         {
-            if (communicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(communicationIdentifier));
-            }
+            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
 
             CommunicationIdentifier = communicationIdentifier;
         }

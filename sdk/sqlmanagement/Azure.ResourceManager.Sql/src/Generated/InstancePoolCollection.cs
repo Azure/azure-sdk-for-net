@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InstancePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instancePoolName, InstancePoolData data, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InstancePoolResource> CreateOrUpdate(WaitUntil waitUntil, string instancePoolName, InstancePoolData data, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual async Task<Response<InstancePoolResource>> GetAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual Response<InstancePoolResource> Get(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<InstancePoolResource>> GetIfExistsAsync(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
         public virtual NullableResponse<InstancePoolResource> GetIfExists(string instancePoolName, CancellationToken cancellationToken = default)
         {
-            if (instancePoolName == null)
-            {
-                throw new ArgumentNullException(nameof(instancePoolName));
-            }
-            if (instancePoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instancePoolName));
-            }
+            Argument.AssertNotNullOrEmpty(instancePoolName, nameof(instancePoolName));
 
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePoolCollection.GetIfExists");
             scope.Start();

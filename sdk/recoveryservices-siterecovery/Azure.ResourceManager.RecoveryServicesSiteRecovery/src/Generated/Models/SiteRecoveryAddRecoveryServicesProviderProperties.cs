@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityContent"/> or <paramref name="resourceAccessIdentityContent"/> is null. </exception>
         public SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (authenticationIdentityContent == null)
-            {
-                throw new ArgumentNullException(nameof(authenticationIdentityContent));
-            }
-            if (resourceAccessIdentityContent == null)
-            {
-                throw new ArgumentNullException(nameof(resourceAccessIdentityContent));
-            }
+            Argument.AssertNotNull(machineName, nameof(machineName));
+            Argument.AssertNotNull(authenticationIdentityContent, nameof(authenticationIdentityContent));
+            Argument.AssertNotNull(resourceAccessIdentityContent, nameof(resourceAccessIdentityContent));
 
             MachineName = machineName;
             AuthenticationIdentityContent = authenticationIdentityContent;

@@ -50,5 +50,13 @@ namespace Azure.Security.KeyVault.Administration
             }
             return new KeyVaultRoleAssignment(id, name, type, properties);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultRoleAssignment FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultRoleAssignment(document.RootElement);
+        }
     }
 }

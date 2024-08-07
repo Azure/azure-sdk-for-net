@@ -123,52 +123,76 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Gets the reason for recommending this action. e.g., DuplicateIndex. </summary>
+        [WirePath("properties.recommendationReason")]
         public string RecommendationReason { get; }
         /// <summary> Gets the time since when this recommended action is valid. </summary>
+        [WirePath("properties.validSince")]
         public DateTimeOffset? ValidSince { get; }
         /// <summary> Gets time when this recommended action was last refreshed. </summary>
+        [WirePath("properties.lastRefresh")]
         public DateTimeOffset? LastRefresh { get; }
         /// <summary> Gets the info of the current state the recommended action is in. </summary>
+        [WirePath("properties.state")]
         public RecommendedActionStateInfo State { get; set; }
         /// <summary> Gets if this recommended action is actionable by user. </summary>
+        [WirePath("properties.isExecutableAction")]
         public bool? IsExecutableAction { get; }
         /// <summary> Gets if changes applied by this recommended action can be reverted by user. </summary>
+        [WirePath("properties.isRevertableAction")]
         public bool? IsRevertableAction { get; }
         /// <summary> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </summary>
+        [WirePath("properties.isArchivedAction")]
         public bool? IsArchivedAction { get; }
         /// <summary> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </summary>
+        [WirePath("properties.executeActionStartTime")]
         public DateTimeOffset? ExecuteActionStartOn { get; }
         /// <summary> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </summary>
+        [WirePath("properties.executeActionDuration")]
         public TimeSpan? ExecuteActionDuration { get; }
         /// <summary> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </summary>
+        [WirePath("properties.revertActionStartTime")]
         public DateTimeOffset? RevertActionStartOn { get; }
         /// <summary> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </summary>
+        [WirePath("properties.revertActionDuration")]
         public TimeSpan? RevertActionDuration { get; }
         /// <summary> Gets if approval for applying this recommended action was given by user/system. </summary>
+        [WirePath("properties.executeActionInitiatedBy")]
         public RecommendedActionInitiatedBy? ExecuteActionInitiatedBy { get; }
         /// <summary> Gets the time when this recommended action was approved for execution. </summary>
+        [WirePath("properties.executeActionInitiatedTime")]
         public DateTimeOffset? ExecuteActionInitiatedOn { get; }
         /// <summary> Gets if approval for reverting this recommended action was given by user/system. </summary>
+        [WirePath("properties.revertActionInitiatedBy")]
         public RecommendedActionInitiatedBy? RevertActionInitiatedBy { get; }
         /// <summary> Gets the time when this recommended action was approved for revert. </summary>
+        [WirePath("properties.revertActionInitiatedTime")]
         public DateTimeOffset? RevertActionInitiatedOn { get; }
         /// <summary> Gets the impact of this recommended action. Possible values are 1 - Low impact, 2 - Medium Impact and 3 - High Impact. </summary>
+        [WirePath("properties.score")]
         public int? Score { get; }
         /// <summary> Gets the implementation details of this recommended action for user to apply it manually. </summary>
+        [WirePath("properties.implementationDetails")]
         public RecommendedActionImplementationInfo ImplementationDetails { get; }
         /// <summary> Gets the error details if and why this recommended action is put to error state. </summary>
+        [WirePath("properties.errorDetails")]
         public RecommendedActionErrorInfo ErrorDetails { get; }
         /// <summary> Gets the estimated impact info for this recommended action e.g., Estimated CPU gain, Estimated Disk Space change. </summary>
+        [WirePath("properties.estimatedImpact")]
         public IReadOnlyList<RecommendedActionImpactRecord> EstimatedImpact { get; }
         /// <summary> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </summary>
+        [WirePath("properties.observedImpact")]
         public IReadOnlyList<RecommendedActionImpactRecord> ObservedImpact { get; }
         /// <summary> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </summary>
+        [WirePath("properties.timeSeries")]
         public IReadOnlyList<RecommendedActionMetricInfo> TimeSeries { get; }
         /// <summary> Gets the linked objects, if any. </summary>
+        [WirePath("properties.linkedObjects")]
         public IReadOnlyList<string> LinkedObjects { get; }
         /// <summary>
         /// Gets additional details specific to this recommended action.
@@ -200,6 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.details")]
         public IReadOnlyDictionary<string, BinaryData> Details { get; }
     }
 }

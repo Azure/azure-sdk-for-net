@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string routeTableName, string routeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/routeTables/", false);
+            uri.AppendPath(routeTableName, true);
+            uri.AppendPath("/routes/", false);
+            uri.AppendPath(routeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string routeTableName, string routeName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, routeTableName, routeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +112,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, routeTableName, routeName);
             _pipeline.Send(message, cancellationToken);
@@ -169,6 +128,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string routeTableName, string routeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/routeTables/", false);
+            uri.AppendPath(routeTableName, true);
+            uri.AppendPath("/routes/", false);
+            uri.AppendPath(routeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string routeTableName, string routeName)
@@ -203,38 +178,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RouteData>> GetAsync(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, routeTableName, routeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +211,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RouteData> Get(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, routeTableName, routeName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +232,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, RouteData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/routeTables/", false);
+            uri.AppendPath(routeTableName, true);
+            uri.AppendPath("/routes/", false);
+            uri.AppendPath(routeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, RouteData data)
@@ -335,7 +270,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -352,42 +287,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, RouteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, routeTableName, routeName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +316,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="routeTableName"/> or <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string routeTableName, string routeName, RouteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, routeTableName, routeName, data);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string routeTableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/routeTables/", false);
+            uri.AppendPath(routeTableName, true);
+            uri.AppendPath("/routes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string routeTableName)
@@ -491,30 +379,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RouteListResult>> ListAsync(string subscriptionId, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, routeTableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +408,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RouteListResult> List(string subscriptionId, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, routeTableName);
             _pipeline.Send(message, cancellationToken);
@@ -580,6 +426,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string routeTableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string routeTableName)
@@ -606,34 +460,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RouteListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, routeTableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +491,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RouteListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, routeTableName);
             _pipeline.Send(message, cancellationToken);

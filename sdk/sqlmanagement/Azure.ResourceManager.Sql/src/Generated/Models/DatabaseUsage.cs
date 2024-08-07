@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> User-readable name of the metric. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Current value of the metric. </summary>
+        [WirePath("properties.currentValue")]
         public double? CurrentValue { get; }
         /// <summary> Boundary value of the metric. </summary>
+        [WirePath("properties.limit")]
         public double? Limit { get; }
         /// <summary> Unit of the metric. </summary>
+        [WirePath("properties.unit")]
         public string Unit { get; }
     }
 }

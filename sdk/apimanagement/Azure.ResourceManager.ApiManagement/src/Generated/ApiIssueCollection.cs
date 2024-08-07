@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiIssueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string issueId, IssueContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiIssueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()));
+                var uri = _apiIssueRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiIssueResource> CreateOrUpdate(WaitUntil waitUntil, string issueId, IssueContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiIssueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()));
+                var uri = _apiIssueRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, issueId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiIssueResource>(Response.FromValue(new ApiIssueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual async Task<Response<ApiIssueResource>> GetAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Get");
             scope.Start();
@@ -239,7 +214,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual Response<ApiIssueResource> Get(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Get");
             scope.Start();
@@ -292,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -375,14 +343,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
             scope.Start();
@@ -411,7 +372,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,14 +387,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual Response<bool> Exists(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.Exists");
             scope.Start();
@@ -462,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,14 +431,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiIssueResource>> GetIfExistsAsync(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.GetIfExists");
             scope.Start();
@@ -515,7 +462,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -530,14 +477,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="issueId"/> is null. </exception>
         public virtual NullableResponse<ApiIssueResource> GetIfExists(string issueId, bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
-            if (issueId == null)
-            {
-                throw new ArgumentNullException(nameof(issueId));
-            }
-            if (issueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(issueId));
-            }
+            Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
 
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueCollection.GetIfExists");
             scope.Start();

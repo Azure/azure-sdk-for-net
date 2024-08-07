@@ -113,14 +113,6 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
             #endregion Snippet:CreateCommunicationTokenWithCustomExpiration
-
-            #region Snippet:RevokeCommunicationUserToken
-            Response revokeResponse = client.RevokeTokens(user);
-            #endregion Snippet:RevokeCommunicationUserToken
-
-            #region Snippet:DeleteACommunicationUser
-            Response deleteResponse = client.DeleteUser(user);
-            #endregion Snippet:DeleteACommunicationUser
         }
 
         [Test]
@@ -200,7 +192,7 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:CreateCommunicationIdentityFromToken
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            TokenCredential tokenCredential = new DefaultAzureCredential();
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             var client = new CommunicationIdentityClient(endpoint, tokenCredential);
             #endregion Snippet:CreateCommunicationIdentityFromToken
 

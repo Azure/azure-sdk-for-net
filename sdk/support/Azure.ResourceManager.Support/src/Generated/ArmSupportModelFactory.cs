@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -108,11 +107,12 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the support ticket was created. </param>
         /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
         /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="isTemporaryTicket"> This property indicates if support ticket is a temporary ticket. </param>
         /// <param name="technicalTicketDetailsResourceId"> Additional ticket details associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, SupportSeverityLevel? severity = null, string enrollmentId = null, bool? require24X7Response = null, AdvancedDiagnosticConsent? advancedDiagnosticConsent = null, string problemScopingQuestions = null, string supportPlanId = null, SupportContactProfile contactDetails = null, SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, DateTimeOffset? problemStartOn = null, string serviceId = null, string serviceDisplayName = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string fileWorkspaceName = null, ResourceIdentifier technicalTicketDetailsResourceId = null, QuotaTicketDetails quotaTicketDetails = null, IEnumerable<SecondaryConsent> secondaryConsent = null)
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, SupportSeverityLevel severity = default, string enrollmentId = null, bool? require24X7Response = null, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = null, string supportPlanId = null, SupportContactProfile contactDetails = null, SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, DateTimeOffset? problemStartOn = null, string serviceId = null, string serviceDisplayName = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string fileWorkspaceName = null, IsTemporaryTicket? isTemporaryTicket = null, ResourceIdentifier technicalTicketDetailsResourceId = null, QuotaTicketDetails quotaTicketDetails = null, IEnumerable<SecondaryConsent> secondaryConsent = null)
         {
             secondaryConsent ??= new List<SecondaryConsent>();
 
@@ -144,6 +144,7 @@ namespace Azure.ResourceManager.Support.Models
                 createdOn,
                 modifiedOn,
                 fileWorkspaceName,
+                isTemporaryTicket,
                 technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId, serializedAdditionalRawData: null) : null,
                 quotaTicketDetails,
                 secondaryConsent?.ToList(),
@@ -254,11 +255,11 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
-        /// <param name="chunkSize"> Size of each chunk. </param>
-        /// <param name="fileSize"> Size of the file to be uploaded. </param>
-        /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
+        /// <param name="chunkSize"> Size of each chunk. The size of each chunk should be provided in bytes and must not exceed 2.5 megabytes (MB). </param>
+        /// <param name="fileSize"> Size of the file to be uploaded. The file size must not exceed 5 MB and should be provided in bytes. </param>
+        /// <param name="numberOfChunks"> Number of chunks to be uploaded. The maximum number of allowed chunks is 2. </param>
         /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
-        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, float? chunkSize = null, float? fileSize = null, float? numberOfChunks = null)
+        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, int? chunkSize = null, int? fileSize = null, int? numberOfChunks = null)
         {
             return new SupportFileDetailData(
                 id,

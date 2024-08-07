@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Mocking
 {
@@ -58,6 +56,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         {
             NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
             return new NewRelicObservabilityTagRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NewRelicMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NewRelicMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NewRelicMonitoredSubscriptionResource"/> object. </returns>
+        public virtual NewRelicMonitoredSubscriptionResource GetNewRelicMonitoredSubscriptionResource(ResourceIdentifier id)
+        {
+            NewRelicMonitoredSubscriptionResource.ValidateResourceId(id);
+            return new NewRelicMonitoredSubscriptionResource(Client, id);
         }
     }
 }

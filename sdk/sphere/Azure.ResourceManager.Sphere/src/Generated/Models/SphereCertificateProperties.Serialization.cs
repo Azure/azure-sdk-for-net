@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class SphereCertificateProperties : IUtf8JsonSerializable, IJsonModel<SphereCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SphereCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SphereCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static SphereCertificateProperties DeserializeSphereCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Sphere.Models
             DateTimeOffset? notBeforeUtc = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -164,10 +163,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SphereCertificateProperties(
                 certificate,
                 status,
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeSphereCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

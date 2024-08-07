@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgFoodPlatform
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FarmBeatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string farmBeatsResourceName, FarmBeatData data, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _farmBeatFarmBeatsModelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()));
+                var uri = _farmBeatFarmBeatsModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FarmBeatResource> CreateOrUpdate(WaitUntil waitUntil, string farmBeatsResourceName, FarmBeatData data, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _farmBeatFarmBeatsModelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()));
+                var uri = _farmBeatFarmBeatsModelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<FarmBeatResource>(Response.FromValue(new FarmBeatResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual async Task<Response<FarmBeatResource>> GetAsync(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual Response<FarmBeatResource> Get(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.Get");
             scope.Start();
@@ -373,14 +341,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.Exists");
             scope.Start();
@@ -423,14 +384,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.Exists");
             scope.Start();
@@ -473,14 +427,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<FarmBeatResource>> GetIfExistsAsync(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
             scope.Start();
@@ -525,14 +472,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
         public virtual NullableResponse<FarmBeatResource> GetIfExists(string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
             scope.Start();

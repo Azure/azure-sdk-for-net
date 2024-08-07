@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRepository"/>, <paramref name="sourceTriggerEvents"/> or <paramref name="name"/> is null. </exception>
         public ContainerRegistrySourceTrigger(SourceCodeRepoProperties sourceRepository, IEnumerable<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents, string name)
         {
-            if (sourceRepository == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRepository));
-            }
-            if (sourceTriggerEvents == null)
-            {
-                throw new ArgumentNullException(nameof(sourceTriggerEvents));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(sourceRepository, nameof(sourceRepository));
+            Argument.AssertNotNull(sourceTriggerEvents, nameof(sourceTriggerEvents));
+            Argument.AssertNotNull(name, nameof(name));
 
             SourceRepository = sourceRepository;
             SourceTriggerEvents = sourceTriggerEvents.ToList();

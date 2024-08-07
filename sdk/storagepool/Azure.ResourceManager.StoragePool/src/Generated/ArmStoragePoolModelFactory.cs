@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {

@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmWorkloadProtectedItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmWorkloadProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue(LastBackupErrorDetail);
+                writer.WriteObjectValue(LastBackupErrorDetail, options);
             }
             if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadProtectedItem DeserializeVmWorkloadProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -248,8 +247,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
-                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
                 }
             }
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -556,10 +555,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VmWorkloadProtectedItem(
                 protectedItemType,
                 backupManagementType,
@@ -606,7 +605,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -622,7 +621,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

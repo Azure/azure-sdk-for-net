@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownEarlyTerminationPolicy. </summary>
+    /// <summary> Unknown version of EarlyTerminationPolicy. </summary>
     internal partial class UnknownEarlyTerminationPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEarlyTerminationPolicy"/>. </summary>

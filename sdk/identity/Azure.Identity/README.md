@@ -77,11 +77,7 @@ See [Credential Classes](#credential-classes) for a complete listing of availabl
 
 ### DefaultAzureCredential
 
-The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in Azure. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment.
-
-> Note: `DefaultAzureCredential` is intended to simplify getting started with the SDK by handling common scenarios with reasonable default behaviors. Developers who want more control or whose scenario isn't served by the default settings should use other credential types.
-
-The `DefaultAzureCredential` attempts to authenticate via the following mechanisms, in this order, stopping when one succeeds:
+The `DefaultAzureCredential` simplifies authentication while developing applications that deploy to Azure by combining credentials used in Azure hosting environments and credentials used in local development. In production, it's better to use a specific credential type so authentication is more predictable and easier to debug. `DefaultAzureCredential` attempts to authenticate via the following mechanisms in this order, stopping when one succeeds:
 
 ![DefaultAzureCredential authentication flow][default_azure_credential_authflow_image]
 
@@ -89,7 +85,7 @@ The `DefaultAzureCredential` attempts to authenticate via the following mechanis
 1. **Workload Identity** - If the application is deployed to an Azure host with Workload Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
 1. **Managed Identity** - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
 1. **Visual Studio** - If the developer has authenticated via Visual Studio, the `DefaultAzureCredential` will authenticate with that account.
-1. **Visual Studio Code** - Currently excluded by default as SDK authentication via Visual Studio Code is broken due to issue [#27263](https://github.com/Azure/azure-sdk-for-net/issues/27263). The `VisualStudioCodeCredential` will be re-enabled in the `DefaultAzureCredential` flow once a fix is in place. Issue [#30525](https://github.com/Azure/azure-sdk-for-net/issues/30525) tracks this. In the meantime Visual Studio Code users can authenticate their development environment using the [Azure CLI](https://learn.microsoft.com/cli/azure/).
+1. **Visual Studio Code** - Currently excluded by default, as library authentication via Visual Studio Code is broken due to issue [#27263](https://github.com/Azure/azure-sdk-for-net/issues/27263). `VisualStudioCodeCredential` will be re-enabled in the `DefaultAzureCredential` flow once a fix is in place. Issue [#30525](https://github.com/Azure/azure-sdk-for-net/issues/30525) tracks this. In the meantime, Visual Studio Code users can authenticate their development environment using the [Azure CLI](https://learn.microsoft.com/cli/azure/).
 1. **Azure CLI** - If the developer has authenticated an account via the Azure CLI `az login` command, the `DefaultAzureCredential` will authenticate with that account.
 1. **Azure PowerShell** - If the developer has authenticated an account via the Azure PowerShell `Connect-AzAccount` command, the `DefaultAzureCredential` will authenticate with that account.
 1. **Azure Developer CLI** - If the developer has authenticated via the Azure Developer CLI `azd auth login` command, the `DefaultAzureCredential` will authenticate with that account.
@@ -125,18 +121,47 @@ var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.ne
 
 ### Specify a user-assigned managed identity with `DefaultAzureCredential`
 
-Many Azure hosts allow the assignment of a user-assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user-assigned identity when deployed to an Azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
+Many Azure hosts allow the assignment of a user-assigned managed identity. The following examples demonstrate configuring `DefaultAzureCredential` to authenticate a user-assigned managed identity when deployed to an Azure host. The sample code uses the credential to authenticate a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library. It also demonstrates how you can specify a user-assigned managed identity either by a client ID or a resource ID.
 
-```C# Snippet:UserAssignedManagedIdentity
-// When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+#### Client ID
 
-string userAssignedClientId = "<your managed identity client Id>";
-var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+To use a client ID, take one of the following approaches:
 
-var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
+1. Set the [DefaultAzureCredentialOptions.ManagedIdentityClientId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityclientid?view=azure-dotnet) property. For example:
+
+```C# Snippet:UserAssignedManagedIdentityWithClientId
+// When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
+
+string userAssignedClientId = "<your managed identity client ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityClientId = userAssignedClientId
+    });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
 ```
 
-In addition to configuring the `ManagedIdentityClientId` via code, it can also be set using the `AZURE_CLIENT_ID` environment variable. These two approaches are equivalent when using the `DefaultAzureCredential`.
+1. Set the `AZURE_CLIENT_ID` environment variable.
+
+#### Resource ID
+
+To use a resource ID, set the [DefaultAzureCredentialOptions.ManagedIdentityResourceId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityresourceid?view=azure-dotnet) property. The resource ID takes the form `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}`. Because resource IDs can be built by convention, they can be more convenient when there are a large number of user-assigned managed identities in your environment. For example:
+
+```C# Snippet:UserAssignedManagedIdentityWithResourceId
+string userAssignedResourceId = "<your managed identity resource ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityResourceId = new ResourceIdentifier(userAssignedResourceId)
+    });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
+```
 
 ### Define a custom authentication flow with `ChainedTokenCredential`
 
@@ -161,6 +186,8 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 * [Azure Service Fabric](https://learn.microsoft.com/azure/service-fabric/concepts-managed-identity)
 * [Azure Virtual Machines](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token)
 * [Azure Virtual Machines Scale Sets](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-powershell-windows-vmss)
+
+As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
 
 ### Examples
 
@@ -206,6 +233,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 
 |Credential | Usage | Reference
 |-|-|-
+|[`AzurePipelinesCredential`][ref_AzurePipelinesCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/samples/OtherCredentialSamples.md#AzurePipelinesCredential_example)
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
@@ -276,16 +304,15 @@ client secret and certificate are both present, the client secret will be used.
 
 As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer and managed identity credentials.
 
-
 ## Token caching
 
-Token caching is a feature provided by the Azure Identity library that allows apps to:
+*Token caching* is a feature provided by the Azure Identity library. The feature allows apps to:
 
 * Cache tokens in memory (default) or on disk (opt-in).
 * Improve resilience and performance.
 * Reduce the number of requests made to Microsoft Entra ID to obtain access tokens.
 
-The Azure Identity library offers both in-memory and persistent disk caching. For more details, see the [token caching documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/samples/TokenCache.md)
+The Azure Identity library offers both in-memory and persistent disk caching. For more details, see the [token caching documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/samples/TokenCache.md).
 
 # Brokered Authentication
 
@@ -417,6 +444,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_AuthorizationCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
 [ref_AzureDeveloperCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azuredeveloperclicredential?view=azure-dotnet
+[ref_AzurePipelinesCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet
 [ref_AzurePowerShellCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_ChainedTokenCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.chainedtokencredential?view=azure-dotnet
 [ref_ClientAssertionCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientassertioncredential?view=azure-dotnet

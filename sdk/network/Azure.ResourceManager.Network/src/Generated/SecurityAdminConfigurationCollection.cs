@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityAdminConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, SecurityAdminConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityAdminConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAdminConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityAdminConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, SecurityAdminConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityAdminConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAdminConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<SecurityAdminConfigurationResource>(Response.FromValue(new SecurityAdminConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<SecurityAdminConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.Get");
             scope.Start();
@@ -236,7 +211,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<SecurityAdminConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.Get");
             scope.Start();
@@ -288,7 +256,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +288,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.Exists");
             scope.Start();
@@ -402,7 +363,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.Exists");
             scope.Start();
@@ -452,7 +406,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityAdminConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.GetIfExists");
             scope.Start();
@@ -504,7 +451,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual NullableResponse<SecurityAdminConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _securityAdminConfigurationClientDiagnostics.CreateScope("SecurityAdminConfigurationCollection.GetIfExists");
             scope.Start();

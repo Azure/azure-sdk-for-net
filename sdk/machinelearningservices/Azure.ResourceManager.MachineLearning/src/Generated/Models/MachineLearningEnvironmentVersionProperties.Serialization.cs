@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningEnvironmentVersionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningEnvironmentVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentVersionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningEnvironmentVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEnvironmentVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
-                writer.WriteObjectValue(Build);
+                writer.WriteObjectValue(Build, options);
             }
             if (Optional.IsDefined(CondaFile))
             {
@@ -55,14 +54,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
-                writer.WriteObjectValue(InferenceConfig);
+                writer.WriteObjectValue(InferenceConfig, options);
             }
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    writer.WriteObjectValue(AutoDeleteSetting, options);
                 }
                 else
                 {
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEnvironmentVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoRebuild"u8))
@@ -373,10 +372,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningEnvironmentVersionProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -422,7 +421,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningEnvironmentVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEnvironmentVersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

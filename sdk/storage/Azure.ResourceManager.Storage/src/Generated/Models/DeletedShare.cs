@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShareName"/> or <paramref name="deletedShareVersion"/> is null. </exception>
         public DeletedShare(string deletedShareName, string deletedShareVersion)
         {
-            if (deletedShareName == null)
-            {
-                throw new ArgumentNullException(nameof(deletedShareName));
-            }
-            if (deletedShareVersion == null)
-            {
-                throw new ArgumentNullException(nameof(deletedShareVersion));
-            }
+            Argument.AssertNotNull(deletedShareName, nameof(deletedShareName));
+            Argument.AssertNotNull(deletedShareVersion, nameof(deletedShareVersion));
 
             DeletedShareName = deletedShareName;
             DeletedShareVersion = deletedShareVersion;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required. Identify the name of the deleted share that will be restored. </summary>
+        [WirePath("deletedShareName")]
         public string DeletedShareName { get; }
         /// <summary> Required. Identify the version of the deleted share that will be restored. </summary>
+        [WirePath("deletedShareVersion")]
         public string DeletedShareVersion { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public RepresentationContract(string contentType)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            Argument.AssertNotNull(contentType, nameof(contentType));
 
             ContentType = contentType;
             FormParameters = new ChangeTrackingList<ParameterContract>();
@@ -84,14 +80,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Specifies a registered or custom content type for this representation, e.g. application/xml. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; set; }
         /// <summary> Schema identifier. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </summary>
+        [WirePath("schemaId")]
         public string SchemaId { get; set; }
         /// <summary> Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </summary>
+        [WirePath("typeName")]
         public string TypeName { get; set; }
         /// <summary> Collection of form parameters. Required if 'contentType' value is either 'application/x-www-form-urlencoded' or 'multipart/form-data'.. </summary>
+        [WirePath("formParameters")]
         public IList<ParameterContract> FormParameters { get; }
         /// <summary> Exampled defined for the representation. </summary>
+        [WirePath("examples")]
         public IDictionary<string, ParameterExampleContract> Examples { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List SAS credentials of storage account. </summary>
+        [WirePath("accountSasToken")]
         public string AccountSasToken { get; }
     }
 }

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowlistValues"/> is null. </exception>
         public ProcessNotAllowed(bool isEnabled, IEnumerable<string> allowlistValues) : base(isEnabled, allowlistValues)
         {
-            if (allowlistValues == null)
-            {
-                throw new ArgumentNullException(nameof(allowlistValues));
-            }
+            Argument.AssertNotNull(allowlistValues, nameof(allowlistValues));
 
             RuleType = "ProcessNotAllowed";
         }

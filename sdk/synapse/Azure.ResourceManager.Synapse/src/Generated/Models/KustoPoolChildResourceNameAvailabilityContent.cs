@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolChildResourceNameAvailabilityContent(string name, KustoPoolDatabaseType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownResyncProviderSpecificContent. </summary>
+    /// <summary> Unknown version of ResyncProviderSpecificInput. </summary>
     internal partial class UnknownResyncProviderSpecificContent : ResyncProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResyncProviderSpecificContent"/>. </summary>

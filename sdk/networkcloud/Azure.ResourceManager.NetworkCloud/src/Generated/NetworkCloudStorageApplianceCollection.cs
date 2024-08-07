@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> GetAsync(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual Response<NetworkCloudStorageApplianceResource> Get(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.Exists");
             scope.Start();
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.Exists");
             scope.Start();
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudStorageApplianceResource>> GetIfExistsAsync(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.GetIfExists");
             scope.Start();
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudStorageApplianceResource> GetIfExists(string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            if (storageApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageApplianceName));
-            }
-            if (storageApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.GetIfExists");
             scope.Start();

@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryPatch : IUtf8JsonSerializable, IJsonModel<GalleryPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue(Identifier, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -79,17 +78,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue(SharingProfile, options);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
+                writer.WriteObjectValue(SoftDeletePolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus);
+                writer.WriteObjectValue(SharingStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryPatch DeserializeGalleryPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
             SoftDeletePolicy softDeletePolicy = default;
             SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -247,10 +246,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryPatch(
                 id,
                 name,
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

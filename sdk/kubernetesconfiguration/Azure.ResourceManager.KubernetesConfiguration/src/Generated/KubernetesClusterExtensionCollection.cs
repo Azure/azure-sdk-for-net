@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
@@ -94,18 +92,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KubernetesClusterExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionName, KubernetesClusterExtensionData data, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -153,18 +141,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KubernetesClusterExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string extensionName, KubernetesClusterExtensionData data, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -210,14 +188,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<KubernetesClusterExtensionResource>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.Get");
             scope.Start();
@@ -262,14 +233,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<KubernetesClusterExtensionResource> Get(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.Get");
             scope.Start();
@@ -374,14 +338,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.Exists");
             scope.Start();
@@ -424,14 +381,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.Exists");
             scope.Start();
@@ -474,14 +424,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<NullableResponse<KubernetesClusterExtensionResource>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetIfExists");
             scope.Start();
@@ -526,14 +469,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual NullableResponse<KubernetesClusterExtensionResource> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _kubernetesClusterExtensionExtensionsClientDiagnostics.CreateScope("KubernetesClusterExtensionCollection.GetIfExists");
             scope.Start();

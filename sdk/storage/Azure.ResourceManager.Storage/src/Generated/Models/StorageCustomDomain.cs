@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StorageCustomDomain(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates. </summary>
+        [WirePath("useSubDomainName")]
         public bool? IsUseSubDomainNameEnabled { get; set; }
     }
 }

@@ -61,18 +61,9 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedSource"/>, <paramref name="displaySource"/> or <paramref name="translations"/> is null. </exception>
         internal DictionaryLookupItem(string normalizedSource, string displaySource, IEnumerable<DictionaryTranslation> translations)
         {
-            if (normalizedSource == null)
-            {
-                throw new ArgumentNullException(nameof(normalizedSource));
-            }
-            if (displaySource == null)
-            {
-                throw new ArgumentNullException(nameof(displaySource));
-            }
-            if (translations == null)
-            {
-                throw new ArgumentNullException(nameof(translations));
-            }
+            Argument.AssertNotNull(normalizedSource, nameof(normalizedSource));
+            Argument.AssertNotNull(displaySource, nameof(displaySource));
+            Argument.AssertNotNull(translations, nameof(translations));
 
             NormalizedSource = normalizedSource;
             DisplaySource = displaySource;

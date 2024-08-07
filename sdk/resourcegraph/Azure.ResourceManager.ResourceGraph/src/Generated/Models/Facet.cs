@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         protected Facet(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
         }

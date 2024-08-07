@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for sites API service call. </summary>
+    /// <summary>
+    /// Response for sites API service call.
+    /// Serialized Name: SiteListResult
+    /// </summary>
     internal partial class SiteListResult
     {
         /// <summary>
@@ -54,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteListResult"/>. </summary>
-        /// <param name="value"> A list of sites in a mobile network. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of sites in a mobile network.
+        /// Serialized Name: SiteListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: SiteListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteListResult(IReadOnlyList<MobileNetworkSiteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of sites in a mobile network. </summary>
+        /// <summary>
+        /// A list of sites in a mobile network.
+        /// Serialized Name: SiteListResult.value
+        /// </summary>
         public IReadOnlyList<MobileNetworkSiteData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: SiteListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

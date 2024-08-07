@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationAccountModuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string moduleName, AutomationAccountModuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationAccountModuleModuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountModuleModuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationAccountModuleResource> CreateOrUpdate(WaitUntil waitUntil, string moduleName, AutomationAccountModuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationAccountModuleModuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountModuleModuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountModuleResource>(Response.FromValue(new AutomationAccountModuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountModuleResource>> GetAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual Response<AutomationAccountModuleResource> Get(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationAccountModuleResource>> GetIfExistsAsync(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
         public virtual NullableResponse<AutomationAccountModuleResource> GetIfExists(string moduleName, CancellationToken cancellationToken = default)
         {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException(nameof(moduleName));
-            }
-            if (moduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(moduleName));
-            }
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
 
             using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
             scope.Start();

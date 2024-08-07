@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class HostNameSslState : IUtf8JsonSerializable, IJsonModel<HostNameSslState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostNameSslState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostNameSslState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostNameSslState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostNameSslState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostNameSslState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostNameSslState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostNameSslState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostNameSslState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostNameSslState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static HostNameSslState DeserializeHostNameSslState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? toUpdate = default;
             AppServiceHostType? hostType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HostNameSslState(
                 name,
                 sslState,
@@ -171,6 +171,136 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sslState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslState))
+                {
+                    builder.Append("  sslState: ");
+                    builder.AppendLine($"'{SslState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualIP: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualIP))
+                {
+                    builder.Append("  virtualIP: ");
+                    if (VirtualIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualIP}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThumbprintString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  thumbprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThumbprintString))
+                {
+                    builder.Append("  thumbprint: ");
+                    if (ThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ToUpdate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  toUpdate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ToUpdate))
+                {
+                    builder.Append("  toUpdate: ");
+                    var boolValue = ToUpdate.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostType))
+                {
+                    builder.Append("  hostType: ");
+                    builder.AppendLine($"'{HostType.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HostNameSslState>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostNameSslState>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,8 +309,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(HostNameSslState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostNameSslState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +328,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeHostNameSslState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostNameSslState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostNameSslState)} does not support reading '{options.Format}' format.");
             }
         }
 

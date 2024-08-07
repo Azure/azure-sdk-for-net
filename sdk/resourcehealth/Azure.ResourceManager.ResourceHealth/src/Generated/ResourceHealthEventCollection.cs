@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -88,14 +86,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual async Task<Response<ResourceHealthEventResource>> GetAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
             scope.Start();
@@ -142,14 +133,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual Response<ResourceHealthEventResource> Get(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
             scope.Start();
@@ -260,14 +244,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
             scope.Start();
@@ -312,14 +289,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual Response<bool> Exists(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
             scope.Start();
@@ -364,14 +334,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceHealthEventResource>> GetIfExistsAsync(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
             scope.Start();
@@ -418,14 +381,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         public virtual NullableResponse<ResourceHealthEventResource> GetIfExists(string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var scope = _resourceHealthEventEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
             scope.Start();

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -46,6 +45,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -61,6 +65,7 @@ namespace Azure.Search.Documents.Models
             string fields = default;
             bool? exhaustive = default;
             double? oversampling = default;
+            float? weight = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vector"u8))
@@ -116,6 +121,15 @@ namespace Azure.Search.Documents.Models
                     oversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("weight"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = property.Value.GetSingle();
+                    continue;
+                }
             }
             return new VectorizedQuery(
                 kind,
@@ -123,7 +137,24 @@ namespace Azure.Search.Documents.Models
                 fields,
                 exhaustive,
                 oversampling,
+                weight,
                 vector);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new VectorizedQuery FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorizedQuery(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

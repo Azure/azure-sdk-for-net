@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="forwardAddress"/> is null. </exception>
         public EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress)
         {
-            if (forwardAddress == null)
-            {
-                throw new ArgumentNullException(nameof(forwardAddress));
-            }
+            Argument.AssertNotNull(forwardAddress, nameof(forwardAddress));
 
             ForwardAddress = forwardAddress;
         }

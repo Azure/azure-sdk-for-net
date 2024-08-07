@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> GetAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
@@ -119,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceSkuResource> Get(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Get");
             scope.Start();
@@ -171,7 +155,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,7 +185,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
@@ -281,7 +258,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<bool> Exists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.Exists");
             scope.Start();
@@ -331,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkVirtualApplianceSkuResource>> GetIfExistsAsync(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();
@@ -383,7 +346,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual NullableResponse<NetworkVirtualApplianceSkuResource> GetIfExists(string skuName, CancellationToken cancellationToken = default)
         {
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuCollection.GetIfExists");
             scope.Start();

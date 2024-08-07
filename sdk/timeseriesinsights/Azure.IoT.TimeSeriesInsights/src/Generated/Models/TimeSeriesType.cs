@@ -23,14 +23,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="variables"/> is null. </exception>
         public TimeSeriesType(string name, IDictionary<string, TimeSeriesVariable> variables)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(variables, nameof(variables));
 
             Name = name;
             Variables = variables;

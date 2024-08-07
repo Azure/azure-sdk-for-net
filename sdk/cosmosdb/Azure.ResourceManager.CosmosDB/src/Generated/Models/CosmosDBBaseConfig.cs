@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </summary>
+        [WirePath("throughput")]
         public int? Throughput { get; set; }
         /// <summary> Specifies the Autoscale settings. </summary>
         internal AutoscaleSettings AutoscaleSettings { get; set; }
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
+        [WirePath("autoscaleSettings.maxThroughput")]
         public int? AutoscaleMaxThroughput
         {
             get => AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;

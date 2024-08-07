@@ -46,12 +46,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ResourceNotificationsResourceDeletedEventData(resourceInfo, operationalInfo);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceNotificationsResourceDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsResourceDeletedEventData(document.RootElement);
+        }
+
         internal partial class ResourceNotificationsResourceDeletedEventDataConverter : JsonConverter<ResourceNotificationsResourceDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceNotificationsResourceDeletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ResourceNotificationsResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

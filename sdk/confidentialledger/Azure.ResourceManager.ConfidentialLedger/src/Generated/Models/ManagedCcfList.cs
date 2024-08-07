@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {

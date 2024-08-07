@@ -1,6 +1,6 @@
 # Release History
 
-## 4.23.0-beta.1 (Unreleased)
+## 4.25.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
+## 4.24.0 (2024-04-09)
+
+### Features Added
+
+- Added new Communication events.
+
+## 4.23.0 (2024-03-11)
+
+### Features Added
+
+- Added API Center events.
 
 ## 4.22.0 (2024-02-12)
 

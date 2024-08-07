@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ArtifactStoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string artifactStoreName, ArtifactStoreData data, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ArtifactStoreResource> CreateOrUpdate(WaitUntil waitUntil, string artifactStoreName, ArtifactStoreData data, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> GetAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> Get(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual Response<bool> Exists(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArtifactStoreResource>> GetIfExistsAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
         public virtual NullableResponse<ArtifactStoreResource> GetIfExists(string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
             scope.Start();

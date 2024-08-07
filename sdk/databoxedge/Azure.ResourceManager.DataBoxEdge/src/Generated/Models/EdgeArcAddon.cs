@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -24,18 +23,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
 
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.StorageMover.Models
     [PersistableModelProxy(typeof(UnknownCredentials))]
     public partial class StorageMoverCredentials : IUtf8JsonSerializable, IJsonModel<StorageMoverCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageMoverCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static StorageMoverCredentials DeserializeStorageMoverCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeStorageMoverCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

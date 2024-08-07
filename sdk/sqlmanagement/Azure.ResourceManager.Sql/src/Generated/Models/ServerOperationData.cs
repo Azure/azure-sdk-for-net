@@ -90,30 +90,43 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name of operation. </summary>
+        [WirePath("properties.operation")]
         public string Operation { get; }
         /// <summary> The friendly name of operation. </summary>
+        [WirePath("properties.operationFriendlyName")]
         public string OperationFriendlyName { get; }
         /// <summary> The percentage of the operation completed. </summary>
+        [WirePath("properties.percentComplete")]
         public int? PercentComplete { get; }
         /// <summary> The name of the server. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> The operation start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The operation state. </summary>
+        [WirePath("properties.state")]
         public ManagementOperationState? State { get; }
         /// <summary> The operation error code. </summary>
+        [WirePath("properties.errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The operation error description. </summary>
+        [WirePath("properties.errorDescription")]
         public string ErrorDescription { get; }
         /// <summary> The operation error severity. </summary>
+        [WirePath("properties.errorSeverity")]
         public int? ErrorSeverity { get; }
         /// <summary> Whether or not the error is a user error. </summary>
+        [WirePath("properties.isUserError")]
         public bool? IsUserError { get; }
         /// <summary> The estimated completion time of the operation. </summary>
+        [WirePath("properties.estimatedCompletionTime")]
         public DateTimeOffset? EstimatedCompleteOn { get; }
         /// <summary> The operation description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Whether the operation can be cancelled. </summary>
+        [WirePath("properties.isCancellable")]
         public bool? IsCancellable { get; }
     }
 }

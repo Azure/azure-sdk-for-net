@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultSecretData(SecretProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -88,10 +85,13 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the secret. </summary>
+        [WirePath("properties")]
         public SecretProperties Properties { get; set; }
         /// <summary> Azure location of the key vault resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -38,6 +37,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -56,6 +60,22 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return UnknownVectorQuery.DeserializeUnknownVectorQuery(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorQuery FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorQuery(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

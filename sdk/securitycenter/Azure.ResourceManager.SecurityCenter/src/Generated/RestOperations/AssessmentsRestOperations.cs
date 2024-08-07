@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -60,10 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<SecurityAssessmentList>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<SecurityAssessmentList> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -106,6 +110,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand)
@@ -139,18 +159,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentData>> GetAsync(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateGetRequest(resourceId, assessmentName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -179,18 +189,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentData> Get(string resourceId, string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateGetRequest(resourceId, assessmentName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -210,6 +210,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -226,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -241,22 +253,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentData>> CreateOrUpdateAsync(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateRequest(resourceId, assessmentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,22 +283,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentData> CreateOrUpdate(string resourceId, string assessmentName, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateRequest(resourceId, assessmentName, content);
             _pipeline.Send(message, cancellationToken);
@@ -316,6 +302,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceId, string assessmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
+            uri.AppendPath(assessmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceId, string assessmentName)
@@ -344,18 +342,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceId, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateDeleteRequest(resourceId, assessmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -377,18 +365,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceId, string assessmentName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (assessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentName));
-            }
-            if (assessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
             using var message = CreateDeleteRequest(resourceId, assessmentName);
             _pipeline.Send(message, cancellationToken);
@@ -400,6 +378,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
@@ -423,14 +409,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<SecurityAssessmentList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -455,14 +435,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<SecurityAssessmentList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

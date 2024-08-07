@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Mocking
@@ -379,10 +376,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
@@ -415,10 +409,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="BenefitRecommendationModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BenefitRecommendationModel> GetBenefitRecommendations(ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(scope, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter, orderby, expand);
@@ -449,14 +440,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (forecastDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(forecastDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
             scope0.Start();
@@ -496,14 +481,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public virtual Response<ForecastResult> UsageForecast(ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (forecastDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(forecastDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(forecastDefinition, nameof(forecastDefinition));
 
             using var scope0 = ForecastClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageForecast");
             scope0.Start();
@@ -546,10 +525,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
@@ -582,10 +558,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
@@ -614,14 +587,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual async Task<Response<QueryResult>> UsageQueryAsync(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
             scope0.Start();
@@ -660,14 +627,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="queryDefinition"/> is null. </exception>
         public virtual Response<QueryResult> UsageQuery(ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (queryDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(queryDefinition));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(queryDefinition, nameof(queryDefinition));
 
             using var scope0 = QueryClientDiagnostics.CreateScope("MockableCostManagementArmClient.UsageQuery");
             scope0.Start();
@@ -706,14 +667,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope0.Start();
@@ -752,14 +707,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope0.Start();

@@ -10,25 +10,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ChainingTrigger : IUtf8JsonSerializable, IJsonModel<ChainingTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChainingTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChainingTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChainingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChainingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline);
+            writer.WriteObjectValue(Pipeline, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in DependsOn)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("runDimension"u8);
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChainingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChainingTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ChainingTrigger DeserializeChainingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChainingTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeChainingTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChainingTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChainingTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

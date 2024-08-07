@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise.Mocking;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
         public static RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisEnterpriseArmClient(client).GetRedisEnterpriseClusterResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
         public static RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisEnterpriseArmClient(client).GetRedisEnterpriseDatabaseResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
         public static RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisEnterpriseArmClient(client).GetRedisEnterprisePrivateEndpointConnectionResource(id);
         }
@@ -113,10 +102,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
         public static RedisEnterpriseClusterCollection GetRedisEnterpriseClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRedisEnterpriseResourceGroupResource(resourceGroupResource).GetRedisEnterpriseClusters();
         }
@@ -154,10 +140,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         [ForwardsClientCalls]
         public static async Task<Response<RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRedisEnterpriseResourceGroupResource(resourceGroupResource).GetRedisEnterpriseClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -195,10 +178,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         [ForwardsClientCalls]
         public static Response<RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRedisEnterpriseResourceGroupResource(resourceGroupResource).GetRedisEnterpriseCluster(clusterName, cancellationToken);
         }
@@ -232,10 +212,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<RedisEnterpriseOperationStatus>> GetRedisEnterpriseOperationsStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseOperationsStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
@@ -269,10 +246,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseOperationsStatus(location, operationId, cancellationToken);
         }
@@ -308,10 +282,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseClustersAsync(cancellationToken);
         }
@@ -347,10 +318,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisEnterpriseSubscriptionResource(subscriptionResource).GetRedisEnterpriseClusters(cancellationToken);
         }

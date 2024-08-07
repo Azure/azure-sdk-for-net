@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -35,6 +34,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest()
@@ -92,6 +100,16 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string assessmentMetadataName)
         {
             var message = _pipeline.CreateMessage();
@@ -115,14 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentMetadataData>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateGetRequest(assessmentMetadataName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -149,14 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentMetadataData> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateGetRequest(assessmentMetadataName);
             _pipeline.Send(message, cancellationToken);
@@ -174,6 +178,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -200,14 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentMetadataResponseList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -232,14 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentMetadataResponseList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -255,6 +256,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInSubscriptionRequest(string subscriptionId, string assessmentMetadataName)
@@ -283,22 +296,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentMetadataData>> GetInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateGetInSubscriptionRequest(subscriptionId, assessmentMetadataName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -326,22 +325,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentMetadataData> GetInSubscription(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateGetInSubscriptionRequest(subscriptionId, assessmentMetadataName);
             _pipeline.Send(message, cancellationToken);
@@ -361,6 +346,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateCreateInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateInSubscriptionRequest(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data)
         {
             var message = _pipeline.CreateMessage();
@@ -377,7 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -392,26 +389,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentMetadataData>> CreateInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateInSubscriptionRequest(subscriptionId, assessmentMetadataName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,26 +418,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentMetadataData> CreateInSubscription(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateInSubscriptionRequest(subscriptionId, assessmentMetadataName, data);
             _pipeline.Send(message, cancellationToken);
@@ -473,6 +436,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteInSubscriptionRequest(string subscriptionId, string assessmentMetadataName)
@@ -501,22 +476,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteInSubscriptionAsync(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateDeleteInSubscriptionRequest(subscriptionId, assessmentMetadataName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -537,22 +498,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteInSubscription(string subscriptionId, string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (assessmentMetadataName == null)
-            {
-                throw new ArgumentNullException(nameof(assessmentMetadataName));
-            }
-            if (assessmentMetadataName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentMetadataName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
             using var message = CreateDeleteInSubscriptionRequest(subscriptionId, assessmentMetadataName);
             _pipeline.Send(message, cancellationToken);
@@ -563,6 +510,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)
@@ -585,10 +540,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SecurityAssessmentMetadataResponseList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -612,10 +564,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SecurityAssessmentMetadataResponseList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
@@ -631,6 +580,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -655,18 +612,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityAssessmentMetadataResponseList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -692,18 +639,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityAssessmentMetadataResponseList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

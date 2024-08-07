@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Media.Models
     [PersistableModelProxy(typeof(UnknownJobInput))]
     public partial class MediaJobInputBasicProperties : IUtf8JsonSerializable, IJsonModel<MediaJobInputBasicProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputBasicProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputBasicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaJobInputBasicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputBasicProperties DeserializeMediaJobInputBasicProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element, options);
                     case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
                     case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element, options);
-                    case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element, options);
                     case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element, options);
+                    case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element, options);
                 }
             }
             return UnknownJobInput.DeserializeUnknownJobInput(element, options);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobInputBasicProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputBasicProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

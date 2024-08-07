@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
         public FlowLogInformation(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, bool enabled)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
-            if (storageId == null)
-            {
-                throw new ArgumentNullException(nameof(storageId));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            Argument.AssertNotNull(storageId, nameof(storageId));
 
             TargetResourceId = targetResourceId;
             StorageId = storageId;
@@ -70,15 +65,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
+            Identity = identity;
             StorageId = storageId;
             Enabled = enabled;
             RetentionPolicy = retentionPolicy;
@@ -107,6 +104,8 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> FlowLog resource Managed Identity. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>

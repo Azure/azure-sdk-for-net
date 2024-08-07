@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AmlComputeProperties : IUtf8JsonSerializable, IJsonModel<AmlComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (VirtualMachineImage != null)
                 {
                     writer.WritePropertyName("virtualMachineImage"u8);
-                    writer.WriteObjectValue(VirtualMachineImage);
+                    writer.WriteObjectValue(VirtualMachineImage, options);
                 }
                 else
                 {
@@ -62,14 +61,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
                     writer.WritePropertyName("userAccountCredentials"u8);
-                    writer.WriteObjectValue(UserAccountCredentials);
+                    writer.WriteObjectValue(UserAccountCredentials, options);
                 }
                 else
                 {
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet);
+                    writer.WriteObjectValue(Subnet, options);
                 }
                 else
                 {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Errors)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NodeStateCounts != null)
                 {
                     writer.WritePropertyName("nodeStateCounts"u8);
-                    writer.WriteObjectValue(NodeStateCounts);
+                    writer.WriteObjectValue(NodeStateCounts, options);
                 }
                 else
                 {
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableNodePublicIP = default;
             BinaryData propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -411,10 +410,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlComputeProperties(
                 osType,
                 vmSize,
@@ -445,7 +444,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -461,7 +460,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAmlComputeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow);
+                writer.WriteObjectValue(Workflow, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                writer.WriteObjectValue(Trigger, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
             {
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                writer.WriteObjectValue(Response, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowRunData DeserializeLogicWorkflowRunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic
             IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs = default;
             LogicWorkflowRunTrigger response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.Logic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowRunData(
                 id,
                 name,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

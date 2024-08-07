@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryModelContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string modelName, MachineLearningModelContainerData data, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningRegistryModelContainerResource> CreateOrUpdate(WaitUntil waitUntil, string modelName, MachineLearningModelContainerData data, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningRegistryModelContainerResource>> GetAsync(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual Response<MachineLearningRegistryModelContainerResource> Get(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual Response<bool> Exists(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryModelContainerResource>> GetIfExistsAsync(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningRegistryModelContainerResource> GetIfExists(string modelName, CancellationToken cancellationToken = default)
         {
-            if (modelName == null)
-            {
-                throw new ArgumentNullException(nameof(modelName));
-            }
-            if (modelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelName));
-            }
+            Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
 
             using var scope = _machineLearningRegistryModelContainerRegistryModelContainersClientDiagnostics.CreateScope("MachineLearningRegistryModelContainerCollection.GetIfExists");
             scope.Start();

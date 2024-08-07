@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Azure resource Id of the VM. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> UUID(Universally Unique Identifier) of the VM. </summary>
+        [WirePath("uuid")]
         public Guid? Uuid { get; }
     }
 }

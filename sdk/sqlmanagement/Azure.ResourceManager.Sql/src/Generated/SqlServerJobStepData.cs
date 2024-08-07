@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </summary>
+        [WirePath("properties.stepId")]
         public int? StepId { get; set; }
         /// <summary> The resource ID of the target group that the job step will be executed on. </summary>
+        [WirePath("properties.targetGroup")]
         public string TargetGroup { get; set; }
         /// <summary> The resource ID of the job credential that will be used to connect to the targets. </summary>
+        [WirePath("properties.credential")]
         public string Credential { get; set; }
         /// <summary> The action payload of the job step. </summary>
+        [WirePath("properties.action")]
         public JobStepAction Action { get; set; }
         /// <summary> Output destination properties of the job step. </summary>
+        [WirePath("properties.output")]
         public JobStepOutput Output { get; set; }
         /// <summary> Execution options for the job step. </summary>
+        [WirePath("properties.executionOptions")]
         public JobStepExecutionOptions ExecutionOptions { get; set; }
     }
 }

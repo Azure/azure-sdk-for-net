@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string supportTicketName, SupportNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string supportTicketName, SupportNameAvailabilityContent content)
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -66,18 +76,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilityAsync(string supportTicketName, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(supportTicketName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,18 +103,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportNameAvailabilityResult> CheckNameAvailability(string supportTicketName, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(supportTicketName, content);
             _pipeline.Send(message, cancellationToken);
@@ -130,6 +120,116 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string supportTicketName, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendPath("/communications", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string supportTicketName, int? top, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendPath("/communications", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CommunicationsListResult>> ListAsync(string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var message = CreateListRequest(supportTicketName, top, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CommunicationsListResult> List(string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var message = CreateListRequest(supportTicketName, top, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string supportTicketName, string communicationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendPath("/communications/", false);
+            uri.AppendPath(communicationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string supportTicketName, string communicationName)
@@ -158,22 +258,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportTicketCommunicationData>> GetAsync(string supportTicketName, string communicationName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var message = CreateGetRequest(supportTicketName, communicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -201,22 +287,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportTicketCommunicationData> Get(string supportTicketName, string communicationName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var message = CreateGetRequest(supportTicketName, communicationName);
             _pipeline.Send(message, cancellationToken);
@@ -236,6 +308,18 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string supportTicketName, string communicationName, SupportTicketCommunicationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/supportTickets/", false);
+            uri.AppendPath(supportTicketName, true);
+            uri.AppendPath("/communications/", false);
+            uri.AppendPath(communicationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string supportTicketName, string communicationName, SupportTicketCommunicationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -252,7 +336,7 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -267,26 +351,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string supportTicketName, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(supportTicketName, communicationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -309,26 +376,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string supportTicketName, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(supportTicketName, communicationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -337,6 +387,86 @@ namespace Azure.ResourceManager.Support
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string supportTicketName, int? top, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string supportTicketName, int? top, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CommunicationsListResult>> ListNextPageAsync(string nextLink, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var message = CreateListNextPageRequest(nextLink, supportTicketName, top, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CommunicationsListResult> ListNextPage(string nextLink, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+
+            using var message = CreateListNextPageRequest(nextLink, supportTicketName, top, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CommunicationsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CommunicationsListResult.DeserializeCommunicationsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorWebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, FrontDoorWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorWebApplicationFirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, FrontDoorWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorWebApplicationFirewallPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorWebApplicationFirewallPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("FrontDoorWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();

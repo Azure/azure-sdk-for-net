@@ -5,50 +5,33 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Maps.Search;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeature : IUtf8JsonSerializable
+    public partial class GeoJsonFeature
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(FeatureType))
-            {
-                writer.WritePropertyName("featureType"u8);
-                writer.WriteStringValue(FeatureType);
-            }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Boundary": return Boundary.DeserializeBoundary(element);
+                }
+            }
             GeoJsonGeometry geometry = default;
             object properties = default;
             string id = default;
             string featureType = default;
-            GeoJsonObjectType type = default;
+            GeoJsonObjectType type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            IReadOnlyList<double> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -77,11 +60,39 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("boundingBox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    boundingBox = array;
                     continue;
                 }
             }
-            return new GeoJsonFeature(type, geometry, properties, id, featureType);
+            return new GeoJsonFeature(
+                type,
+                boundingBox ?? new ChangeTrackingList<double>(),
+                geometry,
+                properties,
+                id,
+                featureType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonFeature FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeature(document.RootElement);
         }
     }
 }

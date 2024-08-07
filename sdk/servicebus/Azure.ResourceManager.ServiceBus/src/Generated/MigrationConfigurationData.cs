@@ -79,16 +79,22 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Provisioning state of Migration Configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
+        [WirePath("properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </summary>
+        [WirePath("properties.targetNamespace")]
         public ResourceIdentifier TargetServiceBusNamespace { get; set; }
         /// <summary> Name to access Standard Namespace after migration. </summary>
+        [WirePath("properties.postMigrationName")]
         public string PostMigrationName { get; set; }
         /// <summary> State in which Standard to Premium Migration is, possible values : Unknown, Reverting, Completing, Initiating, Syncing, Active. </summary>
+        [WirePath("properties.migrationState")]
         public string MigrationState { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

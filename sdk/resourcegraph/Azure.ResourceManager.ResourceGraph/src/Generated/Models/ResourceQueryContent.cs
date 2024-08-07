@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public ResourceQueryContent(string query)
         {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Argument.AssertNotNull(query, nameof(query));
 
             Subscriptions = new ChangeTrackingList<string>();
             ManagementGroups = new ChangeTrackingList<string>();

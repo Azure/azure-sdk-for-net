@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -35,6 +34,24 @@ namespace Azure.ResourceManager.DataFactory
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
@@ -72,46 +89,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SelfHostedIntegrationRuntimeNode>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,46 +122,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SelfHostedIntegrationRuntimeNode> Get(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             _pipeline.Send(message, cancellationToken);
@@ -195,6 +142,24 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
@@ -232,46 +197,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -296,46 +226,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             _pipeline.Send(message, cancellationToken);
@@ -347,6 +242,24 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content)
@@ -371,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -389,50 +302,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -462,50 +337,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SelfHostedIntegrationRuntimeNode> Update(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -521,6 +358,25 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetIPAddressRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeName, true);
+            uri.AppendPath("/ipAddress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetIPAddressRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName)
@@ -559,46 +415,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationRuntimeNodeIPAddress>> GetIPAddressAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateGetIPAddressRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,46 +448,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationRuntimeNodeIPAddress> GetIPAddress(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
-            if (nodeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
             using var message = CreateGetIPAddressRequest(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName, nodeName);
             _pipeline.Send(message, cancellationToken);

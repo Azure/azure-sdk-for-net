@@ -52,10 +52,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal ClinicalNoteEvidence(string id, int offset, int length)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             Offset = offset;

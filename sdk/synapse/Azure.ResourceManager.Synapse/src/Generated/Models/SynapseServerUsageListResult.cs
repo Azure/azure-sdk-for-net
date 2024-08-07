@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseServerUsageListResult(IEnumerable<SynapseServerUsage> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

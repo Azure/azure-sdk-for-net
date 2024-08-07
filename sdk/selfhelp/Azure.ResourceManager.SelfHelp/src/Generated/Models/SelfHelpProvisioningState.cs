@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string SucceededValue = "Succeeded";
         private const string PartialCompleteValue = "PartialComplete";
         private const string FailedValue = "Failed";
+        private const string RunningValue = "Running";
         private const string CanceledValue = "Canceled";
 
         /// <summary> All Diagnostics in the Batch succeeded. </summary>
@@ -33,6 +34,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static SelfHelpProvisioningState PartialComplete { get; } = new SelfHelpProvisioningState(PartialCompleteValue);
         /// <summary> All Diagnostics failed to run. </summary>
         public static SelfHelpProvisioningState Failed { get; } = new SelfHelpProvisioningState(FailedValue);
+        /// <summary> All Diagnostics are still running. </summary>
+        public static SelfHelpProvisioningState Running { get; } = new SelfHelpProvisioningState(RunningValue);
         /// <summary> When Diagnostic request gets canceled. </summary>
         public static SelfHelpProvisioningState Canceled { get; } = new SelfHelpProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are the same. </summary>
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

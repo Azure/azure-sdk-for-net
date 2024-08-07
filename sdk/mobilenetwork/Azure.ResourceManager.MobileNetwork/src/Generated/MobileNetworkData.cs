@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileNetwork data model.
     /// Mobile network resource.
+    /// Serialized Name: MobileNetwork
     /// </summary>
     public partial class MobileNetworkData : TrackedResourceData
     {
@@ -53,16 +54,17 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
+        /// <param name="publicLandMobileNetworkIdentifier">
+        /// The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
+        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworkIdentifier
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicLandMobileNetworkIdentifier"/> is null. </exception>
         public MobileNetworkData(AzureLocation location, MobileNetworkPlmnId publicLandMobileNetworkIdentifier) : base(location)
         {
-            if (publicLandMobileNetworkIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(publicLandMobileNetworkIdentifier));
-            }
+            Argument.AssertNotNull(publicLandMobileNetworkIdentifier, nameof(publicLandMobileNetworkIdentifier));
 
             PublicLandMobileNetworkIdentifier = publicLandMobileNetworkIdentifier;
+            PublicLandMobileNetworks = new ChangeTrackingList<PublicLandMobileNetwork>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkData"/>. </summary>
@@ -72,14 +74,33 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the mobile network resource. </param>
-        /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
-        /// <param name="serviceKey"> The mobile network resource identifier. </param>
+        /// <param name="identity">
+        /// The identity used to retrieve any private keys used for SUPI concealment from Azure key vault.
+        /// Serialized Name: MobileNetwork.identity
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the mobile network resource.
+        /// Serialized Name: MobileNetwork.properties.provisioningState
+        /// </param>
+        /// <param name="publicLandMobileNetworkIdentifier">
+        /// The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
+        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworkIdentifier
+        /// </param>
+        /// <param name="publicLandMobileNetworks">
+        /// A list of public land mobile networks including their identifiers. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
+        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworks
+        /// </param>
+        /// <param name="serviceKey">
+        /// The mobile network resource identifier
+        /// Serialized Name: MobileNetwork.properties.serviceKey
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MobileNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkPlmnId publicLandMobileNetworkIdentifier, string serviceKey, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MobileNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity identity, MobileNetworkProvisioningState? provisioningState, MobileNetworkPlmnId publicLandMobileNetworkIdentifier, IList<PublicLandMobileNetwork> publicLandMobileNetworks, string serviceKey, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             PublicLandMobileNetworkIdentifier = publicLandMobileNetworkIdentifier;
+            PublicLandMobileNetworks = publicLandMobileNetworks;
             ServiceKey = serviceKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,11 +110,35 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> The provisioning state of the mobile network resource. </summary>
+        /// <summary>
+        /// The identity used to retrieve any private keys used for SUPI concealment from Azure key vault.
+        /// Serialized Name: MobileNetwork.identity
+        /// </summary>
+        [WirePath("identity")]
+        public MobileNetworkManagedServiceIdentity Identity { get; set; }
+        /// <summary>
+        /// The provisioning state of the mobile network resource.
+        /// Serialized Name: MobileNetwork.properties.provisioningState
+        /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </summary>
+        /// <summary>
+        /// The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
+        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworkIdentifier
+        /// </summary>
+        [WirePath("properties.publicLandMobileNetworkIdentifier")]
         public MobileNetworkPlmnId PublicLandMobileNetworkIdentifier { get; set; }
-        /// <summary> The mobile network resource identifier. </summary>
+        /// <summary>
+        /// A list of public land mobile networks including their identifiers. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
+        /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworks
+        /// </summary>
+        [WirePath("properties.publicLandMobileNetworks")]
+        public IList<PublicLandMobileNetwork> PublicLandMobileNetworks { get; }
+        /// <summary>
+        /// The mobile network resource identifier
+        /// Serialized Name: MobileNetwork.properties.serviceKey
+        /// </summary>
+        [WirePath("properties.serviceKey")]
         public string ServiceKey { get; }
     }
 }

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal LogicErrorInfo(string code)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(code, nameof(code));
 
             Code = code;
         }

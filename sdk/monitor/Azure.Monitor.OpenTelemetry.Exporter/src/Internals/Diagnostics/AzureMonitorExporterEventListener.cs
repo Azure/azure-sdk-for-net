@@ -36,6 +36,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+            // This method will get called for all Events.
+            // Need to check filter only the name we're interested in here to avoid spamming Debug Output.
             if (eventData.EventSource.Name == AzureMonitorExporterEventSource.EventSourceName)
             {
                 string message = EventSourceEventFormatting.Format(eventData);

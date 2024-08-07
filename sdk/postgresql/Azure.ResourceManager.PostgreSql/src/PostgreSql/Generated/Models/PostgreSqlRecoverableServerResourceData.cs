@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The last available backup date time. </summary>
+        [WirePath("properties.lastAvailableBackupDateTime")]
         public DateTimeOffset? LastAvailableBackupOn { get; }
         /// <summary> The service level objective. </summary>
+        [WirePath("properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; }
         /// <summary> Edition of the performance tier. </summary>
+        [WirePath("properties.edition")]
         public string Edition { get; }
         /// <summary> vCore associated with the service level objective. </summary>
+        [WirePath("properties.vCore")]
         public int? VCores { get; }
         /// <summary> Hardware generation associated with the service level objective. </summary>
+        [WirePath("properties.hardwareGeneration")]
         public string HardwareGeneration { get; }
         /// <summary> The PostgreSQL version. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
     }
 }

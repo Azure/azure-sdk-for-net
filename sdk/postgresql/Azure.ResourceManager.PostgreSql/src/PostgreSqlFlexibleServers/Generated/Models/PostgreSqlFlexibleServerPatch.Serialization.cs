@@ -10,32 +10,31 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerPatch : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlFlexibleServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -68,32 +67,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue(Storage, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                writer.WriteObjectValue(Backup, options);
             }
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability);
+                writer.WriteObjectValue(HighAvailability, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
             if (Optional.IsDefined(AuthConfig))
             {
                 writer.WritePropertyName("authConfig"u8);
-                writer.WriteObjectValue(AuthConfig);
+                writer.WriteObjectValue(AuthConfig, options);
             }
             if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption);
+                writer.WriteObjectValue(DataEncryption, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue(Network, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerPatch DeserializePostgreSqlFlexibleServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             PostgreSqlFlexibleServerNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -318,10 +317,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlFlexibleServerPatch(
                 sku,
                 identity,
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlFlexibleServerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

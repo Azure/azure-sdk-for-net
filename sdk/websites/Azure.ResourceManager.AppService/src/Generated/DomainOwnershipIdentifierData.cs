@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Ownership Id. </summary>
+        [WirePath("properties.ownershipId")]
         public string OwnershipId { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

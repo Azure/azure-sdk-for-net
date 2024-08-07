@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentWord : IUtf8JsonSerializable, IJsonModel<DocumentWord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentWord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentWord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentWord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentWord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentWord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentWord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("span"u8);
-            writer.WriteObjectValue(Span);
+            writer.WriteObjectValue(Span, options);
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -66,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentWord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentWord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentWord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentWord DeserializeDocumentWord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +85,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentSpan span = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -120,10 +119,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentWord(content, polygon ?? new ChangeTrackingList<float>(), span, confidence, serializedAdditionalRawData);
         }
 
@@ -136,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentWord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentWord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentWord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentWord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentWord)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -166,11 +165,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentWord(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

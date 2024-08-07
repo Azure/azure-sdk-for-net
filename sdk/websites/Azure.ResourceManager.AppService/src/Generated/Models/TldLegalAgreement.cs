@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/> or <paramref name="content"/> is null. </exception>
         internal TldLegalAgreement(string agreementKey, string title, string content)
         {
-            if (agreementKey == null)
-            {
-                throw new ArgumentNullException(nameof(agreementKey));
-            }
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(agreementKey, nameof(agreementKey));
+            Argument.AssertNotNull(title, nameof(title));
+            Argument.AssertNotNull(content, nameof(content));
 
             AgreementKey = agreementKey;
             Title = title;
@@ -91,12 +82,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Unique identifier for the agreement. </summary>
+        [WirePath("agreementKey")]
         public string AgreementKey { get; }
         /// <summary> Agreement title. </summary>
+        [WirePath("title")]
         public string Title { get; }
         /// <summary> Agreement details. </summary>
+        [WirePath("content")]
         public string Content { get; }
         /// <summary> URL where a copy of the agreement details is hosted. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
     }
 }

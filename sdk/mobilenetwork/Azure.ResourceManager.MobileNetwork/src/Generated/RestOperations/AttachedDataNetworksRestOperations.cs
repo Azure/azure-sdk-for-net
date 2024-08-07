@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCoreDataPlanes/", false);
+            uri.AppendPath(packetCoreDataPlaneName, true);
+            uri.AppendPath("/attachedDataNetworks/", false);
+            uri.AppendPath(attachedDataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
@@ -72,46 +89,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -137,46 +119,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -189,6 +136,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCoreDataPlanes/", false);
+            uri.AppendPath(packetCoreDataPlaneName, true);
+            uri.AppendPath("/attachedDataNetworks/", false);
+            uri.AppendPath(attachedDataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
@@ -226,46 +191,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MobileAttachedDataNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -296,46 +226,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MobileAttachedDataNetworkData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -353,6 +248,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileAttachedDataNetworkData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCoreDataPlanes/", false);
+            uri.AppendPath(packetCoreDataPlaneName, true);
+            uri.AppendPath("/attachedDataNetworks/", false);
+            uri.AppendPath(attachedDataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileAttachedDataNetworkData data)
@@ -377,7 +290,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -395,50 +308,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileAttachedDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -464,50 +339,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileAttachedDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, data);
             _pipeline.Send(message, cancellationToken);
@@ -519,6 +356,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileNetworkTagsPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCoreDataPlanes/", false);
+            uri.AppendPath(packetCoreDataPlaneName, true);
+            uri.AppendPath("/attachedDataNetworks/", false);
+            uri.AppendPath(attachedDataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileNetworkTagsPatch patch)
@@ -543,7 +398,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -561,50 +416,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MobileAttachedDataNetworkData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -634,50 +451,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MobileAttachedDataNetworkData> UpdateTags(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
-            if (attachedDataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDataNetworkName));
-            }
-            if (attachedDataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDataNetworkName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
+            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -693,6 +472,23 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPacketCoreDataPlaneRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCoreDataPlanes/", false);
+            uri.AppendPath(packetCoreDataPlaneName, true);
+            uri.AppendPath("/attachedDataNetworks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByPacketCoreDataPlaneRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
@@ -728,38 +524,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AttachedDataNetworkListResult>> ListByPacketCoreDataPlaneAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
 
             using var message = CreateListByPacketCoreDataPlaneRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -787,38 +555,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AttachedDataNetworkListResult> ListByPacketCoreDataPlane(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
 
             using var message = CreateListByPacketCoreDataPlaneRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName);
             _pipeline.Send(message, cancellationToken);
@@ -834,6 +574,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPacketCoreDataPlaneNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPacketCoreDataPlaneNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
@@ -861,42 +609,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AttachedDataNetworkListResult>> ListByPacketCoreDataPlaneNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
 
             using var message = CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -925,42 +642,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AttachedDataNetworkListResult> ListByPacketCoreDataPlaneNextPage(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreDataPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreDataPlaneName));
-            }
-            if (packetCoreDataPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreDataPlaneName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
 
             using var message = CreateListByPacketCoreDataPlaneNextPageRequest(nextLink, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName);
             _pipeline.Send(message, cancellationToken);

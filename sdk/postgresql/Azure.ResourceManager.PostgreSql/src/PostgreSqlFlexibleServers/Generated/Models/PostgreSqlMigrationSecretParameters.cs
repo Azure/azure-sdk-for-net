@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminCredentials"/> is null. </exception>
         public PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials)
         {
-            if (adminCredentials == null)
-            {
-                throw new ArgumentNullException(nameof(adminCredentials));
-            }
+            Argument.AssertNotNull(adminCredentials, nameof(adminCredentials));
 
             AdminCredentials = adminCredentials;
         }
@@ -77,10 +74,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Admin credentials for source and target servers. </summary>
+        [WirePath("adminCredentials")]
         public PostgreSqlMigrationAdminCredentials AdminCredentials { get; set; }
         /// <summary> Gets or sets the username for the source server. This user need not be an admin. </summary>
+        [WirePath("sourceServerUsername")]
         public string SourceServerUsername { get; set; }
         /// <summary> Gets or sets the username for the target server. This user need not be an admin. </summary>
+        [WirePath("targetServerUsername")]
         public string TargetServerUsername { get; set; }
     }
 }

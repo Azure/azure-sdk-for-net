@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudVirtualMachineConsoleResource>> GetAsync(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual Response<NetworkCloudVirtualMachineConsoleResource> Get(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual Response<bool> Exists(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudVirtualMachineConsoleResource>> GetIfExistsAsync(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudVirtualMachineConsoleResource> GetIfExists(string consoleName, CancellationToken cancellationToken = default)
         {
-            if (consoleName == null)
-            {
-                throw new ArgumentNullException(nameof(consoleName));
-            }
-            if (consoleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(consoleName));
-            }
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
 
             using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.GetIfExists");
             scope.Start();

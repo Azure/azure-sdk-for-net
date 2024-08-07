@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
@@ -205,7 +203,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceProjectTaskTasksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceProjectTaskTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceProjectTaskTasksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceProjectTaskTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,10 +288,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ServiceProjectTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Update");
             scope.Start();
@@ -331,10 +330,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ServiceProjectTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Update");
             scope.Start();
@@ -452,10 +448,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="commandProperties"/> is null. </exception>
         public virtual async Task<Response<CommandProperties>> CommandAsync(CommandProperties commandProperties, CancellationToken cancellationToken = default)
         {
-            if (commandProperties == null)
-            {
-                throw new ArgumentNullException(nameof(commandProperties));
-            }
+            Argument.AssertNotNull(commandProperties, nameof(commandProperties));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Command");
             scope.Start();
@@ -497,10 +490,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="commandProperties"/> is null. </exception>
         public virtual Response<CommandProperties> Command(CommandProperties commandProperties, CancellationToken cancellationToken = default)
         {
-            if (commandProperties == null)
-            {
-                throw new ArgumentNullException(nameof(commandProperties));
-            }
+            Argument.AssertNotNull(commandProperties, nameof(commandProperties));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Command");
             scope.Start();

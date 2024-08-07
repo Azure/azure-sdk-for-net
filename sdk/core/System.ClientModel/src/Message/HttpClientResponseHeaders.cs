@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -21,10 +22,18 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
     }
 
     public override bool TryGetValue(string name, out string? value)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+        return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
+    }
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+        return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
+    }
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         => GetHeadersStringValues(_httpResponse.Headers, _httpResponseContent).GetEnumerator();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -47,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
-        public DiagnosticsInfo()
+        internal DiagnosticsInfo()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
         }
@@ -56,7 +55,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelState"> Model status. </param>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiagnosticsInfo(ModelState modelState, IReadOnlyList<VariableState> variableStates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelState = modelState;
             VariableStates = variableStates;
@@ -64,8 +63,8 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Model status. </summary>
-        public ModelState ModelState { get; set; }
+        public ModelState ModelState { get; }
         /// <summary> Variable status. </summary>
-        public IList<VariableState> VariableStates { get; }
+        public IReadOnlyList<VariableState> VariableStates { get; }
     }
 }

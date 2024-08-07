@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiManagementLoggerLoggerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiManagementLoggerLoggerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementLoggerResource>> GetAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual Response<ApiManagementLoggerResource> Get(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
@@ -290,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,14 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
@@ -406,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,14 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual Response<bool> Exists(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
@@ -456,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementLoggerResource>> GetIfExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();
@@ -508,7 +455,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementLoggerResource> GetIfExists(string loggerId, CancellationToken cancellationToken = default)
         {
-            if (loggerId == null)
-            {
-                throw new ArgumentNullException(nameof(loggerId));
-            }
-            if (loggerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
-            }
+            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();

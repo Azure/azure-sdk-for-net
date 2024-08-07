@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Function App stack (display only). </summary>
+        [WirePath("displayText")]
         public string DisplayText { get; }
         /// <summary> Function App stack name. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Settings associated with the minor version. </summary>
+        [WirePath("stackSettings")]
         public FunctionAppRuntimes StackSettings { get; }
     }
 }

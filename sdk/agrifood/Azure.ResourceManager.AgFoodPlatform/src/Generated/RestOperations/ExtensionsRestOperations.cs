@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -36,6 +35,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
@@ -70,38 +85,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionData>> CreateAsync(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +116,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionData> Create(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             _pipeline.Send(message, cancellationToken);
@@ -176,6 +135,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
@@ -210,38 +185,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,38 +218,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionData> Get(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             _pipeline.Send(message, cancellationToken);
@@ -320,6 +239,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
@@ -354,38 +289,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -413,38 +320,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionData> Update(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             _pipeline.Send(message, cancellationToken);
@@ -460,6 +339,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
@@ -494,38 +389,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -549,38 +416,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="farmBeatsResourceName"/> or <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
-            if (extensionId == null)
-            {
-                throw new ArgumentNullException(nameof(extensionId));
-            }
-            if (extensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionId);
             _pipeline.Send(message, cancellationToken);
@@ -592,6 +431,43 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFarmBeatsRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (extensionIds != null && !(extensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in extensionIds)
+                {
+                    uri.AppendQuery("extensionIds", param, true);
+                }
+            }
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in extensionCategories)
+                {
+                    uri.AppendQuery("extensionCategories", param, true);
+                }
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByFarmBeatsRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
@@ -653,30 +529,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionListResponse>> ListByFarmBeatsAsync(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var message = CreateListByFarmBeatsRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -710,30 +565,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionListResponse> ListByFarmBeats(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var message = CreateListByFarmBeatsRequest(subscriptionId, resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -749,6 +583,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFarmBeatsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFarmBeatsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
@@ -782,34 +624,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtensionListResponse>> ListByFarmBeatsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var message = CreateListByFarmBeatsNextPageRequest(nextLink, subscriptionId, resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -844,34 +662,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtensionListResponse> ListByFarmBeatsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (farmBeatsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsResourceName));
-            }
-            if (farmBeatsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsResourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
 
             using var message = CreateListByFarmBeatsNextPageRequest(nextLink, subscriptionId, resourceGroupName, farmBeatsResourceName, extensionIds, extensionCategories, maxPageSize, skipToken);
             _pipeline.Send(message, cancellationToken);

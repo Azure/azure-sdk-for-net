@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsDataConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsDataConnectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsDataConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsDataConnectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsDataConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDataConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsDataConnectorData DeserializeSecurityInsightsDataConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsDataConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

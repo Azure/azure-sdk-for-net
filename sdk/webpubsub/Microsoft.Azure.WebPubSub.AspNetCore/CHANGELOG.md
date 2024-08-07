@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-04-10)
+
+### Features Added
+
+- Upgrade `Azure.Messaging.WebPubSub` to 1.3.0.
+- Improve Hub method to support more accurate exceptions.
 
 ## 1.2.0 (2023-08-28)
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudRackResource>> GetAsync(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual Response<NetworkCloudRackResource> Get(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
             scope.Start();
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual Response<bool> Exists(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.Exists");
             scope.Start();
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudRackResource>> GetIfExistsAsync(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
             scope.Start();
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudRackResource> GetIfExists(string rackName, CancellationToken cancellationToken = default)
         {
-            if (rackName == null)
-            {
-                throw new ArgumentNullException(nameof(rackName));
-            }
-            if (rackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackName));
-            }
+            Argument.AssertNotNullOrEmpty(rackName, nameof(rackName));
 
             using var scope = _networkCloudRackRacksClientDiagnostics.CreateScope("NetworkCloudRackCollection.GetIfExists");
             scope.Start();

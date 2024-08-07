@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="startRange"/> or <paramref name="endRange"/> is null. </exception>
         public BlobRestoreRange(string startRange, string endRange)
         {
-            if (startRange == null)
-            {
-                throw new ArgumentNullException(nameof(startRange));
-            }
-            if (endRange == null)
-            {
-                throw new ArgumentNullException(nameof(endRange));
-            }
+            Argument.AssertNotNull(startRange, nameof(startRange));
+            Argument.AssertNotNull(endRange, nameof(endRange));
 
             StartRange = startRange;
             EndRange = endRange;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Blob start range. This is inclusive. Empty means account start. </summary>
+        [WirePath("startRange")]
         public string StartRange { get; set; }
         /// <summary> Blob end range. This is exclusive. Empty means account end. </summary>
+        [WirePath("endRange")]
         public string EndRange { get; set; }
     }
 }

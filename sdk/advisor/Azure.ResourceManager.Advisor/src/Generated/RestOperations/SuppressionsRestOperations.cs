@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Advisor.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.Advisor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string recommendationId, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceUri, string recommendationId, string name)
@@ -66,26 +79,9 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SuppressionContractData>> GetAsync(string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(resourceUri, recommendationId, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -114,26 +110,9 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SuppressionContractData> Get(string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(resourceUri, recommendationId, name);
             _pipeline.Send(message, cancellationToken);
@@ -151,6 +130,20 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string resourceUri, string recommendationId, string name, SuppressionContractData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string resourceUri, string recommendationId, string name, SuppressionContractData data)
@@ -171,7 +164,7 @@ namespace Azure.ResourceManager.Advisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -187,30 +180,10 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SuppressionContractData>> CreateAsync(string resourceUri, string recommendationId, string name, SuppressionContractData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, recommendationId, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -238,30 +211,10 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SuppressionContractData> Create(string resourceUri, string recommendationId, string name, SuppressionContractData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(resourceUri, recommendationId, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -277,6 +230,20 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string recommendationId, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceUri, string recommendationId, string name)
@@ -308,26 +275,9 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(resourceUri, recommendationId, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -349,26 +299,9 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(resourceUri, recommendationId, name);
             _pipeline.Send(message, cancellationToken);
@@ -379,6 +312,25 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/suppressions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, int? top, string skipToken)
@@ -415,14 +367,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SuppressionContractListResult>> ListAsync(string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -449,14 +394,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SuppressionContractListResult> List(string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, top, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -472,6 +410,14 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, int? top, string skipToken)
@@ -498,18 +444,8 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SuppressionContractListResult>> ListNextPageAsync(string nextLink, string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -537,18 +473,8 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SuppressionContractListResult> ListNextPage(string nextLink, string subscriptionId, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, top, skipToken);
             _pipeline.Send(message, cancellationToken);

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The current parameters. </summary>
+        [WirePath("currentParameters")]
         public UpsertManagedServerOperationParameters CurrentParameters { get; }
         /// <summary> The requested parameters. </summary>
+        [WirePath("requestedParameters")]
         public UpsertManagedServerOperationParameters RequestedParameters { get; }
     }
 }

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public ConnectivityCheckRequestSource(string region)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNull(region, nameof(region));
 
             Region = region;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The API Management service region from where to start the connectivity check operation. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> The particular VMSS instance from which to fire the request. </summary>
+        [WirePath("instance")]
         public long? Instance { get; set; }
     }
 }

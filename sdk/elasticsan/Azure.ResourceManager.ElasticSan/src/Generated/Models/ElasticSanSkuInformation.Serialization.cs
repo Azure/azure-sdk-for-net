@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanSkuInformation : IUtf8JsonSerializable, IJsonModel<ElasticSanSkuInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSkuInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanSkuInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo = default;
             IReadOnlyList<ElasticSanSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -180,10 +179,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanSkuInformation(
                 name,
                 tier,
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanSkuInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

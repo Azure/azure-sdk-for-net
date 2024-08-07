@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosTargetFilter. </summary>
+    /// <summary> Unknown version of ChaosTargetFilter. </summary>
     internal partial class UnknownChaosTargetFilter : ChaosTargetFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/>. </summary>

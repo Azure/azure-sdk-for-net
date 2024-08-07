@@ -18,14 +18,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
         public VectorSearchProfile(string name, string algorithmConfigurationName)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (algorithmConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(algorithmConfigurationName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
 
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
@@ -34,23 +28,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
-        /// <param name="vectorizer"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="compressionConfigurationName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
-        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizer, string compressionConfigurationName)
+        /// <param name="vectorizerName"> The name of the vectorization being configured for use with vector search. </param>
+        /// <param name="compressionName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizerName, string compressionName)
         {
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
-            Vectorizer = vectorizer;
-            CompressionConfigurationName = compressionConfigurationName;
+            VectorizerName = vectorizerName;
+            CompressionName = compressionName;
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>
         public string Name { get; set; }
         /// <summary> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </summary>
         public string AlgorithmConfigurationName { get; set; }
-        /// <summary> The name of the kind of vectorization method being configured for use with vector search. </summary>
-        public string Vectorizer { get; set; }
+        /// <summary> The name of the vectorization being configured for use with vector search. </summary>
+        public string VectorizerName { get; set; }
         /// <summary> The name of the compression method configuration that specifies the compression method and optional parameters. </summary>
-        public string CompressionConfigurationName { get; set; }
+        public string CompressionName { get; set; }
     }
 }

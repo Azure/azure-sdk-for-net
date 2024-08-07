@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destinations"/> or <paramref name="nextHop"/> is null. </exception>
         public RoutingPolicy(string name, IEnumerable<string> destinations, string nextHop)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (destinations == null)
-            {
-                throw new ArgumentNullException(nameof(destinations));
-            }
-            if (nextHop == null)
-            {
-                throw new ArgumentNullException(nameof(nextHop));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(destinations, nameof(destinations));
+            Argument.AssertNotNull(nextHop, nameof(nextHop));
 
             Name = name;
             Destinations = destinations.ToList();

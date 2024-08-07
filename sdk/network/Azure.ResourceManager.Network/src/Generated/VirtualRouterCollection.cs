@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualRouterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualRouterName, VirtualRouterData data, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualRouterResource> CreateOrUpdate(WaitUntil waitUntil, string virtualRouterName, VirtualRouterData data, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual async Task<Response<VirtualRouterResource>> GetAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Get");
             scope.Start();
@@ -238,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual Response<VirtualRouterResource> Get(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Get");
             scope.Start();
@@ -291,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +285,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Exists");
             scope.Start();
@@ -402,7 +359,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.Exists");
             scope.Start();
@@ -453,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualRouterResource>> GetIfExistsAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExists");
             scope.Start();
@@ -506,7 +449,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         public virtual NullableResponse<VirtualRouterResource> GetIfExists(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (virtualRouterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualRouterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
 
             using var scope = _virtualRouterClientDiagnostics.CreateScope("VirtualRouterCollection.GetIfExists");
             scope.Start();

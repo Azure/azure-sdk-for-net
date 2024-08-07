@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -24,10 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
         public TumblingWindowTrigger(TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, int maxConcurrency)
         {
-            if (pipeline == null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
 
             Pipeline = pipeline;
             Frequency = frequency;

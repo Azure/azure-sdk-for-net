@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual async Task<Response<BackupRecoveryPointResource>> GetAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
             scope.Start();
@@ -134,14 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual Response<BackupRecoveryPointResource> Get(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Get");
             scope.Start();
@@ -248,14 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
             scope.Start();
@@ -298,14 +275,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual Response<bool> Exists(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.Exists");
             scope.Start();
@@ -348,14 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
             scope.Start();
@@ -400,14 +363,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public virtual NullableResponse<BackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
-            if (recoveryPointId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointId));
-            }
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
             using var scope = _backupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointCollection.GetIfExists");
             scope.Start();

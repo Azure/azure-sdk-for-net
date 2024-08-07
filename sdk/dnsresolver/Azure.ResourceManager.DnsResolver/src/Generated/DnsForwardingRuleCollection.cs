@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -84,25 +82,17 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsForwardingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsForwardingRuleForwardingRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,25 +135,17 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsForwardingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dnsForwardingRuleForwardingRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,14 +184,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual async Task<Response<DnsForwardingRuleResource>> GetAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual Response<DnsForwardingRuleResource> Get(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsForwardingRuleResource>> GetIfExistsAsync(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="forwardingRuleName"/> is null. </exception>
         public virtual NullableResponse<DnsForwardingRuleResource> GetIfExists(string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (forwardingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleCollection.GetIfExists");
             scope.Start();

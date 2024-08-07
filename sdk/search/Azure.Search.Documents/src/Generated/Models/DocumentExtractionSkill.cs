@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public DocumentExtractionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
 
             Configuration = new ChangeTrackingDictionary<string, object>();
             ODataType = "#Microsoft.Skills.Util.DocumentExtractionSkill";

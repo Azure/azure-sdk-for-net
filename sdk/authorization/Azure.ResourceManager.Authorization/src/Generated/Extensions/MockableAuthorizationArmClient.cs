@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization.Mocking
@@ -863,10 +860,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> An async collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);
@@ -897,10 +891,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> A collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EligibleChildResource> GetEligibleChildResources(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);

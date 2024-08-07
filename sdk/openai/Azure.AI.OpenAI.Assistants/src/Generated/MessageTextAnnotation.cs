@@ -56,10 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         protected MessageTextAnnotation(string text, int startIndex, int endIndex)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             StartIndex = startIndex;

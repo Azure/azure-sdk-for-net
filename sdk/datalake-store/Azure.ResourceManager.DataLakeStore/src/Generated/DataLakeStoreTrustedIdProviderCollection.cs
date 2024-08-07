@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeStoreTrustedIdProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trustedIdProviderName, DataLakeStoreTrustedIdProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataLakeStoreTrustedIdProviderResource> CreateOrUpdate(WaitUntil waitUntil, string trustedIdProviderName, DataLakeStoreTrustedIdProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreTrustedIdProviderResource>> GetAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual Response<DataLakeStoreTrustedIdProviderResource> Get(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual Response<bool> Exists(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeStoreTrustedIdProviderResource>> GetIfExistsAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         public virtual NullableResponse<DataLakeStoreTrustedIdProviderResource> GetIfExists(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            if (trustedIdProviderName == null)
-            {
-                throw new ArgumentNullException(nameof(trustedIdProviderName));
-            }
-            if (trustedIdProviderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedIdProviderName));
-            }
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
 
             using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetIfExists");
             scope.Start();

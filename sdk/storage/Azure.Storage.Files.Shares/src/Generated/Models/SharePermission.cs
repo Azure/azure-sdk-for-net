@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -17,15 +18,23 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public SharePermission(string permission)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
+            Argument.AssertNotNull(permission, nameof(permission));
 
             Permission = permission;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
+        /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
+        /// <param name="format"></param>
+        internal SharePermission(string permission, FilePermissionFormat? format)
+        {
+            Permission = permission;
+            Format = format;
+        }
+
         /// <summary> The permission in the Security Descriptor Definition Language (SDDL). </summary>
         public string Permission { get; set; }
+        /// <summary> Gets or sets the format. </summary>
+        public FilePermissionFormat? Format { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -35,6 +34,33 @@ namespace Azure.ResourceManager.OperationalInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (includeBody != null)
+            {
+                uri.AppendQuery("includeBody", includeBody.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
@@ -82,30 +108,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryPackQueryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string queryPackName, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, queryPackName, top, includeBody, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,30 +140,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryPackQueryListResult> List(string subscriptionId, string resourceGroupName, string queryPackName, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, queryPackName, top, includeBody, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -174,6 +158,33 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (includeBody != null)
+            {
+                uri.AppendQuery("includeBody", includeBody.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSearchRequest(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
@@ -207,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(querySearchProperties);
+            content.JsonWriter.WriteObjectValue(querySearchProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -226,34 +237,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchAsync(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (querySearchProperties == null)
-            {
-                throw new ArgumentNullException(nameof(querySearchProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             using var message = CreateSearchRequest(subscriptionId, resourceGroupName, queryPackName, querySearchProperties, top, includeBody, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,34 +271,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryPackQueryListResult> Search(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (querySearchProperties == null)
-            {
-                throw new ArgumentNullException(nameof(querySearchProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             using var message = CreateSearchRequest(subscriptionId, resourceGroupName, queryPackName, querySearchProperties, top, includeBody, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -327,6 +290,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id)
@@ -361,38 +340,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryData>> GetAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, queryPackName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -422,38 +373,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryData> Get(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, queryPackName, id);
             _pipeline.Send(message, cancellationToken);
@@ -471,6 +394,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
@@ -493,7 +432,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -510,42 +449,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryData>> PutAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, queryPackName, id, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -574,42 +482,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryData> Put(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, queryPackName, id, data);
             _pipeline.Send(message, cancellationToken);
@@ -625,6 +502,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
@@ -647,7 +540,7 @@ namespace Azure.ResourceManager.OperationalInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -664,42 +557,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryData>> UpdateAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, queryPackName, id, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -728,42 +590,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryData> Update(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, queryPackName, id, data);
             _pipeline.Send(message, cancellationToken);
@@ -779,6 +610,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string queryPackName, string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/queryPacks/", false);
+            uri.AppendPath(queryPackName, true);
+            uri.AppendPath("/queries/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id)
@@ -813,38 +660,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, queryPackName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -868,38 +687,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, queryPackName, id);
             _pipeline.Send(message, cancellationToken);
@@ -911,6 +702,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top, bool? includeBody, string skipToken)
@@ -940,34 +739,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryPackQueryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, queryPackName, top, includeBody, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -998,34 +773,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryPackQueryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, queryPackName, top, includeBody, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -1041,6 +792,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateSearchNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
@@ -1071,38 +830,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (querySearchProperties == null)
-            {
-                throw new ArgumentNullException(nameof(querySearchProperties));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             using var message = CreateSearchNextPageRequest(nextLink, subscriptionId, resourceGroupName, queryPackName, querySearchProperties, top, includeBody, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1134,38 +866,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogAnalyticsQueryPackQueryListResult> SearchNextPage(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (queryPackName == null)
-            {
-                throw new ArgumentNullException(nameof(queryPackName));
-            }
-            if (queryPackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryPackName));
-            }
-            if (querySearchProperties == null)
-            {
-                throw new ArgumentNullException(nameof(querySearchProperties));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(queryPackName, nameof(queryPackName));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             using var message = CreateSearchNextPageRequest(nextLink, subscriptionId, resourceGroupName, queryPackName, querySearchProperties, top, includeBody, skipToken);
             _pipeline.Send(message, cancellationToken);

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing the primary and secondary admin API keys for a given Azure Cognitive Search service. </summary>
+    /// <summary> Response containing the primary and secondary admin API keys for a given Azure AI Search service. </summary>
     public partial class SearchServiceAdminKeyResult
     {
         /// <summary>
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The primary admin API key of the search service. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
         /// <summary> The secondary admin API key of the search service. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }
 }

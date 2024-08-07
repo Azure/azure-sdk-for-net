@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -32,8 +31,27 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01-preview";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateMigrateBackupsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BackupsMigrationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/migrateBackups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateBackupsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BackupsMigrationContent content)
@@ -59,7 +77,7 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -77,50 +95,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateBackupsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMigrateBackupsRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -145,50 +125,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateBackups(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMigrateBackupsRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);

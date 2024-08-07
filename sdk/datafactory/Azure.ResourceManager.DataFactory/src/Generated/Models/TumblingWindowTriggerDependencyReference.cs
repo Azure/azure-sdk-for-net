@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(DataFactoryTriggerReference referenceTrigger) : base(referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             DependencyReferenceType = "TumblingWindowTriggerDependencyReference";
         }

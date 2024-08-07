@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Executable to be run. </summary>
+        [WirePath("exe")]
         public string Exe { get; set; }
         /// <summary> Parameters for the executable. </summary>
+        [WirePath("parameters")]
         public string Parameters { get; set; }
     }
 }

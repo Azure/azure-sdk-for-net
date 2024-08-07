@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> GitHub Action code configuration. </summary>
+        [WirePath("codeConfiguration")]
         public GitHubActionCodeConfiguration CodeConfiguration { get; set; }
         /// <summary> GitHub Action container configuration. </summary>
+        [WirePath("containerConfiguration")]
         public GitHubActionContainerConfiguration ContainerConfiguration { get; set; }
         /// <summary> This will help determine the workflow configuration to select. </summary>
+        [WirePath("isLinux")]
         public bool? IsLinux { get; set; }
         /// <summary> Workflow option to determine whether the workflow file should be generated and written to the repository. </summary>
+        [WirePath("generateWorkflowFile")]
         public bool? GenerateWorkflowFile { get; set; }
     }
 }

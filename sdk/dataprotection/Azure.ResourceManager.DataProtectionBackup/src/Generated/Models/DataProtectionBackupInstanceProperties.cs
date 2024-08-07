@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -53,21 +52,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/>, <paramref name="policyInfo"/> or <paramref name="objectType"/> is null. </exception>
         public DataProtectionBackupInstanceProperties(DataSourceInfo dataSourceInfo, BackupInstancePolicyInfo policyInfo, string objectType)
         {
-            if (dataSourceInfo == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceInfo));
-            }
-            if (policyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(policyInfo));
-            }
-            if (objectType == null)
-            {
-                throw new ArgumentNullException(nameof(objectType));
-            }
+            Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
+            Argument.AssertNotNull(policyInfo, nameof(policyInfo));
+            Argument.AssertNotNull(objectType, nameof(objectType));
 
             DataSourceInfo = dataSourceInfo;
             PolicyInfo = policyInfo;
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
             ObjectType = objectType;
         }
 
@@ -76,6 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
         /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
@@ -92,12 +84,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
             DataSourceSetInfo = dataSourceSetInfo;
             PolicyInfo = policyInfo;
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
             ProtectionStatus = protectionStatus;
             CurrentProtectionState = currentProtectionState;
             ProtectionErrorDetails = protectionErrorDetails;
@@ -122,6 +115,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public DataSourceSetInfo DataSourceSetInfo { get; set; }
         /// <summary> Gets or sets the policy information. </summary>
         public BackupInstancePolicyInfo PolicyInfo { get; set; }
+        /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
+        public IList<string> ResourceGuardOperationRequests { get; }
         /// <summary> Specifies the protection status of the resource. </summary>
         public BackupInstanceProtectionStatusDetails ProtectionStatus { get; }
         /// <summary> Specifies the current protection state of the resource. </summary>

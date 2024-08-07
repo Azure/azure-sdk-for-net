@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +140,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +171,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +211,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +251,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +293,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +335,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,10 +348,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverProjectResource>> UpdateAsync(StorageMoverProjectPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectResource.Update");
             scope.Start();
@@ -382,7 +377,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,10 +390,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverProjectResource> Update(StorageMoverProjectPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectResource.Update");
             scope.Start();

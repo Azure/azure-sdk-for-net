@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 
@@ -270,7 +268,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -312,7 +312,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -350,10 +352,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<FirmwareAnalysisWorkspaceResource>> UpdateAsync(FirmwareAnalysisWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceResource.Update");
             scope.Start();
@@ -395,10 +394,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<FirmwareAnalysisWorkspaceResource> Update(FirmwareAnalysisWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceResource.Update");
             scope.Start();
@@ -423,7 +419,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,10 +436,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FirmwareUriToken>> GenerateUploadUriAsync(FirmwareUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceResource.GenerateUploadUri");
             scope.Start();
@@ -468,7 +461,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -485,10 +478,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FirmwareUriToken> GenerateUploadUri(FirmwareUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceResource.GenerateUploadUri");
             scope.Start();

@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class UntilActivity : IUtf8JsonSerializable, IJsonModel<UntilActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UntilActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UntilActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UntilActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UntilActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UntilActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression);
+            writer.WriteObjectValue(Expression, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UntilActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UntilActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UntilActivity DeserializeUntilActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UntilActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UntilActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeUntilActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UntilActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UntilActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

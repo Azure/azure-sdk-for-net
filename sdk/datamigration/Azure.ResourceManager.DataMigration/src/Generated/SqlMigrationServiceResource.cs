@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -284,10 +282,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlMigrationServiceResource>> UpdateAsync(WaitUntil waitUntil, SqlMigrationServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.Update");
             scope.Start();
@@ -333,10 +328,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SqlMigrationServiceResource> Update(WaitUntil waitUntil, SqlMigrationServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.Update");
             scope.Start();
@@ -364,7 +356,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -402,7 +394,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listAuthKeys</description>
+        /// <description>SqlMigrationServices_ListAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +432,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -457,10 +449,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="regenAuthKeys"/> is null. </exception>
         public virtual async Task<Response<RegenAuthKeys>> RegenerateAuthKeysAsync(RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
         {
-            if (regenAuthKeys == null)
-            {
-                throw new ArgumentNullException(nameof(regenAuthKeys));
-            }
+            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RegenerateAuthKeys");
             scope.Start();
@@ -485,7 +474,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -502,10 +491,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="regenAuthKeys"/> is null. </exception>
         public virtual Response<RegenAuthKeys> RegenerateAuthKeys(RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
         {
-            if (regenAuthKeys == null)
-            {
-                throw new ArgumentNullException(nameof(regenAuthKeys));
-            }
+            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RegenerateAuthKeys");
             scope.Start();
@@ -530,7 +516,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -547,10 +533,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="deleteNode"/> is null. </exception>
         public virtual async Task<Response<DeleteNode>> DeleteNodeAsync(DeleteNode deleteNode, CancellationToken cancellationToken = default)
         {
-            if (deleteNode == null)
-            {
-                throw new ArgumentNullException(nameof(deleteNode));
-            }
+            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.DeleteNode");
             scope.Start();
@@ -575,7 +558,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_deleteNode</description>
+        /// <description>SqlMigrationServices_DeleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -592,10 +575,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="deleteNode"/> is null. </exception>
         public virtual Response<DeleteNode> DeleteNode(DeleteNode deleteNode, CancellationToken cancellationToken = default)
         {
-            if (deleteNode == null)
-            {
-                throw new ArgumentNullException(nameof(deleteNode));
-            }
+            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.DeleteNode");
             scope.Start();
@@ -620,7 +600,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -650,7 +630,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMigrations</description>
+        /// <description>SqlMigrationServices_ListMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -680,7 +660,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -718,7 +698,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_listMonitoringData</description>
+        /// <description>SqlMigrationServices_ListMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -774,14 +754,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SqlMigrationServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.AddTag");
             scope.Start();
@@ -842,14 +816,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SqlMigrationServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.AddTag");
             scope.Start();
@@ -909,10 +877,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SqlMigrationServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.SetTags");
             scope.Start();
@@ -969,10 +934,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SqlMigrationServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.SetTags");
             scope.Start();
@@ -1029,10 +991,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SqlMigrationServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RemoveTag");
             scope.Start();
@@ -1092,10 +1051,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SqlMigrationServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlMigrationServiceClientDiagnostics.CreateScope("SqlMigrationServiceResource.RemoveTag");
             scope.Start();

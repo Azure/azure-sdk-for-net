@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -53,12 +52,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new DataBoxOrderCompletedEventData(serialNumber, stageName, stageTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataBoxOrderCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataBoxOrderCompletedEventData(document.RootElement);
+        }
+
         internal partial class DataBoxOrderCompletedEventDataConverter : JsonConverter<DataBoxOrderCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, DataBoxOrderCompletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override DataBoxOrderCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

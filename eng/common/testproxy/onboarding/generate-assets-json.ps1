@@ -14,7 +14,7 @@ In that case, the assets.json should live alongside the ci.yml in the sdk/<Servi
 
 Generated assets.json file contents
 - AssetsRepo: "Azure/azure-sdk-assets" - This is the assets repository, aka where your recordings will live after this script runs.
-- AssetsRepoPrefixPath: "<language>" - this is will be computed from repository it's being run in. 
+- AssetsRepoPrefixPath: "<language>" - this is will be computed from repository it's being run in.
 - TagPrefix: "<language>/<ServiceDirectory>" or "<language>/<ServiceDirectory>/<library>" or deeper if things
               are nested in such a manner. All tags created for this assets.json will start with this name.
 - Tag: "" - Initially empty, as nothing has yet been pushed.
@@ -22,9 +22,9 @@ Generated assets.json file contents
 If flag InitialPush is set, recordings will be automatically pushed to the assets repo and the Tag property updated.
 
 .PARAMETER TestProxyExe
-The executable used during the "InitialPush" action. Defaults to the dotnet tool test-proxy, but also supports "docker" or "podman".
+The executable used during the "InitialPush" action. Defaults to the dotnet tool test-proxy, but also supports custom executables as well.
 
-If the user provides their own value that doesn't match options "test-proxy", "docker", or "podman", the script will use this input as the test-proxy exe
+If the user provides their own value that doesn't match options "test-proxy" the script will use this input as the test-proxy exe
 when invoking commands. EG "$TestProxyExe push -a sdk/keyvault/azure-keyvault-keys/assets.json."
 
 .PARAMETER InitialPush
@@ -81,6 +81,7 @@ $LangRecordingDirs = @{"cpp" = "recordings";
 . (Join-Path $PSScriptRoot "common-asset-functions.ps1")
 
 Test-Exe-In-Path -ExeToLookFor $GitExe
+
 $language = Get-Repo-Language
 
 # If the initial push is being performed, ensure that test-proxy is
@@ -89,7 +90,7 @@ $language = Get-Repo-Language
 if ($InitialPush) {
   $proxyPresent = Test-Exe-In-Path -ExeToLookFor $TestProxyExe -ExitOnError $false
 
-  # try to fall back 
+  # try to fall back
   if (-not $proxyPresent) {
     $StandaloneTestProxyExe = "Azure.Sdk.Tools.TestProxy"
 
@@ -106,6 +107,17 @@ if ($InitialPush) {
     else {
       Write-Error "The user has selected option InitialPush to push their assets, neither $TestProxyExe nor standalone executable $StandaloneTestProxyExe are installed on this machine."
       exit 1
+    }
+
+    # if we're pushing, we also need to confirm that the necessary git configuration items are set
+    $result = git config --get user.name
+    if ($LASTEXITCODE -ne 0 -or !$result){
+      Write-Error "The git config setting `"user.name`" is unset. Set it to your git user name via 'git config --global user.name `"<setting>`'"
+    }
+
+    $result = git config --get user.email
+    if ($LASTEXITCODE -ne 0 -or !$result){
+      Write-Error "The git config setting `"user.email`" is unset. Set it to your git email via 'git config --global user.email `"<setting>`'"
     }
   }
 

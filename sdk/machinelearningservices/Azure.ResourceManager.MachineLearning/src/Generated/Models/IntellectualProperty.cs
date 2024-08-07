@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> is null. </exception>
         public IntellectualProperty(string publisher)
         {
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
+            Argument.AssertNotNull(publisher, nameof(publisher));
 
             Publisher = publisher;
         }

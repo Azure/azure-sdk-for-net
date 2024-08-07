@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +179,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +210,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +248,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +279,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +317,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +348,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +386,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,7 +417,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -450,7 +448,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,7 +488,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -530,7 +528,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -572,7 +570,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +612,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,10 +626,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.Update");
             scope.Start();
@@ -663,7 +658,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,10 +672,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisWorkspaceResource> Update(WaitUntil waitUntil, HealthcareApisWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.Update");
             scope.Start();
@@ -712,7 +704,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -726,14 +718,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.AddTag");
             scope.Start();
@@ -780,7 +766,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -794,14 +780,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<HealthcareApisWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.AddTag");
             scope.Start();
@@ -848,7 +828,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -861,10 +841,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.SetTags");
             scope.Start();
@@ -908,7 +885,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -921,10 +898,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HealthcareApisWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.SetTags");
             scope.Start();
@@ -968,7 +942,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -981,10 +955,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.RemoveTag");
             scope.Start();
@@ -1031,7 +1002,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1044,10 +1015,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<HealthcareApisWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _healthcareApisWorkspaceWorkspacesClientDiagnostics.CreateScope("HealthcareApisWorkspaceResource.RemoveTag");
             scope.Start();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownFormat. </summary>
+    /// <summary> Unknown version of Format. </summary>
     internal partial class UnknownFormat : MediaFormatBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFormat"/>. </summary>

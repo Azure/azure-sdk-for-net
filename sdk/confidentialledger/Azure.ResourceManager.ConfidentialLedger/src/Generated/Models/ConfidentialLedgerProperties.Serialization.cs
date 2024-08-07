@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfidentialLedgerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,13 +61,18 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(LedgerSku))
+            {
+                writer.WritePropertyName("ledgerSku"u8);
+                writer.WriteStringValue(LedgerSku.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
             {
                 writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
                 foreach (var item in AadBasedSecurityPrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in CertBasedSecurityPrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,10 +131,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerType? ledgerType = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
+            ConfidentialLedgerSku? ledgerSku = default;
             IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default;
             IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ledgerName"u8))
@@ -188,6 +193,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("ledgerSku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ledgerSku = new ConfidentialLedgerSku(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("aadBasedSecurityPrincipals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -218,10 +232,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfidentialLedgerProperties(
                 ledgerName,
                 ledgerUri,
@@ -230,6 +244,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 runningState,
                 ledgerType,
                 provisioningState,
+                ledgerSku,
                 aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(),
                 certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(),
                 serializedAdditionalRawData);
@@ -244,7 +259,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +275,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeConfidentialLedgerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data)
@@ -57,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -74,42 +89,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -133,42 +117,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName, data);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +132,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName)
@@ -213,38 +182,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,38 +210,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +226,26 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand)
@@ -352,38 +285,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -414,38 +319,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RestorePointData> Get(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointGroupName, restorePointName, expand);
             _pipeline.Send(message, cancellationToken);

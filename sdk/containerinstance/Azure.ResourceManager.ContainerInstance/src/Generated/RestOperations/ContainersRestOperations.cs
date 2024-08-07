@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerInstance.Models;
@@ -35,6 +34,31 @@ namespace Azure.ResourceManager.ContainerInstance
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListLogsRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/logs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (tail != null)
+            {
+                uri.AppendQuery("tail", tail.Value, true);
+            }
+            if (timestamps != null)
+            {
+                uri.AppendQuery("timestamps", timestamps.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListLogsRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps)
@@ -80,38 +104,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerLogs>> ListLogsAsync(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, containerGroupName, containerName, tail, timestamps);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,38 +137,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerLogs> ListLogs(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListLogsRequest(subscriptionId, resourceGroupName, containerGroupName, containerName, tail, timestamps);
             _pipeline.Send(message, cancellationToken);
@@ -188,6 +156,23 @@ namespace Azure.ResourceManager.ContainerInstance
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteCommandRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/exec", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteCommandRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content)
@@ -211,7 +196,7 @@ namespace Azure.ResourceManager.ContainerInstance
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -228,42 +213,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerExecResult>> ExecuteCommandAsync(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateExecuteCommandRequest(subscriptionId, resourceGroupName, containerGroupName, containerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -292,42 +246,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerExecResult> ExecuteCommand(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateExecuteCommandRequest(subscriptionId, resourceGroupName, containerGroupName, containerName, content);
             _pipeline.Send(message, cancellationToken);
@@ -343,6 +266,23 @@ namespace Azure.ResourceManager.ContainerInstance
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAttachRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/attach", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAttachRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName)
@@ -378,38 +318,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAttachResult>> AttachAsync(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateAttachRequest(subscriptionId, resourceGroupName, containerGroupName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -437,38 +349,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerGroupName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAttachResult> Attach(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(containerGroupName));
-            }
-            if (containerGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerGroupName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerGroupName, nameof(containerGroupName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateAttachRequest(subscriptionId, resourceGroupName, containerGroupName, containerName);
             _pipeline.Send(message, cancellationToken);

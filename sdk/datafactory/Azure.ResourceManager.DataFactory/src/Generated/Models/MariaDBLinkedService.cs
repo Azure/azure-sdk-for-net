@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> Database name for connection. Type: string. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MariaDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryKeyVaultSecretReference password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MariaDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> driverVersion, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryKeyVaultSecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             DriverVersion = driverVersion;
             ConnectionString = connectionString;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Database name for connection. Type: string. </summary>
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactoryKeyVaultSecretReference Password { get; set; }
+        public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

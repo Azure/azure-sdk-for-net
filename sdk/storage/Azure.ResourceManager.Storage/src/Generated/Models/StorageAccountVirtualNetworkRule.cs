@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
         public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId)
         {
-            if (virtualNetworkResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkResourceId));
-            }
+            Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
 
             VirtualNetworkResourceId = virtualNetworkResourceId;
         }
@@ -78,10 +75,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
+        [WirePath("id")]
         public ResourceIdentifier VirtualNetworkResourceId { get; set; }
         /// <summary> The action of virtual network rule. </summary>
+        [WirePath("action")]
         public StorageAccountNetworkRuleAction? Action { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>
+        [WirePath("state")]
         public StorageAccountNetworkRuleState? State { get; set; }
     }
 }

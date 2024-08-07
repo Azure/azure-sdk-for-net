@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "130",
+        "Content-Type": "application/json",
+        "traceparent": "00-6189a2b11372ffafb2b3d287c35d9963-f5bed0be949b3fb9-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How many feet are in a mile?",
+            "role": "user"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "Content-Length": "324",
+        "Content-Type": "application/json",
+        "Date": "Thu, 01 Aug 2024 23:09:53 GMT",
+        "prompt_token_len": "19",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "sampling_token_len": "13",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "f4f0086c-c40c-4617-9a51-88dda8378a32"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+              "content": "There are 5,280 feet in a mile.",
+              "role": "assistant",
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1722553793,
+        "id": "f34124c08cc14be0ba9176e44b3e0349",
+        "model": "mistral-small",
+        "object": "chat.completion",
+        "usage": {
+          "completion_tokens": 13,
+          "prompt_tokens": 19,
+          "total_tokens": 32
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
+    "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
+    "RandomSeed": "2144582109"
+  }
+}

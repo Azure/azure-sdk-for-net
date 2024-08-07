@@ -38,12 +38,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new SubscriptionValidationEventData(validationCode, validationUrl);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SubscriptionValidationEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSubscriptionValidationEventData(document.RootElement);
+        }
+
         internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>
         {
             public override void Write(Utf8JsonWriter writer, SubscriptionValidationEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SubscriptionValidationEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

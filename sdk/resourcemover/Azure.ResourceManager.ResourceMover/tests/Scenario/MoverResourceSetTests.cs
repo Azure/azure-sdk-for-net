@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             AssertValidMoverResourceSet(moverResourceSet, getMoverResourceSet);
         }
 
-        //[TestCase]
-        //[RecordedTest]
-        //public async Task Delete()
-        //{
-        //    SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-        //    string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
-        //    ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
-        //    string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
-        //    MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
-        //    await moverResourceSet.DeleteAsync(WaitUntil.Completed);
-        //    var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResourceSet.GetAsync());
-        //    Assert.AreEqual(404, ex.Status);
-        //}
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            string rgName = Recording.GenerateAssetName("testRg-ResourceMover-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName, AzureLocation.WestUS);
+            string moverResourceSetName = Recording.GenerateAssetName("MoverResourceSet-");
+            MoverResourceSetResource moverResourceSet = await CreateMoverResourceSet(rg, moverResourceSetName);
+            await moverResourceSet.DeleteAsync(WaitUntil.Completed);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await moverResourceSet.GetAsync());
+            Assert.AreEqual(404, ex.Status);
+        }
 
         [TestCase]
         [RecordedTest]

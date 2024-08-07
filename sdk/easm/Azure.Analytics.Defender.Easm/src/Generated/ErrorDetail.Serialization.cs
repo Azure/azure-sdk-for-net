@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
     public partial class ErrorDetail : IUtf8JsonSerializable, IJsonModel<ErrorDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ErrorDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +41,14 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue(Innererror, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +94,7 @@ namespace Azure.Analytics.Defender.Easm
             IReadOnlyList<ErrorDetail> details = default;
             InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -138,10 +137,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ErrorDetail(
                 code,
                 message,
@@ -160,7 +159,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeErrorDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDetail)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -190,11 +189,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeErrorDetail(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

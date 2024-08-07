@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Workloads.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.Workloads
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapCentralServerInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapCentralServerInstanceData> Get(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,22 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstanceData data)
@@ -201,7 +176,7 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -218,42 +193,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,42 +222,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -325,6 +238,22 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstancePatch patch)
@@ -347,7 +276,7 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -364,42 +293,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -424,42 +322,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapCentralServerInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -471,6 +338,22 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
@@ -505,38 +388,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -561,38 +416,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -605,6 +432,21 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
@@ -637,30 +479,9 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapCentralInstanceList>> ListAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -687,30 +508,9 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapCentralInstanceList> List(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -726,6 +526,23 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName)
@@ -761,38 +578,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -816,38 +605,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -859,6 +620,23 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapStopContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/centralInstances/", false);
+            uri.AppendPath(centralInstanceName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapStopContent content)
@@ -884,7 +662,7 @@ namespace Azure.ResourceManager.Workloads
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -902,38 +680,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -958,38 +708,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StopInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (centralInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(centralInstanceName));
-            }
-            if (centralInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
 
             using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, centralInstanceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1001,6 +723,14 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
@@ -1027,34 +757,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapCentralInstanceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapVirtualInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1082,34 +788,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapCentralInstanceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapVirtualInstanceName);
             _pipeline.Send(message, cancellationToken);

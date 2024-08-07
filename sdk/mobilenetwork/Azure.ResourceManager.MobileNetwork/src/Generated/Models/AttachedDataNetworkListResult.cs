@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for attached data network API service call. </summary>
+    /// <summary>
+    /// Response for attached data network API service call.
+    /// Serialized Name: AttachedDataNetworkListResult
+    /// </summary>
     internal partial class AttachedDataNetworkListResult
     {
         /// <summary>
@@ -54,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AttachedDataNetworkListResult"/>. </summary>
-        /// <param name="value"> A list of data networks in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of data networks in a resource group.
+        /// Serialized Name: AttachedDataNetworkListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: AttachedDataNetworkListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AttachedDataNetworkListResult(IReadOnlyList<MobileAttachedDataNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of data networks in a resource group. </summary>
+        /// <summary>
+        /// A list of data networks in a resource group.
+        /// Serialized Name: AttachedDataNetworkListResult.value
+        /// </summary>
         public IReadOnlyList<MobileAttachedDataNetworkData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: AttachedDataNetworkListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

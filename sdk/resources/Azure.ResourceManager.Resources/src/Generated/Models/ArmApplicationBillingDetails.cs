@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application resource usage Id. </summary>
+        [WirePath("resourceUsageId")]
         public string ResourceUsageId { get; }
     }
 }

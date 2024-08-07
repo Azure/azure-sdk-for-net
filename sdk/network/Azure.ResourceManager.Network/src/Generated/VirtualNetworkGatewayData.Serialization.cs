@@ -9,8 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
@@ -75,7 +80,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,12 +135,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(VpnClientConfiguration))
             {
                 writer.WritePropertyName("vpnClientConfiguration"u8);
-                writer.WriteObjectValue(VpnClientConfiguration);
+                writer.WriteObjectValue(VpnClientConfiguration, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -143,19 +148,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkGatewayPolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings);
+                writer.WriteObjectValue(BgpSettings, options);
             }
             if (Optional.IsDefined(CustomRoutes))
             {
                 writer.WritePropertyName("customRoutes"u8);
-                writer.WriteObjectValue(CustomRoutes);
+                writer.WriteObjectValue(CustomRoutes, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -188,7 +193,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +241,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -245,7 +250,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -253,6 +258,7 @@ namespace Azure.ResourceManager.Network
             }
             ExtendedLocation extendedLocation = default;
             ETag? etag = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
@@ -284,7 +290,7 @@ namespace Azure.ResourceManager.Network
             bool? allowRemoteVnetTraffic = default;
             ExpressRouteGatewayAdminState? adminState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -303,6 +309,15 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -601,10 +616,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkGatewayData(
                 id,
                 name,
@@ -614,6 +629,7 @@ namespace Azure.ResourceManager.Network
                 serializedAdditionalRawData,
                 extendedLocation,
                 etag,
+                identity,
                 autoScaleConfiguration,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(),
                 gatewayType,
@@ -650,7 +666,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -666,7 +682,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

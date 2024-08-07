@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -77,7 +74,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +136,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +165,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +194,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +223,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +252,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +277,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,14 +312,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentBySubscription");
             scope.Start();
@@ -351,7 +341,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,14 +351,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentBySubscription");
             scope.Start();
@@ -397,7 +380,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,18 +391,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateConfigurationAssignmentBySubscription");
             scope.Start();
@@ -448,7 +421,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +432,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateConfigurationAssignmentBySubscription");
             scope.Start();
@@ -499,7 +462,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,18 +473,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.UpdateConfigurationAssignmentBySubscription");
             scope.Start();
@@ -550,7 +503,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -561,18 +514,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.UpdateConfigurationAssignmentBySubscription");
             scope.Start();
@@ -601,7 +544,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,14 +554,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.DeleteConfigurationAssignmentBySubscription");
             scope.Start();
@@ -647,7 +583,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,14 +593,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (configurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationAssignmentName));
-            }
-            if (configurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
             using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.DeleteConfigurationAssignmentBySubscription");
             scope.Start();

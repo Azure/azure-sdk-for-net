@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string loadBalancerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
+            uri.AppendPath(loadBalancerName, true);
+            uri.AppendPath("/loadBalancingRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string loadBalancerName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadBalancerLoadBalancingRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadBalancerLoadBalancingRuleListResult> List(string subscriptionId, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
+            uri.AppendPath(loadBalancerName, true);
+            uri.AppendPath("/loadBalancingRules/", false);
+            uri.AppendPath(loadBalancingRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName)
@@ -190,38 +178,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadBalancingRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, loadBalancerName, loadBalancingRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +211,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/> or <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadBalancingRuleData> Get(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
-            if (loadBalancingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancingRuleName));
-            }
-            if (loadBalancingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+            Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, loadBalancerName, loadBalancingRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +232,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string loadBalancerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string loadBalancerName)
@@ -326,34 +266,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadBalancerLoadBalancingRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, loadBalancerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -381,34 +297,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadBalancerLoadBalancingRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (loadBalancerName == null)
-            {
-                throw new ArgumentNullException(nameof(loadBalancerName));
-            }
-            if (loadBalancerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(loadBalancerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, loadBalancerName);
             _pipeline.Send(message, cancellationToken);

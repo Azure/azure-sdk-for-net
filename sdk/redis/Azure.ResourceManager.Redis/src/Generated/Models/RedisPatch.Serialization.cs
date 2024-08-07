@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisPatch : IUtf8JsonSerializable, IJsonModel<RedisPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration);
+                writer.WriteObjectValue(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -102,10 +101,15 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
+            {
+                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatch DeserializeRedisPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,9 +162,10 @@ namespace Azure.ResourceManager.Redis.Models
             RedisTlsVersion? minimumTlsVersion = default;
             RedisPublicNetworkAccess? publicNetworkAccess = default;
             UpdateChannel? updateChannel = default;
+            bool? disableAccessKeyAuthentication = default;
             RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -286,6 +291,15 @@ namespace Azure.ResourceManager.Redis.Models
                             updateChannel = new UpdateChannel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -300,10 +314,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
@@ -317,6 +331,7 @@ namespace Azure.ResourceManager.Redis.Models
                 minimumTlsVersion,
                 publicNetworkAccess,
                 updateChannel,
+                disableAccessKeyAuthentication,
                 sku,
                 serializedAdditionalRawData);
         }
@@ -330,7 +345,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +361,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

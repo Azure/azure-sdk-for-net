@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         public ManagementPolicyRule(string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             Name = name;
             RuleType = ruleType;
@@ -87,12 +81,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Rule is enabled if set to true. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The valid value is Lifecycle. </summary>
+        [WirePath("type")]
         public ManagementPolicyRuleType RuleType { get; set; }
         /// <summary> An object that defines the Lifecycle rule. </summary>
+        [WirePath("definition")]
         public ManagementPolicyDefinition Definition { get; set; }
     }
 }

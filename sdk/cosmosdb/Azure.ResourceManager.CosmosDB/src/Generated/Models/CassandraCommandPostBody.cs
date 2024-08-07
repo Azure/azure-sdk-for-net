@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -52,14 +51,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="host"/> is null. </exception>
         public CassandraCommandPostBody(string command, string host)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(host, nameof(host));
 
             Command = command;
             Arguments = new ChangeTrackingDictionary<string, string>();
@@ -89,14 +82,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The command which should be run. </summary>
+        [WirePath("command")]
         public string Command { get; }
         /// <summary> The arguments for the command to be run. </summary>
+        [WirePath("arguments")]
         public IDictionary<string, string> Arguments { get; }
         /// <summary> IP address of the cassandra host to run the command on. </summary>
+        [WirePath("host")]
         public string Host { get; }
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
+        [WirePath("cassandra-stop-start")]
         public bool? CassandraStopStart { get; set; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
+        [WirePath("readWrite")]
         public bool? AllowWrite { get; set; }
     }
 }

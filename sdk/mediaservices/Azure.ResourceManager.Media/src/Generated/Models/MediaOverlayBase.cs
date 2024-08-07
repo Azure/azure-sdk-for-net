@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
         protected MediaOverlayBase(string inputLabel)
         {
-            if (inputLabel == null)
-            {
-                throw new ArgumentNullException(nameof(inputLabel));
-            }
+            Argument.AssertNotNull(inputLabel, nameof(inputLabel));
 
             InputLabel = inputLabel;
         }

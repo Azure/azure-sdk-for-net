@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class BackendCredentialsContract : IUtf8JsonSerializable, IJsonModel<BackendCredentialsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendCredentialsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendCredentialsContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackendCredentialsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue(Authorization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendCredentialsContract DeserializeBackendCredentialsContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IDictionary<string, IList<string>> header = default;
             BackendAuthorizationHeaderCredentials authorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateIds"u8))
@@ -232,10 +233,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackendCredentialsContract(
                 certificateIds ?? new ChangeTrackingList<string>(),
                 certificate ?? new ChangeTrackingList<string>(),
@@ -243,6 +244,202 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 header ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 authorization,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CertificateIds))
+                {
+                    if (CertificateIds.Any())
+                    {
+                        builder.Append("  certificateIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CertificateIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Certificate))
+                {
+                    if (Certificate.Any())
+                    {
+                        builder.Append("  certificate: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Certificate)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Query), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  query: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Query))
+                {
+                    if (Query.Any())
+                    {
+                        builder.Append("  query: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Query)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("      '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"      '{item0}'");
+                                }
+                            }
+                            builder.AppendLine("    ]");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Header), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  header: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Header))
+                {
+                    if (Header.Any())
+                    {
+                        builder.Append("  header: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Header)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("      '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"      '{item0}'");
+                                }
+                            }
+                            builder.AppendLine("    ]");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authorization), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorization: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Authorization))
+                {
+                    builder.Append("  authorization: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Authorization, options, 2, false, "  authorization: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<BackendCredentialsContract>.Write(ModelReaderWriterOptions options)
@@ -253,8 +450,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +469,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeBackendCredentialsContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support reading '{options.Format}' format.");
             }
         }
 

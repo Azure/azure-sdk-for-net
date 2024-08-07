@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -267,17 +265,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuildResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformBuildData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResource.Update");
             scope.Start();
             try
             {
                 var response = await _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -316,17 +313,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuildResource> Update(WaitUntil waitUntil, AppPlatformBuildData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResource.Update");
             scope.Start();
             try
             {
                 var response = _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

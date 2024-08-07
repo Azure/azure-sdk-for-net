@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public OracleConnectionInfo(string dataSource)
         {
-            if (dataSource == null)
-            {
-                throw new ArgumentNullException(nameof(dataSource));
-            }
+            Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
             ConnectionInfoType = "OracleConnectionInfo";

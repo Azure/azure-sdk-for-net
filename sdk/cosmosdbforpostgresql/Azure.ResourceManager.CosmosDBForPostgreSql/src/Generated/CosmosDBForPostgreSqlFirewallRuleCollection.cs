@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<CosmosDBForPostgreSqlFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBForPostgreSqlFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBForPostgreSqlFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
             scope.Start();

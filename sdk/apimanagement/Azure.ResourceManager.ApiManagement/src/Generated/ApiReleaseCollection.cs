@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiReleaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string releaseId, ApiReleaseData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiReleaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()));
+                var uri = _apiReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiReleaseResource> CreateOrUpdate(WaitUntil waitUntil, string releaseId, ApiReleaseData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiReleaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()));
+                var uri = _apiReleaseRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiReleaseResource>(Response.FromValue(new ApiReleaseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual async Task<Response<ApiReleaseResource>> GetAsync(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual Response<ApiReleaseResource> Get(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.Get");
             scope.Start();
@@ -290,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,14 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.Exists");
             scope.Start();
@@ -406,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,14 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual Response<bool> Exists(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.Exists");
             scope.Start();
@@ -456,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiReleaseResource>> GetIfExistsAsync(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
             scope.Start();
@@ -508,7 +455,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
         public virtual NullableResponse<ApiReleaseResource> GetIfExists(string releaseId, CancellationToken cancellationToken = default)
         {
-            if (releaseId == null)
-            {
-                throw new ArgumentNullException(nameof(releaseId));
-            }
-            if (releaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(releaseId));
-            }
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
 
             using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
             scope.Start();

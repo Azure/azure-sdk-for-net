@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentWhatIfContent(ArmDeploymentWhatIfProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -76,8 +73,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentWhatIfProperties Properties { get; }
     }
 }

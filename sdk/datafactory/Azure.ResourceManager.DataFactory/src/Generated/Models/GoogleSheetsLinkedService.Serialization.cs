@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class GoogleSheetsLinkedService : IUtf8JsonSerializable, IJsonModel<GoogleSheetsLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleSheetsLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleSheetsLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GoogleSheetsLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GoogleSheetsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<GoogleSheetsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GoogleSheetsLinkedService DeserializeGoogleSheetsLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            DataFactorySecretBaseDefinition apiToken = default;
+            DataFactorySecret apiToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("apiToken"u8))
                         {
-                            apiToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            apiToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeGoogleSheetsLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleSheetsLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

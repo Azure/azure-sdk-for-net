@@ -18,17 +18,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal LogAnalyticsDataConnection(LogAnalyticsDataConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Kind = "logAnalytics";
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Subscription.Models;
@@ -37,6 +36,15 @@ namespace Azure.ResourceManager.Subscription
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateAddUpdatePolicyForTenantRequestUri(TenantPolicyCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -50,7 +58,7 @@ namespace Azure.ResourceManager.Subscription
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -62,10 +70,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<TenantPolicyData>> AddUpdatePolicyForTenantAsync(TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddUpdatePolicyForTenantRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,10 +94,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<TenantPolicyData> AddUpdatePolicyForTenant(TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddUpdatePolicyForTenantRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -108,6 +110,15 @@ namespace Azure.ResourceManager.Subscription
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPolicyForTenantRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/policies/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPolicyForTenantRequest()
@@ -169,6 +180,15 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        internal RequestUriBuilder CreateListPolicyForTenantRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Subscription/policies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPolicyForTenantRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -224,6 +244,14 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
+        internal RequestUriBuilder CreateListPolicyForTenantNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListPolicyForTenantNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -244,10 +272,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<TenantPoliciesResult>> ListPolicyForTenantNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListPolicyForTenantNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,10 +296,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<TenantPoliciesResult> ListPolicyForTenantNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListPolicyForTenantNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);

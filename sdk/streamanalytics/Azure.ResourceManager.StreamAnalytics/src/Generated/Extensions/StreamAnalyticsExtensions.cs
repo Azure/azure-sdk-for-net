@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Mocking;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobFunctionResource"/> object. </returns>
         public static StreamingJobFunctionResource GetStreamingJobFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobFunctionResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobInputResource"/> object. </returns>
         public static StreamingJobInputResource GetStreamingJobInputResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobInputResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobOutputResource"/> object. </returns>
         public static StreamingJobOutputResource GetStreamingJobOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobOutputResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobResource"/> object. </returns>
         public static StreamingJobResource GetStreamingJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobTransformationResource"/> object. </returns>
         public static StreamingJobTransformationResource GetStreamingJobTransformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobTransformationResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsClusterResource"/> object. </returns>
         public static StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsClusterResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource"/> object. </returns>
         public static StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsPrivateEndpointResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobResources and their operations over a StreamingJobResource. </returns>
         public static StreamingJobCollection GetStreamingJobs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobs();
         }
@@ -243,10 +217,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamingJobResource>> GetStreamingJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -285,10 +256,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamingJobResource> GetStreamingJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJob(jobName, expand, cancellationToken);
         }
@@ -305,10 +273,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
         public static StreamAnalyticsClusterCollection GetStreamAnalyticsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusters();
         }
@@ -346,10 +311,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -387,10 +349,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsCluster(clusterName, cancellationToken);
         }
@@ -427,10 +386,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
         }
@@ -467,10 +423,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamingJobResource> GetStreamingJobs(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
         }
@@ -503,10 +456,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
@@ -539,10 +489,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
@@ -576,10 +523,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testQuery"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsQueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
         }
@@ -613,10 +557,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testQuery"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsQueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
         }
@@ -649,10 +590,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="compileQuery"/> is null. </exception>
         public static async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
         }
@@ -685,10 +623,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="compileQuery"/> is null. </exception>
         public static Response<StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
         }
@@ -722,10 +657,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsSampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -759,10 +691,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsSampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
         }
@@ -796,10 +725,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -833,10 +759,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
         }
@@ -870,10 +793,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testOutput"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
         }
@@ -907,10 +827,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testOutput"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
         }
@@ -946,10 +863,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
         }
@@ -985,10 +899,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
         }

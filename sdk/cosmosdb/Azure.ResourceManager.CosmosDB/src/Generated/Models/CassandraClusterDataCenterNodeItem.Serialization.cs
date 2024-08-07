@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterDataCenterNodeItem : IUtf8JsonSerializable, IJsonModel<CassandraClusterDataCenterNodeItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterDataCenterNodeItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterDataCenterNodeItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraClusterDataCenterNodeItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             double? cpuUsage = default;
             bool? isLatestModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -327,10 +328,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterDataCenterNodeItem(
                 address,
                 state,
@@ -353,6 +354,361 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  address: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address))
+                {
+                    builder.Append("  address: ");
+                    if (Address.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Address}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Address}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraProcessStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cassandraProcessStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CassandraProcessStatus))
+                {
+                    builder.Append("  cassandraProcessStatus: ");
+                    if (CassandraProcessStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CassandraProcessStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CassandraProcessStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Load), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  load: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Load))
+                {
+                    builder.Append("  load: ");
+                    if (Load.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Load}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Load}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tokens), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokens: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tokens))
+                {
+                    if (Tokens.Any())
+                    {
+                        builder.Append("  tokens: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Tokens)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  size: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Size))
+                {
+                    builder.Append("  size: ");
+                    builder.AppendLine($"{Size.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostID: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostId))
+                {
+                    builder.Append("  hostID: ");
+                    builder.AppendLine($"'{HostId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rack), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rack: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rack))
+                {
+                    builder.Append("  rack: ");
+                    if (Rack.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rack}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rack}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    if (Timestamp.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Timestamp}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Timestamp}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskUsedKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskUsedKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskUsedKB))
+                {
+                    builder.Append("  diskUsedKB: ");
+                    builder.AppendLine($"'{DiskUsedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskFreeKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diskFreeKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiskFreeKB))
+                {
+                    builder.Append("  diskFreeKB: ");
+                    builder.AppendLine($"'{DiskFreeKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryUsedKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryUsedKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryUsedKB))
+                {
+                    builder.Append("  memoryUsedKB: ");
+                    builder.AppendLine($"'{MemoryUsedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryBuffersAndCachedKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryBuffersAndCachedKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryBuffersAndCachedKB))
+                {
+                    builder.Append("  memoryBuffersAndCachedKB: ");
+                    builder.AppendLine($"'{MemoryBuffersAndCachedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryFreeKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryFreeKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryFreeKB))
+                {
+                    builder.Append("  memoryFreeKB: ");
+                    builder.AppendLine($"'{MemoryFreeKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryTotalKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryTotalKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryTotalKB))
+                {
+                    builder.Append("  memoryTotalKB: ");
+                    builder.AppendLine($"'{MemoryTotalKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuUsage))
+                {
+                    builder.Append("  cpuUsage: ");
+                    builder.AppendLine($"'{CpuUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isLatestModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLatestModel))
+                {
+                    builder.Append("  isLatestModel: ");
+                    var boolValue = IsLatestModel.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,8 +717,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -378,7 +736,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support reading '{options.Format}' format.");
             }
         }
 

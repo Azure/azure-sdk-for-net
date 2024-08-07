@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The table temporal type. </summary>
+        [WirePath("properties.temporalType")]
         public TableTemporalType? TemporalType { get; set; }
         /// <summary> Whether or not the table is memory optimized. </summary>
+        [WirePath("properties.memoryOptimized")]
         public bool? IsMemoryOptimized { get; set; }
     }
 }

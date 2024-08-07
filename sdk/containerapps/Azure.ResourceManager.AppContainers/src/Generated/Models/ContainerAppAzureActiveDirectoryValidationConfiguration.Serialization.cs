@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppAzureActiveDirectoryValidationConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppAzureActiveDirectoryValidationConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks);
+                writer.WriteObjectValue(JwtClaimChecks, options);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy);
+                writer.WriteObjectValue(DefaultAuthorizationPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryValidationConfiguration DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<string> allowedAudiences = default;
             ContainerAppDefaultAuthorizationPolicy defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jwtClaimChecks"u8))
@@ -126,10 +125,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy, serializedAdditionalRawData);
         }
 
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

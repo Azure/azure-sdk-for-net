@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicWorkflowTriggerStateActionContent : IUtf8JsonSerializable, IJsonModel<LogicWorkflowTriggerStateActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerStateActionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerStateActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowTriggerStateActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerStateActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue(Source, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerStateActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerStateActionContent DeserializeLogicWorkflowTriggerStateActionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             LogicWorkflowTriggerReference source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowTriggerStateActionContent(source, serializedAdditionalRawData);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowTriggerStateActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerStateActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

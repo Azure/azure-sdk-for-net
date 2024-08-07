@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkPeeringData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,25 +75,35 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
+            if (Optional.IsDefined(LocalAddressSpace))
+            {
+                writer.WritePropertyName("localAddressSpace"u8);
+                writer.WriteObjectValue(LocalAddressSpace, options);
+            }
+            if (Optional.IsDefined(LocalVirtualNetworkAddressSpace))
+            {
+                writer.WritePropertyName("localVirtualNetworkAddressSpace"u8);
+                writer.WriteObjectValue(LocalVirtualNetworkAddressSpace, options);
+            }
             if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
-                writer.WriteObjectValue(RemoteAddressSpace);
+                writer.WriteObjectValue(RemoteAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
+                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
-                writer.WriteObjectValue(RemoteBgpCommunities);
+                writer.WriteObjectValue(RemoteBgpCommunities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
-                writer.WriteObjectValue(RemoteVirtualNetworkEncryption);
+                writer.WriteObjectValue(RemoteVirtualNetworkEncryption, options);
             }
             if (Optional.IsDefined(PeeringState))
             {
@@ -121,6 +130,36 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
+            if (Optional.IsDefined(AreCompleteVnetsPeered))
+            {
+                writer.WritePropertyName("peerCompleteVnets"u8);
+                writer.WriteBooleanValue(AreCompleteVnetsPeered.Value);
+            }
+            if (Optional.IsDefined(EnableOnlyIPv6Peering))
+            {
+                writer.WritePropertyName("enableOnlyIPv6Peering"u8);
+                writer.WriteBooleanValue(EnableOnlyIPv6Peering.Value);
+            }
+            if (Optional.IsCollectionDefined(LocalSubnetNames))
+            {
+                writer.WritePropertyName("localSubnetNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocalSubnetNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RemoteSubnetNames))
+            {
+                writer.WritePropertyName("remoteSubnetNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in RemoteSubnetNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +184,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +193,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkPeeringData DeserializeVirtualNetworkPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,6 +208,8 @@ namespace Azure.ResourceManager.Network
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
             WritableSubResource remoteVirtualNetwork = default;
+            AddressSpace localAddressSpace = default;
+            AddressSpace localVirtualNetworkAddressSpace = default;
             AddressSpace remoteAddressSpace = default;
             AddressSpace remoteVirtualNetworkAddressSpace = default;
             VirtualNetworkBgpCommunities remoteBgpCommunities = default;
@@ -178,8 +219,12 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             bool? doNotVerifyRemoteGateways = default;
             Guid? resourceGuid = default;
+            bool? peerCompleteVnets = default;
+            bool? enableOnlyIPv6Peering = default;
+            IList<string> localSubnetNames = default;
+            IList<string> remoteSubnetNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -268,6 +313,24 @@ namespace Azure.ResourceManager.Network
                             remoteVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("localAddressSpace"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            localAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("localVirtualNetworkAddressSpace"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            localVirtualNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("remoteAddressSpace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -349,15 +412,61 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("peerCompleteVnets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerCompleteVnets = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableOnlyIPv6Peering"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableOnlyIPv6Peering = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("localSubnetNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            localSubnetNames = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteSubnetNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            remoteSubnetNames = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkPeeringData(
                 id,
                 name,
@@ -369,6 +478,8 @@ namespace Azure.ResourceManager.Network
                 allowGatewayTransit,
                 useRemoteGateways,
                 remoteVirtualNetwork,
+                localAddressSpace,
+                localVirtualNetworkAddressSpace,
                 remoteAddressSpace,
                 remoteVirtualNetworkAddressSpace,
                 remoteBgpCommunities,
@@ -377,7 +488,11 @@ namespace Azure.ResourceManager.Network
                 peeringSyncLevel,
                 provisioningState,
                 doNotVerifyRemoteGateways,
-                resourceGuid);
+                resourceGuid,
+                peerCompleteVnets,
+                enableOnlyIPv6Peering,
+                localSubnetNames ?? new ChangeTrackingList<string>(),
+                remoteSubnetNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options)
@@ -389,7 +504,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -405,7 +520,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkPeeringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{options.Format}' format.");
             }
         }
 

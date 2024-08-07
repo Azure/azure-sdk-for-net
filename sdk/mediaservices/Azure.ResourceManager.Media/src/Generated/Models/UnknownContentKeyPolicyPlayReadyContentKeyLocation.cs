@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownContentKeyPolicyPlayReadyContentKeyLocation. </summary>
+    /// <summary> Unknown version of ContentKeyPolicyPlayReadyContentKeyLocation. </summary>
     internal partial class UnknownContentKeyPolicyPlayReadyContentKeyLocation : ContentKeyPolicyPlayReadyContentKeyLocation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>

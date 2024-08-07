@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationTask : IUtf8JsonSerializable, IJsonModel<DataReplicationTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue(CustomProperties);
+                writer.WriteObjectValue(CustomProperties, options);
             }
             if (Optional.IsCollectionDefined(ChildrenWorkflows))
             {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildrenWorkflows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationTask DeserializeDataReplicationTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             TaskModelCustomProperties customProperties = default;
             IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskName"u8))
@@ -167,10 +166,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationTask(
                 taskName,
                 state,
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationTask)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containersList"/> is null. </exception>
         public BlobBackupDataSourceSettings(IEnumerable<string> containersList)
         {
-            if (containersList == null)
-            {
-                throw new ArgumentNullException(nameof(containersList));
-            }
+            Argument.AssertNotNull(containersList, nameof(containersList));
 
             ContainersList = containersList.ToList();
             ObjectType = "BlobBackupDatasourceParameters";

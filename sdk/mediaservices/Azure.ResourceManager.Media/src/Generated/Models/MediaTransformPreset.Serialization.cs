@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Media.Models
     [PersistableModelProxy(typeof(UnknownPreset))]
     public partial class MediaTransformPreset : IUtf8JsonSerializable, IJsonModel<MediaTransformPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaTransformPreset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaTransformPreset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaTransformPreset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaTransformPreset DeserializeMediaTransformPreset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaTransformPreset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support reading '{options.Format}' format.");
             }
         }
 

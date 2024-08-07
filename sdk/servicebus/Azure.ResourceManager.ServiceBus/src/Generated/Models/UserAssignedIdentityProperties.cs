@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> ARM ID of user Identity selected for encryption. </summary>
+        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
     }
 }

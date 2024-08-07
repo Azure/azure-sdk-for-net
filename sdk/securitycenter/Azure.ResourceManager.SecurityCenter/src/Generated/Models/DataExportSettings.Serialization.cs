@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DataExportSettings : IUtf8JsonSerializable, IJsonModel<DataExportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataExportSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DataExportSettings DeserializeDataExportSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SystemData systemData = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -158,10 +157,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataExportSettings(
                 id,
                 name,
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDataExportSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

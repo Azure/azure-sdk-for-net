@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteLinkResource>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<ExpressRouteLinkResource> Get(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +184,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +214,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
             scope.Start();
@@ -280,7 +257,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.Exists");
             scope.Start();
@@ -330,7 +300,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteLinkResource>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
             scope.Start();
@@ -382,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteLinkResource> GetIfExists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLinkCollection.GetIfExists");
             scope.Start();

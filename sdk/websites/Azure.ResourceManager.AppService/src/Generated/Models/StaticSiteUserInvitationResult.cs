@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The expiration time of the invitation. </summary>
+        [WirePath("properties.expiresOn")]
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The url for the invitation link. </summary>
+        [WirePath("properties.invitationUrl")]
         public Uri InvitationUri { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Data.Tables;
-
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The Metrics. </summary>

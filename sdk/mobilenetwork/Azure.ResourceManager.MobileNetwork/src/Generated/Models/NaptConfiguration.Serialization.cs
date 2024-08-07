@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class NaptConfiguration : IUtf8JsonSerializable, IJsonModel<NaptConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NaptConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NaptConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NaptConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
-                writer.WriteObjectValue(PortRange);
+                writer.WriteObjectValue(PortRange, options);
             }
             if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
-                writer.WriteObjectValue(PortReuseHoldTime);
+                writer.WriteObjectValue(PortReuseHoldTime, options);
             }
             if (Optional.IsDefined(PinholeLimits))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
-                writer.WriteObjectValue(PinholeTimeouts);
+                writer.WriteObjectValue(PinholeTimeouts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             int? pinholeLimits = default;
             PinholeTimeouts pinholeTimeouts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NaptConfiguration(
                 enabled,
                 portRange,
@@ -157,6 +157,96 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 pinholeLimits,
                 pinholeTimeouts,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
+                {
+                    builder.Append("  enabled: ");
+                    builder.AppendLine($"'{Enabled.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortRange))
+                {
+                    builder.Append("  portRange: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PortRange, options, 2, false, "  portRange: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortReuseHoldTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  portReuseHoldTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PortReuseHoldTime))
+                {
+                    builder.Append("  portReuseHoldTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PortReuseHoldTime, options, 2, false, "  portReuseHoldTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PinholeLimits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pinholeLimits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PinholeLimits))
+                {
+                    builder.Append("  pinholeLimits: ");
+                    builder.AppendLine($"{PinholeLimits.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PinholeTimeouts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pinholeTimeouts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PinholeTimeouts))
+                {
+                    builder.Append("  pinholeTimeouts: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PinholeTimeouts, options, 2, false, "  pinholeTimeouts: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)
@@ -167,8 +257,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +276,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeNaptConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

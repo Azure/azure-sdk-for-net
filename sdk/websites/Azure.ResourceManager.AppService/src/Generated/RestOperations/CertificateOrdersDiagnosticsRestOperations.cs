@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2023-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAppServiceCertificateOrderDetectorResponseRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/detectors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceDetectorListResult>> ListAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
             using var message = CreateListAppServiceCertificateOrderDetectorResponseRequest(subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceDetectorListResult> ListAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
             using var message = CreateListAppServiceCertificateOrderDetectorResponseRequest(subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,34 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAppServiceCertificateOrderDetectorResponseRequestUri(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CertificateRegistration/certificateOrders/", false);
+            uri.AppendPath(certificateOrderName, true);
+            uri.AppendPath("/detectors/", false);
+            uri.AppendPath(detectorName, true);
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime.Value, "O", true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("endTime", endTime.Value, "O", true);
+            }
+            if (timeGrain != null)
+            {
+                uri.AppendQuery("timeGrain", timeGrain, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAppServiceCertificateOrderDetectorResponseRequest(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain)
@@ -205,38 +205,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceDetectorData>> GetAppServiceCertificateOrderDetectorResponseAsync(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var message = CreateGetAppServiceCertificateOrderDetectorResponseRequest(subscriptionId, resourceGroupName, certificateOrderName, detectorName, startTime, endTime, timeGrain);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,38 +241,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="certificateOrderName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceDetectorData> GetAppServiceCertificateOrderDetectorResponse(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var message = CreateGetAppServiceCertificateOrderDetectorResponseRequest(subscriptionId, resourceGroupName, certificateOrderName, detectorName, startTime, endTime, timeGrain);
             _pipeline.Send(message, cancellationToken);
@@ -318,6 +262,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServiceCertificateOrderDetectorResponseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName)
@@ -344,34 +296,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceDetectorListResult>> ListAppServiceCertificateOrderDetectorResponseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
             using var message = CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, subscriptionId, resourceGroupName, certificateOrderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,34 +327,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceDetectorListResult> ListAppServiceCertificateOrderDetectorResponseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (certificateOrderName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateOrderName));
-            }
-            if (certificateOrderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateOrderName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
 
             using var message = CreateListAppServiceCertificateOrderDetectorResponseNextPageRequest(nextLink, subscriptionId, resourceGroupName, certificateOrderName);
             _pipeline.Send(message, cancellationToken);

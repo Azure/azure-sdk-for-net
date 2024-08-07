@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ExclusionManagedRule(string ruleId)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
+            Argument.AssertNotNull(ruleId, nameof(ruleId));
 
             RuleId = ruleId;
         }

@@ -52,10 +52,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentStyle(IEnumerable<DocumentSpan> spans, float confidence)
         {
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(spans, nameof(spans));
 
             Spans = spans.ToList();
             Confidence = confidence;
@@ -74,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, FontStyle? fontStyle, FontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -100,9 +97,9 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         public string SimilarFontFamily { get; }
         /// <summary> Font style. </summary>
-        public FontStyle? FontStyle { get; }
+        public DocumentFontStyle? FontStyle { get; }
         /// <summary> Font weight. </summary>
-        public FontWeight? FontWeight { get; }
+        public DocumentFontWeight? FontWeight { get; }
         /// <summary> Foreground color in #rrggbb hexadecimal format. </summary>
         public string Color { get; }
         /// <summary> Background color in #rrggbb hexadecimal format.. </summary>

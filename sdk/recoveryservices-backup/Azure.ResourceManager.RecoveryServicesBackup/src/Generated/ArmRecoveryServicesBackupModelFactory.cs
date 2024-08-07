@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// ProtectedItemResource properties
         /// Please note <see cref="Models.BackupGenericProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/> and <see cref="Models.SqlProtectedItem"/>.
+        /// The available derived classes include <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/> and <see cref="Models.SqlProtectedItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
@@ -702,7 +700,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>

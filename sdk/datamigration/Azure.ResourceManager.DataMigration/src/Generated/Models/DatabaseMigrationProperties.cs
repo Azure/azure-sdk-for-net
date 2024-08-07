@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary>
     /// Database Migration Resource properties.
     /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlVmProperties"/> and <see cref="DatabaseMigrationSqlMIProperties"/>.
+    /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/> and <see cref="DatabaseMigrationSqlVmProperties"/>.
     /// </summary>
     public abstract partial class DatabaseMigrationProperties
     {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsStatusContent(string userEmail)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentNullException(nameof(userEmail));
-            }
+            Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             AzureResourceIds = new ChangeTrackingList<string>();
             UserEmail = userEmail;
@@ -77,8 +73,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource IDs. </summary>
+        [WirePath("azureResourceIds")]
         public IList<string> AzureResourceIds { get; }
         /// <summary> User Email. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

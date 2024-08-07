@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class KeyVaultKeyReference : IUtf8JsonSerializable, IJsonModel<KeyVaultKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultKeyReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultKeyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultKeyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri keyUrl = default;
             WritableSubResource sourceVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"u8))
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultKeyReference(keyUrl, sourceVault, serializedAdditionalRawData);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeKeyVaultKeyReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultKeyReference)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppContainers.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRevisionsRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRevisionsRequest(string subscriptionId, string resourceGroupName, string containerAppName, string filter)
@@ -72,30 +90,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RevisionCollection>> ListRevisionsAsync(string subscriptionId, string resourceGroupName, string containerAppName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
             using var message = CreateListRevisionsRequest(subscriptionId, resourceGroupName, containerAppName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +120,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RevisionCollection> ListRevisions(string subscriptionId, string resourceGroupName, string containerAppName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
             using var message = CreateListRevisionsRequest(subscriptionId, resourceGroupName, containerAppName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -162,6 +138,22 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRevisionRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRevisionRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
@@ -196,38 +188,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppRevisionData>> GetRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateGetRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +221,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppRevisionData> GetRevision(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateGetRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             _pipeline.Send(message, cancellationToken);
@@ -306,6 +242,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateActivateRevisionRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/activate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateActivateRevisionRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
@@ -341,38 +294,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ActivateRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateActivateRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -395,38 +320,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ActivateRevision(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateActivateRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             _pipeline.Send(message, cancellationToken);
@@ -437,6 +334,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeactivateRevisionRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/deactivate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeactivateRevisionRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
@@ -472,38 +386,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeactivateRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateDeactivateRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -526,38 +412,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeactivateRevision(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateDeactivateRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             _pipeline.Send(message, cancellationToken);
@@ -568,6 +426,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestartRevisionRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestartRevisionRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
@@ -603,38 +478,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RestartRevisionAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateRestartRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -657,38 +504,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RestartRevision(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateRestartRevisionRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             _pipeline.Send(message, cancellationToken);
@@ -699,6 +518,14 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRevisionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListRevisionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, string filter)
@@ -726,34 +553,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RevisionCollection>> ListRevisionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, containerAppName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -782,34 +585,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RevisionCollection> ListRevisionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string containerAppName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, containerAppName, filter);
             _pipeline.Send(message, cancellationToken);

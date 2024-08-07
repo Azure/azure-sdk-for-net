@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HDInsightApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<HDInsightApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<HDInsightApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<HDInsightApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual NullableResponse<HDInsightApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
             scope.Start();

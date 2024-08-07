@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput. </summary>
+    /// <summary> Unknown version of MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput. </summary>
     internal partial class UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>

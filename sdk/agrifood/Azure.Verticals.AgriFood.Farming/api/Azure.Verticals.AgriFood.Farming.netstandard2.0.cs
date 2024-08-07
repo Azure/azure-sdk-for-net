@@ -23,8 +23,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected Attachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
@@ -117,43 +117,43 @@ namespace Azure.Verticals.AgriFood.Farming
         public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Verticals.AgriFood.Farming.ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Boundaries GetBoundariesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.CropProducts GetCropProductsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Crops GetCropsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.DeviceDataModels GetDeviceDataModelsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Devices GetDevicesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.FarmerOAuthTokens GetFarmerOAuthTokensClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Farms GetFarmsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Fields GetFieldsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.HarvestData GetHarvestDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.ImageProcessing GetImageProcessingClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.InsightAttachments GetInsightAttachmentsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Insights GetInsightsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.ManagementZones GetManagementZonesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.ModelInference GetModelInferenceClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.NutrientAnalyses GetNutrientAnalysesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.OAuthProviders GetOAuthProvidersClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Parties GetPartiesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.PlantingData GetPlantingDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.PlantTissueAnalyses GetPlantTissueAnalysesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.PrescriptionMaps GetPrescriptionMapsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Prescriptions GetPrescriptionsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Scenes GetScenesClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SeasonalFields GetSeasonalFieldsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Seasons GetSeasonsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SensorDataModels GetSensorDataModelsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SensorEvents GetSensorEventsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SensorMappings GetSensorMappingsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SensorPartnerIntegrations GetSensorPartnerIntegrationsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Sensors GetSensorsClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.SolutionInference GetSolutionInferenceClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.TillageData GetTillageDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Weather GetWeatherClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.WeatherData GetWeatherDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
-        public virtual Azure.Verticals.AgriFood.Farming.Zones GetZonesClient(string apiVersion = "2022-11-01-preview") { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.ApplicationData GetApplicationDataClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Attachments GetAttachmentsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Boundaries GetBoundariesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.CropProducts GetCropProductsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Crops GetCropsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.DeviceDataModels GetDeviceDataModelsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Devices GetDevicesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmerOAuthTokens GetFarmerOAuthTokensClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Farms GetFarmsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Fields GetFieldsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.HarvestData GetHarvestDataClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.ImageProcessing GetImageProcessingClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.InsightAttachments GetInsightAttachmentsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Insights GetInsightsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.ManagementZones GetManagementZonesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.ModelInference GetModelInferenceClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.NutrientAnalyses GetNutrientAnalysesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.OAuthProviders GetOAuthProvidersClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Parties GetPartiesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.PlantingData GetPlantingDataClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.PlantTissueAnalyses GetPlantTissueAnalysesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.PrescriptionMaps GetPrescriptionMapsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Prescriptions GetPrescriptionsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Scenes GetScenesClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SeasonalFields GetSeasonalFieldsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Seasons GetSeasonsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SensorDataModels GetSensorDataModelsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SensorEvents GetSensorEventsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SensorMappings GetSensorMappingsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SensorPartnerIntegrations GetSensorPartnerIntegrationsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Sensors GetSensorsClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.SolutionInference GetSolutionInferenceClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.TillageData GetTillageDataClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Weather GetWeatherClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.WeatherData GetWeatherDataClient() { throw null; }
+        public virtual Azure.Verticals.AgriFood.Farming.Zones GetZonesClient() { throw null; }
     }
     public partial class FarmBeatsClientOptions : Azure.Core.ClientOptions
     {
@@ -255,8 +255,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected InsightAttachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context) { throw null; }

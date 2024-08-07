@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ArmApplicationNotificationEndpoint(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application notification endpoint uri. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
     }
 }

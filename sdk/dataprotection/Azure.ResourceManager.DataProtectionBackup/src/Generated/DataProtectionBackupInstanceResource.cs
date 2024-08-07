@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +176,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +256,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,15 +265,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,15 +308,16 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,21 +352,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> UpdateAsync(WaitUntil waitUntil, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,7 +389,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,21 +399,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionBackupInstanceResource> Update(WaitUntil waitUntil, DataProtectionBackupInstanceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionBackupInstanceResource> Update(WaitUntil waitUntil, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, xMsAuthorizationAuxiliary, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -440,7 +436,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,10 +450,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerAdhocBackupAsync(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerAdhocBackup");
             scope.Start();
@@ -489,7 +482,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -503,10 +496,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerAdhocBackup(WaitUntil waitUntil, AdhocBackupTriggerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerAdhocBackup");
             scope.Start();
@@ -538,7 +528,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,10 +542,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> TriggerRehydrationAsync(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydration");
             scope.Start();
@@ -587,7 +574,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,10 +588,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation TriggerRehydration(WaitUntil waitUntil, BackupRehydrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRehydration");
             scope.Start();
@@ -636,7 +620,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -646,21 +630,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerRestoreAsync(WaitUntil waitUntil, BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRestore");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.TriggerRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.TriggerRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -685,7 +667,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -695,21 +677,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerRestore(WaitUntil waitUntil, BackupRestoreContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerRestore(WaitUntil waitUntil, BackupRestoreContent content, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.TriggerRestore");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.TriggerRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.TriggerRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(new DataProtectionOperationJobExtendedInfoOperationSource(), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateTriggerRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -734,7 +714,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -776,7 +756,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -818,7 +798,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -860,7 +840,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -902,7 +882,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -911,15 +891,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopProtectionAsync(WaitUntil waitUntil, StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.StopProtectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateStopProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.StopProtectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateStopProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -944,7 +926,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -953,15 +935,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation StopProtection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StopProtection(WaitUntil waitUntil, StopProtectionContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.StopProtection");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.StopProtection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateStopProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.StopProtection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateStopProtectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -986,7 +970,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -995,15 +979,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SuspendBackupsAsync(WaitUntil waitUntil, SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SuspendBackups");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.SuspendBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateSuspendBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.SuspendBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateSuspendBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1028,7 +1014,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1037,15 +1023,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SuspendBackups(WaitUntil waitUntil, SuspendBackupContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SuspendBackups");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.SuspendBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateSuspendBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.SuspendBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary, cancellationToken);
+                var operation = new DataProtectionBackupArmOperation(_dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateSuspendBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1071,7 +1059,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1085,10 +1073,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> SyncBackupInstanceAsync(WaitUntil waitUntil, BackupInstanceSyncContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SyncBackupInstance");
             scope.Start();
@@ -1121,7 +1106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1135,10 +1120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation SyncBackupInstance(WaitUntil waitUntil, BackupInstanceSyncContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SyncBackupInstance");
             scope.Start();
@@ -1170,7 +1152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1184,10 +1166,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateRestoreAsync(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateRestore");
             scope.Start();
@@ -1219,7 +1198,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1233,10 +1212,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateRestore(WaitUntil waitUntil, BackupValidateRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.ValidateRestore");
             scope.Start();
@@ -1267,7 +1243,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1276,10 +1252,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BackupFindRestorableTimeRangeResult>> FindRestorableTimeRangeAsync(BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restorableTimeRangesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.FindRestorableTimeRange");
             scope.Start();
@@ -1307,7 +1280,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1316,10 +1289,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BackupFindRestorableTimeRangeResult> FindRestorableTimeRange(BackupFindRestorableTimeRangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restorableTimeRangesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.FindRestorableTimeRange");
             scope.Start();
@@ -1348,7 +1318,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1362,14 +1332,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AddTag");
             scope.Start();
@@ -1411,7 +1375,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1425,14 +1389,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataProtectionBackupInstanceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.AddTag");
             scope.Start();
@@ -1474,7 +1432,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1487,10 +1445,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SetTags");
             scope.Start();
@@ -1533,7 +1488,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1546,10 +1501,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataProtectionBackupInstanceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.SetTags");
             scope.Start();
@@ -1592,7 +1544,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1605,10 +1557,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.RemoveTag");
             scope.Start();
@@ -1650,7 +1599,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1663,10 +1612,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataProtectionBackupInstanceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceResource.RemoveTag");
             scope.Start();

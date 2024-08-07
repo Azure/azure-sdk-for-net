@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridContainerService.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -47,10 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public static ProvisionedClusterResource GetProvisionedCluster(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetProvisionedCluster(scope);
         }
@@ -68,10 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
         public static KubernetesVersionProfileResource GetKubernetesVersionProfile(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetKubernetesVersionProfile(scope);
         }
@@ -89,10 +81,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
         public static HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSku(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVmSku(scope);
         }
@@ -111,10 +100,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public static ProvisionedClusterResource GetProvisionedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterResource(id);
         }
@@ -133,10 +119,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public static ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterUpgradeProfileResource(id);
         }
@@ -155,10 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetHybridIdentityMetadataResource(id);
         }
@@ -177,10 +157,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource"/> object. </returns>
         public static HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceAgentPoolResource(id);
         }
@@ -199,10 +176,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
         public static KubernetesVersionProfileResource GetKubernetesVersionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetKubernetesVersionProfileResource(id);
         }
@@ -221,10 +195,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
         public static HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVmSkuResource(id);
         }
@@ -243,10 +214,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
         public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVirtualNetworkResource(id);
         }
@@ -263,10 +231,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
         public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
         }
@@ -304,10 +269,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -345,10 +307,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetwork(virtualNetworkName, cancellationToken);
         }
@@ -384,10 +343,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
         }
@@ -423,10 +379,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
         }

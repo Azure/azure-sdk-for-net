@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The name of the metadata schema. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The version of the metadata schema. </summary>
+        [WirePath("version")]
         public int? Version { get; }
     }
 }

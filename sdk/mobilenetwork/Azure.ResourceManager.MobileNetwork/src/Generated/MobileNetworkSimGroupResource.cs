@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Resources;
 
@@ -117,7 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +177,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +217,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +257,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +299,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,7 +341,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,10 +354,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> UpdateAsync(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.Update");
             scope.Start();
@@ -388,7 +383,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,10 +396,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> Update(MobileNetworkResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.Update");
             scope.Start();
@@ -433,7 +425,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,10 +439,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simUploadList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkUploadSimAsync(WaitUntil waitUntil, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadSim");
             scope.Start();
@@ -482,7 +471,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,10 +485,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simUploadList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkUploadSim(WaitUntil waitUntil, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadSim");
             scope.Start();
@@ -531,7 +517,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -545,10 +531,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simDeleteList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkDeleteSimAsync(WaitUntil waitUntil, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkDeleteSim");
             scope.Start();
@@ -580,7 +563,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -594,10 +577,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simDeleteList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkDeleteSim(WaitUntil waitUntil, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkDeleteSim");
             scope.Start();
@@ -629,7 +609,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -643,10 +623,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="encryptedSimUploadList"/> is null. </exception>
         public virtual async Task<ArmOperation<AsyncOperationStatus>> BulkUploadEncryptedSimAsync(WaitUntil waitUntil, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadEncryptedSim");
             scope.Start();
@@ -678,7 +655,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -692,10 +669,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="encryptedSimUploadList"/> is null. </exception>
         public virtual ArmOperation<AsyncOperationStatus> BulkUploadEncryptedSim(WaitUntil waitUntil, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.BulkUploadEncryptedSim");
             scope.Start();
@@ -703,6 +677,190 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkSimSimsRestClient.BulkUploadEncrypted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList, cancellationToken);
                 var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadEncryptedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Move SIMs to another SIM Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/moveSims</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Move</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AsyncOperationStatus>> MoveSimAsync(WaitUntil waitUntil, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.MoveSim");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimSimsRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Move SIMs to another SIM Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/moveSims</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Move</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AsyncOperationStatus> MoveSim(WaitUntil waitUntil, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.MoveSim");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimSimsRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Clone SIMs to another SIM Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/cloneSims</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Clone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AsyncOperationStatus>> CloneSimAsync(WaitUntil waitUntil, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.CloneSim");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimSimsRestClient.CloneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Clone SIMs to another SIM Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/cloneSims</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Clone</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AsyncOperationStatus> CloneSim(WaitUntil waitUntil, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.CloneSim");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimSimsRestClient.Clone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -727,7 +885,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -741,14 +899,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.AddTag");
             scope.Start();
@@ -795,7 +947,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -809,14 +961,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.AddTag");
             scope.Start();
@@ -863,7 +1009,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -876,10 +1022,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.SetTags");
             scope.Start();
@@ -923,7 +1066,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -936,10 +1079,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.SetTags");
             scope.Start();
@@ -983,7 +1123,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -996,10 +1136,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.RemoveTag");
             scope.Start();
@@ -1046,7 +1183,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1059,10 +1196,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MobileNetworkSimGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mobileNetworkSimGroupSimGroupsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.RemoveTag");
             scope.Start();

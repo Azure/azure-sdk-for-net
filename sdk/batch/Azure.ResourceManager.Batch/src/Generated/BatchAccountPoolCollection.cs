@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,25 +82,17 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BatchAccountPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, BatchAccountPoolData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _batchAccountPoolPoolRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountPoolPoolRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +117,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,25 +135,17 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BatchAccountPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, BatchAccountPoolData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _batchAccountPoolPoolRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountPoolPoolRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,7 +170,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,14 +184,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<BatchAccountPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.Get");
             scope.Start();
@@ -240,7 +215,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<BatchAccountPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.Get");
             scope.Start();
@@ -292,7 +260,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +307,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -386,7 +354,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,14 +368,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.Exists");
             scope.Start();
@@ -436,7 +397,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -450,14 +411,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<bool> Exists(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.Exists");
             scope.Start();
@@ -486,7 +440,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -500,14 +454,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<NullableResponse<BatchAccountPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.GetIfExists");
             scope.Start();
@@ -538,7 +485,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,14 +499,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual NullableResponse<BatchAccountPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.GetIfExists");
             scope.Start();

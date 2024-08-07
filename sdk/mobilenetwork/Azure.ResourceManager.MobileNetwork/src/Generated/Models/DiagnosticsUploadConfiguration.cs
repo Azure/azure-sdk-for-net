@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Configuration for uploading packet core diagnostics. </summary>
+    /// <summary>
+    /// Configuration for uploading packet core diagnostics.
+    /// Serialized Name: DiagnosticsUploadConfiguration
+    /// </summary>
     internal partial class DiagnosticsUploadConfiguration
     {
         /// <summary>
@@ -46,20 +49,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/>. </summary>
-        /// <param name="storageAccountContainerUri"> The Storage Account Container URL to upload diagnostics to. </param>
+        /// <param name="storageAccountContainerUri">
+        /// The Storage Account Container URL to upload diagnostics to.
+        /// Serialized Name: DiagnosticsUploadConfiguration.storageAccountContainerUrl
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountContainerUri"/> is null. </exception>
         public DiagnosticsUploadConfiguration(Uri storageAccountContainerUri)
         {
-            if (storageAccountContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountContainerUri));
-            }
+            Argument.AssertNotNull(storageAccountContainerUri, nameof(storageAccountContainerUri));
 
             StorageAccountContainerUri = storageAccountContainerUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/>. </summary>
-        /// <param name="storageAccountContainerUri"> The Storage Account Container URL to upload diagnostics to. </param>
+        /// <param name="storageAccountContainerUri">
+        /// The Storage Account Container URL to upload diagnostics to.
+        /// Serialized Name: DiagnosticsUploadConfiguration.storageAccountContainerUrl
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticsUploadConfiguration(Uri storageAccountContainerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,7 +78,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>
+        /// <summary>
+        /// The Storage Account Container URL to upload diagnostics to.
+        /// Serialized Name: DiagnosticsUploadConfiguration.storageAccountContainerUrl
+        /// </summary>
+        [WirePath("storageAccountContainerUrl")]
         public Uri StorageAccountContainerUri { get; set; }
     }
 }

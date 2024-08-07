@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="counters"/> is null. </exception>
         public DataBoxEdgeMetricCounterSet(IEnumerable<DataBoxEdgeMetricCounter> counters)
         {
-            if (counters == null)
-            {
-                throw new ArgumentNullException(nameof(counters));
-            }
+            Argument.AssertNotNull(counters, nameof(counters));
 
             Counters = counters.ToList();
         }

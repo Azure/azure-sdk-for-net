@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual async Task<Response<UserSessionResource>> GetAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual Response<UserSessionResource> Get(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.Get");
             scope.Start();
@@ -250,14 +234,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.Exists");
             scope.Start();
@@ -300,14 +277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual Response<bool> Exists(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.Exists");
             scope.Start();
@@ -350,14 +320,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual async Task<NullableResponse<UserSessionResource>> GetIfExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
             scope.Start();
@@ -402,14 +365,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
         public virtual NullableResponse<UserSessionResource> GetIfExists(string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
             scope.Start();

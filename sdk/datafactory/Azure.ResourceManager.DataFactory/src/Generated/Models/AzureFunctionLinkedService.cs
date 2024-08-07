@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public AzureFunctionLinkedService(DataFactoryElement<string> functionAppUri)
         {
-            if (functionAppUri == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppUri));
-            }
+            Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
 
             FunctionAppUri = functionAppUri;
             LinkedServiceType = "AzureFunction";
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="resourceId"> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> functionAppUri, DataFactorySecretBaseDefinition functionKey, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> resourceId, DataFactoryElement<string> authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> functionAppUri, DataFactorySecret functionKey, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> resourceId, DataFactoryElement<string> authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUri = functionAppUri;
             FunctionKey = functionKey;
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FunctionAppUri { get; set; }
         /// <summary> Function or Host key for Azure Function App. </summary>
-        public DataFactorySecretBaseDefinition FunctionKey { get; set; }
+        public DataFactorySecret FunctionKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

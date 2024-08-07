@@ -412,7 +412,7 @@ namespace Azure.Data.Tables
                                 new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                                 cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -432,7 +432,7 @@ namespace Azure.Data.Tables
                                 new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                                 cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -469,7 +469,7 @@ namespace Azure.Data.Tables
                             null,
                             new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -488,7 +488,7 @@ namespace Azure.Data.Tables
                             nextLink,
                             new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {

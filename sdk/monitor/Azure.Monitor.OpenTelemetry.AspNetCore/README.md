@@ -20,21 +20,38 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the OpenTelemetry SqlClient instrumentation remains in its beta phase, we have taken the step to vendor it and include it in our Distro)
 
 * Metrics
-  * Provides automatic collection of Application Insights Standard metrics.
+  * **Application Insights Standard Metrics**: Provides automatic collection of Application Insights Standard metrics.
+  * **ASP.NET Core and HTTP Client Metrics Instrumentation**: Our distro will selectively enable metrics collection based on the .NET runtime version.
+	* **.NET 8.0 and above**: Utilizes built-in Metrics `Microsoft.AspNetCore.Hosting` and `System.Net.Http` from .NET.
+      For a detailed list of metrics produced, refer to the [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+      and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp) metrics documentation.
+	* **.NET 7.0 and below**: Falls back to ASP.NET Core Instrumentation and HTTP Client Instrumentation.
+      For a detailed list of metrics produced, refer to the [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+      and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced) documentation.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
+  * Logs created with `Microsoft.Extensions.Logging`. See [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
+  * [Azure SDK logs](https://learn.microsoft.com/dotnet/azure/sdk/logging) are recorded as a subset of `Microsoft.Extensions.Logging`
 
 * Resource Detectors
   * **AppServiceResourceDetector**: Adds resource attributes for the applications running in Azure App Service.
   * **AzureVMResourceDetector**: Adds resource attributes for the applications running in an Azure Virtual Machine.
   * **AzureContainerAppsResourceDetector**: Adds resource attributes for the applications running in Azure Container Apps.
 
-   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.ResourceDetectors.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
+   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Resources.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
 
 * [Live Metrics](https://learn.microsoft.com/azure/azure-monitor/app/live-stream)
-  * Integrated support for live metrics through the [Azure.Monitor.OpenTelemetry.LiveMetrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics) package, enabling real-time monitoring of application performance.
+  * Integrated support for live metrics enabling real-time monitoring of application performance.
 
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
+
+### Migrating from Application Insights SDK?
+
+If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=aspnetcore).
+
+### Already using OpenTelemetry?
+
+If you are currently using OpenTelemetry and want to send telemetry data to Azure Monitor, please follow our [getting started guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore).
 
 ### Install the package
 
@@ -230,9 +247,9 @@ builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
 
 ##### Customizing SqlClientInstrumentationOptions
 
-While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package. 
-Once it reaches a stable release, it will be included as a standard package reference. 
-Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API. 
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package.
+Once it reaches a stable release, it will be included as a standard package reference.
+Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API.
 
 ```
 dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
@@ -263,6 +280,19 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 });
 ```
 
+#### Drop a Metrics Instrument
+
+The Azure Monitor Distro enables metric collection and collects several metrics by default.
+If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
+
+```C#
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrumentName: "http.server.active_requests", MetricStreamConfiguration.Drop)
+    );
+```
+
+Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
+
 ## Key concepts
 
 The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
@@ -270,6 +300,39 @@ The Azure Monitor Distro is a distribution package that facilitates users in sen
 ## Examples
 
 Refer to [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.Demo/Program.cs) for a complete demo.
+
+### Log Scopes
+
+Log [scopes](https://learn.microsoft.com/dotnet/core/extensions/logging#log-scopes) allow you to add additional properties to the logs generated by your application.
+Although the Azure Monitor Distro does support scopes, this feature is off by default in OpenTelemetry.
+To leverage log scopes, you must explicitly enable them.
+
+To include the scope with your logs, set `OpenTelemetryLoggerOptions.IncludeScopes` to `true` in your application's configuration:
+```csharp
+builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>
+{
+    loggingOptions.IncludeScopes = true;
+});
+```
+
+When using `ILogger` scopes, use a `List<KeyValuePair<string, object?>>` or `IReadOnlyList<KeyValue<string, object?>>` as the state for best performance.
+All logs written within the context of the scope will include the specified information.
+Azure Monitor will add these scope values to the Log's CustomProperties.
+```csharp
+List<KeyValuePair<string, object?>> scope =
+[
+    new("scopeKey", "scopeValue")
+];
+
+using (logger.BeginScope(scope))
+{
+    logger.LogInformation("Example message.");
+}
+```
+
+In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present,
+only the first occurrence of the key-value pair from the outermost scope will be recorded.
+However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
 ## Troubleshooting
 
@@ -283,14 +346,14 @@ An example of this is available in our demo project [here](https://github.com/Az
 If an app has a reference to the [OpenTelemetry.Instrumentation.AspNetCore](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore) package, it could be missing request telemetry. To resolve this issue:
 
 * Either remove the reference to the `OpenTelemetry.Instrumentation.AspNetCore` package (or)
-* Add `AddAspNetCoreInstrumentation` to the OpenTelemetry TracerProvider configuration as per the [OpenTelemetry documentation](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore).
+* Add `AddAspNetCoreInstrumentation` to the OpenTelemetry TracerProvider configuration as per the [OpenTelemetry documentation](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore).
 
 **Few or all Dependency Telemetries are missing**
 
 If an app references the [OpenTelemetry.Instrumentation.Http](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http) or [OpenTelemetry.Instrumentation.SqlClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) packages, it might be missing dependency telemetry. To resolve:
 
 * Remove the respective package references (or)
-* Add `AddHttpClientInstrumentation` or `AddSqlClientInstrumentation` to the TracerProvider configuration. Detailed guidance can be found in the OpenTelemetry documentation for [HTTP](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.Http) and [SQL Client](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.SqlClient).
+* Add `AddHttpClientInstrumentation` or `AddSqlClientInstrumentation` to the TracerProvider configuration. Detailed guidance can be found in the OpenTelemetry documentation for [HTTP](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Instrumentation.Http) and [SQL Client](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Instrumentation.SqlClient).
 
 **Note:** If all telemetries are missing or if the above troubleshooting steps do not help, please collect [self-diagnostics logs](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/README.md#troubleshooting).
 

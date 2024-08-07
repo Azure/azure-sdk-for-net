@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string scopeAssignmentName)
@@ -63,18 +74,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScopeAssignmentData>> GetAsync(string scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
 
             using var message = CreateGetRequest(scope, scopeAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,18 +103,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScopeAssignmentData> Get(string scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
 
             using var message = CreateGetRequest(scope, scopeAssignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -133,6 +124,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string scopeAssignmentName, ScopeAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string scopeAssignmentName, ScopeAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,22 +167,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScopeAssignmentData>> CreateOrUpdateAsync(string scope, string scopeAssignmentName, ScopeAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, scopeAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,22 +197,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScopeAssignmentData> CreateOrUpdate(string scope, string scopeAssignmentName, ScopeAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, scopeAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
@@ -239,6 +216,18 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string scopeAssignmentName)
@@ -266,18 +255,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
 
             using var message = CreateDeleteRequest(scope, scopeAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -298,18 +277,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="scopeAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (scopeAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeAssignmentName));
-            }
-            if (scopeAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeAssignmentName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeAssignmentName, nameof(scopeAssignmentName));
 
             using var message = CreateDeleteRequest(scope, scopeAssignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -320,6 +289,17 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope)
@@ -345,10 +325,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ScopeAssignmentListResult>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -372,10 +349,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ScopeAssignmentListResult> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -391,6 +365,14 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
@@ -414,14 +396,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ScopeAssignmentListResult>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -446,14 +422,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ScopeAssignmentListResult> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

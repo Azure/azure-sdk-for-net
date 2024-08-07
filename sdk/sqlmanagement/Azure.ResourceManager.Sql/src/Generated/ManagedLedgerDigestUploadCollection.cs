@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedLedgerDigestUploadResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedLedgerDigestUploadsName ledgerDigestUploads, ManagedLedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedLedgerDigestUploadClientDiagnostics.CreateScope("ManagedLedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedLedgerDigestUploadResource> CreateOrUpdate(WaitUntil waitUntil, ManagedLedgerDigestUploadsName ledgerDigestUploads, ManagedLedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedLedgerDigestUploadClientDiagnostics.CreateScope("ManagedLedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Sms;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
@@ -29,6 +28,14 @@ namespace Azure.Communication.Sms.Models
                 writer.WriteStringValue(RepeatabilityFirstSent);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

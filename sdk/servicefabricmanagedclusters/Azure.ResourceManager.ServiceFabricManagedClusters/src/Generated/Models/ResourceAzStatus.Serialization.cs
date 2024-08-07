@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ResourceAzStatus : IUtf8JsonSerializable, IJsonModel<ResourceAzStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceAzStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceAzStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceAzStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceAzStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,6 +40,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("isZoneResilient"u8);
                 writer.WriteBooleanValue(IsZoneResilient.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceAzStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ResourceAzStatus DeserializeResourceAzStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,8 +87,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string resourceName = default;
             ResourceType? resourceType = default;
             bool? isZoneResilient = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -110,13 +115,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     isZoneResilient = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("details"u8))
+                {
+                    details = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceAzStatus>.Write(ModelReaderWriterOptions options)
@@ -128,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeResourceAzStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceAzStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

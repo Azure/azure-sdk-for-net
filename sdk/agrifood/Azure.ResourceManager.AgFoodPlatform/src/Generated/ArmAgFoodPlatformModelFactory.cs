@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
@@ -23,21 +21,21 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="eTag"> The ETag value to implement optimistic concurrency. </param>
+        /// <param name="etag"> The ETag value to implement optimistic concurrency. </param>
         /// <param name="extensionId"> Extension Id. </param>
         /// <param name="extensionCategory"> Extension category. e.g. weather/sensor/satellite. </param>
         /// <param name="installedExtensionVersion"> Installed extension version. </param>
         /// <param name="extensionAuthLink"> Extension auth link. </param>
         /// <param name="extensionApiDocsLink"> Extension api docs link. </param>
         /// <returns> A new <see cref="AgFoodPlatform.ExtensionData"/> instance for mocking. </returns>
-        public static ExtensionData ExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, string extensionId = null, string extensionCategory = null, string installedExtensionVersion = null, string extensionAuthLink = null, string extensionApiDocsLink = null)
+        public static ExtensionData ExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string extensionId = null, string extensionCategory = null, string installedExtensionVersion = null, string extensionAuthLink = null, string extensionApiDocsLink = null)
         {
             return new ExtensionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                eTag,
+                etag,
                 extensionId,
                 extensionCategory,
                 installedExtensionVersion,

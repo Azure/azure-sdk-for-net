@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ServiceLinker.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.ServiceLinker
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -60,10 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<LinkerList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<LinkerList> List(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -106,6 +110,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceUri, string linkerName)
@@ -134,18 +150,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LinkerResourceData>> GetAsync(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateGetRequest(resourceUri, linkerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -173,18 +179,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LinkerResourceData> Get(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateGetRequest(resourceUri, linkerName);
             _pipeline.Send(message, cancellationToken);
@@ -204,6 +200,18 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string linkerName, LinkerResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string linkerName, LinkerResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -220,7 +228,7 @@ namespace Azure.ResourceManager.ServiceLinker
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,22 +243,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceUri, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceUri, linkerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -273,22 +268,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string resourceUri, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceUri, linkerName, data);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +282,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceUri, string linkerName)
@@ -328,18 +322,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateDeleteRequest(resourceUri, linkerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -362,18 +346,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateDeleteRequest(resourceUri, linkerName);
             _pipeline.Send(message, cancellationToken);
@@ -386,6 +360,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string linkerName, LinkerResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string resourceUri, string linkerName, LinkerResourcePatch patch)
@@ -404,7 +390,7 @@ namespace Azure.ResourceManager.ServiceLinker
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -419,22 +405,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string resourceUri, string linkerName, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(resourceUri, linkerName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -457,22 +430,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string resourceUri, string linkerName, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(resourceUri, linkerName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -484,6 +444,19 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendPath("/validateLinker", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateRequest(string resourceUri, string linkerName)
@@ -513,18 +486,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ValidateAsync(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateValidateRequest(resourceUri, linkerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -546,18 +509,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Validate(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateValidateRequest(resourceUri, linkerName);
             _pipeline.Send(message, cancellationToken);
@@ -569,6 +522,19 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendPath("/listConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsRequest(string resourceUri, string linkerName)
@@ -598,18 +564,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SourceConfigurationResult>> ListConfigurationsAsync(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateListConfigurationsRequest(resourceUri, linkerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -635,18 +591,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SourceConfigurationResult> ListConfigurations(string resourceUri, string linkerName, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (linkerName == null)
-            {
-                throw new ArgumentNullException(nameof(linkerName));
-            }
-            if (linkerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkerName));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             using var message = CreateListConfigurationsRequest(resourceUri, linkerName);
             _pipeline.Send(message, cancellationToken);
@@ -662,6 +608,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)
@@ -685,14 +639,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<LinkerList>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -717,14 +665,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public Response<LinkerList> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri);
             _pipeline.Send(message, cancellationToken);

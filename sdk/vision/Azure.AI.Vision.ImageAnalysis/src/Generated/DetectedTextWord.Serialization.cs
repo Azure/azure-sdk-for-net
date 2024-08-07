@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class DetectedTextWord : IUtf8JsonSerializable, IJsonModel<DetectedTextWord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedTextWord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedTextWord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DetectedTextWord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DetectedTextWord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedTextWord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectedTextWord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("confidence"u8);
@@ -61,7 +60,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<DetectedTextWord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DetectedTextWord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DetectedTextWord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +69,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static DetectedTextWord DeserializeDetectedTextWord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +79,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             IReadOnlyList<ImagePoint> boundingPolygon = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -105,10 +104,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DetectedTextWord(text, boundingPolygon, confidence, serializedAdditionalRawData);
         }
 
@@ -121,7 +120,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DetectedTextWord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectedTextWord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeDetectedTextWord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DetectedTextWord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DetectedTextWord)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -151,11 +150,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeDetectedTextWord(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

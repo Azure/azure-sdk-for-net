@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class ClientAuthenticationSettings : IUtf8JsonSerializable, IJsonModel<ClientAuthenticationSettings>
+    public partial class ClientAuthenticationSettings : IUtf8JsonSerializable, IJsonModel<ClientAuthenticationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientAuthenticationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientAuthenticationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClientAuthenticationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,6 +35,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CustomJwtAuthentication))
+            {
+                writer.WritePropertyName("customJwtAuthentication"u8);
+                writer.WriteObjectValue(CustomJwtAuthentication, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientAuthenticationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,15 +73,16 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static ClientAuthenticationSettings DeserializeClientAuthenticationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources = default;
+            CustomJwtAuthenticationSettings customJwtAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alternativeAuthenticationNameSources"u8))
@@ -94,13 +99,22 @@ namespace Azure.ResourceManager.EventGrid.Models
                     alternativeAuthenticationNameSources = array;
                     continue;
                 }
+                if (property.NameEquals("customJwtAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customJwtAuthentication = CustomJwtAuthenticationSettings.DeserializeCustomJwtAuthenticationSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClientAuthenticationSettings(alternativeAuthenticationNameSources ?? new ChangeTrackingList<AlternativeAuthenticationNameSource>(), customJwtAuthentication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientAuthenticationSettings>.Write(ModelReaderWriterOptions options)
@@ -112,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeClientAuthenticationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientAuthenticationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

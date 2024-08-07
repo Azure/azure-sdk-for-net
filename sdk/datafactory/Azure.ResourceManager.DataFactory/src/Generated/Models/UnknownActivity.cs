@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownActivity. </summary>
+    /// <summary> Unknown version of Activity. </summary>
     internal partial class UnknownActivity : PipelineActivity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>

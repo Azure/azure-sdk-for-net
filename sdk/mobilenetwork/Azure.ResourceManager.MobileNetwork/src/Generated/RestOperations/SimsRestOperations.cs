@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +112,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             _pipeline.Send(message, cancellationToken);
@@ -169,6 +128,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
@@ -203,38 +178,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MobileNetworkSimData>> GetAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +211,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MobileNetworkSimData> Get(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +232,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
@@ -335,7 +270,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -352,42 +287,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, simGroupName, simName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +316,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, simGroupName, simName, data);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGroupRequestUri(string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByGroupRequest(string subscriptionId, string resourceGroupName, string simGroupName)
@@ -491,30 +379,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SimListResult>> ListByGroupAsync(string subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
 
             using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, simGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +408,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SimListResult> ListByGroup(string subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
 
             using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, simGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -580,6 +426,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBulkUploadRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBulkUploadRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
@@ -601,7 +462,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simUploadList);
+            content.JsonWriter.WriteObjectValue(simUploadList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -617,34 +478,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BulkUploadAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var message = CreateBulkUploadRequest(subscriptionId, resourceGroupName, simGroupName, simUploadList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -668,34 +505,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BulkUpload(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(simUploadList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
 
             using var message = CreateBulkUploadRequest(subscriptionId, resourceGroupName, simGroupName, simUploadList);
             _pipeline.Send(message, cancellationToken);
@@ -707,6 +520,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBulkDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/deleteSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBulkDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
@@ -728,7 +556,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simDeleteList);
+            content.JsonWriter.WriteObjectValue(simDeleteList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -744,34 +572,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BulkDeleteAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var message = CreateBulkDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simDeleteList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -796,34 +600,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BulkDelete(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (simDeleteList == null)
-            {
-                throw new ArgumentNullException(nameof(simDeleteList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
 
             using var message = CreateBulkDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simDeleteList);
             _pipeline.Send(message, cancellationToken);
@@ -836,6 +616,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBulkUploadEncryptedRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadEncryptedSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBulkUploadEncryptedRequest(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
@@ -857,7 +652,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(encryptedSimUploadList);
+            content.JsonWriter.WriteObjectValue(encryptedSimUploadList, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -873,34 +668,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BulkUploadEncryptedAsync(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var message = CreateBulkUploadEncryptedRequest(subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -924,34 +695,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BulkUploadEncrypted(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
-            if (encryptedSimUploadList == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedSimUploadList));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
 
             using var message = CreateBulkUploadEncryptedRequest(subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList);
             _pipeline.Send(message, cancellationToken);
@@ -963,6 +710,202 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMoveRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/moveSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateMoveRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/moveSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Move SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Move SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Move(string subscriptionId, string resourceGroupName, string simGroupName, SimMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateMoveRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCloneRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/cloneSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCloneRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/cloneSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Clone SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CloneAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCloneRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Clone SIMs to another SIM Group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Clone(string subscriptionId, string resourceGroupName, string simGroupName, SimCloneContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCloneRequest(subscriptionId, resourceGroupName, simGroupName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)
@@ -989,34 +932,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SimListResult>> ListByGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
 
             using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, simGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1044,34 +963,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SimListResult> ListByGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (simGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(simGroupName));
-            }
-            if (simGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
 
             using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, simGroupName);
             _pipeline.Send(message, cancellationToken);

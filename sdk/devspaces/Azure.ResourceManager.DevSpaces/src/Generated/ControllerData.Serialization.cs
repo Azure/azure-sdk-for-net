@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.DevSpaces
 {
     public partial class ControllerData : IUtf8JsonSerializable, IJsonModel<ControllerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevSpaces
             var format = options.Format == "W" ? ((IPersistableModel<ControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevSpaces
 
         internal static ControllerData DeserializeControllerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevSpaces
             string targetContainerHostResourceId = default;
             string targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.DevSpaces
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ControllerData(
                 id,
                 name,
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevSpaces
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevSpaces
                         return DeserializeControllerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerData)} does not support reading '{options.Format}' format.");
             }
         }
 

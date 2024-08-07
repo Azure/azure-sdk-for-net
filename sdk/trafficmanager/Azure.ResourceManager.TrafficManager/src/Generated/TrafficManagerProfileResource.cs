@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrafficManager.Models;
 
@@ -342,7 +340,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerProfileProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerProfileProfilesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -384,7 +384,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerProfileProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerProfileProfilesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -422,10 +424,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerProfileResource>> UpdateAsync(TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Update");
             scope.Start();
@@ -467,10 +466,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<TrafficManagerProfileResource> Update(TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.Update");
             scope.Start();
@@ -513,14 +509,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.AddTag");
             scope.Start();
@@ -581,14 +571,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<TrafficManagerProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.AddTag");
             scope.Start();
@@ -648,10 +632,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.SetTags");
             scope.Start();
@@ -708,10 +689,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<TrafficManagerProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.SetTags");
             scope.Start();
@@ -768,10 +746,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.RemoveTag");
             scope.Start();
@@ -831,10 +806,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<TrafficManagerProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _trafficManagerProfileProfilesClientDiagnostics.CreateScope("TrafficManagerProfileResource.RemoveTag");
             scope.Start();

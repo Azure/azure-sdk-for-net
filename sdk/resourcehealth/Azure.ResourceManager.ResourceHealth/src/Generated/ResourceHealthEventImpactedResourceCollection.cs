@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual async Task<Response<ResourceHealthEventImpactedResource>> GetAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual Response<ResourceHealthEventImpactedResource> Get(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceHealthEventImpactedResource>> GetIfExistsAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         public virtual NullableResponse<ResourceHealthEventImpactedResource> GetIfExists(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            if (impactedResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(impactedResourceName));
-            }
-            if (impactedResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(impactedResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
             using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
             scope.Start();

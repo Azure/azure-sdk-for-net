@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     public partial class SwaggerExternalDocumentation : IUtf8JsonSerializable, IJsonModel<SwaggerExternalDocumentation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerExternalDocumentation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerExternalDocumentation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SwaggerExternalDocumentation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerExternalDocumentation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerExternalDocumentation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerExternalDocumentation DeserializeSwaggerExternalDocumentation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
             Uri uri = default;
             IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -142,10 +141,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SwaggerExternalDocumentation(description, uri, extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerExternalDocumentation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -391,6 +391,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         public string ConsumerGroup { get { throw null; } }
+        protected bool EnableBatchTracing { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public JitAuthorizationPolicies(Guid principalId, string roleDefinitionId)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The the principal id that will be granted JIT access. </summary>
+        [WirePath("principalId")]
         public Guid PrincipalId { get; set; }
         /// <summary> The role definition id that will be granted to the Principal. </summary>
+        [WirePath("roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
     }
 }

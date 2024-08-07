@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -16,14 +15,14 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownJobMatchingMode))]
     public partial class JobMatchingMode : IUtf8JsonSerializable, IJsonModel<JobMatchingMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobMatchingMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobMatchingMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobMatchingMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<JobMatchingMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobMatchingMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.Communication.JobRouter
 
         internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,8 +70,8 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "queueAndMatch": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
+                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "suspend": return SuspendMode.DeserializeSuspendMode(element, options);
                 }
             }
@@ -88,7 +87,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +103,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeJobMatchingMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobMatchingMode)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -118,11 +117,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeJobMatchingMode(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

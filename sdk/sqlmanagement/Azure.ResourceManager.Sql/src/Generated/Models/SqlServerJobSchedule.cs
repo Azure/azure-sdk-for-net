@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Schedule start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Schedule end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Schedule interval type. </summary>
+        [WirePath("type")]
         public SqlServerJobScheduleType? ScheduleType { get; set; }
         /// <summary> Whether or not the schedule is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </summary>
+        [WirePath("interval")]
         public TimeSpan? Interval { get; set; }
     }
 }

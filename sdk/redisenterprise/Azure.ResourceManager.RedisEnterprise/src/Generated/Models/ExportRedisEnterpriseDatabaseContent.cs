@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
         public ExportRedisEnterpriseDatabaseContent(Uri sasUri)
         {
-            if (sasUri == null)
-            {
-                throw new ArgumentNullException(nameof(sasUri));
-            }
+            Argument.AssertNotNull(sasUri, nameof(sasUri));
 
             SasUri = sasUri;
         }

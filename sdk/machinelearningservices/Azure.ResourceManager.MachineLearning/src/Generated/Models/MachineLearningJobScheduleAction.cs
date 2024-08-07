@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="jobDefinition"/> is null. </exception>
         public MachineLearningJobScheduleAction(MachineLearningJobProperties jobDefinition)
         {
-            if (jobDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(jobDefinition));
-            }
+            Argument.AssertNotNull(jobDefinition, nameof(jobDefinition));
 
             JobDefinition = jobDefinition;
             ActionType = ScheduleActionType.CreateJob;

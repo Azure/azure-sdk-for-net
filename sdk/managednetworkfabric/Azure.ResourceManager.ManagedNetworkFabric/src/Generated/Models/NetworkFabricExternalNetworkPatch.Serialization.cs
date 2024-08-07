@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricExternalNetworkPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricExternalNetworkPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricExternalNetworkPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricExternalNetworkPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricExternalNetworkPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricExternalNetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,12 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                writer.WriteObjectValue(ImportRoutePolicy, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                writer.WriteObjectValue(ExportRoutePolicy, options);
             }
             if (Optional.IsDefined(PeeringOption))
             {
@@ -62,12 +61,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue(OptionBProperties);
+                writer.WriteObjectValue(OptionBProperties, options);
             }
             if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties);
+                writer.WriteObjectValue(OptionAProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricExternalNetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricExternalNetworkPatch DeserializeNetworkFabricExternalNetworkPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             L3OptionBProperties optionBProperties = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -202,10 +201,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricExternalNetworkPatch(
                 annotation,
                 importRoutePolicyId,
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricExternalNetworkPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricExternalNetworkPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

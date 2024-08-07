@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
@@ -66,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,10 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
@@ -168,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,10 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionClientDiagnostics.CreateScope("MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport");
             scope.Start();
@@ -210,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -240,7 +231,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

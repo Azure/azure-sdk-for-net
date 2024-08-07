@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public RedisCreateOrUpdateContent(AzureLocation location, RedisSku sku)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Zones = new ChangeTrackingList<string>();
             Location = location;
@@ -71,7 +68,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </param>
+        /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta, maxmemory-policy,notify-keyspace-events, aof-backup-enabled, aof-storage-connection-string-0, aof-storage-connection-string-1 etc. </param>
         /// <param name="redisVersion"> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </param>
         /// <param name="enableNonSslPort"> Specifies whether the non-ssl Redis server port (6379) is enabled. </param>
         /// <param name="replicasPerMaster"> The number of replicas to be created per primary. </param>
@@ -81,11 +78,12 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
         /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
+        /// <param name="isAccessKeyAuthenticationDisabled"> Authentication to Redis through access keys is disabled when set as true. Default value is false. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
         /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCreateOrUpdateContent(IList<string> zones, AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisCreateOrUpdateContent(IList<string> zones, AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
             Location = location;
@@ -101,6 +99,7 @@ namespace Azure.ResourceManager.Redis.Models
             MinimumTlsVersion = minimumTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
             UpdateChannel = updateChannel;
+            IsAccessKeyAuthenticationDisabled = isAccessKeyAuthenticationDisabled;
             Sku = sku;
             SubnetId = subnetId;
             StaticIP = staticIP;
@@ -113,38 +112,58 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
+        /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta, maxmemory-policy,notify-keyspace-events, aof-backup-enabled, aof-storage-connection-string-0, aof-storage-connection-string-1 etc. </summary>
+        [WirePath("properties.redisConfiguration")]
         public RedisCommonConfiguration RedisConfiguration { get; set; }
         /// <summary> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </summary>
+        [WirePath("properties.redisVersion")]
         public string RedisVersion { get; set; }
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
+        [WirePath("properties.enableNonSslPort")]
         public bool? EnableNonSslPort { get; set; }
         /// <summary> The number of replicas to be created per primary. </summary>
+        [WirePath("properties.replicasPerMaster")]
         public int? ReplicasPerMaster { get; set; }
         /// <summary> The number of replicas to be created per primary. </summary>
+        [WirePath("properties.replicasPerPrimary")]
         public int? ReplicasPerPrimary { get; set; }
         /// <summary> A dictionary of tenant settings. </summary>
+        [WirePath("properties.tenantSettings")]
         public IDictionary<string, string> TenantSettings { get; }
         /// <summary> The number of shards to be created on a Premium Cluster Cache. </summary>
+        [WirePath("properties.shardCount")]
         public int? ShardCount { get; set; }
         /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
+        [WirePath("properties.updateChannel")]
         public UpdateChannel? UpdateChannel { get; set; }
+        /// <summary> Authentication to Redis through access keys is disabled when set as true. Default value is false. </summary>
+        [WirePath("properties.disableAccessKeyAuthentication")]
+        public bool? IsAccessKeyAuthenticationDisabled { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
+        [WirePath("properties.sku")]
         public RedisSku Sku { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>
+        [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </summary>
+        [WirePath("properties.staticIP")]
         public IPAddress StaticIP { get; set; }
     }
 }

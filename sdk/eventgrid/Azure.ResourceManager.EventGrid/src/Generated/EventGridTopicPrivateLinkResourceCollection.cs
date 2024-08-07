@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -119,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<EventGridTopicPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -171,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,14 +233,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -285,7 +262,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,14 +276,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -335,7 +305,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,14 +319,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridTopicPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -387,7 +350,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -401,14 +364,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<EventGridTopicPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

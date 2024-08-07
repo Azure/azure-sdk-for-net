@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Name of the key. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; }
         /// <summary> Base 64-encoded value of the key. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Permissions for the key -- read-only or full permissions. </summary>
+        [WirePath("permissions")]
         public StorageAccountKeyPermission? Permissions { get; }
         /// <summary> Creation time of the key, in round trip date format. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

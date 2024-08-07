@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkFunction.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> Returns a <see cref="AzureTrafficCollectorResource"/> object. </returns>
         public static AzureTrafficCollectorResource GetAzureTrafficCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkFunctionArmClient(client).GetAzureTrafficCollectorResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> Returns a <see cref="CollectorPolicyResource"/> object. </returns>
         public static CollectorPolicyResource GetCollectorPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkFunctionArmClient(client).GetCollectorPolicyResource(id);
         }
@@ -90,10 +82,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public static AzureTrafficCollectorCollection GetAzureTrafficCollectors(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectors();
         }
@@ -131,10 +120,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [ForwardsClientCalls]
         public static async Task<Response<AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectorAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,10 +158,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [ForwardsClientCalls]
         public static Response<AzureTrafficCollectorResource> GetAzureTrafficCollector(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollector(azureTrafficCollectorName, cancellationToken);
         }
@@ -207,10 +190,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> An async collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
@@ -242,10 +222,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }

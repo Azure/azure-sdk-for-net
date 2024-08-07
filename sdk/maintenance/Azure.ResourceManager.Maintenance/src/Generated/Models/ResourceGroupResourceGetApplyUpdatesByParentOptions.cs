@@ -22,30 +22,12 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         public ResourceGroupResourceGetApplyUpdatesByParentOptions(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (resourceParentType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentType));
-            }
-            if (resourceParentName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentName));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (applyUpdateName == null)
-            {
-                throw new ArgumentNullException(nameof(applyUpdateName));
-            }
+            Argument.AssertNotNull(providerName, nameof(providerName));
+            Argument.AssertNotNull(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNull(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(applyUpdateName, nameof(applyUpdateName));
 
             ProviderName = providerName;
             ResourceParentType = resourceParentType;

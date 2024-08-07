@@ -1,10 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
-    internal class TestAuthResponse : AuthenticationEventResponse
+    internal class TestAuthResponse : WebJobsAuthenticationEventResponse
     {
         internal TestAuthResponse(HttpStatusCode code, string content)
         : this(code)
@@ -17,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             StatusCode = code;
         }
 
-        internal override void Invalidate()
+        internal override void BuildJsonElement()
         { }
     }
 }

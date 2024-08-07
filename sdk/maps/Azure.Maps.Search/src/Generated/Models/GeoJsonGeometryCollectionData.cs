@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeoJsonGeometryCollectionData. </summary>
-    internal partial class GeoJsonGeometryCollectionData
+    public partial class GeoJsonGeometryCollectionData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometryCollectionData"/>. </summary>
         /// <param name="geometries">
@@ -21,12 +22,9 @@ namespace Azure.Maps.Search.Models
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        public GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries)
+        internal GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries)
         {
-            if (geometries == null)
-            {
-                throw new ArgumentNullException(nameof(geometries));
-            }
+            Argument.AssertNotNull(geometries, nameof(geometries));
 
             Geometries = geometries.ToList();
         }
@@ -37,7 +35,7 @@ namespace Azure.Maps.Search.Models
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
-        internal GeoJsonGeometryCollectionData(IList<GeoJsonGeometry> geometries)
+        internal GeoJsonGeometryCollectionData(IReadOnlyList<GeoJsonGeometry> geometries)
         {
             Geometries = geometries;
         }
@@ -47,6 +45,6 @@ namespace Azure.Maps.Search.Models
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </summary>
-        public IList<GeoJsonGeometry> Geometries { get; }
+        public IReadOnlyList<GeoJsonGeometry> Geometries { get; }
     }
 }

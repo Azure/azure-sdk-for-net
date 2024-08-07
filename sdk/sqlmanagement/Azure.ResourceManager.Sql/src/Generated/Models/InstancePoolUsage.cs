@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public InstancePoolUsageName Name { get; }
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Usage unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Usage current value. </summary>
+        [WirePath("currentValue")]
         public int? CurrentValue { get; }
         /// <summary> Usage limit. </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
         /// <summary> Usage requested limit. </summary>
+        [WirePath("requestedLimit")]
         public int? RequestedLimit { get; }
     }
 }

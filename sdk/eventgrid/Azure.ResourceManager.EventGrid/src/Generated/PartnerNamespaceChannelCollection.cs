@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerNamespaceChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _partnerNamespaceChannelChannelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerNamespaceChannelChannelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PartnerNamespaceChannelResource> CreateOrUpdate(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _partnerNamespaceChannelChannelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerNamespaceChannelChannelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<Response<PartnerNamespaceChannelResource>> GetAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
@@ -236,7 +211,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual Response<PartnerNamespaceChannelResource> Get(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
@@ -288,7 +256,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +288,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +320,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
@@ -402,7 +363,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual Response<bool> Exists(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
@@ -452,7 +406,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerNamespaceChannelResource>> GetIfExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();
@@ -504,7 +451,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
         public virtual NullableResponse<PartnerNamespaceChannelResource> GetIfExists(string channelName, CancellationToken cancellationToken = default)
         {
-            if (channelName == null)
-            {
-                throw new ArgumentNullException(nameof(channelName));
-            }
-            if (channelName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(channelName));
-            }
+            Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
             using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();

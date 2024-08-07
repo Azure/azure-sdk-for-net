@@ -8,23 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class TenantConfigurationSyncStateContract : IUtf8JsonSerializable, IJsonModel<TenantConfigurationSyncStateContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantConfigurationSyncStateContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantConfigurationSyncStateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TenantConfigurationSyncStateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static TenantConfigurationSyncStateContract DeserializeTenantConfigurationSyncStateContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset? configurationChangeDate = default;
             string lastOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TenantConfigurationSyncStateContract(
                 id,
                 name,
@@ -263,6 +263,226 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    branch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Branch))
+                {
+                    builder.Append("    branch: ");
+                    if (Branch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Branch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Branch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    commitId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitId))
+                {
+                    builder.Append("    commitId: ");
+                    if (CommitId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommitId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommitId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExported), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isExport: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsExported))
+                {
+                    builder.Append("    isExport: ");
+                    var boolValue = IsExported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSynced), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isSynced: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSynced))
+                {
+                    builder.Append("    isSynced: ");
+                    var boolValue = IsSynced.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGitEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isGitEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGitEnabled))
+                {
+                    builder.Append("    isGitEnabled: ");
+                    var boolValue = IsGitEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    syncDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SyncOn))
+                {
+                    builder.Append("    syncDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(SyncOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationChangeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    configurationChangeDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationChangeOn))
+                {
+                    builder.Append("    configurationChangeDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ConfigurationChangeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastOperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastOperationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastOperationId))
+                {
+                    builder.Append("    lastOperationId: ");
+                    if (LastOperationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastOperationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastOperationId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TenantConfigurationSyncStateContract>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TenantConfigurationSyncStateContract>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,8 +491,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +510,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeTenantConfigurationSyncStateContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantConfigurationSyncStateContract)} does not support reading '{options.Format}' format.");
             }
         }
 

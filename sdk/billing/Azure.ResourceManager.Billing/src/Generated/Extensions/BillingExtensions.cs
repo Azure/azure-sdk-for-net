@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -43,10 +41,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
         public static BillingSubscriptionResource GetBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBillingArmClient(client).GetBillingSubscriptionResource(id);
         }
@@ -65,10 +60,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingSubscriptionAliasResource"/> object. </returns>
         public static BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBillingArmClient(client).GetBillingSubscriptionAliasResource(id);
         }
@@ -87,10 +79,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
         public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBillingArmClient(client).GetBillingPaymentMethodResource(id);
         }
@@ -109,10 +98,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
         public static BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBillingArmClient(client).GetBillingAccountPaymentMethodResource(id);
         }
@@ -131,10 +117,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource"/> object. </returns>
         public static BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBillingArmClient(client).GetBillingPaymentMethodLinkResource(id);
         }
@@ -153,10 +136,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
         public static BillingSubscriptionCollection GetBillingSubscriptions(this TenantResource tenantResource, string billingAccountName)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptions(billingAccountName);
         }
@@ -195,10 +175,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
@@ -237,10 +214,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionResource> GetBillingSubscription(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingSubscription(billingAccountName, billingSubscriptionName, cancellationToken);
         }
@@ -259,10 +233,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
         public static BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(this TenantResource tenantResource, string billingAccountName)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
         }
@@ -301,10 +272,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliasAsync(billingAccountName, aliasName, cancellationToken).ConfigureAwait(false);
         }
@@ -343,10 +311,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAlias(billingAccountName, aliasName, cancellationToken);
         }
@@ -363,10 +328,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
         public static BillingPaymentMethodCollection GetBillingPaymentMethods(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethods();
         }
@@ -404,10 +366,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
@@ -445,10 +404,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodResource> GetBillingPaymentMethod(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethod(paymentMethodName, cancellationToken);
         }
@@ -467,10 +423,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
         public static BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(this TenantResource tenantResource, string billingAccountName)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
         }
@@ -509,10 +462,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethodAsync(billingAccountName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
@@ -551,10 +501,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethod(billingAccountName, paymentMethodName, cancellationToken);
         }
@@ -574,10 +521,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
         public static BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
         }
@@ -617,10 +561,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinkAsync(billingAccountName, billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
@@ -660,10 +601,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLink(billingAccountName, billingProfileName, paymentMethodName, cancellationToken);
         }

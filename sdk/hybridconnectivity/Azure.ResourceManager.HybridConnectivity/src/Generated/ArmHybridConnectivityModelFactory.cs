@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.HybridConnectivity;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models

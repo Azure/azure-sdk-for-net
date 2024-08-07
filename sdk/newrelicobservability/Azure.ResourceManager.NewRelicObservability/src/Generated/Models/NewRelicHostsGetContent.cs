@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentNullException(nameof(userEmail));
-            }
+            Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             VmIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> VM resource IDs. </summary>
+        [WirePath("vmIds")]
         public IList<ResourceIdentifier> VmIds { get; }
         /// <summary> User Email. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

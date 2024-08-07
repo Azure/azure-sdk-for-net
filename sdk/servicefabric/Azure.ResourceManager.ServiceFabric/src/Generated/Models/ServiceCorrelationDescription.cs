@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public ServiceCorrelationDescription(ServiceCorrelationScheme scheme, string serviceName)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
+            Argument.AssertNotNull(serviceName, nameof(serviceName));
 
             Scheme = scheme;
             ServiceName = serviceName;

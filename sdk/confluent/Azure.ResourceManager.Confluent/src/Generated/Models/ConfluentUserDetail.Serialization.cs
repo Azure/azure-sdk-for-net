@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ConfluentUserDetail : IUtf8JsonSerializable, IJsonModel<ConfluentUserDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentUserDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentUserDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfluentUserDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,6 +38,16 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
+            if (Optional.IsDefined(UserPrincipalName))
+            {
+                writer.WritePropertyName("userPrincipalName"u8);
+                writer.WriteStringValue(UserPrincipalName);
+            }
+            if (Optional.IsDefined(AadEmail))
+            {
+                writer.WritePropertyName("aadEmail"u8);
+                writer.WriteStringValue(AadEmail);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +71,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +80,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,8 +89,10 @@ namespace Azure.ResourceManager.Confluent.Models
             string firstName = default;
             string lastName = default;
             string emailAddress = default;
+            string userPrincipalName = default;
+            string aadEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))
@@ -99,13 +110,29 @@ namespace Azure.ResourceManager.Confluent.Models
                     emailAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("userPrincipalName"u8))
+                {
+                    userPrincipalName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("aadEmail"u8))
+                {
+                    aadEmail = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentUserDetail(firstName, lastName, emailAddress, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfluentUserDetail(
+                firstName,
+                lastName,
+                emailAddress,
+                userPrincipalName,
+                aadEmail,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options)
@@ -117,7 +144,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +160,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeConfluentUserDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

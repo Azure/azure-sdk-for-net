@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -43,6 +41,8 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyIdpsSignaturesRestOperations _firewallPolicyIdpsSignaturesRestClient;
         private readonly ClientDiagnostics _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics;
         private readonly FirewallPolicyIdpsSignaturesFilterValuesRestOperations _firewallPolicyIdpsSignaturesFilterValuesRestClient;
+        private readonly ClientDiagnostics _firewallPolicyDeploymentsClientDiagnostics;
+        private readonly FirewallPolicyDeploymentsRestOperations _firewallPolicyDeploymentsRestClient;
         private readonly FirewallPolicyData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -74,6 +74,8 @@ namespace Azure.ResourceManager.Network
             _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _firewallPolicyDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,6 +178,13 @@ namespace Azure.ResourceManager.Network
             return new PolicySignaturesOverridesForIdpsResource(Client, Id.AppendChildResource("signatureOverrides", "default"));
         }
 
+        /// <summary> Gets an object representing a FirewallPolicyDraftResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
+        /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
+        public virtual FirewallPolicyDraftResource GetFirewallPolicyDraft()
+        {
+            return new FirewallPolicyDraftResource(Client, Id.AppendChildResource("firewallPolicyDrafts", "default"));
+        }
+
         /// <summary>
         /// Gets the specified Firewall Policy.
         /// <list type="bullet">
@@ -189,7 +198,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +239,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +280,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +364,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,10 +377,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.Update");
             scope.Start();
@@ -400,7 +406,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,10 +419,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual Response<FirewallPolicyResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.Update");
             scope.Start();
@@ -445,7 +448,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,10 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IdpsSignatureListResult>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,10 +495,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IdpsSignatureListResult> GetFirewallPolicyIdpsSignature(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
@@ -527,7 +524,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,10 +533,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
@@ -568,7 +562,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,10 +571,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SignatureOverridesFilterValuesResult> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
@@ -588,6 +579,82 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _firewallPolicyIdpsSignaturesFilterValuesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deploys the firewall policy draft and child rule collection group drafts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicyDeployments_Deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeployFirewallPolicyDeploymentAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _firewallPolicyDeploymentsClientDiagnostics.CreateScope("FirewallPolicyResource.DeployFirewallPolicyDeployment");
+            scope.Start();
+            try
+            {
+                var response = await _firewallPolicyDeploymentsRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, _firewallPolicyDeploymentsRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deploys the firewall policy draft and child rule collection group drafts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicyDeployments_Deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeployFirewallPolicyDeployment(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _firewallPolicyDeploymentsClientDiagnostics.CreateScope("FirewallPolicyResource.DeployFirewallPolicyDeployment");
+            scope.Start();
+            try
+            {
+                var response = _firewallPolicyDeploymentsRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, _firewallPolicyDeploymentsRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -609,7 +676,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -623,14 +690,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.AddTag");
             scope.Start();
@@ -677,7 +738,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -691,14 +752,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<FirewallPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.AddTag");
             scope.Start();
@@ -745,7 +800,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -758,10 +813,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.SetTags");
             scope.Start();
@@ -805,7 +857,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -818,10 +870,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<FirewallPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.SetTags");
             scope.Start();
@@ -865,7 +914,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -878,10 +927,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.RemoveTag");
             scope.Start();
@@ -928,7 +974,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -941,10 +987,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<FirewallPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.RemoveTag");
             scope.Start();

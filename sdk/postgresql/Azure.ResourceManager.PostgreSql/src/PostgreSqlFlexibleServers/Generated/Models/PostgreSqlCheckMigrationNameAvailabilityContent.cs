@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlCheckMigrationNameAvailabilityContent(string name, ResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;
@@ -84,14 +81,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; set; }
         /// <summary> Indicates whether the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> Migration name availability reason. </summary>
+        [WirePath("reason")]
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
         /// <summary> Migration name availability message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

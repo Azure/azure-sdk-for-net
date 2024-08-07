@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.DevSpaces;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevSpaces.Models

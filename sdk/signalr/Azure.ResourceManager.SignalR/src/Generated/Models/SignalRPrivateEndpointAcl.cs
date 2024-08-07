@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SignalRPrivateEndpointAcl(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -42,6 +39,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Name of the private endpoint connection. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

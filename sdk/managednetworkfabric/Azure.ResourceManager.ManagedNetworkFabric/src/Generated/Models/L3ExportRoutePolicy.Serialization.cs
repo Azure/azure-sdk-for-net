@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class L3ExportRoutePolicy : IUtf8JsonSerializable, IJsonModel<L3ExportRoutePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L3ExportRoutePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L3ExportRoutePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<L3ExportRoutePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<L3ExportRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<L3ExportRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static L3ExportRoutePolicy DeserializeL3ExportRoutePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier exportIPv4RoutePolicyId = default;
             ResourceIdentifier exportIPv6RoutePolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportIpv4RoutePolicyId"u8))
@@ -101,10 +100,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new L3ExportRoutePolicy(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, serializedAdditionalRawData);
         }
 
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeL3ExportRoutePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(L3ExportRoutePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

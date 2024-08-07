@@ -17,10 +17,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="chatMessageId"/> is null. </exception>
         public SendReadReceiptRequest(string chatMessageId)
         {
-            if (chatMessageId == null)
-            {
-                throw new ArgumentNullException(nameof(chatMessageId));
-            }
+            Argument.AssertNotNull(chatMessageId, nameof(chatMessageId));
 
             ChatMessageId = chatMessageId;
         }

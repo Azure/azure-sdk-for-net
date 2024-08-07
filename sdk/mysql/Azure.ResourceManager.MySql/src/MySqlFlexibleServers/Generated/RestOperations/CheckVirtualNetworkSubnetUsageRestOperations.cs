@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -33,8 +32,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2023-12-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateExecuteRequestUri(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/checkVirtualNetworkSubnetUsage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteRequest(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter)
@@ -54,7 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -69,18 +81,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteAsync(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (mySqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
-            {
-                throw new ArgumentNullException(nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             using var message = CreateExecuteRequest(subscriptionId, locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,18 +109,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> Execute(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (mySqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
-            {
-                throw new ArgumentNullException(nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             using var message = CreateExecuteRequest(subscriptionId, locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter);
             _pipeline.Send(message, cancellationToken);

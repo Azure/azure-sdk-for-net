@@ -52,14 +52,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> or <paramref name="properties"/> is null. </exception>
         public GeographicArea(GeoJsonType type, AreaGeometry geometry, AreaProperties properties)
         {
-            if (geometry == null)
-            {
-                throw new ArgumentNullException(nameof(geometry));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(geometry, nameof(geometry));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Type = type;
             Geometry = geometry;

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -55,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(IndexingParametersConfiguration);
+                writer.WriteObjectValue<IndexingParametersConfiguration>(IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -113,6 +112,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

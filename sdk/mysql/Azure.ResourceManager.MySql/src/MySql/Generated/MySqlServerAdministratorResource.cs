@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
@@ -280,10 +278,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlServerAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MySqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerAdministratorServerAdministratorsClientDiagnostics.CreateScope("MySqlServerAdministratorResource.CreateOrUpdate");
             scope.Start();
@@ -329,10 +324,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlServerAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, MySqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerAdministratorServerAdministratorsClientDiagnostics.CreateScope("MySqlServerAdministratorResource.CreateOrUpdate");
             scope.Start();

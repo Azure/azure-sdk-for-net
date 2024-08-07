@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationEventTriggerValidationException"/> class.
         /// </summary>
-        /// <param name="message">asdfasd</param>
+        /// <param name="message">The exception message</param>
         public AuthenticationEventTriggerValidationException(string message)
             : base(message)
         {
@@ -22,8 +22,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationEventTriggerValidationException"/> class.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
+        /// <param name="message">The exception message</param>
+        /// <param name="innerException">The inner exception</param>
         public AuthenticationEventTriggerValidationException(string message, Exception innerException)
             : base(message, innerException)
         {

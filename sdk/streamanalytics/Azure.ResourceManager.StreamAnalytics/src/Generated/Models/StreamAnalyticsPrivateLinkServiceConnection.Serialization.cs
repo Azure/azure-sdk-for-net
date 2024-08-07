@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsPrivateLinkServiceConnection : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsPrivateLinkServiceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsPrivateLinkServiceConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsPrivateLinkServiceConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamAnalyticsPrivateLinkServiceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateLinkServiceConnection DeserializeStreamAnalyticsPrivateLinkServiceConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string requestMessage = default;
             StreamAnalyticsPrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -152,10 +151,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamAnalyticsPrivateLinkServiceConnection(privateLinkServiceId, groupIds ?? new ChangeTrackingList<string>(), requestMessage, privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsPrivateLinkServiceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

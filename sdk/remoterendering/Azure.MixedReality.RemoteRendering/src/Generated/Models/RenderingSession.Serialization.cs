@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -129,6 +128,14 @@ namespace Azure.MixedReality.RemoteRendering
                 teraflops,
                 error,
                 creationTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RenderingSession FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRenderingSession(document.RootElement);
         }
     }
 }

@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Communication link location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Communication link kind.  This property is used for Azure Portal metadata. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The state. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
         /// <summary> The name of the partner server. </summary>
+        [WirePath("properties.partnerServer")]
         public string PartnerServer { get; set; }
     }
 }

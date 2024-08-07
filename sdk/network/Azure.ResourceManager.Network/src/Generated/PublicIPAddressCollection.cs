@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublicIPAddressResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicIPAddressName, PublicIPAddressData data, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublicIPAddressResource> CreateOrUpdate(WaitUntil waitUntil, string publicIPAddressName, PublicIPAddressData data, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual async Task<Response<PublicIPAddressResource>> GetAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.Get");
             scope.Start();
@@ -238,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual Response<PublicIPAddressResource> Get(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.Get");
             scope.Start();
@@ -291,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +285,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.Exists");
             scope.Start();
@@ -402,7 +359,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual Response<bool> Exists(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.Exists");
             scope.Start();
@@ -453,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual async Task<NullableResponse<PublicIPAddressResource>> GetIfExistsAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.GetIfExists");
             scope.Start();
@@ -506,7 +449,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual NullableResponse<PublicIPAddressResource> GetIfExists(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressCollection.GetIfExists");
             scope.Start();

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MixedReality;
 using Azure.ResourceManager.MixedReality.Models;
 
 namespace Azure.ResourceManager.MixedReality.Mocking
@@ -76,10 +73,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<MixedRealityNameAvailabilityResult>> CheckMixedRealityNameAvailabilityAsync(AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableMixedRealitySubscriptionResource.CheckMixedRealityNameAvailability");
             scope.Start();
@@ -118,10 +112,7 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableMixedRealitySubscriptionResource.CheckMixedRealityNameAvailability");
             scope.Start();

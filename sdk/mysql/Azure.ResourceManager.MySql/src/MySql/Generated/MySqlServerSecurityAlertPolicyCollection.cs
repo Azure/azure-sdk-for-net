@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlServerSecurityAlertPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MySqlSecurityAlertPolicyName securityAlertPolicyName, MySqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("MySqlServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlServerSecurityAlertPolicyResource> CreateOrUpdate(WaitUntil waitUntil, MySqlSecurityAlertPolicyName securityAlertPolicyName, MySqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("MySqlServerSecurityAlertPolicyCollection.CreateOrUpdate");
             scope.Start();

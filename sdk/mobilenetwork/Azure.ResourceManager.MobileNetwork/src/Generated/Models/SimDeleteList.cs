@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The SIMs to delete. </summary>
+    /// <summary>
+    /// The SIMs to delete.
+    /// Serialized Name: SimDeleteList
+    /// </summary>
     public partial class SimDeleteList
     {
         /// <summary>
@@ -47,20 +50,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
-        /// <param name="sims"> A list of SIM resource names to delete. </param>
+        /// <param name="sims">
+        /// A list of SIM resource names to delete.
+        /// Serialized Name: SimDeleteList.sims
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimDeleteList(IEnumerable<string> sims)
         {
-            if (sims == null)
-            {
-                throw new ArgumentNullException(nameof(sims));
-            }
+            Argument.AssertNotNull(sims, nameof(sims));
 
             Sims = sims.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
-        /// <param name="sims"> A list of SIM resource names to delete. </param>
+        /// <param name="sims">
+        /// A list of SIM resource names to delete.
+        /// Serialized Name: SimDeleteList.sims
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimDeleteList(IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +79,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> A list of SIM resource names to delete. </summary>
+        /// <summary>
+        /// A list of SIM resource names to delete.
+        /// Serialized Name: SimDeleteList.sims
+        /// </summary>
+        [WirePath("sims")]
         public IList<string> Sims { get; }
     }
 }

@@ -20,14 +20,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="ArgumentNullException"> <paramref name="question"/> or <paramref name="textDocuments"/> is null. </exception>
         public AnswersFromTextOptions(string question, IEnumerable<TextDocument> textDocuments)
         {
-            if (question == null)
-            {
-                throw new ArgumentNullException(nameof(question));
-            }
-            if (textDocuments == null)
-            {
-                throw new ArgumentNullException(nameof(textDocuments));
-            }
+            Argument.AssertNotNull(question, nameof(question));
+            Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             Question = question;
             TextDocuments = textDocuments.ToList();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Parameters for Create or Update Request for ServiceResource. </summary>
+    /// <summary> Parameters for Create or Update request for ServiceResource. </summary>
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         /// <summary>
@@ -51,23 +51,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="serviceType"> ServiceType for the service. </param>
+        /// <param name="properties">
+        /// Properties in ServiceResourceCreateUpdateParameters.
+        /// Please note <see cref="ServiceResourceCreateUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/> and <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBServiceCreateOrUpdateContent(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType? serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBServiceCreateOrUpdateContent(ServiceResourceCreateUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InstanceSize = instanceSize;
-            InstanceCount = instanceCount;
-            ServiceType = serviceType;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Instance type for the service. </summary>
-        public CosmosDBServiceSize? InstanceSize { get; set; }
-        /// <summary> Instance count for the service. </summary>
-        public int? InstanceCount { get; set; }
-        /// <summary> ServiceType for the service. </summary>
-        public CosmosDBServiceType? ServiceType { get; set; }
+        /// <summary>
+        /// Properties in ServiceResourceCreateUpdateParameters.
+        /// Please note <see cref="ServiceResourceCreateUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/> and <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
+        /// </summary>
+        [WirePath("properties")]
+        public ServiceResourceCreateUpdateProperties Properties { get; set; }
     }
 }

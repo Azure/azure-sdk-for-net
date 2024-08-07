@@ -24,10 +24,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AutoScaleVCoreData(AzureLocation location, AutoScaleVCoreSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }

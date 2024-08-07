@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownNetworkFunctionDefinitionVersionPropertiesFormat. </summary>
+    /// <summary> Unknown version of NetworkFunctionDefinitionVersionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionDefinitionVersionPropertiesFormat : NetworkFunctionDefinitionVersionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>

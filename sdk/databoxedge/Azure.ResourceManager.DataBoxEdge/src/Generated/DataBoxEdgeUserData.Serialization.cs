@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeUserData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeUserData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUserData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUserData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword);
+                writer.WriteObjectValue(EncryptedPassword, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeUserData DeserializeDataBoxEdgeUserData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             IReadOnlyList<ShareAccessRight> shareAccessRights = default;
             DataBoxEdgeUserType userType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeUserData(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeUserData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support reading '{options.Format}' format.");
             }
         }
 

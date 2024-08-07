@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppDiagnosticsProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppDiagnosticsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppDiagnosticsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -38,19 +37,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
-                writer.WriteObjectValue(DataProviderMetadata);
+                writer.WriteObjectValue(DataProviderMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppDiagnosticsStatus status = default;
             ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -141,10 +140,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppDiagnosticsProperties(metadata, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status, dataProviderMetadata, serializedAdditionalRawData);
         }
 
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDiagnosticsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

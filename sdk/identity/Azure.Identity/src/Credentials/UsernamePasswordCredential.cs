@@ -93,6 +93,10 @@ namespace Azure.Identity
             _username = username;
             _password = password;
             _clientId = clientId;
+            if (options is UsernamePasswordCredentialOptions usernamePasswordOptions && usernamePasswordOptions.AuthenticationRecord != null)
+            {
+                _record = usernamePasswordOptions.AuthenticationRecord;
+            }
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
@@ -166,6 +170,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -180,6 +185,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -216,9 +222,19 @@ namespace Azure.Identity
                     var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                     try
                     {
-                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                        result = await Client.AcquireTokenSilentAsync(
+                            requestContext.Scopes,
+                            requestContext.Claims,
+                            _record,
+                            tenantId,
+                            requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                            null,
+#endif
+                            async,
+                            cancellationToken)
                             .ConfigureAwait(false);
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(result.ToAccessToken());
                     }
                     catch (MsalUiRequiredException msalEx)
                     {
@@ -227,7 +243,7 @@ namespace Azure.Identity
                     }
                 }
                 result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

@@ -51,14 +51,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modelVersion"/> is null. </exception>
         internal ImageAnalysisResult(ImageMetadata metadata, string modelVersion)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             Metadata = metadata;
             ModelVersion = modelVersion;

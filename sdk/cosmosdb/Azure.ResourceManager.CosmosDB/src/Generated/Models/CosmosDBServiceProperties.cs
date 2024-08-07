@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -42,14 +41,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Time of the last state change (ISO-8601 format). </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Instance type for the service. </summary>
+        [WirePath("instanceSize")]
         public CosmosDBServiceSize? InstanceSize { get; set; }
         /// <summary> Instance count for the service. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
         /// <summary> ServiceType for the service. </summary>
         internal CosmosDBServiceType ServiceType { get; set; }
         /// <summary> Describes the status of a service. </summary>
+        [WirePath("status")]
         public CosmosDBServiceStatus? Status { get; }
         /// <summary>
         /// Additional Properties
@@ -81,6 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

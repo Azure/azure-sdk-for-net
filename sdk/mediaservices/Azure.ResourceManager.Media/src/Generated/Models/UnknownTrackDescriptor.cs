@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownTrackDescriptor. </summary>
+    /// <summary> Unknown version of TrackDescriptor. </summary>
     internal partial class UnknownTrackDescriptor : TrackDescriptor
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrackDescriptor"/>. </summary>

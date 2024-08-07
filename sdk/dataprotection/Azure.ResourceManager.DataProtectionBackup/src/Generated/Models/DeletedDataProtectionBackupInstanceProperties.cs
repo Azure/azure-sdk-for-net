@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,18 +20,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceInfo"/>, <paramref name="policyInfo"/> or <paramref name="objectType"/> is null. </exception>
         public DeletedDataProtectionBackupInstanceProperties(DataSourceInfo dataSourceInfo, BackupInstancePolicyInfo policyInfo, string objectType) : base(dataSourceInfo, policyInfo, objectType)
         {
-            if (dataSourceInfo == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceInfo));
-            }
-            if (policyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(policyInfo));
-            }
-            if (objectType == null)
-            {
-                throw new ArgumentNullException(nameof(objectType));
-            }
+            Argument.AssertNotNull(dataSourceInfo, nameof(dataSourceInfo));
+            Argument.AssertNotNull(policyInfo, nameof(policyInfo));
+            Argument.AssertNotNull(objectType, nameof(objectType));
         }
 
         /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/>. </summary>
@@ -40,6 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
         /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
@@ -57,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
-        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, serializedAdditionalRawData)
+        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, serializedAdditionalRawData)
         {
             DeletionInfo = deletionInfo;
         }

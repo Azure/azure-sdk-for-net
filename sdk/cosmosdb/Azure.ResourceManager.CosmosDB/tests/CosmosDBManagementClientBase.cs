@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task CommonGlobalSetup()
         {
             SubscriptionResource sr = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName($"dbaccount-"),
+            var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Started,
+                CosmosDBTestUtilities.GenerateResourceGroupName(SessionRecording),
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }

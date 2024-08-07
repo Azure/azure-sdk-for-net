@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupVaultName, NetAppBackupVaultData data, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string backupVaultName, NetAppBackupVaultData data, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual async Task<Response<NetAppBackupVaultResource>> GetAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual Response<NetAppBackupVaultResource> Get(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +282,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +312,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Exists");
             scope.Start();
@@ -398,7 +355,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.Exists");
             scope.Start();
@@ -448,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppBackupVaultResource>> GetIfExistsAsync(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.GetIfExists");
             scope.Start();
@@ -500,7 +443,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
         public virtual NullableResponse<NetAppBackupVaultResource> GetIfExists(string backupVaultName, CancellationToken cancellationToken = default)
         {
-            if (backupVaultName == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultName));
-            }
-            if (backupVaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
-            }
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
             using var scope = _netAppBackupVaultBackupVaultsClientDiagnostics.CreateScope("NetAppBackupVaultCollection.GetIfExists");
             scope.Start();

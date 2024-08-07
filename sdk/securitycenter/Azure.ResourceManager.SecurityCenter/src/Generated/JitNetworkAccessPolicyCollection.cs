@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -86,25 +84,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JitNetworkAccessPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _jitNetworkAccessPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _jitNetworkAccessPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -145,25 +135,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JitNetworkAccessPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string jitNetworkAccessPolicyName, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _jitNetworkAccessPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _jitNetworkAccessPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), jitNetworkAccessPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<JitNetworkAccessPolicyResource>(Response.FromValue(new JitNetworkAccessPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,14 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual async Task<Response<JitNetworkAccessPolicyResource>> GetAsync(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual Response<JitNetworkAccessPolicyResource> Get(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.Get");
             scope.Start();
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.Exists");
             scope.Start();
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.Exists");
             scope.Start();
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<JitNetworkAccessPolicyResource>> GetIfExistsAsync(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetIfExists");
             scope.Start();
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         public virtual NullableResponse<JitNetworkAccessPolicyResource> GetIfExists(string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (jitNetworkAccessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(jitNetworkAccessPolicyName));
-            }
-            if (jitNetworkAccessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitNetworkAccessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetIfExists");
             scope.Start();

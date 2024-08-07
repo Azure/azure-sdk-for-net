@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -16,14 +15,14 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownQueueSelectorAttachment))]
     public partial class QueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<QueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueSelectorAttachment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<QueueSelectorAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueSelectorAttachment DeserializeQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +89,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +105,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeQueueSelectorAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueSelectorAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -120,11 +119,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeQueueSelectorAttachment(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

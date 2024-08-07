@@ -29,14 +29,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> or <paramref name="recoveryPointId"/> is null. </exception>
         public BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, string recoveryPointId) : base(restoreTargetInfo, sourceDataStoreType)
         {
-            if (restoreTargetInfo == null)
-            {
-                throw new ArgumentNullException(nameof(restoreTargetInfo));
-            }
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
+            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RecoveryPointId = recoveryPointId;
             ObjectType = "AzureBackupRecoveryPointBasedRestoreRequest";
@@ -51,13 +45,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"></param>
-        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData)
+        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests, identityDetails, serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             ObjectType = objectType ?? "AzureBackupRecoveryPointBasedRestoreRequest";

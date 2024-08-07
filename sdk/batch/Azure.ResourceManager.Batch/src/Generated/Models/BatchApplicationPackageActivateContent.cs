@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public BatchApplicationPackageActivateContent(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            Argument.AssertNotNull(format, nameof(format));
 
             Format = format;
         }

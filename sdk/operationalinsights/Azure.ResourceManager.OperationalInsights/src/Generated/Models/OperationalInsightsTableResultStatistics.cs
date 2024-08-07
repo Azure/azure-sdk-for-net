@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Search job completion percentage. </summary>
+        [WirePath("progress")]
         public float? Progress { get; }
         /// <summary> The number of rows that were returned by the search job. </summary>
+        [WirePath("ingestedRecords")]
         public int? IngestedRecords { get; }
         /// <summary> Search job: Amount of scanned data. </summary>
+        [WirePath("scannedGb")]
         public float? ScannedGB { get; }
     }
 }

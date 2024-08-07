@@ -51,10 +51,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal ObjectsResult(IEnumerable<DetectedObject> values)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(values, nameof(values));
 
             Values = values.ToList();
         }

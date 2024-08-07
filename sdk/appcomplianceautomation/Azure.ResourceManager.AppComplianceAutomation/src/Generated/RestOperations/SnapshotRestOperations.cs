@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-16-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string reportName, string snapshotName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string reportName, string snapshotName)
@@ -63,22 +74,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SnapshotResourceData>> GetAsync(string reportName, string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var message = CreateGetRequest(reportName, snapshotName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,22 +103,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SnapshotResourceData> Get(string reportName, string snapshotName, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var message = CreateGetRequest(reportName, snapshotName);
             _pipeline.Send(message, cancellationToken);
@@ -141,6 +124,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
+        internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string snapshotName, SnapshotDownloadContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendPath("/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, SnapshotDownloadContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -158,7 +154,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -173,26 +169,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DownloadAsync(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDownloadRequest(reportName, snapshotName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -215,26 +194,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Download(string reportName, string snapshotName, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
-            if (snapshotName == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotName));
-            }
-            if (snapshotName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(snapshotName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDownloadRequest(reportName, snapshotName, content);
             _pipeline.Send(message, cancellationToken);

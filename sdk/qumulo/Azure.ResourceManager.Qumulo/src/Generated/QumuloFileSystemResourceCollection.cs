@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Qumulo
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<QumuloFileSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileSystemName, QumuloFileSystemResourceData data, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<QumuloFileSystemResource> CreateOrUpdate(WaitUntil waitUntil, string fileSystemName, QumuloFileSystemResourceData data, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<Response<QumuloFileSystemResource>> GetAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual Response<QumuloFileSystemResource> Get(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual Response<bool> Exists(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<NullableResponse<QumuloFileSystemResource>> GetIfExistsAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual NullableResponse<QumuloFileSystemResource> GetIfExists(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            if (fileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystemName));
-            }
-            if (fileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
             using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
             scope.Start();

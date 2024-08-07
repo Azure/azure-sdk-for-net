@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
@@ -186,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionAppResource>> GetAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
@@ -238,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<StaticSiteBuildUserProvidedFunctionAppResource> Get(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
@@ -290,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +284,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +314,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
@@ -400,7 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
@@ -450,7 +400,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual async Task<NullableResponse<StaticSiteBuildUserProvidedFunctionAppResource>> GetIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
@@ -502,7 +445,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
         public virtual NullableResponse<StaticSiteBuildUserProvidedFunctionAppResource> GetIfExists(string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();

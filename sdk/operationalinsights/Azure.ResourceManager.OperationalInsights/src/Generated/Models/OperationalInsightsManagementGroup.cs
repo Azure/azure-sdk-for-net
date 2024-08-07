@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The number of servers connected to the management group. </summary>
+        [WirePath("properties.serverCount")]
         public int? ServerCount { get; }
         /// <summary> Gets or sets a value indicating whether the management group is a gateway. </summary>
+        [WirePath("properties.isGateway")]
         public bool? IsGateway { get; }
         /// <summary> The name of the management group. </summary>
+        [WirePath("properties.name")]
         public string Name { get; }
         /// <summary> The unique ID of the management group. </summary>
+        [WirePath("properties.id")]
         public string Id { get; }
         /// <summary> The datetime that the management group was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The last datetime that the management group received data. </summary>
+        [WirePath("properties.dataReceived")]
         public DateTimeOffset? DataReceivedOn { get; }
         /// <summary> The version of System Center that is managing the management group. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> The SKU of System Center that is managing the management group. </summary>
+        [WirePath("properties.sku")]
         public string Sku { get; }
     }
 }

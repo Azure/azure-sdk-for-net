@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -39,8 +37,6 @@ namespace Azure.ResourceManager.Network
 
         private readonly ClientDiagnostics _networkVirtualApplianceClientDiagnostics;
         private readonly NetworkVirtualAppliancesRestOperations _networkVirtualApplianceRestClient;
-        private readonly ClientDiagnostics _inboundSecurityRuleClientDiagnostics;
-        private readonly InboundSecurityRuleRestOperations _inboundSecurityRuleRestClient;
         private readonly NetworkVirtualApplianceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -68,8 +64,6 @@ namespace Azure.ResourceManager.Network
             _networkVirtualApplianceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkVirtualApplianceApiVersion);
             _networkVirtualApplianceRestClient = new NetworkVirtualAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceApiVersion);
-            _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -116,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,6 +157,75 @@ namespace Azure.ResourceManager.Network
         public virtual Response<VirtualApplianceSiteResource> GetVirtualApplianceSite(string siteName, CancellationToken cancellationToken = default)
         {
             return GetVirtualApplianceSites().Get(siteName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of InboundSecurityRuleResources in the NetworkVirtualAppliance. </summary>
+        /// <returns> An object representing collection of InboundSecurityRuleResources and their operations over a InboundSecurityRuleResource. </returns>
+        public virtual InboundSecurityRuleCollection GetInboundSecurityRules()
+        {
+            return GetCachedClient(client => new InboundSecurityRuleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InboundSecurityRule_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InboundSecurityRuleResource>> GetInboundSecurityRuleAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetInboundSecurityRules().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InboundSecurityRule_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InboundSecurityRuleResource> GetInboundSecurityRule(string ruleCollectionName, CancellationToken cancellationToken = default)
+        {
+            return GetInboundSecurityRules().Get(ruleCollectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkVirtualApplianceConnectionResources in the NetworkVirtualAppliance. </summary>
@@ -185,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -247,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +392,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +434,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,7 +476,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,10 +489,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Update");
             scope.Start();
@@ -458,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,10 +531,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Update");
             scope.Start();
@@ -491,49 +548,37 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
+        /// Restarts one or more VMs belonging to the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/restart</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <description>NetworkVirtualAppliances_Restart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
-        /// <param name="inboundSecurityRule"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
+        /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
-        public virtual async Task<ArmOperation<InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkVirtualApplianceInstanceIds>> RestartAsync(WaitUntil waitUntil, NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionName));
-            }
-            if (ruleCollectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
-            }
-            if (inboundSecurityRule == null)
-            {
-                throw new ArgumentNullException(nameof(inboundSecurityRule));
-            }
-
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.CreateOrUpdateInboundSecurityRule");
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Restart");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkVirtualApplianceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceIds>(new NetworkVirtualApplianceInstanceIdsOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -546,49 +591,37 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
+        /// Restarts one or more VMs belonging to the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/restart</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <description>NetworkVirtualAppliances_Restart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
-        /// <param name="inboundSecurityRule"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
+        /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
-        public virtual ArmOperation<InboundSecurityRule> CreateOrUpdateInboundSecurityRule(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkVirtualApplianceInstanceIds> Restart(WaitUntil waitUntil, NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionName));
-            }
-            if (ruleCollectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionName));
-            }
-            if (inboundSecurityRule == null)
-            {
-                throw new ArgumentNullException(nameof(inboundSecurityRule));
-            }
-
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.CreateOrUpdateInboundSecurityRule");
+            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.Restart");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule, cancellationToken);
-                var operation = new NetworkArmOperation<InboundSecurityRule>(new InboundSecurityRuleOperationSource(), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, inboundSecurityRule).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkVirtualApplianceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds, cancellationToken);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceInstanceIds>(new NetworkVirtualApplianceInstanceIdsOperationSource(), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkVirtualApplianceInstanceIds).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -613,7 +646,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -627,14 +660,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.AddTag");
             scope.Start();
@@ -681,7 +708,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -695,14 +722,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.AddTag");
             scope.Start();
@@ -749,7 +770,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,10 +783,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.SetTags");
             scope.Start();
@@ -809,7 +827,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -822,10 +840,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.SetTags");
             scope.Start();
@@ -869,7 +884,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -882,10 +897,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkVirtualApplianceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.RemoveTag");
             scope.Start();
@@ -932,7 +944,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -945,10 +957,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkVirtualApplianceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceResource.RemoveTag");
             scope.Start();

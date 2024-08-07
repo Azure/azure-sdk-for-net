@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementCacheResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cacheId, ApiManagementCacheData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiManagementCacheCacheRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cacheId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementCacheResource>(Response.FromValue(new ApiManagementCacheResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementCacheCacheRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cacheId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementCacheResource>(Response.FromValue(new ApiManagementCacheResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementCacheResource> CreateOrUpdate(WaitUntil waitUntil, string cacheId, ApiManagementCacheData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiManagementCacheCacheRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cacheId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementCacheResource>(Response.FromValue(new ApiManagementCacheResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementCacheCacheRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cacheId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementCacheResource>(Response.FromValue(new ApiManagementCacheResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementCacheResource>> GetAsync(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual Response<ApiManagementCacheResource> Get(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.Get");
             scope.Start();
@@ -290,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.Exists");
             scope.Start();
@@ -404,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual Response<bool> Exists(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.Exists");
             scope.Start();
@@ -454,7 +408,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementCacheResource>> GetIfExistsAsync(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.GetIfExists");
             scope.Start();
@@ -506,7 +453,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementCacheResource> GetIfExists(string cacheId, CancellationToken cancellationToken = default)
         {
-            if (cacheId == null)
-            {
-                throw new ArgumentNullException(nameof(cacheId));
-            }
-            if (cacheId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheId));
-            }
+            Argument.AssertNotNullOrEmpty(cacheId, nameof(cacheId));
 
             using var scope = _apiManagementCacheCacheClientDiagnostics.CreateScope("ApiManagementCacheCollection.GetIfExists");
             scope.Start();

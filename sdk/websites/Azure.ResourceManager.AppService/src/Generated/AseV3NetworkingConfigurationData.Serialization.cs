@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AseV3NetworkingConfigurationData : IUtf8JsonSerializable, IJsonModel<AseV3NetworkingConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AseV3NetworkingConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AseV3NetworkingConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AseV3NetworkingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -120,6 +122,21 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
+            if (Optional.IsDefined(IsFtpEnabled))
+            {
+                writer.WritePropertyName("ftpEnabled"u8);
+                writer.WriteBooleanValue(IsFtpEnabled.Value);
+            }
+            if (Optional.IsDefined(IsRemoteDebugEnabled))
+            {
+                writer.WritePropertyName("remoteDebugEnabled"u8);
+                writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
+            }
+            if (Optional.IsDefined(InboundIPAddressOverride))
+            {
+                writer.WritePropertyName("inboundIpAddressOverride"u8);
+                writer.WriteStringValue(InboundIPAddressOverride);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,7 +161,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +170,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AseV3NetworkingConfigurationData DeserializeAseV3NetworkingConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,8 +186,11 @@ namespace Azure.ResourceManager.AppService
             IReadOnlyList<IPAddress> externalInboundIPAddresses = default;
             IReadOnlyList<IPAddress> internalInboundIPAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
+            bool? ftpEnabled = default;
+            bool? remoteDebugEnabled = default;
+            string inboundIPAddressOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -304,15 +324,38 @@ namespace Azure.ResourceManager.AppService
                             allowNewPrivateEndpointConnections = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ftpEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ftpEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteDebugEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remoteDebugEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("inboundIpAddressOverride"u8))
+                        {
+                            inboundIPAddressOverride = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AseV3NetworkingConfigurationData(
                 id,
                 name,
@@ -323,8 +366,288 @@ namespace Azure.ResourceManager.AppService
                 externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 allowNewPrivateEndpointConnections,
+                ftpEnabled,
+                remoteDebugEnabled,
+                inboundIPAddressOverride,
                 kind,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsOutboundIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    windowsOutboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
+                {
+                    if (WindowsOutboundIPAddresses.Any())
+                    {
+                        builder.Append("    windowsOutboundIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in WindowsOutboundIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxOutboundIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linuxOutboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
+                {
+                    if (LinuxOutboundIPAddresses.Any())
+                    {
+                        builder.Append("    linuxOutboundIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LinuxOutboundIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalInboundIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    externalInboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExternalInboundIPAddresses))
+                {
+                    if (ExternalInboundIPAddresses.Any())
+                    {
+                        builder.Append("    externalInboundIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExternalInboundIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalInboundIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    internalInboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InternalInboundIPAddresses))
+                {
+                    if (InternalInboundIPAddresses.Any())
+                    {
+                        builder.Append("    internalInboundIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in InternalInboundIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowNewPrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowNewPrivateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
+                {
+                    builder.Append("    allowNewPrivateEndpointConnections: ");
+                    var boolValue = AllowNewPrivateEndpointConnections.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsFtpEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ftpEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsFtpEnabled))
+                {
+                    builder.Append("    ftpEnabled: ");
+                    var boolValue = IsFtpEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebugEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteDebugEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRemoteDebugEnabled))
+                {
+                    builder.Append("    remoteDebugEnabled: ");
+                    var boolValue = IsRemoteDebugEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InboundIPAddressOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    inboundIpAddressOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InboundIPAddressOverride))
+                {
+                    builder.Append("    inboundIpAddressOverride: ");
+                    if (InboundIPAddressOverride.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InboundIPAddressOverride}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InboundIPAddressOverride}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options)
@@ -335,8 +658,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +677,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeAseV3NetworkingConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

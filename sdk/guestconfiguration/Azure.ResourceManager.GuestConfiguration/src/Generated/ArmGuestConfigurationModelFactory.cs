@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="version"> Version of the guest configuration. </param>
         /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
         /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
+        /// <param name="contentManagedIdentity"> Managed identity with storage access of the guest configuration package and configuration parameters. </param>
         /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
         /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
         /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationNavigation"/> instance for mocking. </returns>
-        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind = null, string name = null, string version = null, Uri contentUri = null, string contentHash = null, GuestConfigurationAssignmentType? assignmentType = null, string assignmentSource = null, string contentType = null, IEnumerable<GuestConfigurationParameter> configurationParameters = null, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters = null, LcmConfigurationSetting configurationSetting = null)
+        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind = null, string name = null, string version = null, Uri contentUri = null, string contentHash = null, string contentManagedIdentity = null, GuestConfigurationAssignmentType? assignmentType = null, string assignmentSource = null, string contentType = null, IEnumerable<GuestConfigurationParameter> configurationParameters = null, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters = null, LcmConfigurationSetting configurationSetting = null)
         {
             configurationParameters ??= new List<GuestConfigurationParameter>();
             configurationProtectedParameters ??= new List<GuestConfigurationParameter>();
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 version,
                 contentUri,
                 contentHash,
+                contentManagedIdentity,
                 assignmentType,
                 assignmentSource,
                 contentType,
@@ -291,6 +293,25 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 operationType,
                 resources?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation" />. </summary>
+        /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
+        /// <param name="name"> Name of the guest configuration. </param>
+        /// <param name="version"> Version of the guest configuration. </param>
+        /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
+        /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
+        /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
+        /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
+        /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
+        /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
+        /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
+        /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<GuestConfigurationParameter> configurationParameters, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
+        {
+            return GuestConfigurationNavigation(kind: kind, name: name, version: version, contentUri: contentUri, contentHash: contentHash, contentManagedIdentity: default, assignmentType: assignmentType, assignmentSource: assignmentSource, contentType: contentType, configurationParameters: configurationParameters, configurationProtectedParameters: configurationProtectedParameters, configurationSetting: configurationSetting);
         }
     }
 }

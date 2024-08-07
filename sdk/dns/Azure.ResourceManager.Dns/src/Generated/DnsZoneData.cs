@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -60,6 +59,7 @@ namespace Azure.ResourceManager.Dns
             NameServers = new ChangeTrackingList<string>();
             RegistrationVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
             ResolutionVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
+            SigningKeys = new ChangeTrackingList<DnsSigningKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsZoneData"/>. </summary>
@@ -77,8 +77,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks, IReadOnlyList<DnsSigningKey> signingKeys, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecords = maxNumberOfRecords;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Dns
             ZoneType = zoneType;
             RegistrationVirtualNetworks = registrationVirtualNetworks;
             ResolutionVirtualNetworks = resolutionVirtualNetworks;
+            SigningKeys = signingKeys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -112,5 +114,7 @@ namespace Azure.ResourceManager.Dns
         public IList<WritableSubResource> RegistrationVirtualNetworks { get; }
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
         public IList<WritableSubResource> ResolutionVirtualNetworks { get; }
+        /// <summary> The list of signing keys. </summary>
+        public IReadOnlyList<DnsSigningKey> SigningKeys { get; }
     }
 }

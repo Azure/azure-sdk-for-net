@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -52,10 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentSection(IEnumerable<DocumentSpan> spans)
         {
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(spans, nameof(spans));
 
             Spans = spans.ToList();
             Elements = new ChangeTrackingList<string>();

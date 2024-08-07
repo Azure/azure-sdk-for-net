@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ExtendedLocations
 {
     public partial class CustomLocationData : IUtf8JsonSerializable, IJsonModel<CustomLocationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         internal static CustomLocationData DeserializeCustomLocationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             string @namespace = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.ExtendedLocations
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomLocationData(
                 id,
                 name,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                         return DeserializeCustomLocationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support reading '{options.Format}' format.");
             }
         }
 

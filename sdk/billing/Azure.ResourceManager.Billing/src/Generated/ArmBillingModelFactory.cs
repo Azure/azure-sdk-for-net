@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing.Models

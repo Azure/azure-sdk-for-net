@@ -19,14 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public OcrSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
 
             ODataType = "#Microsoft.Skills.Vision.OcrSkill";
         }
@@ -41,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="shouldDetectOrientation"> A value indicating to turn orientation detection on or not. Default is false. </param>
         /// <param name="lineEnding"> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </param>
-        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, LineEnding? lineEnding) : base(oDataType, name, description, context, inputs, outputs)
+        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, OcrLineEnding? lineEnding) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             ShouldDetectOrientation = shouldDetectOrientation;
@@ -49,6 +43,6 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = oDataType ?? "#Microsoft.Skills.Vision.OcrSkill";
         }
         /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </summary>
-        public LineEnding? LineEnding { get; set; }
+        public OcrLineEnding? LineEnding { get; set; }
     }
 }

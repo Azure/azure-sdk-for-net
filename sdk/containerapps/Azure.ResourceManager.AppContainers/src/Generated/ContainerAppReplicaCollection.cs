@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual Response<ContainerAppReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Exists");
             scope.Start();
@@ -278,7 +255,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual Response<bool> Exists(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Exists");
             scope.Start();
@@ -328,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.GetIfExists");
             scope.Start();
@@ -380,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.GetIfExists");
             scope.Start();

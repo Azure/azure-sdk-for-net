@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     public partial class ManagedGrafanaProperties : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedGrafanaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,17 +89,17 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
-                writer.WriteObjectValue(GrafanaIntegrations);
+                writer.WriteObjectValue(GrafanaIntegrations, options);
             }
             if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
-                writer.WriteObjectValue(EnterpriseConfigurations);
+                writer.WriteObjectValue(EnterpriseConfigurations, options);
             }
             if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
-                writer.WriteObjectValue(GrafanaConfigurations);
+                writer.WriteObjectValue(GrafanaConfigurations, options);
             }
             if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 foreach (var item in GrafanaPlugins)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static ManagedGrafanaProperties DeserializeManagedGrafanaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Grafana.Models
             IDictionary<string, GrafanaPlugin> grafanaPlugins = default;
             string grafanaMajorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -315,10 +314,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedGrafanaProperties(
                 provisioningState,
                 grafanaVersion,
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeManagedGrafanaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

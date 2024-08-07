@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="returnReason"/> is null. </exception>
         public EdgeOrderItemReturnContent(string returnReason)
         {
-            if (returnReason == null)
-            {
-                throw new ArgumentNullException(nameof(returnReason));
-            }
+            Argument.AssertNotNull(returnReason, nameof(returnReason));
 
             ReturnReason = returnReason;
         }

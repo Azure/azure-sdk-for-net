@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The UnknownBackupPolicy. </summary>
+    /// <summary> Unknown version of BackupPolicy. </summary>
     internal partial class UnknownBackupPolicy : CosmosDBAccountBackupPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/>. </summary>

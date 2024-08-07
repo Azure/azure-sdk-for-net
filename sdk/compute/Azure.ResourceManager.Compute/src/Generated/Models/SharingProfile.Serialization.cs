@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharingProfile : IUtf8JsonSerializable, IJsonModel<SharingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharingProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharingProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,14 +37,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
-                writer.WriteObjectValue(CommunityGalleryInfo);
+                writer.WriteObjectValue(CommunityGalleryInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfile DeserializeSharingProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<SharingProfileGroup> groups = default;
             CommunityGalleryInfo communityGalleryInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"u8))
@@ -126,10 +125,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SharingProfile(permissions, groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo, serializedAdditionalRawData);
         }
 
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

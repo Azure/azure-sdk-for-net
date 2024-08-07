@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubData : IUtf8JsonSerializable, IJsonModel<EventHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,15 +87,20 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
+            if (Optional.IsDefined(UserMetadata))
+            {
+                writer.WritePropertyName("userMetadata"u8);
+                writer.WriteStringValue(UserMetadata);
+            }
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
-                writer.WriteObjectValue(CaptureDescription);
+                writer.WriteObjectValue(CaptureDescription, options);
             }
             if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
-                writer.WriteObjectValue(RetentionDescription);
+                writer.WriteObjectValue(RetentionDescription, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
             var format = options.Format == "W" ? ((IPersistableModel<EventHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubData DeserializeEventHubData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,10 +151,11 @@ namespace Azure.ResourceManager.EventHubs
             DateTimeOffset? updatedAt = default;
             long? partitionCount = default;
             EventHubEntityStatus? status = default;
+            string userMetadata = default;
             CaptureDescription captureDescription = default;
             RetentionDescription retentionDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -242,6 +250,11 @@ namespace Azure.ResourceManager.EventHubs
                             status = property0.Value.GetString().ToEventHubEntityStatus();
                             continue;
                         }
+                        if (property0.NameEquals("userMetadata"u8))
+                        {
+                            userMetadata = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("captureDescription"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -265,10 +278,10 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventHubData(
                 id,
                 name,
@@ -279,10 +292,248 @@ namespace Azure.ResourceManager.EventHubs
                 updatedAt,
                 partitionCount,
                 status,
+                userMetadata,
                 captureDescription,
                 retentionDescription,
                 location,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partitionIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PartitionIds))
+                {
+                    if (PartitionIds.Any())
+                    {
+                        builder.Append("    partitionIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PartitionIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdAt: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    createdAt: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    updatedAt: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    builder.Append("    updatedAt: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partitionCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionCount))
+                {
+                    builder.Append("    partitionCount: ");
+                    builder.AppendLine($"'{PartitionCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserMetadata))
+                {
+                    builder.Append("    userMetadata: ");
+                    if (UserMetadata.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserMetadata}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserMetadata}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptureDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    captureDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CaptureDescription))
+                {
+                    builder.Append("    captureDescription: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CaptureDescription, options, 4, false, "    captureDescription: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionDescription))
+                {
+                    builder.Append("    retentionDescription: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RetentionDescription, options, 4, false, "    retentionDescription: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EventHubData>.Write(ModelReaderWriterOptions options)
@@ -293,8 +544,10 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +563,7 @@ namespace Azure.ResourceManager.EventHubs
                         return DeserializeEventHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubData)} does not support reading '{options.Format}' format.");
             }
         }
 

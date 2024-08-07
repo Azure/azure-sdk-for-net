@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -53,14 +52,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
         public MachineLearningRecurrenceSchedule(IEnumerable<int> hours, IEnumerable<int> minutes)
         {
-            if (hours == null)
-            {
-                throw new ArgumentNullException(nameof(hours));
-            }
-            if (minutes == null)
-            {
-                throw new ArgumentNullException(nameof(minutes));
-            }
+            Argument.AssertNotNull(hours, nameof(hours));
+            Argument.AssertNotNull(minutes, nameof(minutes));
 
             Hours = hours.ToList();
             Minutes = minutes.ToList();

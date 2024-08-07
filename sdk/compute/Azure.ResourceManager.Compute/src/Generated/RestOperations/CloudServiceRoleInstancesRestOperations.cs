@@ -10,7 +10,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -36,6 +35,22 @@ namespace Azure.ResourceManager.Compute
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-04";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -70,38 +85,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -126,38 +113,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -170,6 +129,26 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand)
@@ -209,38 +188,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CloudServiceRoleInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,38 +222,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CloudServiceRoleInstanceData> Get(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -320,6 +243,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInstanceViewRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendPath("/instanceView", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInstanceViewRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -355,38 +295,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleInstanceView>> GetInstanceViewAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetInstanceViewRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -414,38 +326,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleInstanceView> GetInstanceView(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetInstanceViewRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -461,6 +345,25 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
@@ -498,30 +401,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleInstanceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cloudServiceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -549,30 +431,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleInstanceListResult> List(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cloudServiceName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -588,6 +449,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestartRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -623,38 +501,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RestartAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateRestartRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -678,38 +528,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Restart(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateRestartRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -721,6 +543,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReimageRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendPath("/reimage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -756,38 +595,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateReimageRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -811,38 +622,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Reimage(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateReimageRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -854,6 +637,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRebuildRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendPath("/rebuild", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRebuildRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -889,38 +689,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RebuildAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateRebuildRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -944,38 +716,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Rebuild(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateRebuildRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -987,6 +731,23 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRemoteDesktopFileRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/roleInstances/", false);
+            uri.AppendPath(roleInstanceName, true);
+            uri.AppendPath("/remoteDesktopFile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRemoteDesktopFileRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName)
@@ -1022,38 +783,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Stream>> GetRemoteDesktopFileAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetRemoteDesktopFileRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1079,38 +812,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Stream> GetRemoteDesktopFile(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
-            if (roleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstanceName));
-            }
-            if (roleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+            Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
             using var message = CreateGetRemoteDesktopFileRequest(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -1124,6 +829,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
@@ -1151,34 +864,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleInstanceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1207,34 +896,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleInstanceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName, expand);
             _pipeline.Send(message, cancellationToken);

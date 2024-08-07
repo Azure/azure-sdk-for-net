@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ServiceBusNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNameAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNameAvailabilityContent DeserializeServiceBusNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusNameAvailabilityContent(name, serializedAdditionalRawData);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

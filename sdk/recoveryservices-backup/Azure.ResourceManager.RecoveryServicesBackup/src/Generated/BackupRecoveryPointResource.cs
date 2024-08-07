@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -211,10 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> MoveRecoveryPointAsync(WaitUntil waitUntil, MoveRPAcrossTiersContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupRecoveryPointResource.MoveRecoveryPoint");
             scope.Start();
@@ -256,10 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation MoveRecoveryPoint(WaitUntil waitUntil, MoveRPAcrossTiersContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupRecoveryPointResource.MoveRecoveryPoint");
             scope.Start();
@@ -302,10 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
@@ -348,10 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
@@ -394,10 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> ProvisionItemLevelRecoveryConnectionAsync(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.ProvisionItemLevelRecoveryConnection");
             scope.Start();
@@ -437,10 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response ProvisionItemLevelRecoveryConnection(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.ProvisionItemLevelRecoveryConnection");
             scope.Start();

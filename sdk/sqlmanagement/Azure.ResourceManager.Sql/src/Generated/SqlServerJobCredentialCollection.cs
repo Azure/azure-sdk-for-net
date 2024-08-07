@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerJobCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialName, SqlServerJobCredentialData data, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _sqlServerJobCredentialJobCredentialsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobCredentialJobCredentialsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerJobCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string credentialName, SqlServerJobCredentialData data, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _sqlServerJobCredentialJobCredentialsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobCredentialJobCredentialsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<Response<SqlServerJobCredentialResource>> GetAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<SqlServerJobCredentialResource> Get(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerJobCredentialResource>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual NullableResponse<SqlServerJobCredentialResource> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetIfExists");
             scope.Start();

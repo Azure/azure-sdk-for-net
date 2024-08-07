@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     internal partial class SimListResult : IUtf8JsonSerializable, IJsonModel<SimListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SimListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SimListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SimListResult DeserializeSimListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             IReadOnlyList<MobileNetworkSimData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -107,11 +108,72 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SimListResult(value ?? new ChangeTrackingList<MobileNetworkSimData>(), nextLink, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    if (Value.Any())
+                    {
+                        builder.Append("  value: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    builder.Append("  nextLink: ");
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SimListResult>.Write(ModelReaderWriterOptions options)
@@ -122,8 +184,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SimListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +203,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeSimListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

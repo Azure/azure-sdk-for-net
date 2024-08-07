@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The type of access key. </summary>
+        [WirePath("keyType")]
         public SignalRKeyType? KeyType { get; set; }
     }
 }

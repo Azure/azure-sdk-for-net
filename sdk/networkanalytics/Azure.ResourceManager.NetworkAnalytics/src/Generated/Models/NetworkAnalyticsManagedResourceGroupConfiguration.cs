@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NetworkAnalyticsManagedResourceGroupConfiguration(string name, AzureLocation location)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Location = location;

@@ -17,9 +17,10 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("PlayCompleted", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("PlayFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("RecognizeFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
-    [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingType?), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingKind?), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("HoldFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
@@ -74,10 +75,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
+        /// <param name="isOnHold"> Is participant on hold. </param>
         /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
-        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default, bool isOnHold = default)
         {
-            return new CallParticipant(identifier, isMuted);
+            return new CallParticipant(identifier, isMuted, isOnHold);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -164,7 +166,7 @@ namespace Azure.Communication.CallAutomation
             var internalObject = new ParticipantsUpdatedInternal(
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 sequenceNumber,
                 callConnectionId,
                 serverCallId,
@@ -467,24 +469,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="recordingType"></param>
+        /// <param name="recordingKind"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateChanged"/> instance for mocking. </returns>
-        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingType? recordingType = null)
+        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingKind? recordingKind = null)
         {
-            return new RecordingStateChanged(recordingId, state, startDateTime, recordingType, callConnectionId, serverCallId, correlationId);
-        }
-
-        /// <summary> Initializes a new instance of RecordingStateResult. </summary>
-        /// <param name="recordingId"></param>
-        /// <param name="recordingState"></param>
-        /// <param name="recordingType"></param>
-        /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
-        {
-            return new RecordingStateResult(recordingId, recordingState, recordingType);
+            return new RecordingStateChanged(recordingId, state, startDateTime, recordingKind, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of SendDtmfTonesCompleted. </summary>
@@ -513,6 +505,18 @@ namespace Azure.Communication.CallAutomation
             var internalObject = new SendDtmfTonesFailedInternal(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
 
             return new SendDtmfTonesFailed(internalObject);
+        }
+
+        /// <summary> Initializes a new instance of HoldFailed. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
+        public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
     }
 }

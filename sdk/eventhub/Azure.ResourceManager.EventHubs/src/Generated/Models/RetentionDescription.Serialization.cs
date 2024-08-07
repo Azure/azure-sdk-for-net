@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class RetentionDescription : IUtf8JsonSerializable, IJsonModel<RetentionDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RetentionDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static RetentionDescription DeserializeRetentionDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             long? retentionTimeInHours = default;
             int? tombstoneRetentionTimeInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cleanupPolicy"u8))
@@ -116,11 +116,71 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RetentionDescription(cleanupPolicy, retentionTimeInHours, tombstoneRetentionTimeInHours, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CleanupPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cleanupPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CleanupPolicy))
+                {
+                    builder.Append("  cleanupPolicy: ");
+                    builder.AppendLine($"'{CleanupPolicy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionTimeInHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  retentionTimeInHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionTimeInHours))
+                {
+                    builder.Append("  retentionTimeInHours: ");
+                    builder.AppendLine($"'{RetentionTimeInHours.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TombstoneRetentionTimeInHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tombstoneRetentionTimeInHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TombstoneRetentionTimeInHours))
+                {
+                    builder.Append("  tombstoneRetentionTimeInHours: ");
+                    builder.AppendLine($"{TombstoneRetentionTimeInHours.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RetentionDescription>.Write(ModelReaderWriterOptions options)
@@ -131,8 +191,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +210,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeRetentionDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

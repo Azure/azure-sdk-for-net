@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger type. </summary>
+        [WirePath("properties.loggerType")]
         public LoggerType? LoggerType { get; set; }
         /// <summary> Logger description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Logger credentials. </summary>
+        [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials { get; }
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        [WirePath("properties.isBuffered")]
         public bool? IsBuffered { get; set; }
     }
 }

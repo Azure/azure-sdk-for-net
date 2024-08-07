@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
@@ -137,6 +135,75 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets effective Network Security Perimeter Configuration for association
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets effective Network Security Perimeter Configuration for association
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of GraphResourceGetResultResources in the CosmosDBAccount. </summary>
         /// <returns> An object representing collection of GraphResourceGetResultResources and their operations over a GraphResourceGetResultResource. </returns>
         public virtual GraphResourceGetResultCollection GetGraphResourceGetResults()
@@ -157,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +393,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,7 +462,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,7 +500,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +531,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -502,7 +569,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -533,7 +600,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +638,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +669,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -640,7 +707,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -671,7 +738,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -709,7 +776,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -740,7 +807,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -778,7 +845,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -809,7 +876,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,7 +914,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -878,7 +945,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -916,7 +983,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -947,7 +1014,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -985,7 +1052,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1016,7 +1083,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1054,7 +1121,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1085,7 +1152,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1116,7 +1183,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1156,7 +1223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1196,7 +1263,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1238,7 +1305,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1280,7 +1347,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1294,10 +1361,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBAccountResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.Update");
             scope.Start();
@@ -1329,7 +1393,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1343,10 +1407,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<CosmosDBAccountResource> Update(WaitUntil waitUntil, CosmosDBAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.Update");
             scope.Start();
@@ -1378,7 +1439,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1392,10 +1453,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
         public virtual async Task<ArmOperation> FailoverPriorityChangeAsync(WaitUntil waitUntil, CosmosDBFailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
-            if (failoverParameters == null)
-            {
-                throw new ArgumentNullException(nameof(failoverParameters));
-            }
+            Argument.AssertNotNull(failoverParameters, nameof(failoverParameters));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.FailoverPriorityChange");
             scope.Start();
@@ -1427,7 +1485,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1441,10 +1499,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="failoverParameters"/> is null. </exception>
         public virtual ArmOperation FailoverPriorityChange(WaitUntil waitUntil, CosmosDBFailoverPolicies failoverParameters, CancellationToken cancellationToken = default)
         {
-            if (failoverParameters == null)
-            {
-                throw new ArgumentNullException(nameof(failoverParameters));
-            }
+            Argument.AssertNotNull(failoverParameters, nameof(failoverParameters));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.FailoverPriorityChange");
             scope.Start();
@@ -1476,7 +1531,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1514,7 +1569,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1552,7 +1607,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1581,7 +1636,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1610,7 +1665,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1624,10 +1679,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
         public virtual async Task<ArmOperation> OfflineRegionAsync(WaitUntil waitUntil, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
-            if (regionParameterForOffline == null)
-            {
-                throw new ArgumentNullException(nameof(regionParameterForOffline));
-            }
+            Argument.AssertNotNull(regionParameterForOffline, nameof(regionParameterForOffline));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.OfflineRegion");
             scope.Start();
@@ -1659,7 +1711,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1673,10 +1725,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOffline"/> is null. </exception>
         public virtual ArmOperation OfflineRegion(WaitUntil waitUntil, RegionForOnlineOffline regionParameterForOffline, CancellationToken cancellationToken = default)
         {
-            if (regionParameterForOffline == null)
-            {
-                throw new ArgumentNullException(nameof(regionParameterForOffline));
-            }
+            Argument.AssertNotNull(regionParameterForOffline, nameof(regionParameterForOffline));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.OfflineRegion");
             scope.Start();
@@ -1708,7 +1757,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1722,10 +1771,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
         public virtual async Task<ArmOperation> OnlineRegionAsync(WaitUntil waitUntil, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
-            if (regionParameterForOnline == null)
-            {
-                throw new ArgumentNullException(nameof(regionParameterForOnline));
-            }
+            Argument.AssertNotNull(regionParameterForOnline, nameof(regionParameterForOnline));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.OnlineRegion");
             scope.Start();
@@ -1757,7 +1803,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1771,10 +1817,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="regionParameterForOnline"/> is null. </exception>
         public virtual ArmOperation OnlineRegion(WaitUntil waitUntil, RegionForOnlineOffline regionParameterForOnline, CancellationToken cancellationToken = default)
         {
-            if (regionParameterForOnline == null)
-            {
-                throw new ArgumentNullException(nameof(regionParameterForOnline));
-            }
+            Argument.AssertNotNull(regionParameterForOnline, nameof(regionParameterForOnline));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.OnlineRegion");
             scope.Start();
@@ -1806,7 +1849,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1844,7 +1887,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1882,7 +1925,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1896,10 +1939,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RegenerateKeyAsync(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.RegenerateKey");
             scope.Start();
@@ -1931,7 +1971,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1945,10 +1985,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation RegenerateKey(WaitUntil waitUntil, CosmosDBAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.RegenerateKey");
             scope.Start();
@@ -1980,7 +2017,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1994,10 +2031,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
@@ -2016,7 +2050,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2030,10 +2064,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBAccountDatabaseAccountsRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _cosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetrics", "value", null, cancellationToken);
@@ -2052,7 +2083,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2082,7 +2113,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2112,7 +2143,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2141,7 +2172,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2170,7 +2201,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2182,18 +2213,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsDatabasesAsync(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
@@ -2212,7 +2233,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2224,18 +2245,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseMetric> GetMetricsDatabases(string databaseRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabases", "value", null, cancellationToken);
@@ -2254,7 +2265,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2266,14 +2277,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesDatabasesAsync(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
@@ -2292,7 +2296,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2304,14 +2308,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseUsage> GetUsagesDatabases(string databaseRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesDatabases", "value", null, cancellationToken);
@@ -2330,7 +2327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2341,14 +2338,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsDatabasesAsync(string databaseRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
@@ -2367,7 +2357,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2378,14 +2368,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitionsDatabases(string databaseRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _databaseClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsDatabases", "value", null, cancellationToken);
@@ -2404,7 +2387,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2417,26 +2400,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsCollectionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
@@ -2455,7 +2421,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2468,26 +2434,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseMetric> GetMetricsCollections(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollections", "value", null, cancellationToken);
@@ -2506,7 +2455,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2519,22 +2468,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseUsage> GetUsagesCollectionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
@@ -2553,7 +2488,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2566,22 +2501,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseUsage> GetUsagesCollections(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollections", "value", null, cancellationToken);
@@ -2600,7 +2521,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2612,22 +2533,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBMetricDefinition> GetMetricDefinitionsCollectionsAsync(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
@@ -2646,7 +2553,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2658,22 +2565,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBMetricDefinition> GetMetricDefinitionsCollections(string databaseRid, string collectionRid, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRestClient.CreateListMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(e), _collectionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricDefinitionsCollections", "value", null, cancellationToken);
@@ -2692,7 +2585,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2706,34 +2599,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsCollectionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
@@ -2752,7 +2621,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2766,34 +2635,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseMetric> GetMetricsCollectionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _collectionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionRegions", "value", null, cancellationToken);
@@ -2812,7 +2657,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2824,18 +2669,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBBaseMetric> GetMetricsDatabaseAccountRegionsAsync(string region, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
@@ -2854,7 +2689,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2866,18 +2701,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBBaseMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBBaseMetric> GetMetricsDatabaseAccountRegions(string region, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAccountRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBBaseMetric.DeserializeCosmosDBBaseMetric(e), _databaseAccountRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsDatabaseAccountRegions", "value", null, cancellationToken);
@@ -2896,7 +2721,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2909,26 +2734,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (sourceRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
@@ -2947,7 +2755,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2960,26 +2768,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (sourceRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileSourceTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceRegion, targetRegion, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileSourceTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileSourceTargets", "value", null, cancellationToken);
@@ -2998,7 +2789,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3010,18 +2801,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
@@ -3040,7 +2821,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3052,18 +2833,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileTargetRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetRegion, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileTargetClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentileTargets", "value", null, cancellationToken);
@@ -3082,7 +2853,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3092,10 +2863,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentilesAsync(string filter, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
@@ -3114,7 +2882,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3124,10 +2892,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBPercentileMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentiles(string filter, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _percentileRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(e), _percentileClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPercentiles", "value", null, cancellationToken);
@@ -3146,7 +2911,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3160,34 +2925,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionRegionsAsync(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
@@ -3206,7 +2947,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3220,34 +2961,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitionRegions(string region, string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitionRegions", "value", null, cancellationToken);
@@ -3266,7 +2983,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3279,26 +2996,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
@@ -3317,7 +3017,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3330,26 +3030,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsCollectionPartitions(string databaseRid, string collectionRid, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsCollectionPartitions", "value", null, cancellationToken);
@@ -3368,7 +3051,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3381,22 +3064,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="PartitionUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionUsage> GetUsagesCollectionPartitionsAsync(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
@@ -3415,7 +3084,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3428,22 +3097,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="PartitionUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionUsage> GetUsagesCollectionPartitions(string databaseRid, string collectionRid, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectionPartitionRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionUsage.DeserializePartitionUsage(e), _collectionPartitionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetUsagesCollectionPartitions", "value", null, cancellationToken);
@@ -3462,7 +3117,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3476,34 +3131,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdsAsync(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
-            if (partitionKeyRangeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partitionKeyRangeId));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
@@ -3522,7 +3153,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3536,34 +3167,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIds(string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
-            if (partitionKeyRangeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partitionKeyRangeId));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseRid, collectionRid, partitionKeyRangeId, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIds", "value", null, cancellationToken);
@@ -3582,7 +3189,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3597,42 +3204,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegionsAsync(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
-            if (partitionKeyRangeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partitionKeyRangeId));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
@@ -3651,7 +3227,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3666,42 +3242,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="PartitionMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartitionMetric> GetMetricsPartitionKeyRangeIdRegions(string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (region.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(region));
-            }
-            if (databaseRid == null)
-            {
-                throw new ArgumentNullException(nameof(databaseRid));
-            }
-            if (databaseRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseRid));
-            }
-            if (collectionRid == null)
-            {
-                throw new ArgumentNullException(nameof(collectionRid));
-            }
-            if (collectionRid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionRid));
-            }
-            if (partitionKeyRangeId == null)
-            {
-                throw new ArgumentNullException(nameof(partitionKeyRangeId));
-            }
-            if (partitionKeyRangeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partitionKeyRangeId));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
+            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
+            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partitionKeyRangeIdRegionRestClient.CreateListMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PartitionMetric.DeserializePartitionMetric(e), _partitionKeyRangeIdRegionClientDiagnostics, Pipeline, "CosmosDBAccountResource.GetMetricsPartitionKeyRangeIdRegions", "value", null, cancellationToken);
@@ -3720,7 +3265,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3734,14 +3279,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CosmosDBAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.AddTag");
             scope.Start();
@@ -3788,7 +3327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3802,14 +3341,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CosmosDBAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.AddTag");
             scope.Start();
@@ -3856,7 +3389,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3869,10 +3402,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CosmosDBAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.SetTags");
             scope.Start();
@@ -3916,7 +3446,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3929,10 +3459,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CosmosDBAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.SetTags");
             scope.Start();
@@ -3976,7 +3503,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3989,10 +3516,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CosmosDBAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.RemoveTag");
             scope.Start();
@@ -4039,7 +3563,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4052,10 +3576,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CosmosDBAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.RemoveTag");
             scope.Start();

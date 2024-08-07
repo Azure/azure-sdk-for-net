@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerSkill>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
@@ -41,10 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
-            if (Optional.IsDefined(IndexProjections))
+            if (Optional.IsDefined(IndexProjection))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue(IndexProjections);
+                writer.WriteObjectValue(IndexProjection);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -77,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchIndexerSkill> skills = default;
             CognitiveServicesAccount cognitiveServices = default;
             KnowledgeStore knowledgeStore = default;
-            SearchIndexerIndexProjections indexProjections = default;
+            SearchIndexerIndexProjection indexProjections = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -126,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    indexProjections = SearchIndexerIndexProjections.DeserializeSearchIndexerIndexProjections(property.Value);
+                    indexProjections = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -154,6 +153,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 indexProjections,
                 odataEtag,
                 encryptionKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerSkillset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerSkillset(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

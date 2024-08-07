@@ -9,33 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderItemDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
-            writer.WriteObjectValue(ProductDetails);
+            writer.WriteObjectValue(ProductDetails, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue(CurrentStage);
+                writer.WriteObjectValue(CurrentStage, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
             {
@@ -43,24 +41,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderItemStageHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
-                writer.WriteObjectValue(ForwardShippingDetails);
+                writer.WriteObjectValue(ForwardShippingDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue(ReverseShippingDetails, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -100,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
             {
                 writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue(FirstOrDefaultManagement);
+                writer.WriteObjectValue(FirstOrDefaultManagement, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagementRPDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +147,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemDetails DeserializeEdgeOrderItemDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +170,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IReadOnlyList<ResourceProviderDetails> managementRPDetailsList = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"u8))
@@ -320,10 +318,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderItemDetails(
                 productDetails,
                 orderItemType,
@@ -353,7 +351,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +367,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderItemDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

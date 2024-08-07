@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptEnvironmentVariable(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -77,10 +74,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the environment variable. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The value of the environment variable. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> The value of the secure environment variable. </summary>
+        [WirePath("secureValue")]
         public string SecureValue { get; set; }
     }
 }

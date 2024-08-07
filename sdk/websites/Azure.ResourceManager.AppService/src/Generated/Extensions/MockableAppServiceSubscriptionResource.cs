@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService.Mocking
@@ -47,6 +44,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         private ResourceHealthMetadataRestOperations _resourceHealthMetadataRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private WebSiteManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _getUsagesInLocationClientDiagnostics;
+        private GetUsagesInLocationRestOperations _getUsagesInLocationRestClient;
         private ClientDiagnostics _staticSitesClientDiagnostics;
         private StaticSitesRestOperations _staticSitesRestClient;
         private ClientDiagnostics _staticSiteClientDiagnostics;
@@ -92,6 +91,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GetUsagesInLocationClientDiagnostics => _getUsagesInLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GetUsagesInLocationRestOperations GetUsagesInLocationRestClient => _getUsagesInLocationRestClient ??= new GetUsagesInLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StaticSiteClientDiagnostics => _staticSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,10 +326,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
@@ -357,7 +355,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,10 +364,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
@@ -398,7 +393,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,10 +402,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            if (identifier == null)
-            {
-                throw new ArgumentNullException(nameof(identifier));
-            }
+            Argument.AssertNotNull(identifier, nameof(identifier));
 
             using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
@@ -439,7 +431,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,10 +440,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public virtual Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            if (identifier == null)
-            {
-                throw new ArgumentNullException(nameof(identifier));
-            }
+            Argument.AssertNotNull(identifier, nameof(identifier));
 
             using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
@@ -480,7 +469,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,7 +499,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +529,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -574,7 +563,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -608,7 +597,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -618,10 +607,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
@@ -641,7 +627,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,10 +637,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
@@ -674,7 +657,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -704,7 +687,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -734,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -768,7 +751,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -802,7 +785,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -833,7 +816,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -864,7 +847,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -895,7 +878,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -926,7 +909,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -941,14 +924,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -977,7 +953,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -992,14 +968,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -1028,7 +997,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1058,7 +1027,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1088,7 +1057,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1115,7 +1084,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1142,7 +1111,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1170,7 +1139,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1198,7 +1167,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1232,7 +1201,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1266,7 +1235,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1276,14 +1245,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response> DisableAppServiceRecommendationAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
@@ -1312,7 +1274,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1322,14 +1284,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response DisableAppServiceRecommendation(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
@@ -1358,7 +1313,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1384,7 +1339,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1410,7 +1365,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1438,7 +1393,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1466,7 +1421,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1475,10 +1430,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
@@ -1507,7 +1459,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,10 +1468,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
@@ -1536,6 +1485,60 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Get custom hostnames under this subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListCustomHostNameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostname"> Specific hostname. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(string hostname = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListCustomHostNameSitesRequest(Id.SubscriptionId, hostname);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListCustomHostNameSitesNextPageRequest(nextLink, Id.SubscriptionId, hostname);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CustomHostnameSites.DeserializeCustomHostnameSites(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get custom hostnames under this subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListCustomHostNameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hostname"> Specific hostname. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomHostnameSites> GetCustomHostNameSites(string hostname = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListCustomHostNameSitesRequest(Id.SubscriptionId, hostname);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListCustomHostNameSitesNextPageRequest(nextLink, Id.SubscriptionId, hostname);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CustomHostnameSites.DeserializeCustomHostnameSites(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetCustomHostNameSites", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Gets list of available geo regions plus ministamps
         /// <list type="bullet">
         /// <item>
@@ -1548,7 +1551,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1582,7 +1585,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1604,6 +1607,58 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Description for get a list of available ASE regions and its supported Skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListAseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListAseRegionsRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListAseRegionsNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceAseRegion.DeserializeAppServiceAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for get a list of available ASE regions and its supported Skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListAseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceAseRegion> GetAseRegions(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListAseRegionsRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListAseRegionsNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceAseRegion.DeserializeAppServiceAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Get a list of available geographical regions.
         /// <list type="bullet">
         /// <item>
@@ -1616,7 +1671,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1646,7 +1701,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1676,7 +1731,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1702,7 +1757,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1728,7 +1783,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1762,7 +1817,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1796,7 +1851,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1805,10 +1860,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1837,7 +1889,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1846,10 +1898,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1866,6 +1915,60 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetUsagesInLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CsmUsageQuota> GetGetUsagesInLocationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GetUsagesInLocationRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GetUsagesInLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmUsageQuota.DeserializeCsmUsageQuota(e), GetUsagesInLocationClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGetUsagesInLocations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetUsagesInLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CsmUsageQuota> GetGetUsagesInLocations(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GetUsagesInLocationRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GetUsagesInLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmUsageQuota.DeserializeCsmUsageQuota(e), GetUsagesInLocationClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGetUsagesInLocations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Generates a preview workflow file for the static site
         /// <list type="bullet">
         /// <item>
@@ -1878,7 +1981,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1888,10 +1991,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();
@@ -1920,7 +2020,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1930,10 +2030,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();
@@ -1962,7 +2059,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1992,7 +2089,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2022,7 +2119,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2052,7 +2149,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

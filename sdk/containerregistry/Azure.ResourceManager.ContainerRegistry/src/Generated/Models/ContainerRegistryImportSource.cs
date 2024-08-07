@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceImage"/> is null. </exception>
         public ContainerRegistryImportSource(string sourceImage)
         {
-            if (sourceImage == null)
-            {
-                throw new ArgumentNullException(nameof(sourceImage));
-            }
+            Argument.AssertNotNull(sourceImage, nameof(sourceImage));
 
             SourceImage = sourceImage;
         }

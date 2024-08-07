@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.FluidRelay.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.FluidRelay
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.FluidRelay/fluidRelayServers/", false);
+            uri.AppendPath(fluidRelayServerName, true);
+            uri.AppendPath("/fluidRelayContainers/", false);
+            uri.AppendPath(fluidRelayContainerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FluidRelayContainerData>> GetAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, fluidRelayServerName, fluidRelayContainerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FluidRelayContainerData> Get(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, fluidRelayServerName, fluidRelayContainerName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,22 @@ namespace Azure.ResourceManager.FluidRelay
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.FluidRelay/fluidRelayServers/", false);
+            uri.AppendPath(fluidRelayServerName, true);
+            uri.AppendPath("/fluidRelayContainers/", false);
+            uri.AppendPath(fluidRelayContainerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName)
@@ -213,38 +188,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroup, fluidRelayServerName, fluidRelayContainerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -268,38 +215,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="fluidRelayServerName"/> or <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroup, string fluidRelayServerName, string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroup, fluidRelayServerName, fluidRelayContainerName);
             _pipeline.Send(message, cancellationToken);
@@ -311,6 +230,21 @@ namespace Azure.ResourceManager.FluidRelay
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFluidRelayServersRequestUri(string subscriptionId, string resourceGroup, string fluidRelayServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroup, true);
+            uri.AppendPath("/providers/Microsoft.FluidRelay/fluidRelayServers/", false);
+            uri.AppendPath(fluidRelayServerName, true);
+            uri.AppendPath("/fluidRelayContainers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFluidRelayServersRequest(string subscriptionId, string resourceGroup, string fluidRelayServerName)
@@ -343,30 +277,9 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FluidRelayContainerList>> ListByFluidRelayServersAsync(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
             using var message = CreateListByFluidRelayServersRequest(subscriptionId, resourceGroup, fluidRelayServerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -393,30 +306,9 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FluidRelayContainerList> ListByFluidRelayServers(string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
             using var message = CreateListByFluidRelayServersRequest(subscriptionId, resourceGroup, fluidRelayServerName);
             _pipeline.Send(message, cancellationToken);
@@ -432,6 +324,14 @@ namespace Azure.ResourceManager.FluidRelay
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFluidRelayServersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFluidRelayServersNextPageRequest(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName)
@@ -458,34 +358,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FluidRelayContainerList>> ListByFluidRelayServersNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
             using var message = CreateListByFluidRelayServersNextPageRequest(nextLink, subscriptionId, resourceGroup, fluidRelayServerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -513,34 +389,10 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="fluidRelayServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FluidRelayContainerList> ListByFluidRelayServersNextPage(string nextLink, string subscriptionId, string resourceGroup, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (fluidRelayServerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayServerName));
-            }
-            if (fluidRelayServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(fluidRelayServerName, nameof(fluidRelayServerName));
 
             using var message = CreateListByFluidRelayServersNextPageRequest(nextLink, subscriptionId, resourceGroup, fluidRelayServerName);
             _pipeline.Send(message, cancellationToken);

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnCustomDomainData : IUtf8JsonSerializable, IJsonModel<CdnCustomDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnCustomDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnCustomDomainData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CdnCustomDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
                 if (CustomDomainHttpsContent != null)
                 {
                     writer.WritePropertyName("customHttpsParameters"u8);
-                    writer.WriteObjectValue(CustomDomainHttpsContent);
+                    writer.WriteObjectValue(CustomDomainHttpsContent, options);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnCustomDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnCustomDomainData DeserializeCdnCustomDomainData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn
             string validationData = default;
             CustomHttpsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CdnCustomDomainData(
                 id,
                 name,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeCdnCustomDomainData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
         public ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)
         {
-            if (destinationManagedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(destinationManagedDatabaseId));
-            }
+            Argument.AssertNotNull(destinationManagedDatabaseId, nameof(destinationManagedDatabaseId));
 
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
         }
@@ -76,8 +73,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The destination managed database ID. </summary>
+        [WirePath("destinationManagedDatabaseId")]
         public ResourceIdentifier DestinationManagedDatabaseId { get; }
         /// <summary> The move operation mode. </summary>
+        [WirePath("operationMode")]
         public ManagedDatabaseMoveOperationMode? OperationMode { get; set; }
     }
 }

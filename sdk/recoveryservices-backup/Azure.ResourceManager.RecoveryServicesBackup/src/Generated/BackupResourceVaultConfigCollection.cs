@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -80,25 +78,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupResourceVaultConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _backupResourceVaultConfigRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,25 +129,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupResourceVaultConfigResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _backupResourceVaultConfigRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -196,14 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<BackupResourceVaultConfigResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.Get");
             scope.Start();
@@ -248,14 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<BackupResourceVaultConfigResource> Get(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.Get");
             scope.Start();
@@ -300,14 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.Exists");
             scope.Start();
@@ -350,14 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.Exists");
             scope.Start();
@@ -400,14 +354,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupResourceVaultConfigResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.GetIfExists");
             scope.Start();
@@ -452,14 +399,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual NullableResponse<BackupResourceVaultConfigResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceVaultConfigClientDiagnostics.CreateScope("BackupResourceVaultConfigCollection.GetIfExists");
             scope.Start();

@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
     public partial class StorageMoverAgentPatch : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageMoverAgentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,6 +32,11 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(UploadLimitSchedule))
+            {
+                writer.WritePropertyName("uploadLimitSchedule"u8);
+                writer.WriteObjectValue(UploadLimitSchedule, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,15 +71,16 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static StorageMoverAgentPatch DeserializeStorageMoverAgentPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string description = default;
+            UploadLimitSchedule uploadLimitSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -92,16 +97,25 @@ namespace Azure.ResourceManager.StorageMover.Models
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("uploadLimitSchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverAgentPatch(description, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageMoverAgentPatch(description, uploadLimitSchedule, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverAgentPatch>.Write(ModelReaderWriterOptions options)
@@ -113,7 +127,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +143,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeStorageMoverAgentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

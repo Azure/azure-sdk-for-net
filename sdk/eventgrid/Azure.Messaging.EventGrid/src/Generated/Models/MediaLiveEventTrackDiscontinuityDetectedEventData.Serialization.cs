@@ -79,12 +79,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 discontinuityGap);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventTrackDiscontinuityDetectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventTrackDiscontinuityDetectedEventDataConverter : JsonConverter<MediaLiveEventTrackDiscontinuityDetectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventTrackDiscontinuityDetectedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventTrackDiscontinuityDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

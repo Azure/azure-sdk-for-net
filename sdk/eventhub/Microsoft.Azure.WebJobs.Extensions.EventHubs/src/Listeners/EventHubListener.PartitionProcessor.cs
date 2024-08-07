@@ -30,6 +30,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         {
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
+            private readonly bool _enableCheckpointing;
             private readonly ILogger _logger;
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 _executor = executor;
                 _singleDispatch = singleDispatch;
+                _enableCheckpointing = options.EnableCheckpointing;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
                 _firstFunctionInvocation = true;
@@ -217,8 +219,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // and wait to send until we receive enough events or total max wait time has passed.
                 }
 
-                // Checkpoint if we processed any events, the listener is not stopping, and
-                // cancellation has not been signaled.  Don't checkpoint if no events. This
+                // If enabled, checkpoint if we processed any events, the listener is not stopping,
+                // and cancellation has not been signaled.  Don't checkpoint if no events. This
                 // can reset the sequence counter to 0.
                 //
                 // Note: we intentionally checkpoint the batch regardless of function
@@ -229,7 +231,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 // Don't checkpoint if cancellation has been requested as this can lead to data loss,
                 // since the user may not actually process the event.
 
-                if (eventToCheckpoint != null
+                if (_enableCheckpointing
+                    && eventToCheckpoint != null
                     // IMPORTANT - explicitly check each token to avoid data loss as the linkedCts is not canceled atomically when each of the
                     // sources are canceled.
                     && !_listenerCancellationToken.IsCancellationRequested
@@ -387,7 +390,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _batchCounter++;
                 var isCheckpointingAfterInvocation = false;
 
-                if (events != null && events.Length > 0)
+                if (_enableCheckpointing
+                    && events != null
+                    && events.Length > 0)
                 {
                     if (_batchCheckpointFrequency == 1)
                     {

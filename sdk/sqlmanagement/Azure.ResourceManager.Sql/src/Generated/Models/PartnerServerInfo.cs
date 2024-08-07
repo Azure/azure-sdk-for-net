@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PartnerServerInfo(ResourceIdentifier id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
@@ -78,10 +75,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource identifier of the partner server. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Geo location of the partner server. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Replication role of the partner server. </summary>
+        [WirePath("replicationRole")]
         public FailoverGroupReplicationRole? ReplicationRole { get; }
     }
 }

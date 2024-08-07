@@ -10,23 +10,32 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubNamespacePatch : IUtf8JsonSerializable, IJsonModel<NotificationHubNamespacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -37,11 +46,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,18 +79,37 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubNamespacePatch DeserializeNotificationHubNamespacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             NotificationHubSku sku = default;
+            NotificationHubNamespaceProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NotificationHubNamespaceProperties.DeserializeNotificationHubNamespaceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -101,22 +124,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NotificationHubNamespacePatch(sku, properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubNamespacePatch>.Write(ModelReaderWriterOptions options)
@@ -128,7 +142,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +158,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

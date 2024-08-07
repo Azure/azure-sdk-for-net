@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualNetworkGatewayConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualNetworkGatewayConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkGatewayConnectionResource>> GetAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual Response<VirtualNetworkGatewayConnectionResource> Get(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualNetworkGatewayConnectionResource>> GetIfExistsAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
         public virtual NullableResponse<VirtualNetworkGatewayConnectionResource> GetIfExists(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkGatewayConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
-            }
-            if (virtualNetworkGatewayConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkGatewayConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
 
             using var scope = _virtualNetworkGatewayConnectionClientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionCollection.GetIfExists");
             scope.Start();

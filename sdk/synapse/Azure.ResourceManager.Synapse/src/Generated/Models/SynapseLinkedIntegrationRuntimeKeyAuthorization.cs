@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SynapseLinkedIntegrationRuntimeKeyAuthorization(SynapseSecureString key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             AuthorizationType = "Key";

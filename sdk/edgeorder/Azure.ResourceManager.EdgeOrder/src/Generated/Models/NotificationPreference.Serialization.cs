@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class NotificationPreference : IUtf8JsonSerializable, IJsonModel<NotificationPreference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationPreference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationPreference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationPreference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationPreference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationPreference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static NotificationPreference DeserializeNotificationPreference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             NotificationStageName stageName = default;
             bool sendNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stageName"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationPreference(stageName, sendNotification, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationPreference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeNotificationPreference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationPreference)} does not support reading '{options.Format}' format.");
             }
         }
 

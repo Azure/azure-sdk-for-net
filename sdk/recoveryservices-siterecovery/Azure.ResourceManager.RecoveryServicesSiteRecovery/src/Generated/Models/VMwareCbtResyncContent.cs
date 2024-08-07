@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
         public VMwareCbtResyncContent(string skipCbtReset)
         {
-            if (skipCbtReset == null)
-            {
-                throw new ArgumentNullException(nameof(skipCbtReset));
-            }
+            Argument.AssertNotNull(skipCbtReset, nameof(skipCbtReset));
 
             SkipCbtReset = skipCbtReset;
             InstanceType = "VMwareCbt";

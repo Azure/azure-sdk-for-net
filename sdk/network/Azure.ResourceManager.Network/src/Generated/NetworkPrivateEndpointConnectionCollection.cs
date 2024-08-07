@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<Response<NetworkPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -237,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual Response<NetworkPrivateEndpointConnectionResource> Get(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -290,7 +258,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +288,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +318,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,14 +333,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -401,7 +362,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -452,7 +406,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,14 +421,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -505,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual NullableResponse<NetworkPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

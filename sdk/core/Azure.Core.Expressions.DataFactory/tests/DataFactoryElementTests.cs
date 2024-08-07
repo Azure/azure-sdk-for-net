@@ -362,10 +362,10 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CreateFromKeyVaultReference()
         {
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
                 "referenceName");
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, KeyVaultSecretName);
-            var dfe = DataFactoryElement<string?>.FromKeyVaultSecretReference(keyVaultReference);
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, KeyVaultSecretName);
+            var dfe = DataFactoryElement<string?>.FromKeyVaultSecret(keyVaultReference);
             AssertKeyVaultReferenceDfe(dfe);
         }
 
@@ -623,7 +623,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfUnknownType()
         {
-            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecretBase(null));
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(null));
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(UnknownTypeJson, actual);
             Assert.IsNull(dfe.ToString());
@@ -633,7 +633,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfOtherType()
         {
-            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecretBase(OtherSecretType));
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(OtherSecretType));
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(OtherTypeJson, actual);
             Assert.IsNull(dfe.ToString());
@@ -643,13 +643,13 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfKeyVaultReference()
         {
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
                 "referenceNameValue");
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretNameValue")
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretNameValue")
             {
                 SecretVersion = "secretVersionValue"
             };
-            var dfe = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference);
+            var dfe = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(KeyVaultSecretReferenceJson, actual);
         }
@@ -1079,7 +1079,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private static void AssertKeyVaultReferenceDfe(DataFactoryElement<string?> dfe)
         {
-            Assert.AreEqual(DataFactoryElementKind.KeyVaultSecretReference, dfe.Kind);
+            Assert.AreEqual(DataFactoryElementKind.KeyVaultSecret, dfe.Kind);
             Assert.Throws<InvalidOperationException>(() => { var x = dfe.Literal; });
             Assert.AreEqual(KeyVaultSecretName, dfe.ToString());
         }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     [PersistableModelProxy(typeof(UnknownContainerizedNetworkFunctionTemplate))]
     public partial class ContainerizedNetworkFunctionTemplate : IUtf8JsonSerializable, IJsonModel<ContainerizedNetworkFunctionTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerizedNetworkFunctionTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerizedNetworkFunctionTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerizedNetworkFunctionTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerizedNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerizedNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ContainerizedNetworkFunctionTemplate DeserializeContainerizedNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeContainerizedNetworkFunctionTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

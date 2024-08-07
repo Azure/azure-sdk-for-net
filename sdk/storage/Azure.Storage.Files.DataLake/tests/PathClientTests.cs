@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             string directoryName = GetNewDirectoryName();
             await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
             DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, tokenCredential, GetOptions()));
 
@@ -133,7 +133,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -243,8 +243,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
@@ -257,6 +259,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -281,8 +284,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 StartsOn = startsOn
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = pathClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
@@ -294,6 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -412,7 +418,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
         }
 
         [RecordedTest]

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="taggingCriteriaList"/> is null. </exception>
         public ScheduleBasedBackupTriggerContext(DataProtectionBackupSchedule schedule, IEnumerable<DataProtectionBackupTaggingCriteria> taggingCriteriaList)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
-            if (taggingCriteriaList == null)
-            {
-                throw new ArgumentNullException(nameof(taggingCriteriaList));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(taggingCriteriaList, nameof(taggingCriteriaList));
 
             Schedule = schedule;
             TaggingCriteriaList = taggingCriteriaList.ToList();

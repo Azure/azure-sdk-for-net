@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -81,12 +80,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 connectedRegistry);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ContainerRegistryArtifactEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryArtifactEventData(document.RootElement);
+        }
+
         internal partial class ContainerRegistryArtifactEventDataConverter : JsonConverter<ContainerRegistryArtifactEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryArtifactEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ContainerRegistryArtifactEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

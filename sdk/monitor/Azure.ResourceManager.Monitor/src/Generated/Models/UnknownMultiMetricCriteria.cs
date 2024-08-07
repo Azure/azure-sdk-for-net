@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownMultiMetricCriteria. </summary>
+    /// <summary> Unknown version of MultiMetricCriteria. </summary>
     internal partial class UnknownMultiMetricCriteria : MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/>. </summary>

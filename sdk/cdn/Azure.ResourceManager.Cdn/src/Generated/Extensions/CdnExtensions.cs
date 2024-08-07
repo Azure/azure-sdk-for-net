@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Mocking;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
@@ -54,10 +52,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorCustomDomainResource"/> object. </returns>
         public static FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorCustomDomainResource(id);
         }
@@ -76,10 +71,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorEndpointResource"/> object. </returns>
         public static FrontDoorEndpointResource GetFrontDoorEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorEndpointResource(id);
         }
@@ -98,10 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorOriginGroupResource"/> object. </returns>
         public static FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorOriginGroupResource(id);
         }
@@ -120,10 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorOriginResource"/> object. </returns>
         public static FrontDoorOriginResource GetFrontDoorOriginResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorOriginResource(id);
         }
@@ -142,10 +128,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRouteResource"/> object. </returns>
         public static FrontDoorRouteResource GetFrontDoorRouteResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorRouteResource(id);
         }
@@ -164,10 +147,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRuleSetResource"/> object. </returns>
         public static FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorRuleSetResource(id);
         }
@@ -186,10 +166,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRuleResource"/> object. </returns>
         public static FrontDoorRuleResource GetFrontDoorRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorRuleResource(id);
         }
@@ -208,10 +185,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource"/> object. </returns>
         public static FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorSecurityPolicyResource(id);
         }
@@ -230,10 +204,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorSecretResource"/> object. </returns>
         public static FrontDoorSecretResource GetFrontDoorSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetFrontDoorSecretResource(id);
         }
@@ -252,10 +223,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="ProfileResource"/> object. </returns>
         public static ProfileResource GetProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetProfileResource(id);
         }
@@ -274,10 +242,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnEndpointResource"/> object. </returns>
         public static CdnEndpointResource GetCdnEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetCdnEndpointResource(id);
         }
@@ -296,10 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginResource"/> object. </returns>
         public static CdnOriginResource GetCdnOriginResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetCdnOriginResource(id);
         }
@@ -318,10 +280,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginGroupResource"/> object. </returns>
         public static CdnOriginGroupResource GetCdnOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetCdnOriginGroupResource(id);
         }
@@ -340,10 +299,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnCustomDomainResource"/> object. </returns>
         public static CdnCustomDomainResource GetCdnCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetCdnCustomDomainResource(id);
         }
@@ -362,10 +318,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource"/> object. </returns>
         public static CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCdnArmClient(client).GetCdnWebApplicationFirewallPolicyResource(id);
         }
@@ -382,10 +335,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).GetProfiles();
         }
@@ -403,7 +353,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,10 +373,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCdnResourceGroupResource(resourceGroupResource).GetProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
@@ -444,7 +391,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,10 +411,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).GetProfile(profileName, cancellationToken);
         }
@@ -484,10 +428,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
         }
@@ -505,7 +446,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -525,10 +466,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebApplicationFirewallPolicyAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
@@ -546,7 +484,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -566,10 +504,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebApplicationFirewallPolicy(policyName, cancellationToken);
         }
@@ -587,7 +522,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -601,10 +536,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCdnResourceGroupResource(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -622,7 +554,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -636,12 +568,157 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CanMigrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateProfile(WaitUntil,CanMigrateContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<CanMigrateResult>> CanMigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CanMigrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCdnResourceGroupResource.CanMigrateProfile(WaitUntil,CanMigrateContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to check if cdn profile or classic frontdoor can be migrated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation<CanMigrateResult> CanMigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfile(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCdnResourceGroupResource.MigrateProfile(WaitUntil,MigrationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<MigrateResult>> MigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCdnResourceGroupResource.MigrateProfile(WaitUntil,MigrationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Properties needed to migrate the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
+        public static ArmOperation<MigrateResult> MigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfile(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -657,7 +734,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -671,10 +748,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableCdnSubscriptionResource(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -692,7 +766,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -706,10 +780,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
         }
@@ -727,7 +798,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -741,10 +812,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableCdnSubscriptionResource(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -762,7 +830,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -776,10 +844,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).ValidateProbe(content, cancellationToken);
         }
@@ -797,7 +862,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -815,10 +880,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetProfilesAsync(cancellationToken);
         }
@@ -836,7 +898,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -854,10 +916,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetProfiles(cancellationToken);
         }
@@ -875,7 +934,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -889,10 +948,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
         }
@@ -910,7 +966,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -924,10 +980,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetResourceUsages(cancellationToken);
         }
@@ -945,7 +998,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -959,10 +1012,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
         }
@@ -980,7 +1030,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -994,10 +1044,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCdnSubscriptionResource(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
@@ -1015,7 +1062,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1029,10 +1076,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableCdnTenantResource(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1050,7 +1094,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1064,10 +1108,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCdnTenantResource(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
@@ -1085,7 +1126,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1099,10 +1140,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeNode> GetEdgeNodesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCdnTenantResource(tenantResource).GetEdgeNodesAsync(cancellationToken);
         }
@@ -1120,7 +1158,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1134,10 +1172,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="EdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeNode> GetEdgeNodes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCdnTenantResource(tenantResource).GetEdgeNodes(cancellationToken);
         }

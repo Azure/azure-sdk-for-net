@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Failover policy of the read-write endpoint for the failover group. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </summary>
+        [WirePath("failoverPolicy")]
         public ReadWriteEndpointFailoverPolicy FailoverPolicy { get; set; }
         /// <summary> Grace period before failover with data loss is attempted for the read-write endpoint. If failoverPolicy is Automatic then failoverWithDataLossGracePeriodMinutes is required. </summary>
+        [WirePath("failoverWithDataLossGracePeriodMinutes")]
         public int? FailoverWithDataLossGracePeriodMinutes { get; set; }
     }
 }

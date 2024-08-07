@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Pair name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Pair value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

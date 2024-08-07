@@ -120,17 +120,21 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateManagedIdentityCredential()
         {
-            return new ManagedIdentityCredential(new ManagedIdentityClient(
-                new ManagedIdentityClientOptions
-                {
-                    ResourceIdentifier = Options.ManagedIdentityResourceId,
-                    ClientId = Options.ManagedIdentityClientId,
-                    Pipeline = Pipeline,
-                    Options = Options,
-                    InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
-                    ExcludeTokenExchangeManagedIdentitySource = Options.ExcludeWorkloadIdentityCredential
-                })
-            );
+            var options = Options.Clone<DefaultAzureCredentialOptions>();
+            options.IsChainedCredential = true;
+
+            var miOptions = new ManagedIdentityClientOptions
+            {
+                ResourceIdentifier = options.ManagedIdentityResourceId,
+                ClientId = options.ManagedIdentityClientId,
+                Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
+                Options = options,
+                InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
+                ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
+                IsForceRefreshEnabled = options.IsForceRefreshEnabled,
+            };
+
+            return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));
         }
 
         public virtual TokenCredential CreateSharedTokenCacheCredential()

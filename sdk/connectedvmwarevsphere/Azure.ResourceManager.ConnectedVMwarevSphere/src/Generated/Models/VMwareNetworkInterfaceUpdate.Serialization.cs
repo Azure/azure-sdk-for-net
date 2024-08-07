@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class VMwareNetworkInterfaceUpdate : IUtf8JsonSerializable, IJsonModel<VMwareNetworkInterfaceUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkInterfaceUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkInterfaceUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareNetworkInterfaceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterfaceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterfaceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VMwareNetworkInterfaceUpdate DeserializeVMwareNetworkInterfaceUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             PowerOnBootOption? powerOnBoot = default;
             int? deviceKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -138,10 +137,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareNetworkInterfaceUpdate(
                 name,
                 networkId,
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareNetworkInterfaceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkInterfaceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

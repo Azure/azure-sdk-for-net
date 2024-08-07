@@ -46,5 +46,13 @@ namespace Azure.Search.Documents.Models
             }
             return new IndexingResult(key, errorMessage, status, statusCode);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingResult(document.RootElement);
+        }
     }
 }

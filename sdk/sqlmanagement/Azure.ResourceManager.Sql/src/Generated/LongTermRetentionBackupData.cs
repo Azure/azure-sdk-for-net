@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The server name that the backup database belong to. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> The create time of the server. </summary>
+        [WirePath("properties.serverCreateTime")]
         public DateTimeOffset? ServerCreateOn { get; }
         /// <summary> The name of the database the backup belong to. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> The delete time of the database. </summary>
+        [WirePath("properties.databaseDeletionTime")]
         public DateTimeOffset? DatabaseDeletedOn { get; }
         /// <summary> The time the backup was taken. </summary>
+        [WirePath("properties.backupTime")]
         public DateTimeOffset? BackupOn { get; }
         /// <summary> The time the long term retention backup will expire. </summary>
+        [WirePath("properties.backupExpirationTime")]
         public DateTimeOffset? BackupExpireOn { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
+        [WirePath("properties.backupStorageRedundancy")]
         public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
+        [WirePath("properties.requestedBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> The setting whether the LTR backup is immutable. </summary>
+        [WirePath("properties.isBackupImmutable")]
         public bool? IsBackupImmutable { get; set; }
         /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
+        [WirePath("properties.backupStorageAccessTier")]
         public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
     }
 }

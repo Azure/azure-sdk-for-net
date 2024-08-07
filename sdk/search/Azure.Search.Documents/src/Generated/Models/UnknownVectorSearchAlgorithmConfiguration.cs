@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownVectorSearchAlgorithmConfiguration. </summary>
+    /// <summary> Unknown version of VectorSearchAlgorithmConfiguration. </summary>
     internal partial class UnknownVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchAlgorithmConfiguration"/>. </summary>

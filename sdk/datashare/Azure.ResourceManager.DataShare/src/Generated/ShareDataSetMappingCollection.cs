@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareDataSetMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _shareDataSetMappingDataSetMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetMappingDataSetMappingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareDataSetMappingResource> CreateOrUpdate(WaitUntil waitUntil, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _shareDataSetMappingDataSetMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetMappingDataSetMappingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetMappingResource>(Response.FromValue(new ShareDataSetMappingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual async Task<Response<ShareDataSetMappingResource>> GetAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual Response<ShareDataSetMappingResource> Get(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual async Task<NullableResponse<ShareDataSetMappingResource>> GetIfExistsAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         public virtual NullableResponse<ShareDataSetMappingResource> GetIfExists(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            if (dataSetMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetMappingName));
-            }
-            if (dataSetMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
 
             using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.GetIfExists");
             scope.Start();

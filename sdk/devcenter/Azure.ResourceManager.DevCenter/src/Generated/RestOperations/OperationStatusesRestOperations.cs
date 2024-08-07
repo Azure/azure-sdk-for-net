@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevCenter.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.DevCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/operationStatuses/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string operationId)
@@ -66,22 +79,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevCenterOperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, location, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,22 +108,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevCenterOperationStatus> Get(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, location, operationId);
             _pipeline.Send(message, cancellationToken);

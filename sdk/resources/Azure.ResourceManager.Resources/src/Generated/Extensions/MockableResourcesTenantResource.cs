@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Mocking
@@ -64,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -95,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,10 +136,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
         {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(template, nameof(template));
 
             using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
@@ -171,7 +165,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,10 +178,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
         {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(template, nameof(template));
 
             using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();

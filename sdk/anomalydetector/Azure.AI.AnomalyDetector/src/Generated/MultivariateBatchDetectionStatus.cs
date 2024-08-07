@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The MultivariateBatchDetectionStatus. </summary>
     public readonly partial struct MultivariateBatchDetectionStatus : IEquatable<MultivariateBatchDetectionStatus>
     {
         private readonly string _value;
@@ -49,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

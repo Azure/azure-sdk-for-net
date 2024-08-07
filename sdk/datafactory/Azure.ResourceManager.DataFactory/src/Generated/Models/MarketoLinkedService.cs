@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         public MarketoLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
             Endpoint = endpoint;
             ClientId = clientId;
@@ -48,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MarketoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MarketoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ClientId = clientId;
@@ -70,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client Id of your Marketo service. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of your Marketo service. </summary>
-        public DataFactorySecretBaseDefinition ClientSecret { get; set; }
+        public DataFactorySecret ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>

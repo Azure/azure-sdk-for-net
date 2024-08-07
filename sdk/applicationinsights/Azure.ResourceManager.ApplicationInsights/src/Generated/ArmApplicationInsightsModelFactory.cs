@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -53,10 +51,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ETag? etag = null, string applicationId = null, string appId = null, string namePropertiesName = null, ApplicationType? applicationType = null, FlowType? flowType = null, RequestSource? requestSource = null, string instrumentationKey = null, DateTimeOffset? createdOn = null, Guid? tenantId = null, string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = null, string connectionString = null, int? retentionInDays = null, bool? isDisableIPMasking = null, bool? isImmediatePurgeDataOn30Days = null, string workspaceResourceId = null, DateTimeOffset? laMigrationOn = null, IEnumerable<PrivateLinkScopedResourceContent> privateLinkScopedResources = null, PublicNetworkAccessType? publicNetworkAccessForIngestion = null, PublicNetworkAccessType? publicNetworkAccessForQuery = null, IngestionMode? ingestionMode = null, bool? isDisableLocalAuth = null, bool? isForceCustomerStorageForProfiler = null)
+        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ETag? etag = null, string applicationId = null, string appId = null, string namePropertiesName = null, ApplicationInsightsApplicationType? applicationType = null, ComponentFlowType? flowType = null, ComponentRequestSource? requestSource = null, string instrumentationKey = null, DateTimeOffset? createdOn = null, Guid? tenantId = null, string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = null, string connectionString = null, int? retentionInDays = null, bool? isDisableIPMasking = null, bool? isImmediatePurgeDataOn30Days = null, ResourceIdentifier workspaceResourceId = null, DateTimeOffset? laMigrationOn = null, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = null, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, ComponentIngestionMode? ingestionMode = null, bool? isDisableLocalAuth = null, bool? isForceCustomerStorageForProfiler = null)
         {
             tags ??= new Dictionary<string, string>();
-            privateLinkScopedResources ??= new List<PrivateLinkScopedResourceContent>();
+            privateLinkScopedResources ??= new List<PrivateLinkScopedResourceReference>();
 
             return new ApplicationInsightsComponentData(
                 id,
@@ -95,48 +93,48 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopedResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopedResourceReference"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkScopedResourceContent"/> instance for mocking. </returns>
-        public static PrivateLinkScopedResourceContent PrivateLinkScopedResourceContent(string resourceId = null, string scopeId = null)
+        /// <returns> A new <see cref="Models.PrivateLinkScopedResourceReference"/> instance for mocking. </returns>
+        public static PrivateLinkScopedResourceReference PrivateLinkScopedResourceReference(ResourceIdentifier resourceId = null, string scopeId = null)
         {
-            return new PrivateLinkScopedResourceContent(resourceId, scopeId, serializedAdditionalRawData: null);
+            return new PrivateLinkScopedResourceReference(resourceId, scopeId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeResult"/>. </summary>
         /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
-        /// <returns> A new <see cref="Models.ComponentPurgeResponse"/> instance for mocking. </returns>
-        public static ComponentPurgeResponse ComponentPurgeResponse(string operationId = null)
+        /// <returns> A new <see cref="Models.ComponentPurgeResult"/> instance for mocking. </returns>
+        public static ComponentPurgeResult ComponentPurgeResult(string operationId = null)
         {
-            return new ComponentPurgeResponse(operationId, serializedAdditionalRawData: null);
+            return new ComponentPurgeResult(operationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeStatusResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentPurgeStatusResult"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
-        /// <returns> A new <see cref="Models.ComponentPurgeStatusResponse"/> instance for mocking. </returns>
-        public static ComponentPurgeStatusResponse ComponentPurgeStatusResponse(PurgeState status = default)
+        /// <returns> A new <see cref="Models.ComponentPurgeStatusResult"/> instance for mocking. </returns>
+        public static ComponentPurgeStatusResult ComponentPurgeStatusResult(ComponentPurgeState status = default)
         {
-            return new ComponentPurgeStatusResponse(status, serializedAdditionalRawData: null);
+            return new ComponentPurgeStatusResult(status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAPIKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentApiKey"/>. </summary>
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
-        /// <param name="createdDate"> The create date of this API key. </param>
+        /// <param name="createdOn"> The create date of this API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
         /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentAPIKey"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentAPIKey ApplicationInsightsComponentAPIKey(string id = null, string apiKey = null, string createdDate = null, string name = null, IEnumerable<string> linkedReadProperties = null, IEnumerable<string> linkedWriteProperties = null)
+        /// <returns> A new <see cref="Models.ApplicationInsightsComponentApiKey"/> instance for mocking. </returns>
+        public static ApplicationInsightsComponentApiKey ApplicationInsightsComponentApiKey(string id = null, string apiKey = null, DateTimeOffset? createdOn = null, string name = null, IEnumerable<string> linkedReadProperties = null, IEnumerable<string> linkedWriteProperties = null)
         {
             linkedReadProperties ??= new List<string>();
             linkedWriteProperties ??= new List<string>();
 
-            return new ApplicationInsightsComponentAPIKey(
+            return new ApplicationInsightsComponentApiKey(
                 id,
                 apiKey,
-                createdDate,
+                createdOn,
                 name,
                 linkedReadProperties?.ToList(),
                 linkedWriteProperties?.ToList(),
@@ -155,16 +153,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationAccountId"> The name of destination account. </param>
         /// <param name="destinationType"> The destination type. </param>
         /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
-        /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
-        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="lastUserUpdatedOn"> Last time the Continuous Export configuration was updated. </param>
+        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
         /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
-        /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
-        /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
+        /// <param name="lastSucceededOn"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
+        /// <param name="lastGappedOn"> The last time the Continuous Export configuration started failing. </param>
         /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportConfiguration"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = null, string instrumentationKey = null, string recordTypes = null, string applicationName = null, string subscriptionId = null, string resourceGroup = null, string destinationStorageSubscriptionId = null, string destinationStorageLocationId = null, string destinationAccountId = null, string destinationType = null, string isUserEnabled = null, string lastUserUpdate = null, string notificationQueueEnabled = null, string exportStatus = null, string lastSuccessTime = null, string lastGapTime = null, string permanentErrorReason = null, string storageName = null, string containerName = null)
+        public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = null, string instrumentationKey = null, string recordTypes = null, string applicationName = null, string subscriptionId = null, string resourceGroup = null, string destinationStorageSubscriptionId = null, string destinationStorageLocationId = null, ResourceIdentifier destinationAccountId = null, string destinationType = null, string isUserEnabled = null, DateTimeOffset? lastUserUpdatedOn = null, string isNotificationQueueEnabled = null, string exportStatus = null, DateTimeOffset? lastSucceededOn = null, DateTimeOffset? lastGappedOn = null, string permanentErrorReason = null, string storageName = null, string containerName = null)
         {
             return new ApplicationInsightsComponentExportConfiguration(
                 exportId,
@@ -178,11 +176,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 destinationAccountId,
                 destinationType,
                 isUserEnabled,
-                lastUserUpdate,
-                notificationQueueEnabled,
+                lastUserUpdatedOn,
+                isNotificationQueueEnabled,
                 exportStatus,
-                lastSuccessTime,
-                lastGapTime,
+                lastSucceededOn,
+                lastGappedOn,
                 permanentErrorReason,
                 storageName,
                 containerName,
@@ -212,15 +210,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentQuotaStatus"/>. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
-        /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
+        /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentQuotaStatus"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentQuotaStatus ApplicationInsightsComponentQuotaStatus(string appId = null, bool? shouldBeThrottled = null, string expirationTime = null)
+        public static ApplicationInsightsComponentQuotaStatus ApplicationInsightsComponentQuotaStatus(string appId = null, bool? shouldBeThrottled = null, DateTimeOffset? expireOn = null)
         {
-            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expireOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
-        /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
+        /// <param name="isExportDataSupported"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>
         /// <param name="liveStreamMetrics"> Reserved, not used now. </param>
@@ -237,10 +235,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="dailyCapResetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="throttleRate"> Reserved, not used now. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeatureCapabilities"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentFeatureCapabilities ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData = null, string burstThrottlePolicy = null, string metadataClass = null, bool? liveStreamMetrics = null, bool? applicationMap = null, bool? workItemIntegration = null, bool? powerBIIntegration = null, bool? openSchema = null, bool? proactiveDetection = null, bool? analyticsIntegration = null, bool? multipleStepWebTest = null, string apiAccessLevel = null, string trackingType = null, float? dailyCap = null, float? dailyCapResetTime = null, float? throttleRate = null)
+        public static ApplicationInsightsComponentFeatureCapabilities ApplicationInsightsComponentFeatureCapabilities(bool? isExportDataSupported = null, string burstThrottlePolicy = null, string metadataClass = null, bool? liveStreamMetrics = null, bool? applicationMap = null, bool? workItemIntegration = null, bool? powerBIIntegration = null, bool? openSchema = null, bool? proactiveDetection = null, bool? analyticsIntegration = null, bool? multipleStepWebTest = null, string apiAccessLevel = null, string trackingType = null, float? dailyCap = null, float? dailyCapResetTime = null, float? throttleRate = null)
         {
             return new ApplicationInsightsComponentFeatureCapabilities(
-                supportExportData,
+                isExportDataSupported,
                 burstThrottlePolicy,
                 metadataClass,
                 liveStreamMetrics,
@@ -280,7 +278,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
         /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeature"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentFeature ApplicationInsightsComponentFeature(string featureName = null, string meterId = null, string meterRateFrequency = null, string resourceId = null, bool? isHidden = null, IEnumerable<ApplicationInsightsComponentFeatureCapability> capabilities = null, string title = null, bool? isMainFeature = null, string supportedAddonFeatures = null)
+        public static ApplicationInsightsComponentFeature ApplicationInsightsComponentFeature(string featureName = null, string meterId = null, string meterRateFrequency = null, ResourceIdentifier resourceId = null, bool? isHidden = null, IEnumerable<ApplicationInsightsComponentFeatureCapability> capabilities = null, string title = null, bool? isMainFeature = null, string supportedAddonFeatures = null)
         {
             capabilities ??= new List<ApplicationInsightsComponentFeatureCapability>();
 
@@ -342,13 +340,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
         /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="sourceType"> The source of the favorite definition. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
         /// <param name="tags"> A list of 0 or more tags that are associated with this favorite definition. </param>
         /// <param name="category"> Favorite category, as defined by the user at creation time. </param>
         /// <param name="isGeneratedFromTemplate"> Flag denoting wether or not this favorite was generated from a template. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this favorite. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFavorite"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = null, string config = null, string version = null, string favoriteId = null, FavoriteType? favoriteType = null, string sourceType = null, string timeModified = null, IEnumerable<string> tags = null, string category = null, bool? isGeneratedFromTemplate = null, string userId = null)
+        public static ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = null, string config = null, string version = null, string favoriteId = null, ComponentFavoriteType? favoriteType = null, string sourceType = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> tags = null, string category = null, bool? isGeneratedFromTemplate = null, string userId = null)
         {
             tags ??= new List<string>();
 
@@ -359,7 +357,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 favoriteId,
                 favoriteType,
                 sourceType,
-                timeModified,
+                modifiedOn,
                 tags?.ToList(),
                 category,
                 isGeneratedFromTemplate,
@@ -376,7 +374,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentWebTestLocation(displayName, tag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WebTestData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -397,13 +395,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
-        /// <returns> A new <see cref="ApplicationInsights.WebTestData"/> instance for mocking. </returns>
-        public static WebTestData WebTestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebTestKind? kind = null, string syntheticMonitorId = null, string webTestName = null, string description = null, bool? isEnabled = null, int? frequencyInSeconds = null, int? timeoutInSeconds = null, WebTestKind? webTestKind = null, bool? isRetryEnabled = null, IEnumerable<WebTestGeolocation> locations = null, string webTest = null, string provisioningState = null, WebTestPropertiesRequest request = null, WebTestPropertiesValidationRules validationRules = null)
+        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/> instance for mocking. </returns>
+        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WebTestKind? kind = null, string syntheticMonitorId = null, string webTestName = null, string description = null, bool? isEnabled = null, int? frequencyInSeconds = null, int? timeoutInSeconds = null, WebTestKind? webTestKind = null, bool? isRetryEnabled = null, IEnumerable<WebTestGeolocation> locations = null, string webTest = null, string provisioningState = null, WebTestRequest request = null, WebTestValidationRules validationRules = null)
         {
             tags ??= new Dictionary<string, string>();
             locations ??= new List<WebTestGeolocation>();
 
-            return new WebTestData(
+            return new ApplicationInsightsWebTestData(
                 id,
                 name,
                 resourceType,
@@ -420,7 +418,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 webTestKind,
                 isRetryEnabled,
                 locations?.ToList(),
-                webTest != null ? new WebTestPropertiesConfiguration(webTest, serializedAdditionalRawData: null) : null,
+                webTest != null ? new WebTestConfiguration(webTest, serializedAdditionalRawData: null) : null,
                 provisioningState,
                 request,
                 validationRules,
@@ -433,12 +431,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="content"> The content of this item. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
         /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
-        /// <param name="itemType"> Enum indicating the type of the Analytics item. </param>
-        /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this item. </param>
+        /// <param name="componentItemType"> Enum indicating the type of the Analytics item. </param>
+        /// <param name="createdOn"> Date and time in UTC when this item was created. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this item. </param>
         /// <param name="applicationInsightsComponentAnalyticsItemFunctionAlias"> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = null, string name = null, string content = null, string version = null, ItemScope? scope = null, ItemType? itemType = null, string timeCreated = null, string timeModified = null, string applicationInsightsComponentAnalyticsItemFunctionAlias = null)
+        public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = null, string name = null, string content = null, string version = null, ComponentItemScope? scope = null, ComponentItemType? componentItemType = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string applicationInsightsComponentAnalyticsItemFunctionAlias = null)
         {
             return new ApplicationInsightsComponentAnalyticsItem(
                 id,
@@ -446,14 +444,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 content,
                 version,
                 scope,
-                itemType,
-                timeCreated,
-                timeModified,
+                componentItemType,
+                createdOn,
+                modifiedOn,
                 applicationInsightsComponentAnalyticsItemFunctionAlias != null ? new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookTemplateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWorkbookTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -465,14 +463,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
         /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
-        /// <returns> A new <see cref="ApplicationInsights.WorkbookTemplateData"/> instance for mocking. </returns>
-        public static WorkbookTemplateData WorkbookTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? priority = null, string author = null, BinaryData templateData = null, IEnumerable<WorkbookTemplateGallery> galleries = null, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries = null)
+        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWorkbookTemplateData"/> instance for mocking. </returns>
+        public static ApplicationInsightsWorkbookTemplateData ApplicationInsightsWorkbookTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? priority = null, string author = null, BinaryData templateData = null, IEnumerable<WorkbookTemplateGallery> galleries = null, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries = null)
         {
             tags ??= new Dictionary<string, string>();
             galleries ??= new List<WorkbookTemplateGallery>();
             localizedGalleries ??= new Dictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
 
-            return new WorkbookTemplateData(
+            return new ApplicationInsightsWorkbookTemplateData(
                 id,
                 name,
                 resourceType,
@@ -487,61 +485,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.MyWorkbookData"/>. </summary>
-        /// <param name="identity"> Identity used for BYOS. </param>
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="resourceType"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> Resource etag. </param>
-        /// <param name="kind"> The kind of workbook. Choices are user and shared. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="displayName"> The user-defined name of the private workbook. </param>
-        /// <param name="serializedData"> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this private workbook definition. </param>
-        /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
-        /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
-        /// <param name="sourceId"> Optional resourceId for a source resource. </param>
-        /// <param name="storageUri"> BYOS Storage Account URI. </param>
-        /// <returns> A new <see cref="ApplicationInsights.MyWorkbookData"/> instance for mocking. </returns>
-        public static MyWorkbookData MyWorkbookData(MyWorkbookManagedIdentity identity = null, string id = null, string name = null, string resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, IDictionary<string, string> etag = null, ApplicationInsightsKind? kind = null, SystemData systemData = null, string displayName = null, string serializedData = null, string version = null, string timeModified = null, string category = null, string userId = null, string sourceId = null, Uri storageUri = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            etag ??= new Dictionary<string, string>();
-
-            return new MyWorkbookData(
-                identity,
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                etag,
-                serializedAdditionalRawData: null,
-                kind,
-                systemData,
-                displayName,
-                serializedData,
-                version,
-                timeModified,
-                category,
-                userId,
-                sourceId,
-                storageUri);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MyWorkbookUserAssignedIdentities"/>. </summary>
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <returns> A new <see cref="Models.MyWorkbookUserAssignedIdentities"/> instance for mocking. </returns>
-        public static MyWorkbookUserAssignedIdentities MyWorkbookUserAssignedIdentities(string principalId = null, Guid? tenantId = null)
-        {
-            return new MyWorkbookUserAssignedIdentities(principalId, tenantId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -561,12 +505,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="etag"> Resource etag. </param>
-        /// <returns> A new <see cref="ApplicationInsights.WorkbookData"/> instance for mocking. </returns>
-        public static WorkbookData WorkbookData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, string serializedData = null, string version = null, DateTimeOffset? modifiedOn = null, string category = null, string userId = null, string sourceId = null, Uri storageUri = null, string description = null, string revision = null, ManagedServiceIdentity identity = null, WorkbookSharedTypeKind? kind = null, ETag? etag = null)
+        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/> instance for mocking. </returns>
+        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, string serializedData = null, string version = null, DateTimeOffset? modifiedOn = null, string category = null, string userId = null, ResourceIdentifier sourceId = null, Uri storageUri = null, string description = null, string revision = null, ManagedServiceIdentity identity = null, WorkbookSharedTypeKind? kind = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkbookData(
+            return new ApplicationInsightsWorkbookData(
                 id,
                 name,
                 resourceType,
@@ -589,30 +533,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LiveTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LiveTokenResult"/>. </summary>
         /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
-        /// <returns> A new <see cref="Models.LiveTokenResponse"/> instance for mocking. </returns>
-        public static LiveTokenResponse LiveTokenResponse(string liveToken = null)
+        /// <returns> A new <see cref="Models.LiveTokenResult"/> instance for mocking. </returns>
+        public static LiveTokenResult LiveTokenResult(string liveToken = null)
         {
-            return new LiveTokenResponse(liveToken, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedStorageAccount"> Linked storage account resource ID. </param>
-        /// <returns> A new <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/> instance for mocking. </returns>
-        public static ComponentLinkedStorageAccountData ComponentLinkedStorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string linkedStorageAccount = null)
-        {
-            return new ComponentLinkedStorageAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                linkedStorageAccount,
-                serializedAdditionalRawData: null);
+            return new LiveTokenResult(liveToken, serializedAdditionalRawData: null);
         }
     }
 }

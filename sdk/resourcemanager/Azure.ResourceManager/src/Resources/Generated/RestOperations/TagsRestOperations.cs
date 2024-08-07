@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.Resources
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteValueRequestUri(string subscriptionId, string tagName, string tagValue)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendPath("/tagValues/", false);
+            uri.AppendPath(tagValue, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteValueRequest(string subscriptionId, string tagName, string tagValue)
@@ -66,30 +79,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var message = CreateDeleteValueRequest(subscriptionId, tagName, tagValue);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -112,30 +104,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var message = CreateDeleteValueRequest(subscriptionId, tagName, tagValue);
             _pipeline.Send(message, cancellationToken);
@@ -147,6 +118,20 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateValueRequestUri(string subscriptionId, string tagName, string tagValue)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendPath("/tagValues/", false);
+            uri.AppendPath(tagValue, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateValueRequest(string subscriptionId, string tagName, string tagValue)
@@ -178,30 +163,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var message = CreateCreateOrUpdateValueRequest(subscriptionId, tagName, tagValue);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -229,30 +193,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="tagName"/> or <paramref name="tagValue"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PredefinedTagValue> CreateOrUpdateValue(string subscriptionId, string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var message = CreateCreateOrUpdateValueRequest(subscriptionId, tagName, tagValue);
             _pipeline.Send(message, cancellationToken);
@@ -269,6 +212,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string tagName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string tagName)
@@ -297,22 +252,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PredefinedTag>> CreateOrUpdateAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, tagName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -339,22 +280,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PredefinedTag> CreateOrUpdate(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, tagName);
             _pipeline.Send(message, cancellationToken);
@@ -371,6 +298,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string tagName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames/", false);
+            uri.AppendPath(tagName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string tagName)
@@ -399,22 +338,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var message = CreateDeleteRequest(subscriptionId, tagName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -436,22 +361,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string tagName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var message = CreateDeleteRequest(subscriptionId, tagName);
             _pipeline.Send(message, cancellationToken);
@@ -463,6 +374,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/tagNames", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -489,14 +411,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PredefinedTagsListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -521,14 +436,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PredefinedTagsListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -546,6 +454,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, TagResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, TagResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -561,7 +480,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -574,14 +493,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -602,14 +515,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtScopeRequest(scope, data);
             _pipeline.Send(message, cancellationToken);
@@ -621,6 +528,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAtScopeRequestUri(string scope, TagResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAtScopeRequest(string scope, TagResourcePatch patch)
@@ -638,7 +556,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -651,14 +569,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response> UpdateAtScopeAsync(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateAtScopeRequest(scope, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -679,14 +591,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public Response UpdateAtScope(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateAtScopeRequest(scope, patch);
             _pipeline.Send(message, cancellationToken);
@@ -698,6 +604,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAtScopeRequest(string scope)
@@ -723,10 +640,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<TagResourceData>> GetAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateGetAtScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -752,10 +666,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<TagResourceData> GetAtScope(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateGetAtScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -773,6 +684,17 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/tags/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtScopeRequest(string scope)
@@ -798,10 +720,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response> DeleteAtScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateDeleteAtScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -821,10 +740,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response DeleteAtScope(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateDeleteAtScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -836,6 +752,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -860,18 +784,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PredefinedTagsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -897,18 +811,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PredefinedTagsListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

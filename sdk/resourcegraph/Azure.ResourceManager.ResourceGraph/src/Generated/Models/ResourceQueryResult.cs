@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -54,10 +53,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal ResourceQueryResult(long totalRecords, long count, ResultTruncated resultTruncated, BinaryData data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             TotalRecords = totalRecords;
             Count = count;

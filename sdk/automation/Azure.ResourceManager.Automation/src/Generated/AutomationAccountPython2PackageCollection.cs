@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationAccountPython2PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, AutomationAccountPython2PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountPython2PackagePython2PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationAccountPython2PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, AutomationAccountPython2PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountPython2PackagePython2PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual Response<AutomationAccountPython2PackageResource> Get(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual Response<bool> Exists(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationAccountPython2PackageResource>> GetIfExistsAsync(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         public virtual NullableResponse<AutomationAccountPython2PackageResource> GetIfExists(string packageName, CancellationToken cancellationToken = default)
         {
-            if (packageName == null)
-            {
-                throw new ArgumentNullException(nameof(packageName));
-            }
-            if (packageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packageName));
-            }
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
             using var scope = _automationAccountPython2PackagePython2PackageClientDiagnostics.CreateScope("AutomationAccountPython2PackageCollection.GetIfExists");
             scope.Start();

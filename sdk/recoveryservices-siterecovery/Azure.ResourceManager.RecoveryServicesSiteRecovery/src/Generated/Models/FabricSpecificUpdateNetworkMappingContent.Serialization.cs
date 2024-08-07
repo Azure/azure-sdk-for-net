@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownFabricSpecificUpdateNetworkMappingContent))]
     public partial class FabricSpecificUpdateNetworkMappingContent : IUtf8JsonSerializable, IJsonModel<FabricSpecificUpdateNetworkMappingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificUpdateNetworkMappingContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificUpdateNetworkMappingContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FabricSpecificUpdateNetworkMappingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificUpdateNetworkMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificUpdateNetworkMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static FabricSpecificUpdateNetworkMappingContent DeserializeFabricSpecificUpdateNetworkMappingContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeFabricSpecificUpdateNetworkMappingContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificUpdateNetworkMappingContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -35,6 +34,33 @@ namespace Azure.ResourceManager.CostManagement
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope, string filter, string expand, string skiptoken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/dimensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope, string filter, string expand, string skiptoken, int? top)
@@ -80,10 +106,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<CostManagementDimensionsListResult>> ListAsync(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -113,10 +136,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<CostManagementDimensionsListResult> List(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
             _pipeline.Send(message, cancellationToken);
@@ -134,6 +154,35 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateByExternalCloudProviderTypeRequestUri(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/dimensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateByExternalCloudProviderTypeRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
@@ -183,14 +232,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementDimensionsListResult>> ByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -220,14 +262,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementDimensionsListResult> ByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
             _pipeline.Send(message, cancellationToken);

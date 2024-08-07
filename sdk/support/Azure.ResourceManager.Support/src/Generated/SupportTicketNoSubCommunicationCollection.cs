@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
@@ -28,8 +26,6 @@ namespace Azure.ResourceManager.Support
     {
         private readonly ClientDiagnostics _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics;
         private readonly CommunicationsNoSubscriptionRestOperations _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient;
-        private readonly ClientDiagnostics _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionClientDiagnostics;
-        private readonly SupportTicketCommunicationsNoSubscriptionRestOperations _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubCommunicationCollection"/> class for mocking. </summary>
         protected SupportTicketNoSubCommunicationCollection()
@@ -44,9 +40,6 @@ namespace Azure.ResourceManager.Support
             _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubCommunicationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SupportTicketNoSubCommunicationResource.ResourceType, out string supportTicketNoSubCommunicationCommunicationsNoSubscriptionApiVersion);
             _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient = new CommunicationsNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubCommunicationCommunicationsNoSubscriptionApiVersion);
-            _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubCommunicationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SupportTicketNoSubCommunicationResource.ResourceType, out string supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionApiVersion);
-            _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient = new SupportTicketCommunicationsNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +64,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,18 +80,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SupportTicketNoSubCommunicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +113,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,18 +129,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SupportTicketNoSubCommunicationResource> CreateOrUpdate(WaitUntil waitUntil, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.CreateOrUpdate");
             scope.Start();
@@ -189,7 +162,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,14 +176,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Get");
             scope.Start();
@@ -241,7 +207,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,14 +221,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual Response<SupportTicketNoSubCommunicationResource> Get(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Get");
             scope.Start();
@@ -289,11 +248,11 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTicketCommunicationsNoSubscription_List</description>
+        /// <description>CommunicationsNoSubscription_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -307,9 +266,9 @@ namespace Azure.ResourceManager.Support
         /// <returns> An async collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketNoSubCommunicationResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,11 +280,11 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTicketCommunicationsNoSubscription_List</description>
+        /// <description>CommunicationsNoSubscription_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,9 +298,9 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketNoSubCommunicationResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.Name, top, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketNoSubCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics, Pipeline, "SupportTicketNoSubCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +316,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,14 +330,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Exists");
             scope.Start();
@@ -407,7 +359,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,14 +373,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Exists");
             scope.Start();
@@ -457,7 +402,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,14 +416,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SupportTicketNoSubCommunicationResource>> GetIfExistsAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
             scope.Start();
@@ -509,7 +447,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -523,14 +461,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual NullableResponse<SupportTicketNoSubCommunicationResource> GetIfExists(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
             scope.Start();

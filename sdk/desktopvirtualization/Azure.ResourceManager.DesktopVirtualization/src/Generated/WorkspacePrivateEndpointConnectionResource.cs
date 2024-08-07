@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -201,7 +199,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,17 +284,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException(nameof(connection));
-            }
+            Argument.AssertNotNull(connection, nameof(connection));
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = await _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,17 +332,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
         public virtual ArmOperation<WorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DesktopVirtualizationPrivateEndpointConnection connection, CancellationToken cancellationToken = default)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException(nameof(connection));
-            }
+            Argument.AssertNotNull(connection, nameof(connection));
 
             using var scope = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("WorkspacePrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

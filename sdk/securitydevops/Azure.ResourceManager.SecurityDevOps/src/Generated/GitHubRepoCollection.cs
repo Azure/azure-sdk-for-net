@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GitHubRepoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GitHubRepoResource> CreateOrUpdate(WaitUntil waitUntil, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual async Task<Response<GitHubRepoResource>> GetAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual Response<GitHubRepoResource> Get(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual Response<bool> Exists(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual async Task<NullableResponse<GitHubRepoResource>> GetIfExistsAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
         public virtual NullableResponse<GitHubRepoResource> GetIfExists(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            if (gitHubRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubRepoName));
-            }
-            if (gitHubRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
 
             using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.GetIfExists");
             scope.Start();

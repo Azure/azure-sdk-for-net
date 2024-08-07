@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudL3NetworkPatch : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudL3NetworkPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static NetworkCloudL3NetworkPatch DeserializeNetworkCloudL3NetworkPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -97,10 +96,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudL3NetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudL3NetworkPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

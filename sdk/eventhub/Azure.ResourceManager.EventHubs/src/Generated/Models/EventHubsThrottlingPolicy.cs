@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubsThrottlingPolicy(string name, long rateLimitThreshold, EventHubsMetricId metricId) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             RateLimitThreshold = rateLimitThreshold;
             MetricId = metricId;
@@ -49,8 +46,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </summary>
+        [WirePath("rateLimitThreshold")]
         public long RateLimitThreshold { get; set; }
         /// <summary> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </summary>
+        [WirePath("metricId")]
         public EventHubsMetricId MetricId { get; set; }
     }
 }

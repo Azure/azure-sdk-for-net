@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerPassword"/> or <paramref name="targetServerPassword"/> is null. </exception>
         public PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword)
         {
-            if (sourceServerPassword == null)
-            {
-                throw new ArgumentNullException(nameof(sourceServerPassword));
-            }
-            if (targetServerPassword == null)
-            {
-                throw new ArgumentNullException(nameof(targetServerPassword));
-            }
+            Argument.AssertNotNull(sourceServerPassword, nameof(sourceServerPassword));
+            Argument.AssertNotNull(targetServerPassword, nameof(targetServerPassword));
 
             SourceServerPassword = sourceServerPassword;
             TargetServerPassword = targetServerPassword;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Password for source server. </summary>
+        [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
         /// <summary> Password for target server. </summary>
+        [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }
 }

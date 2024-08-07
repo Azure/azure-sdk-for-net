@@ -83,12 +83,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         }
 
         /// <summary> The id of the tenant which the identity belongs to. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The id of the service principal object associated with the created identity. </summary>
+        [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; }
         /// <summary> The id of the app associated with the identity. This is a random generated UUID by MSI. </summary>
+        [WirePath("properties.clientId")]
         public Guid? ClientId { get; }
         /// <summary> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </summary>
+        [WirePath("properties.clientSecretUrl")]
         public Uri ClientSecretUri { get; }
     }
 }

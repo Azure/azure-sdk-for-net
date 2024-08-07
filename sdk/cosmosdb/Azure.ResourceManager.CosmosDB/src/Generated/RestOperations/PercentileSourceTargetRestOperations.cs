@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -33,8 +32,28 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-15-preview";
+            _apiVersion = apiVersion ?? "2024-05-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListMetricsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string sourceRegion, string targetRegion, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sourceRegion/", false);
+            uri.AppendPath(sourceRegion, true);
+            uri.AppendPath("/targetRegion/", false);
+            uri.AppendPath(targetRegion, true);
+            uri.AppendPath("/percentile/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$filter", filter, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMetricsRequest(string subscriptionId, string resourceGroupName, string accountName, string sourceRegion, string targetRegion, string filter)
@@ -64,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -75,50 +94,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PercentileMetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (sourceRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, sourceRegion, targetRegion, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -137,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the metrics determined by the given filter for the given account, source and target region. This url is only for PBS and Replication Latency data. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="sourceRegion"> Source region from which data is written. Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -148,50 +129,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PercentileMetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (sourceRegion == null)
-            {
-                throw new ArgumentNullException(nameof(sourceRegion));
-            }
-            if (sourceRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceRegion));
-            }
-            if (targetRegion == null)
-            {
-                throw new ArgumentNullException(nameof(targetRegion));
-            }
-            if (targetRegion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetRegion));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
+            Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, sourceRegion, targetRegion, filter);
             _pipeline.Send(message, cancellationToken);

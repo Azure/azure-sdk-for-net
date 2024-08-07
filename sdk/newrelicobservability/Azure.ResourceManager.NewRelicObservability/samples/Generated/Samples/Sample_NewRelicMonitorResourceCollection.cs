@@ -7,12 +7,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NewRelicObservability;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
 
@@ -25,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_MonitorsListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,7 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -61,7 +58,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,7 +68,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -95,7 +92,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +102,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -125,7 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_MonitorsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +132,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -167,7 +164,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_MonitorsCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2022-07-01/examples/Monitors_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Monitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,7 +174,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "hfmjmpyqgezxkp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNewRelic";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -225,12 +222,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = NewRelicObservabilityBillingCycle.Yearly,
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
                 OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
                 AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
+                SubscriptionState = "Suspended",
+                SaaSAzureSubscriptionStatus = "Subscribed",
                 Tags =
 {
 ["key6976"] = "oaxfhf",

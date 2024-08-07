@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -89,25 +87,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectionIntentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string intentObjectName, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _replicationProtectionIntentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var uri = _replicationProtectionIntentRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -148,25 +138,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectionIntentResource> CreateOrUpdate(WaitUntil waitUntil, string intentObjectName, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _replicationProtectionIntentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var uri = _replicationProtectionIntentRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -205,14 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<ReplicationProtectionIntentResource>> GetAsync(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.Get");
             scope.Start();
@@ -257,14 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<ReplicationProtectionIntentResource> Get(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.Get");
             scope.Start();
@@ -373,14 +341,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.Exists");
             scope.Start();
@@ -423,14 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<bool> Exists(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.Exists");
             scope.Start();
@@ -473,14 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<NullableResponse<ReplicationProtectionIntentResource>> GetIfExistsAsync(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetIfExists");
             scope.Start();
@@ -525,14 +472,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
         public virtual NullableResponse<ReplicationProtectionIntentResource> GetIfExists(string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetIfExists");
             scope.Start();

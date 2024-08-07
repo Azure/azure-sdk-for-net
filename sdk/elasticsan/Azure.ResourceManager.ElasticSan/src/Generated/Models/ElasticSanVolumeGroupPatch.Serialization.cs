@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanVolumeGroupPatch : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanVolumeGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,12 +47,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                writer.WriteObjectValue(EncryptionProperties, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkAcls, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanVolumeGroupPatch DeserializeElasticSanVolumeGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanEncryptionProperties encryptionProperties = default;
             NetworkRuleSet networkAcls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -162,10 +161,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanVolumeGroupPatch(
                 identity,
                 protocolType,
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanVolumeGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

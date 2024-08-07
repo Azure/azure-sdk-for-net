@@ -56,22 +56,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="email"/>, <paramref name="nameFirst"/>, <paramref name="nameLast"/> or <paramref name="phone"/> is null. </exception>
         public RegistrationContactInfo(string email, string nameFirst, string nameLast, string phone)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (nameFirst == null)
-            {
-                throw new ArgumentNullException(nameof(nameFirst));
-            }
-            if (nameLast == null)
-            {
-                throw new ArgumentNullException(nameof(nameLast));
-            }
-            if (phone == null)
-            {
-                throw new ArgumentNullException(nameof(phone));
-            }
+            Argument.AssertNotNull(email, nameof(email));
+            Argument.AssertNotNull(nameFirst, nameof(nameFirst));
+            Argument.AssertNotNull(nameLast, nameof(nameLast));
+            Argument.AssertNotNull(phone, nameof(phone));
 
             Email = email;
             NameFirst = nameFirst;
@@ -110,22 +98,31 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Mailing address. </summary>
+        [WirePath("addressMailing")]
         public RegistrationAddressInfo AddressMailing { get; set; }
         /// <summary> Email address. </summary>
+        [WirePath("email")]
         public string Email { get; set; }
         /// <summary> Fax number. </summary>
+        [WirePath("fax")]
         public string Fax { get; set; }
         /// <summary> Job title. </summary>
+        [WirePath("jobTitle")]
         public string JobTitle { get; set; }
         /// <summary> First name. </summary>
+        [WirePath("nameFirst")]
         public string NameFirst { get; set; }
         /// <summary> Last name. </summary>
+        [WirePath("nameLast")]
         public string NameLast { get; set; }
         /// <summary> Middle name. </summary>
+        [WirePath("nameMiddle")]
         public string NameMiddle { get; set; }
         /// <summary> Organization contact belongs to. </summary>
+        [WirePath("organization")]
         public string Organization { get; set; }
         /// <summary> Phone number. </summary>
+        [WirePath("phone")]
         public string Phone { get; set; }
     }
 }

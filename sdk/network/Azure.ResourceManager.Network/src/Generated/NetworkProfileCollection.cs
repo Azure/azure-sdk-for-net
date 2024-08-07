@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkProfileName, NetworkProfileData data, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _networkProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkProfileResource>(Response.FromValue(new NetworkProfileResource(Client, response), response.GetRawResponse()));
+                var uri = _networkProfileRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkProfileResource>(Response.FromValue(new NetworkProfileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkProfileResource> CreateOrUpdate(WaitUntil waitUntil, string networkProfileName, NetworkProfileData data, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _networkProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkProfileResource>(Response.FromValue(new NetworkProfileResource(Client, response), response.GetRawResponse()));
+                var uri = _networkProfileRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkProfileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkProfileResource>(Response.FromValue(new NetworkProfileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual async Task<Response<NetworkProfileResource>> GetAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<NetworkProfileResource> Get(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Get");
             scope.Start();
@@ -291,7 +259,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +289,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +319,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
@@ -402,7 +363,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +378,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.Exists");
             scope.Start();
@@ -453,7 +407,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkProfileResource>> GetIfExistsAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();
@@ -506,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         public virtual NullableResponse<NetworkProfileResource> GetIfExists(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (networkProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(networkProfileName));
-            }
-            if (networkProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
 
             using var scope = _networkProfileClientDiagnostics.CreateScope("NetworkProfileCollection.GetIfExists");
             scope.Start();

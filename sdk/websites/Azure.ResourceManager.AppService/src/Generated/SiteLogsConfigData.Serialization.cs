@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteLogsConfigData : IUtf8JsonSerializable, IJsonModel<SiteLogsConfigData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteLogsConfigData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteLogsConfigData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteLogsConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteLogsConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,22 +59,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue(ApplicationLogs);
+                writer.WriteObjectValue(ApplicationLogs, options);
             }
             if (Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
-                writer.WriteObjectValue(HttpLogs);
+                writer.WriteObjectValue(HttpLogs, options);
             }
             if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
-                writer.WriteObjectValue(IsFailedRequestsTracing);
+                writer.WriteObjectValue(IsFailedRequestsTracing, options);
             }
             if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
-                writer.WriteObjectValue(IsDetailedErrorMessages);
+                writer.WriteObjectValue(IsDetailedErrorMessages, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<SiteLogsConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteLogsConfigData DeserializeSiteLogsConfigData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppService
             WebAppEnabledConfig failedRequestsTracing = default;
             WebAppEnabledConfig detailedErrorMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -206,10 +207,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteLogsConfigData(
                 id,
                 name,
@@ -223,6 +224,170 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    applicationLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationLogs))
+                {
+                    builder.Append("    applicationLogs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApplicationLogs, options, 4, false, "    applicationLogs: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    httpLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpLogs))
+                {
+                    builder.Append("    httpLogs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HttpLogs, options, 4, false, "    httpLogs: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsFailedRequestsTracingEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    failedRequestsTracing: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      failedRequestsTracing: {");
+                builder.Append("        enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(IsFailedRequestsTracing))
+                {
+                    builder.Append("    failedRequestsTracing: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IsFailedRequestsTracing, options, 4, false, "    failedRequestsTracing: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsDetailedErrorMessagesEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    detailedErrorMessages: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      detailedErrorMessages: {");
+                builder.Append("        enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDetailedErrorMessages))
+                {
+                    builder.Append("    detailedErrorMessages: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IsDetailedErrorMessages, options, 4, false, "    detailedErrorMessages: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteLogsConfigData>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,8 +396,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +415,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeSiteLogsConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 

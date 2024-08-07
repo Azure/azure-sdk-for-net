@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicyDefinitionGroup(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -81,14 +78,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the group. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The group's display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The group's category. </summary>
+        [WirePath("category")]
         public string Category { get; set; }
         /// <summary> The group's description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A resource ID of a resource that contains additional metadata about the group. </summary>
+        [WirePath("additionalMetadataId")]
         public string AdditionalMetadataId { get; set; }
     }
 }

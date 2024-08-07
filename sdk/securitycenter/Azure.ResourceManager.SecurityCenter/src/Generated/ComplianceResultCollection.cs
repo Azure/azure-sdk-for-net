@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -70,14 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual async Task<Response<ComplianceResultResource>> GetAsync(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.Get");
             scope.Start();
@@ -122,14 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual Response<ComplianceResultResource> Get(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.Get");
             scope.Start();
@@ -234,14 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.Exists");
             scope.Start();
@@ -284,14 +261,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual Response<bool> Exists(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.Exists");
             scope.Start();
@@ -334,14 +304,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual async Task<NullableResponse<ComplianceResultResource>> GetIfExistsAsync(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetIfExists");
             scope.Start();
@@ -386,14 +349,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
         public virtual NullableResponse<ComplianceResultResource> GetIfExists(string complianceResultName, CancellationToken cancellationToken = default)
         {
-            if (complianceResultName == null)
-            {
-                throw new ArgumentNullException(nameof(complianceResultName));
-            }
-            if (complianceResultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(complianceResultName));
-            }
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
 
             using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetIfExists");
             scope.Start();

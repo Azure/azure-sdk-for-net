@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -33,6 +32,23 @@ namespace Azure.ResourceManager.ContainerInstance
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/subnets/", false);
+            uri.AppendPath(subnetName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName)
@@ -68,38 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -124,38 +112,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
             _pipeline.Send(message, cancellationToken);

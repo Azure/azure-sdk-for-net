@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryLogicalNetworkResource>> GetAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual Response<SiteRecoveryLogicalNetworkResource> Get(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryLogicalNetworkResource>> GetIfExistsAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryLogicalNetworkResource> GetIfExists(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (logicalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(logicalNetworkName));
-            }
-            if (logicalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
 
             using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.GetIfExists");
             scope.Start();

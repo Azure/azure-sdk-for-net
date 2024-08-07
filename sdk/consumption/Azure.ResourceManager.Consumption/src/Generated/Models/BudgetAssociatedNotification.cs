@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -55,10 +54,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactEmails"/> is null. </exception>
         public BudgetAssociatedNotification(bool isEnabled, NotificationAlertTriggerType @operator, decimal threshold, IEnumerable<string> contactEmails)
         {
-            if (contactEmails == null)
-            {
-                throw new ArgumentNullException(nameof(contactEmails));
-            }
+            Argument.AssertNotNull(contactEmails, nameof(contactEmails));
 
             IsEnabled = isEnabled;
             Operator = @operator;

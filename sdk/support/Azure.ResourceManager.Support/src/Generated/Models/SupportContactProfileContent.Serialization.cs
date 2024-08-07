@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     public partial class SupportContactProfileContent : IUtf8JsonSerializable, IJsonModel<SupportContactProfileContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportContactProfileContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportContactProfileContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportContactProfileContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfileContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfileContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportContactProfileContent DeserializeSupportContactProfileContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Support.Models
             string country = default;
             string preferredSupportLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))
@@ -188,10 +187,10 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SupportContactProfileContent(
                 firstName,
                 lastName,
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeSupportContactProfileContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportContactProfileContent)} does not support reading '{options.Format}' format.");
             }
         }
 

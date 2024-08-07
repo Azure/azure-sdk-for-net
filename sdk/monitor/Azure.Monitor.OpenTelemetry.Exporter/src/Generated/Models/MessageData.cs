@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public MessageData(int version, string message) : base(version)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
             Properties = new ChangeTrackingDictionary<string, string>();

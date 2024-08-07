@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -54,20 +53,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<object>(Endpoint);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -77,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId);
+                writer.WriteObjectValue<object>(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
@@ -87,28 +86,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue(UseEncryptedEndpoints);
+                writer.WriteObjectValue<object>(UseEncryptedEndpoints);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                writer.WriteObjectValue(UseHostVerification);
+                writer.WriteObjectValue<object>(UseHostVerification);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                writer.WriteObjectValue(UsePeerVerification);
+                writer.WriteObjectValue<object>(UsePeerVerification);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -308,12 +307,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ServiceNowLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceNowLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ServiceNowLinkedServiceConverter : JsonConverter<ServiceNowLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, ServiceNowLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ServiceNowLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

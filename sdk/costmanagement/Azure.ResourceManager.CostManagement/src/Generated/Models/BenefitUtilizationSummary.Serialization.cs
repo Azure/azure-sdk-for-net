@@ -9,20 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class BenefitUtilizationSummary : IUtf8JsonSerializable, IJsonModel<BenefitUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitUtilizationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static BenefitUtilizationSummary DeserializeBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitUtilizationSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

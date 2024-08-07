@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="value"/> is null. </exception>
         public ManagementPolicyTagFilter(string name, string @operator, string value)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (@operator == null)
-            {
-                throw new ArgumentNullException(nameof(@operator));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(@operator, nameof(@operator));
+            Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Operator = @operator;
@@ -89,10 +80,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> This is the filter tag name, it can have 1 - 128 characters. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </summary>
+        [WirePath("op")]
         public string Operator { get; set; }
         /// <summary> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

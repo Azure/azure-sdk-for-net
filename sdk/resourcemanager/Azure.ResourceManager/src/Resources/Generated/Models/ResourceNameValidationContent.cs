@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceNameValidationContent(string name, ResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;
@@ -78,8 +75,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

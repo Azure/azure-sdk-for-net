@@ -121,5 +121,13 @@ namespace Azure.Maps.Routing.Models
                 magnitudeOfDelay,
                 tec);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteSection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteSection(document.RootElement);
+        }
     }
 }

@@ -10,32 +10,31 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultMonitoringSettings : IUtf8JsonSerializable, IJsonModel<VaultMonitoringSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultMonitoringSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultMonitoringSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultMonitoringSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings);
+                writer.WriteObjectValue(AzureMonitorAlertSettings, options);
             }
             if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
-                writer.WriteObjectValue(ClassicAlertSettings);
+                writer.WriteObjectValue(ClassicAlertSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             AzureMonitorAlertSettings azureMonitorAlertSettings = default;
             ClassicAlertSettings classicAlertSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorAlertSettings"u8))
@@ -101,10 +100,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, serializedAdditionalRawData);
         }
 
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultMonitoringSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultMonitoringSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

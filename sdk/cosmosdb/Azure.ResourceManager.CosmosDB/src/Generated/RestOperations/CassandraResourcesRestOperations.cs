@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-15-preview";
+            _apiVersion = apiVersion ?? "2024-05-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListCassandraKeyspacesRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCassandraKeyspacesRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra keyspaces under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraKeyspaceListResult>> ListCassandraKeyspacesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListCassandraKeyspacesRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra keyspaces under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraKeyspaceListResult> ListCassandraKeyspaces(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var message = CreateListCassandraKeyspacesRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraKeyspaceRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraKeyspaceRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -181,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -190,38 +178,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraKeyspaceData>> GetCassandraKeyspaceAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateGetCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -242,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -251,38 +211,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraKeyspaceData> GetCassandraKeyspace(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateGetCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +232,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateUpdateCassandraKeyspaceRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateUpdateCassandraKeyspaceRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content)
@@ -322,14 +270,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -339,42 +287,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateUpdateCassandraKeyspaceAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -389,7 +306,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -399,42 +316,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateUpdateCassandraKeyspace(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -446,6 +332,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteCassandraKeyspaceRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteCassandraKeyspaceRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -470,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -479,38 +381,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteCassandraKeyspaceAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateDeleteCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -525,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -534,38 +408,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteCassandraKeyspace(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateDeleteCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -577,6 +423,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraKeyspaceThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraKeyspaceThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -603,7 +466,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -612,38 +475,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ThroughputSettingData>> GetCassandraKeyspaceThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateGetCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -664,7 +499,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -673,38 +508,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ThroughputSettingData> GetCassandraKeyspaceThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateGetCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -722,6 +529,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateCassandraKeyspaceThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCassandraKeyspaceThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data)
@@ -745,14 +569,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -762,42 +586,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateCassandraKeyspaceThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -812,7 +605,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra Keyspace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -822,42 +615,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateCassandraKeyspaceThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -869,6 +631,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraKeyspaceToAutoscaleRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraKeyspaceToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -895,7 +674,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -904,38 +683,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraKeyspaceToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateMigrateCassandraKeyspaceToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -950,7 +701,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -959,38 +710,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraKeyspaceToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateMigrateCassandraKeyspaceToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -1002,6 +725,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraKeyspaceToManualThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraKeyspaceToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -1028,7 +768,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1037,38 +777,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraKeyspaceToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateMigrateCassandraKeyspaceToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1083,7 +795,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1092,38 +804,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraKeyspaceToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateMigrateCassandraKeyspaceToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -1135,6 +819,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCassandraTablesRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCassandraTablesRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -1161,7 +862,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra table under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1170,38 +871,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraTableListResult>> ListCassandraTablesAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateListCassandraTablesRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1220,7 +893,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra table under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1229,38 +902,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraTableListResult> ListCassandraTables(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateListCassandraTablesRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -1276,6 +921,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraTableRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraTableRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
@@ -1303,7 +966,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1313,46 +976,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraTableData>> GetCassandraTableAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1373,7 +1001,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra table under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1383,46 +1011,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraTableData> GetCassandraTable(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -1440,6 +1033,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateUpdateCassandraTableRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateUpdateCassandraTableRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content)
@@ -1464,14 +1075,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra Table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1482,50 +1093,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateUpdateCassandraTableAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1540,7 +1113,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra Table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1551,50 +1124,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateUpdateCassandraTable(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1606,6 +1141,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteCassandraTableRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteCassandraTableRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
@@ -1632,7 +1185,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1642,46 +1195,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteCassandraTableAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateDeleteCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1696,7 +1214,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1706,46 +1224,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteCassandraTable(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateDeleteCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -1757,6 +1240,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraTableThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraTableThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
@@ -1785,7 +1287,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1795,46 +1297,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ThroughputSettingData>> GetCassandraTableThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1855,7 +1322,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1865,46 +1332,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ThroughputSettingData> GetCassandraTableThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -1922,6 +1354,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateCassandraTableThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCassandraTableThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data)
@@ -1947,14 +1398,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -1965,50 +1416,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateCassandraTableThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2023,7 +1436,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra table. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2034,50 +1447,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateCassandraTableThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, data);
             _pipeline.Send(message, cancellationToken);
@@ -2089,6 +1464,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraTableToAutoscaleRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraTableToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
@@ -2117,7 +1511,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2127,46 +1521,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraTableToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateMigrateCassandraTableToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2181,7 +1540,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2191,46 +1550,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraTableToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateMigrateCassandraTableToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -2242,6 +1566,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraTableToManualThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraTableToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName)
@@ -2270,7 +1613,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2280,46 +1623,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraTableToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateMigrateCassandraTableToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2334,7 +1642,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2344,46 +1652,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraTableToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateMigrateCassandraTableToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -2395,6 +1668,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCassandraViewsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCassandraViewsRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName)
@@ -2421,7 +1711,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra materialized views under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2430,38 +1720,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraViewListResult>> ListCassandraViewsAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateListCassandraViewsRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2480,7 +1742,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Lists the Cassandra materialized views under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2489,38 +1751,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraViewListResult> ListCassandraViews(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
             using var message = CreateListCassandraViewsRequest(subscriptionId, resourceGroupName, accountName, keyspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -2536,6 +1770,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraViewRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraViewRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
@@ -2563,7 +1815,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra view under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2573,46 +1825,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CassandraViewGetResultData>> GetCassandraViewAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateGetCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2633,7 +1850,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the Cassandra view under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2643,46 +1860,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CassandraViewGetResultData> GetCassandraView(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateGetCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -2700,6 +1882,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateUpdateCassandraViewRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CassandraViewGetResultCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateUpdateCassandraViewRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CassandraViewGetResultCreateOrUpdateContent content)
@@ -2724,14 +1924,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra View. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2742,50 +1942,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateUpdateCassandraViewAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CassandraViewGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2800,7 +1962,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Create or update an Azure Cosmos DB Cassandra View. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2811,50 +1973,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateUpdateCassandraView(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CassandraViewGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUpdateCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2866,6 +1990,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteCassandraViewRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteCassandraViewRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
@@ -2892,7 +2034,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra view. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2902,46 +2044,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteCassandraViewAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateDeleteCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2957,7 +2064,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Deletes an existing Azure Cosmos DB Cassandra view. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -2967,46 +2074,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteCassandraView(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateDeleteCassandraViewRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -3019,6 +2091,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCassandraViewThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCassandraViewThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
@@ -3047,7 +2138,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra view under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3057,46 +2148,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ThroughputSettingData>> GetCassandraViewThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateGetCassandraViewThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3117,7 +2173,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets the RUs per second of the Cassandra view under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3127,46 +2183,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ThroughputSettingData> GetCassandraViewThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateGetCassandraViewThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -3184,6 +2205,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateCassandraViewThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, ThroughputSettingsUpdateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCassandraViewThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, ThroughputSettingsUpdateData data)
@@ -3209,14 +2249,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra view. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3227,50 +2267,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateCassandraViewThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraViewThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3285,7 +2287,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Update RUs per second of an Azure Cosmos DB Cassandra view. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3296,50 +2298,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateCassandraViewThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateCassandraViewThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName, data);
             _pipeline.Send(message, cancellationToken);
@@ -3351,6 +2315,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraViewToAutoscaleRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraViewToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
@@ -3379,7 +2362,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra view from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3389,46 +2372,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraViewToAutoscaleAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateMigrateCassandraViewToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3443,7 +2391,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra view from manual throughput to autoscale. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3453,46 +2401,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraViewToAutoscale(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateMigrateCassandraViewToAutoscaleRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             _pipeline.Send(message, cancellationToken);
@@ -3504,6 +2417,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMigrateCassandraViewToManualThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/cassandraKeyspaces/", false);
+            uri.AppendPath(keyspaceName, true);
+            uri.AppendPath("/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMigrateCassandraViewToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
@@ -3532,7 +2464,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra view from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3542,46 +2474,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MigrateCassandraViewToManualThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateMigrateCassandraViewToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3596,7 +2493,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Migrate an Azure Cosmos DB Cassandra view from autoscale to manual throughput. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
@@ -3606,46 +2503,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response MigrateCassandraViewToManualThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (keyspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyspaceName));
-            }
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var message = CreateMigrateCassandraViewToManualThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, viewName);
             _pipeline.Send(message, cancellationToken);

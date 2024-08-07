@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,32 +21,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
-                writer.WriteObjectValue(AllowDataTruncation);
+                writer.WriteObjectValue<object>(AllowDataTruncation);
             }
             if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
-                writer.WriteObjectValue(TreatBooleanAsNumber);
+                writer.WriteObjectValue<object>(TreatBooleanAsNumber);
             }
             if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
-                writer.WriteObjectValue(DateTimeFormat);
+                writer.WriteObjectValue<object>(DateTimeFormat);
             }
             if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
-                writer.WriteObjectValue(DateTimeOffsetFormat);
+                writer.WriteObjectValue<object>(DateTimeOffsetFormat);
             }
             if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
-                writer.WriteObjectValue(TimeSpanFormat);
+                writer.WriteObjectValue<object>(TimeSpanFormat);
             }
             if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
-                writer.WriteObjectValue(Culture);
+                writer.WriteObjectValue<object>(Culture);
             }
             writer.WriteEndObject();
         }
@@ -130,12 +129,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 culture);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TypeConversionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTypeConversionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>
         {
             public override void Write(Utf8JsonWriter writer, TypeConversionSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override TypeConversionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

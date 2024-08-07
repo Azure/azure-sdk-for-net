@@ -8,15 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         private readonly ClientDiagnostics _newRelicMonitorResourceMonitorsClientDiagnostics;
         private readonly MonitorsRestOperations _newRelicMonitorResourceMonitorsRestClient;
+        private readonly ClientDiagnostics _billingInfoClientDiagnostics;
+        private readonly BillingInfoRestOperations _billingInfoRestClient;
+        private readonly ClientDiagnostics _connectedPartnerResourcesClientDiagnostics;
+        private readonly ConnectedPartnerResourcesRestOperations _connectedPartnerResourcesRestClient;
         private readonly NewRelicMonitorResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -67,6 +71,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             _newRelicMonitorResourceMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string newRelicMonitorResourceMonitorsApiVersion);
             _newRelicMonitorResourceMonitorsRestClient = new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceMonitorsApiVersion);
+            _billingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _billingInfoRestClient = new BillingInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _connectedPartnerResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _connectedPartnerResourcesRestClient = new ConnectedPartnerResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -113,7 +121,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +152,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -162,6 +170,71 @@ namespace Azure.ResourceManager.NewRelicObservability
             return GetNewRelicObservabilityTagRules().Get(ruleSetName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NewRelicMonitoredSubscriptionResources in the NewRelicMonitorResource. </summary>
+        /// <returns> An object representing collection of NewRelicMonitoredSubscriptionResources and their operations over a NewRelicMonitoredSubscriptionResource. </returns>
+        public virtual NewRelicMonitoredSubscriptionCollection GetNewRelicMonitoredSubscriptions()
+        {
+            return GetCachedClient(client => new NewRelicMonitoredSubscriptionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// List the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MonitoredSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NewRelicMonitoredSubscriptionResource>> GetNewRelicMonitoredSubscriptionAsync(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNewRelicMonitoredSubscriptions().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MonitoredSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<NewRelicMonitoredSubscriptionResource> GetNewRelicMonitoredSubscription(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNewRelicMonitoredSubscriptions().Get(configurationName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a NewRelicMonitorResource
         /// <list type="bullet">
@@ -175,7 +248,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +288,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +328,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,10 +342,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string userEmail, CancellationToken cancellationToken = default)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentNullException(nameof(userEmail));
-            }
+            Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Delete");
             scope.Start();
@@ -304,7 +374,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,10 +388,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string userEmail, CancellationToken cancellationToken = default)
         {
-            if (userEmail == null)
-            {
-                throw new ArgumentNullException(nameof(userEmail));
-            }
+            Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Delete");
             scope.Start();
@@ -353,7 +420,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,22 +428,23 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<NewRelicMonitorResource>> UpdateAsync(NewRelicMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NewRelicMonitorResource>> UpdateAsync(WaitUntil waitUntil, NewRelicMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Update");
             scope.Start();
             try
             {
                 var response = await _newRelicMonitorResourceMonitorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NewRelicMonitorResource(Client, response.Value), response.GetRawResponse());
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -398,7 +466,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,22 +474,23 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<NewRelicMonitorResource> Update(NewRelicMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NewRelicMonitorResource> Update(WaitUntil waitUntil, NewRelicMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Update");
             scope.Start();
             try
             {
                 var response = _newRelicMonitorResourceMonitorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new NewRelicMonitorResource(Client, response.Value), response.GetRawResponse());
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -443,7 +512,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -456,10 +525,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NewRelicObservabilityMetricRules>> GetMetricRulesAsync(NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.GetMetricRules");
             scope.Start();
@@ -488,7 +554,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -501,10 +567,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NewRelicObservabilityMetricRules> GetMetricRules(NewRelicMetricsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.GetMetricRules");
             scope.Start();
@@ -533,7 +596,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -546,10 +609,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NewRelicMetricsStatusResult>> GetMetricStatusAsync(NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.GetMetricStatus");
             scope.Start();
@@ -578,7 +638,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -591,10 +651,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NewRelicMetricsStatusResult> GetMetricStatus(NewRelicMetricsStatusContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.GetMetricStatus");
             scope.Start();
@@ -623,7 +680,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -637,10 +694,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -660,7 +714,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,10 +728,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -697,7 +748,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -710,10 +761,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NewRelicMonitorResource>> SwitchBillingAsync(NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.SwitchBilling");
             scope.Start();
@@ -742,7 +790,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -755,10 +803,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NewRelicMonitorResource> SwitchBilling(NewRelicSwitchBillingContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.SwitchBilling");
             scope.Start();
@@ -787,7 +832,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -801,10 +846,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -824,7 +866,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -838,10 +880,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -861,7 +900,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -891,7 +930,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -909,6 +948,66 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
+        /// List all Azure resources associated to the same NewRelic organization and account as the target resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listLinkedResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListLinkedResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all Azure resources associated to the same NewRelic organization and account as the target resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listLinkedResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListLinkedResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubResource> GetLinkedResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Returns the payload that needs to be passed in the request body for installing NewRelic agent on a VM.
         /// <list type="bullet">
         /// <item>
@@ -921,7 +1020,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -959,7 +1058,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -985,6 +1084,128 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
+        /// Get marketplace info mapped to the given monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/getBillingInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingInfo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NewRelicBillingInfoResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _billingInfoClientDiagnostics.CreateScope("NewRelicMonitorResource.GetBillingInfo");
+            scope.Start();
+            try
+            {
+                var response = await _billingInfoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get marketplace info mapped to the given monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/getBillingInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingInfo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NewRelicBillingInfoResult> GetBillingInfo(CancellationToken cancellationToken = default)
+        {
+            using var scope = _billingInfoClientDiagnostics.CreateScope("NewRelicMonitorResource.GetBillingInfo");
+            scope.Start();
+            try
+            {
+                var response = _billingInfoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List of all active deployments that are associated with the marketplace subscription linked to the given monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listConnectedPartnerResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedPartnerResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Email Id of the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResourcesAsync(string body = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedPartnerResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedPartnerResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicConnectedPartnerResourceInfo.DeserializeNewRelicConnectedPartnerResourceInfo(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List of all active deployments that are associated with the marketplace subscription linked to the given monitor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listConnectedPartnerResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedPartnerResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Email Id of the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResources(string body = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedPartnerResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedPartnerResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicConnectedPartnerResourceInfo.DeserializeNewRelicConnectedPartnerResourceInfo(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -997,7 +1218,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1011,14 +1232,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NewRelicMonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.AddTag");
             scope.Start();
@@ -1041,8 +1256,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1065,7 +1280,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1079,14 +1294,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NewRelicMonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.AddTag");
             scope.Start();
@@ -1109,8 +1318,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1133,7 +1342,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1146,10 +1355,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NewRelicMonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.SetTags");
             scope.Start();
@@ -1169,8 +1375,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new NewRelicMonitorResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1193,7 +1399,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1206,10 +1412,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NewRelicMonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.SetTags");
             scope.Start();
@@ -1229,8 +1432,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new NewRelicMonitorResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1253,7 +1456,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1266,10 +1469,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NewRelicMonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.RemoveTag");
             scope.Start();
@@ -1292,8 +1492,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1316,7 +1516,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-07-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1329,10 +1529,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NewRelicMonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.RemoveTag");
             scope.Start();
@@ -1355,8 +1552,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

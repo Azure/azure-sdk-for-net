@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     [PersistableModelProxy(typeof(UnknownFunctionRetrieveDefaultDefinitionParameters))]
     public partial class FunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable, IJsonModel<FunctionRetrieveDefaultDefinitionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionRetrieveDefaultDefinitionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionRetrieveDefaultDefinitionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionRetrieveDefaultDefinitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static FunctionRetrieveDefaultDefinitionContent DeserializeFunctionRetrieveDefaultDefinitionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

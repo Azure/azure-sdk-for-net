@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionNetworkManagerConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _subscriptionNetworkManagerConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, networkManagerConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionNetworkManagerConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, networkManagerConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SubscriptionNetworkManagerConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _subscriptionNetworkManagerConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, networkManagerConnectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionNetworkManagerConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, networkManagerConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionNetworkManagerConnectionResource>> GetAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.Get");
             scope.Start();
@@ -237,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual Response<SubscriptionNetworkManagerConnectionResource> Get(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.Get");
             scope.Start();
@@ -289,7 +257,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +289,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.Exists");
             scope.Start();
@@ -403,7 +364,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +378,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.Exists");
             scope.Start();
@@ -453,7 +407,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,14 +421,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionNetworkManagerConnectionResource>> GetIfExistsAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.GetIfExists");
             scope.Start();
@@ -505,7 +452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,14 +466,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionNetworkManagerConnectionResource> GetIfExists(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.GetIfExists");
             scope.Start();

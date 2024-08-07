@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Maps
 {
     public partial class MapsAccountData : IUtf8JsonSerializable, IJsonModel<MapsAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Maps
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Maps
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Maps
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.Maps
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MapsAccountData(
                 id,
                 name,
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Maps
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Maps
                         return DeserializeMapsAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

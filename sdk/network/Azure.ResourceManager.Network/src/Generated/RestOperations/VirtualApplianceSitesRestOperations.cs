@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
+            uri.AppendPath(networkVirtualApplianceName, true);
+            uri.AppendPath("/virtualApplianceSites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +112,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             _pipeline.Send(message, cancellationToken);
@@ -169,6 +128,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
+            uri.AppendPath(networkVirtualApplianceName, true);
+            uri.AppendPath("/virtualApplianceSites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName)
@@ -203,38 +178,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualApplianceSiteData>> GetAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +211,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualApplianceSiteData> Get(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +232,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
+            uri.AppendPath(networkVirtualApplianceName, true);
+            uri.AppendPath("/virtualApplianceSites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data)
@@ -335,7 +270,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -352,42 +287,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +316,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName, siteName, data);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
+            uri.AppendPath(networkVirtualApplianceName, true);
+            uri.AppendPath("/virtualApplianceSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
@@ -491,30 +379,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkVirtualApplianceSiteListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +408,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkVirtualApplianceSiteListResult> List(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkVirtualApplianceName);
             _pipeline.Send(message, cancellationToken);
@@ -580,6 +426,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName)
@@ -606,34 +460,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkVirtualApplianceSiteListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkVirtualApplianceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +491,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkVirtualApplianceSiteListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (networkVirtualApplianceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkVirtualApplianceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkVirtualApplianceName);
             _pipeline.Send(message, cancellationToken);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomRolloutResource : Azure.ResourceManager.ArmResource
+    public partial class CustomRolloutResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CustomRolloutResource() { }
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.ProviderHub
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string rolloutName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.CustomRolloutResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.CustomRolloutResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.CustomRolloutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.CustomRolloutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.CustomRolloutResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.CustomRolloutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.CustomRolloutResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.CustomRolloutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -66,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DefaultRolloutResource : Azure.ResourceManager.ArmResource
+    public partial class DefaultRolloutResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DefaultRolloutResource() { }
@@ -79,6 +84,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Stop(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.DefaultRolloutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.DefaultRolloutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.DefaultRolloutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.DefaultRolloutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -99,7 +109,7 @@ namespace Azure.ResourceManager.ProviderHub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NestedResourceTypeFirstSkuResource : Azure.ResourceManager.ArmResource
+    public partial class NestedResourceTypeFirstSkuResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NestedResourceTypeFirstSkuResource() { }
@@ -110,6 +120,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -130,7 +145,7 @@ namespace Azure.ResourceManager.ProviderHub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NestedResourceTypeSecondSkuResource : Azure.ResourceManager.ArmResource
+    public partial class NestedResourceTypeSecondSkuResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NestedResourceTypeSecondSkuResource() { }
@@ -141,6 +156,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -161,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NestedResourceTypeThirdSkuResource : Azure.ResourceManager.ArmResource
+    public partial class NestedResourceTypeThirdSkuResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NestedResourceTypeThirdSkuResource() { }
@@ -172,6 +192,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -202,7 +227,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NotificationRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class NotificationRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NotificationRegistrationResource() { }
@@ -213,6 +238,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.NotificationRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.NotificationRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.NotificationRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.NotificationRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -258,7 +288,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class ProviderRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProviderRegistrationResource() { }
@@ -285,6 +315,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> GetResourceTypeRegistration(string resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>> GetResourceTypeRegistrationAsync(string resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationCollection GetResourceTypeRegistrations() { throw null; }
+        Azure.ResourceManager.ProviderHub.ProviderRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ProviderRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ProviderRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ProviderRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -315,7 +350,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceTypeRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class ResourceTypeRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ResourceTypeRegistrationResource() { }
@@ -338,6 +373,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> GetResourceTypeSku(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> GetResourceTypeSkuAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.ResourceTypeSkuCollection GetResourceTypeSkus() { throw null; }
+        Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -368,7 +408,7 @@ namespace Azure.ResourceManager.ProviderHub
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceTypeSkuResource : Azure.ResourceManager.ArmResource
+    public partial class ResourceTypeSkuResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ResourceTypeSkuResource() { }
@@ -379,6 +419,11 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -20,14 +20,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="template"/> is null. </exception>
         public TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template) : base(channelRegistrationId, to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(template, nameof(template));
 
             Kind = CommunicationMessageKind.Template;
             Template = template;

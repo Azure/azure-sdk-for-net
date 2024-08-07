@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2024-04-30)
+
+This small, out-of-band version addresses a couple of critical blocking bugs. To use the latest service features, including streaming support and the Assistants v2 API, migrate to the [Azure.AI.OpenAI package](https://www.nuget.org/packages/Azure.AI.OpenAI).
+
+### Bugs Fixed
+
+- Several issues with direct equality comparisons of function tool definitions have been fixed
+- The mistaken, remain instance of an "Azure not supported" exception has been removed, along with its related
+  mentions. This should unblock the use of the the token-based client constructor.
+
+## 1.0.0-beta.3 (2024-03-06)
+
+This update includes a fix for assistant-generated files as represented on messages along with an overdue README update reflecting the release status of Azure OpenAI Assistants support.
+
+### Bugs Fixed
+
+- Incorporates a specification fix for message image file content that caused generated image file IDs (e.g. from the Code Interpreter tool) to not properly appear in messages
 
 ## 1.0.0-beta.2 (2024-02-05)
 

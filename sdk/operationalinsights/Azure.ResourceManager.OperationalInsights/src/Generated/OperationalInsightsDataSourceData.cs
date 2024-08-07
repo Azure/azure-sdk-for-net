@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -58,10 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public OperationalInsightsDataSourceData(BinaryData properties, OperationalInsightsDataSourceKind kind)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
             Kind = kind;
@@ -122,12 +118,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
         /// <summary> The ETag of the data source. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The kind of the DataSource. </summary>
+        [WirePath("kind")]
         public OperationalInsightsDataSourceKind Kind { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

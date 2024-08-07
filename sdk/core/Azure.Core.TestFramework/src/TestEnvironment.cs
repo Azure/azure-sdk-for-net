@@ -184,12 +184,12 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
-        public string ClientId => GetRecordedVariable("CLIENT_ID");
+        public string ClientId => GetRecordedOptionalVariable("CLIENT_ID");
 
         /// <summary>
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
         /// </summary>
-        public string ClientSecret => GetVariable("CLIENT_SECRET");
+        public string ClientSecret => GetOptionalVariable("CLIENT_SECRET");
 
         public virtual TokenCredential Credential
         {
@@ -206,13 +206,9 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    var clientSecret = ClientSecret;
-                    if (string.IsNullOrWhiteSpace(clientSecret))
-                    {
-                        _credential = new DefaultAzureCredential(
-                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
-                    }
-                    else
+                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
+                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSTOKEN");
+                    if (!string.IsNullOrWhiteSpace(clientSecret))
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used
                         // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
@@ -232,6 +228,21 @@ namespace Azure.Core.TestFramework
                             ClientId,
                             clientSecret,
                             new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
+                    }
+                    else if (!string.IsNullOrWhiteSpace(systemAccessToken))
+                    {
+                        // These variables should only be defined in the Live Test Pipelines so there is no need to record these variables
+                        _credential = new AzurePipelinesCredential(
+                                GetVariable("AZURESUBSCRIPTION_TENANT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_CLIENT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID"),
+                                systemAccessToken,
+                                new AzurePipelinesCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
+                    }
+                    else
+                    {
+                        _credential = new DefaultAzureCredential(
+                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                 }
 
@@ -303,20 +314,24 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping)
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            string resourceManagerUrl = GetOptionalVariable("RESOURCE_MANAGER_URL");
+
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record)
+                || DisableBootstrapping
+                || string.IsNullOrEmpty(resourceGroup)
+                || string.IsNullOrEmpty(subscription)
+                || string.IsNullOrEmpty(resourceManagerUrl))
             {
                 return;
             }
-
-            string resourceGroup = GetVariable("RESOURCE_GROUP");
-
-            string subscription = GetVariable("SUBSCRIPTION_ID");
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(Credential, "https://management.azure.com/.default"));
 
             // create the GET request for the resource group information
             Request request = pipeline.CreateRequest();
-            Uri uri = new Uri($"{GetVariable("RESOURCE_MANAGER_URL")}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            Uri uri = new Uri($"{resourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 
@@ -541,7 +556,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        internal static string GetSourcePath(Assembly assembly)
+        public static string GetSourcePath(Assembly assembly)
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
@@ -656,14 +671,14 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Determines whether to enable proxy logging beyond errors.
+        /// Determines whether to enable debug level proxy logging. Errors are logged by default.
         /// </summary>
-        internal static bool EnableProxyLogging
+        internal static bool EnableTestProxyDebugLogs
         {
             get
             {
-                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
-                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+                string switchString = TestContext.Parameters[nameof(EnableTestProxyDebugLogs)] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS");
 
                 bool.TryParse(switchString, out bool enableProxyLogging);
 

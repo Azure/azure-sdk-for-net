@@ -19,16 +19,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="text"/> is null. </exception>
         public MessageTemplateText(string name, string text) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(text, nameof(text));
 
-            Kind = "text";
+            Kind = MessageTemplateValueKind.Text;
             Text = text;
         }
 
@@ -37,7 +31,7 @@ namespace Azure.Communication.Messages
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal MessageTemplateText(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateText(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(name, kind, serializedAdditionalRawData)
         {
             Text = text;
         }

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +182,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,10 +195,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationResource>> UpdateAsync(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Update");
             scope.Start();
@@ -229,7 +224,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,10 +237,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationResource> Update(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Update");
             scope.Start();
@@ -274,7 +266,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,14 +280,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.AddTag");
             scope.Start();
@@ -342,7 +328,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,14 +342,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.AddTag");
             scope.Start();
@@ -410,7 +390,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,10 +403,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.SetTags");
             scope.Start();
@@ -470,7 +447,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,10 +460,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.SetTags");
             scope.Start();
@@ -530,7 +504,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -543,10 +517,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.RemoveTag");
             scope.Start();
@@ -593,7 +564,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -606,10 +577,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.RemoveTag");
             scope.Start();

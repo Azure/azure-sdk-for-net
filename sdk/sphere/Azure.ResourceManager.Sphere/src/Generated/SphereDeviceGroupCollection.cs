@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeviceGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereDeviceGroupResource> CreateOrUpdate(WaitUntil waitUntil, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual async Task<Response<SphereDeviceGroupResource>> GetAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual Response<SphereDeviceGroupResource> Get(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +286,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +320,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,14 +334,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
             scope.Start();
@@ -406,7 +363,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,14 +377,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.Exists");
             scope.Start();
@@ -456,7 +406,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,14 +420,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereDeviceGroupResource>> GetIfExistsAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
             scope.Start();
@@ -508,7 +451,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
         public virtual NullableResponse<SphereDeviceGroupResource> GetIfExists(string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupCollection.GetIfExists");
             scope.Start();

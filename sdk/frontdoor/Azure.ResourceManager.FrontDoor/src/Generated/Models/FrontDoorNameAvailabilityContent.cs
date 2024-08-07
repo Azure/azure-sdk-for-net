@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FrontDoorNameAvailabilityContent(string name, FrontDoorResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;

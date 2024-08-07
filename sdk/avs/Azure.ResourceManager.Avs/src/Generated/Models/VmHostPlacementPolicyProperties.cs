@@ -22,14 +22,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> or <paramref name="hostMembers"/> is null. </exception>
         public VmHostPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
         {
-            if (vmMembers == null)
-            {
-                throw new ArgumentNullException(nameof(vmMembers));
-            }
-            if (hostMembers == null)
-            {
-                throw new ArgumentNullException(nameof(hostMembers));
-            }
+            Argument.AssertNotNull(vmMembers, nameof(vmMembers));
+            Argument.AssertNotNull(hostMembers, nameof(hostMembers));
 
             VmMembers = vmMembers.ToList();
             HostMembers = hostMembers.ToList();

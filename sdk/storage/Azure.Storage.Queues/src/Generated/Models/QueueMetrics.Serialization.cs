@@ -8,7 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Queues;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -17,7 +17,7 @@ namespace Azure.Storage.Queues.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
-            if (Optional.IsDefined(Version))
+            if (Common.Optional.IsDefined(Version))
             {
                 writer.WriteStartElement("Version");
                 writer.WriteValue(Version);
@@ -26,13 +26,13 @@ namespace Azure.Storage.Queues.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeApis))
+            if (Common.Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (Common.Optional.IsDefined(RetentionPolicy))
             {
                 writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }

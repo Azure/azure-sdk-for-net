@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public RunCommandInputParameter(string name, string value)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Value = value;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The run command parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The run command parameter value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class EncryptionKeyDetails : IUtf8JsonSerializable, IJsonModel<EncryptionKeyDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionKeyDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionKeyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EncryptionKeyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static EncryptionKeyDetails DeserializeEncryptionKeyDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             string keyName = default;
             string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultUri"u8))
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EncryptionKeyDetails(keyVaultUri, keyName, keyVersion, serializedAdditionalRawData);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeEncryptionKeyDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionKeyDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

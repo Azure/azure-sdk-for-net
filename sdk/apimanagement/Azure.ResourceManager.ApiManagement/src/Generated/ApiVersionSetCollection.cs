@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiVersionSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiVersionSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var uri = _apiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiVersionSetResource> CreateOrUpdate(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiVersionSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var uri = _apiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual async Task<Response<ApiVersionSetResource>> GetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual Response<ApiVersionSetResource> Get(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.Get");
             scope.Start();
@@ -290,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +291,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,14 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.Exists");
             scope.Start();
@@ -406,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,14 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual Response<bool> Exists(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.Exists");
             scope.Start();
@@ -456,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiVersionSetResource>> GetIfExistsAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.GetIfExists");
             scope.Start();
@@ -508,7 +455,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         public virtual NullableResponse<ApiVersionSetResource> GetIfExists(string versionSetId, CancellationToken cancellationToken = default)
         {
-            if (versionSetId == null)
-            {
-                throw new ArgumentNullException(nameof(versionSetId));
-            }
-            if (versionSetId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionSetId));
-            }
+            Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
             using var scope = _apiVersionSetClientDiagnostics.CreateScope("ApiVersionSetCollection.GetIfExists");
             scope.Start();

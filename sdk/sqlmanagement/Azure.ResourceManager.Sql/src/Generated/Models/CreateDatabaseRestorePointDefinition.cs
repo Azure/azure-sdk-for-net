@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public CreateDatabaseRestorePointDefinition(string restorePointLabel)
         {
-            if (restorePointLabel == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointLabel));
-            }
+            Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
 
             RestorePointLabel = restorePointLabel;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The restore point label to apply. </summary>
+        [WirePath("restorePointLabel")]
         public string RestorePointLabel { get; }
     }
 }

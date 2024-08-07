@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetPhysicalPartitionThroughputInfo"/> or <paramref name="sourcePhysicalPartitionThroughputInfo"/> is null. </exception>
         public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IEnumerable<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo)
         {
-            if (targetPhysicalPartitionThroughputInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetPhysicalPartitionThroughputInfo));
-            }
-            if (sourcePhysicalPartitionThroughputInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourcePhysicalPartitionThroughputInfo));
-            }
+            Argument.AssertNotNull(targetPhysicalPartitionThroughputInfo, nameof(targetPhysicalPartitionThroughputInfo));
+            Argument.AssertNotNull(sourcePhysicalPartitionThroughputInfo, nameof(sourcePhysicalPartitionThroughputInfo));
 
             ThroughputPolicy = throughputPolicy;
             TargetPhysicalPartitionThroughputInfo = targetPhysicalPartitionThroughputInfo.ToList();
@@ -86,10 +80,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> ThroughputPolicy to apply for throughput redistribution. </summary>
+        [WirePath("throughputPolicy")]
         public ThroughputPolicyType ThroughputPolicy { get; set; }
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("targetPhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get; }
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("sourcePhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get; }
     }
 }

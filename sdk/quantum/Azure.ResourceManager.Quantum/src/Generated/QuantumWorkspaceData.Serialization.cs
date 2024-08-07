@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Quantum
 {
     public partial class QuantumWorkspaceData : IUtf8JsonSerializable, IJsonModel<QuantumWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuantumWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quantum
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.Quantum
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(IsApiKeyEnabled))
+            {
+                writer.WritePropertyName("apiKeyEnabled"u8);
+                writer.WriteBooleanValue(IsApiKeyEnabled.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -122,7 +127,7 @@ namespace Azure.ResourceManager.Quantum
             var format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.Quantum
 
         internal static QuantumWorkspaceData DeserializeQuantumWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,13 +149,14 @@ namespace Azure.ResourceManager.Quantum
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<Provider> providers = default;
-            UsableStatus? usable = default;
-            ProvisioningStatus? provisioningState = default;
+            IList<QuantumProvider> providers = default;
+            WorkspaceUsableStatus? usable = default;
+            QuantumProvisioningStatus? provisioningState = default;
             string storageAccount = default;
             Uri endpointUri = default;
+            bool? apiKeyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -220,10 +226,10 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            List<Provider> array = new List<Provider>();
+                            List<QuantumProvider> array = new List<QuantumProvider>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Provider.DeserializeProvider(item, options));
+                                array.Add(QuantumProvider.DeserializeQuantumProvider(item, options));
                             }
                             providers = array;
                             continue;
@@ -234,7 +240,7 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            usable = new UsableStatus(property0.Value.GetString());
+                            usable = new WorkspaceUsableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -243,7 +249,7 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningStatus(property0.Value.GetString());
+                            provisioningState = new QuantumProvisioningStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageAccount"u8))
@@ -260,15 +266,24 @@ namespace Azure.ResourceManager.Quantum
                             endpointUri = new Uri(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("apiKeyEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            apiKeyEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuantumWorkspaceData(
                 id,
                 name,
@@ -277,11 +292,12 @@ namespace Azure.ResourceManager.Quantum
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                providers ?? new ChangeTrackingList<Provider>(),
+                providers ?? new ChangeTrackingList<QuantumProvider>(),
                 usable,
                 provisioningState,
                 storageAccount,
                 endpointUri,
+                apiKeyEnabled,
                 serializedAdditionalRawData);
         }
 
@@ -294,7 +310,7 @@ namespace Azure.ResourceManager.Quantum
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +326,7 @@ namespace Azure.ResourceManager.Quantum
                         return DeserializeQuantumWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

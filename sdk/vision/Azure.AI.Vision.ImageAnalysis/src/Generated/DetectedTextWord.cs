@@ -56,14 +56,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingPolygon"/> is null. </exception>
         internal DetectedTextWord(string text, IEnumerable<ImagePoint> boundingPolygon, float confidence)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (boundingPolygon == null)
-            {
-                throw new ArgumentNullException(nameof(boundingPolygon));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(boundingPolygon, nameof(boundingPolygon));
 
             Text = text;
             BoundingPolygon = boundingPolygon.ToList();

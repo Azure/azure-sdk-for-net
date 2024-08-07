@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Reason for the compliance of the guest configuration assignment resource. </summary>
+        [WirePath("phrase")]
         public string Phrase { get; }
         /// <summary> Code for the compliance of the guest configuration assignment resource. </summary>
+        [WirePath("code")]
         public string Code { get; }
     }
 }

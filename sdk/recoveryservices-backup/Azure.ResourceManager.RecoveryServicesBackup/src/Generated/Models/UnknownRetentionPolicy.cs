@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownRetentionPolicy. </summary>
+    /// <summary> Unknown version of RetentionPolicy. </summary>
     internal partial class UnknownRetentionPolicy : BackupRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRetentionPolicy"/>. </summary>

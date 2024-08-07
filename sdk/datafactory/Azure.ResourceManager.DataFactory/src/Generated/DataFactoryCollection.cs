@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory
@@ -84,25 +82,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string factoryName, DataFactoryData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryFactoriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, factoryName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryResource>(Response.FromValue(new DataFactoryResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryFactoriesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, factoryName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryResource>(Response.FromValue(new DataFactoryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -144,25 +134,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryResource> CreateOrUpdate(WaitUntil waitUntil, string factoryName, DataFactoryData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryFactoriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, factoryName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryResource>(Response.FromValue(new DataFactoryResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryFactoriesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, factoryName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryResource>(Response.FromValue(new DataFactoryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -202,14 +184,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryResource>> GetAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Get");
             scope.Start();
@@ -255,14 +230,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual Response<DataFactoryResource> Get(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Exists");
             scope.Start();
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual Response<bool> Exists(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Exists");
             scope.Start();
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryResource>> GetIfExistsAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetIfExists");
             scope.Start();
@@ -523,14 +470,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryResource> GetIfExists(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetIfExists");
             scope.Start();

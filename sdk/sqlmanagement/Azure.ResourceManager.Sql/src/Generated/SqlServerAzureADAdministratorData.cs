@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Type of the sever administrator. </summary>
+        [WirePath("properties.administratorType")]
         public SqlAdministratorType? AdministratorType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
+        [WirePath("properties.login")]
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>
+        [WirePath("properties.sid")]
         public Guid? Sid { get; set; }
         /// <summary> Tenant ID of the administrator. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
+        [WirePath("properties.azureADOnlyAuthentication")]
         public bool? IsAzureADOnlyAuthenticationEnabled { get; }
     }
 }

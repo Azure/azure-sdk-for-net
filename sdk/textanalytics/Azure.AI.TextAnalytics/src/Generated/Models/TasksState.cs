@@ -17,10 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(AnalyzeTasks tasks)
         {
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
         }

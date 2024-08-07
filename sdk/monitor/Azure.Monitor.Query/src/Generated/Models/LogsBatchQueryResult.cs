@@ -19,10 +19,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
         {
-            if (allTables == null)
-            {
-                throw new ArgumentNullException(nameof(allTables));
-            }
+            Argument.AssertNotNull(allTables, nameof(allTables));
         }
 
         /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>

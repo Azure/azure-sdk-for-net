@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     [PersistableModelProxy(typeof(UnknownAutoMLVertical))]
     public partial class AutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoMLVertical>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAutoMLVertical(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{options.Format}' format.");
             }
         }
 

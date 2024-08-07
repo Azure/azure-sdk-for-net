@@ -18,17 +18,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public AzureDataExplorerDataConnectionPayload(AzureDataExplorerDataConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Kind = "azureDataExplorer";
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>

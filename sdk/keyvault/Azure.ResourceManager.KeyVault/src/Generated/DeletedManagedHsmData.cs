@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the deleted managed HSM. </summary>
+        [WirePath("properties")]
         public DeletedManagedHsmProperties Properties { get; }
     }
 }

@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public AzureBlobDataTransferDataSourceSink(string containerName)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
 
             ContainerName = containerName;
             Component = DataTransferComponent.AzureBlobStorage;
@@ -45,8 +42,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the container name. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
         /// <summary> Gets or sets the endpoint uri. </summary>
+        [WirePath("endpointUrl")]
         public Uri EndpointUri { get; set; }
     }
 }

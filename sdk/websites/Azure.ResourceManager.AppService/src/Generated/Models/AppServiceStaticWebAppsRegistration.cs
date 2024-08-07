@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The Client ID of the app used for login. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

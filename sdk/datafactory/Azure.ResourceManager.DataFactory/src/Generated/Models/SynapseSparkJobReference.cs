@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, DataFactoryElement<string> referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             SparkJobReferenceType = sparkJobReferenceType;
             ReferenceName = referenceName;

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicyDescription))]
     public partial class ServicePlacementPolicyDescription : IUtf8JsonSerializable, IJsonModel<ServicePlacementPolicyDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementPolicyDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementPolicyDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServicePlacementPolicyDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServicePlacementPolicyDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServicePlacementPolicyDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeServicePlacementPolicyDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePlacementPolicyDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

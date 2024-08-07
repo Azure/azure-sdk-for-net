@@ -48,12 +48,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="CreateAssistantFileRequest"/>. </summary>
         /// <param name="fileId"> The ID of the previously uploaded file to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        public CreateAssistantFileRequest(string fileId)
+        internal CreateAssistantFileRequest(string fileId)
         {
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
+            Argument.AssertNotNull(fileId, nameof(fileId));
 
             FileId = fileId;
         }

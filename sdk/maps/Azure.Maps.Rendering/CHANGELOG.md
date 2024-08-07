@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 2.0.0-beta.1 (2024-08-06)
 
 ### Features Added
 
-### Breaking Changes
+- Support Rendering API `2024-04-01`
+
+## 1.0.0-beta.3 (2024-05-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Instantiate paths variable.
+- Use alpha for extracting the pushpin color.
+
+
 
 ## 1.0.0-beta.2 (2023-07-13)
 

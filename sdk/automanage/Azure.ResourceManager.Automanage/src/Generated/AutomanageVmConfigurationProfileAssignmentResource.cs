@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -269,7 +267,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation(response);
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomanageArmOperation(response);
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -350,17 +352,16 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomanageVmConfigurationProfileAssignmentResource>> UpdateAsync(WaitUntil waitUntil, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -399,17 +400,16 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomanageVmConfigurationProfileAssignmentResource> Update(WaitUntil waitUntil, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

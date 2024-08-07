@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/mobileNetworks/", false);
+            uri.AppendPath(mobileNetworkName, true);
+            uri.AppendPath("/dataNetworks/", false);
+            uri.AppendPath(dataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +112,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -169,6 +128,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/mobileNetworks/", false);
+            uri.AppendPath(mobileNetworkName, true);
+            uri.AppendPath("/dataNetworks/", false);
+            uri.AppendPath(dataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName)
@@ -203,38 +178,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MobileDataNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +211,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MobileDataNetworkData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +232,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileDataNetworkData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/mobileNetworks/", false);
+            uri.AppendPath(mobileNetworkName, true);
+            uri.AppendPath("/dataNetworks/", false);
+            uri.AppendPath(dataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileDataNetworkData data)
@@ -335,7 +270,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -352,42 +287,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +316,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, data);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileNetworkTagsPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/mobileNetworks/", false);
+            uri.AppendPath(mobileNetworkName, true);
+            uri.AppendPath("/dataNetworks/", false);
+            uri.AppendPath(dataNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileNetworkTagsPatch patch)
@@ -481,7 +370,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -498,42 +387,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MobileDataNetworkData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -562,42 +420,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MobileDataNetworkData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -613,6 +440,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByMobileNetworkRequestUri(string subscriptionId, string resourceGroupName, string mobileNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/mobileNetworks/", false);
+            uri.AppendPath(mobileNetworkName, true);
+            uri.AppendPath("/dataNetworks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByMobileNetworkRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName)
@@ -645,30 +487,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataNetworkListResult>> ListByMobileNetworkAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
             using var message = CreateListByMobileNetworkRequest(subscriptionId, resourceGroupName, mobileNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -695,30 +516,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataNetworkListResult> ListByMobileNetwork(string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
             using var message = CreateListByMobileNetworkRequest(subscriptionId, resourceGroupName, mobileNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -734,6 +534,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByMobileNetworkNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByMobileNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName)
@@ -760,34 +568,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataNetworkListResult>> ListByMobileNetworkNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
             using var message = CreateListByMobileNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, mobileNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -815,34 +599,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataNetworkListResult> ListByMobileNetworkNextPage(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (mobileNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(mobileNetworkName));
-            }
-            if (mobileNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mobileNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
             using var message = CreateListByMobileNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, mobileNetworkName);
             _pipeline.Send(message, cancellationToken);

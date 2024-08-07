@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -107,12 +106,29 @@ namespace Azure.Messaging.EventGrid.Models
                 dataVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EventGridEventInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridEventInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>
         {
             public override void Write(Utf8JsonWriter writer, EventGridEventInternal model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

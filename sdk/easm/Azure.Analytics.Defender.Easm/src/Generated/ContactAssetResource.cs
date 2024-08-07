@@ -18,17 +18,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
         internal ContactAssetResource(ContactAsset asset)
         {
-            if (asset == null)
-            {
-                throw new ArgumentNullException(nameof(asset));
-            }
+            Argument.AssertNotNull(asset, nameof(asset));
 
             Kind = "contact";
             Asset = asset;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContactAssetResource"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for AssetResource. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>

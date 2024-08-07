@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         internal TagResourceContractDetails(AssociatedTagProperties tag)
         {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
+            Argument.AssertNotNull(tag, nameof(tag));
 
             Tag = tag;
         }
@@ -79,12 +76,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Tag associated with the resource. </summary>
+        [WirePath("tag")]
         public AssociatedTagProperties Tag { get; }
         /// <summary> API associated with the tag. </summary>
+        [WirePath("api")]
         public AssociatedApiProperties Api { get; }
         /// <summary> Operation associated with the tag. </summary>
+        [WirePath("operation")]
         public AssociatedOperationProperties Operation { get; }
         /// <summary> Product associated with the tag. </summary>
+        [WirePath("product")]
         public AssociatedProductProperties Product { get; }
     }
 }

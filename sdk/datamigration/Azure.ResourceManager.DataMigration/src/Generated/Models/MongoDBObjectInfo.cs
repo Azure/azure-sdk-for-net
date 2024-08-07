@@ -54,14 +54,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="qualifiedName"/> is null. </exception>
         internal MongoDBObjectInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (qualifiedName == null)
-            {
-                throw new ArgumentNullException(nameof(qualifiedName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
 
             AverageDocumentSize = averageDocumentSize;
             DataSize = dataSize;

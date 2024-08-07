@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     [PersistableModelProxy(typeof(UnknownNetworkFunctionPropertiesFormat))]
     public partial class NetworkFunctionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFunctionPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference);
+                writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference, options);
             }
             if (Optional.IsDefined(NfviType))
             {
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static NetworkFunctionPropertiesFormat DeserializeNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

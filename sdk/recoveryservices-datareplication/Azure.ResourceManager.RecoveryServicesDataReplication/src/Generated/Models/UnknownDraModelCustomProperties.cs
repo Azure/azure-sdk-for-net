@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The UnknownDraModelCustomProperties. </summary>
+    /// <summary> Unknown version of DraModelCustomProperties. </summary>
     internal partial class UnknownDraModelCustomProperties : DraModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDraModelCustomProperties"/>. </summary>

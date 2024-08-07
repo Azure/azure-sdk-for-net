@@ -8,23 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class MobileNetworkInstallation : IUtf8JsonSerializable, IJsonModel<MobileNetworkInstallation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkInstallation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkInstallation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkInstallation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static MobileNetworkInstallation DeserializeMobileNetworkInstallation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             IReadOnlyList<MobileNetworkInstallationReason> reasons = default;
             SubResource operation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -157,10 +158,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MobileNetworkInstallation(
                 desiredState,
                 state,
@@ -168,6 +169,107 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(),
                 operation,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  desiredState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DesiredState))
+                {
+                    builder.Append("  desiredState: ");
+                    builder.AppendLine($"'{DesiredState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReinstallRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reinstallRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReinstallRequired))
+                {
+                    builder.Append("  reinstallRequired: ");
+                    builder.AppendLine($"'{ReinstallRequired.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reasons), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reasons: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Reasons))
+                {
+                    if (Reasons.Any())
+                    {
+                        builder.Append("  reasons: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Reasons)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OperationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operation: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    builder.Append("  operation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Operation, options, 2, false, "  operation: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MobileNetworkInstallation>.Write(ModelReaderWriterOptions options)
@@ -178,8 +280,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +299,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkInstallation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{options.Format}' format.");
             }
         }
 

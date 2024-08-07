@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -22,14 +21,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="iotDeviceDetails"/> or <paramref name="iotEdgeDeviceDetails"/> is null. </exception>
         public EdgeIotAddon(EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails)
         {
-            if (iotDeviceDetails == null)
-            {
-                throw new ArgumentNullException(nameof(iotDeviceDetails));
-            }
-            if (iotEdgeDeviceDetails == null)
-            {
-                throw new ArgumentNullException(nameof(iotEdgeDeviceDetails));
-            }
+            Argument.AssertNotNull(iotDeviceDetails, nameof(iotDeviceDetails));
+            Argument.AssertNotNull(iotEdgeDeviceDetails, nameof(iotEdgeDeviceDetails));
 
             IotDeviceDetails = iotDeviceDetails;
             IotEdgeDeviceDetails = iotEdgeDeviceDetails;

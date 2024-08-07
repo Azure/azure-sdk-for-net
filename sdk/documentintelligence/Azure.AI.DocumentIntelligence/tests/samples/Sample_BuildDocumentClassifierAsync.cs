@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             DocumentClassifierDetails classifier = operation.Value;
 
             Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
-            Console.WriteLine($"Created on: {classifier.CreatedDateTime}");
+            Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
             Console.WriteLine("Document types the classifier can recognize:");
             foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)

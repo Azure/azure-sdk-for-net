@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyResourceInfo Resource { get; }
     }
 }

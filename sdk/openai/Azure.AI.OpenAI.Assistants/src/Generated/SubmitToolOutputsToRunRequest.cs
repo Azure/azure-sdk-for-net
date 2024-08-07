@@ -49,12 +49,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolOutputs"/> is null. </exception>
-        public SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
+        internal SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
         {
-            if (toolOutputs == null)
-            {
-                throw new ArgumentNullException(nameof(toolOutputs));
-            }
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             ToolOutputs = toolOutputs.ToList();
         }
@@ -62,7 +59,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubmitToolOutputsToRunRequest(IList<ToolOutput> toolOutputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToolOutputs = toolOutputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -74,6 +71,6 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The list of tool outputs requested by tool calls from the specified run. </summary>
-        public IList<ToolOutput> ToolOutputs { get; }
+        public IReadOnlyList<ToolOutput> ToolOutputs { get; }
     }
 }

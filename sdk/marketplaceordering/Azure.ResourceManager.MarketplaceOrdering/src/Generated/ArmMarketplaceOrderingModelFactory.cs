@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.MarketplaceOrdering;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering.Models

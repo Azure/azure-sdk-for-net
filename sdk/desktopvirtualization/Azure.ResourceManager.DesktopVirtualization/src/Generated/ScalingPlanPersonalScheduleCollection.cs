@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScalingPlanPersonalScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _scalingPlanPersonalScheduleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPersonalScheduleResource>(Response.FromValue(new ScalingPlanPersonalScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _scalingPlanPersonalScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPersonalScheduleResource>(Response.FromValue(new ScalingPlanPersonalScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScalingPlanPersonalScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _scalingPlanPersonalScheduleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPersonalScheduleResource>(Response.FromValue(new ScalingPlanPersonalScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _scalingPlanPersonalScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPersonalScheduleResource>(Response.FromValue(new ScalingPlanPersonalScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> GetAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual Response<ScalingPlanPersonalScheduleResource> Get(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScalingPlanPersonalScheduleResource>> GetIfExistsAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
         public virtual NullableResponse<ScalingPlanPersonalScheduleResource> GetIfExists(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanScheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
-            }
-            if (scalingPlanScheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
 
             using var scope = _scalingPlanPersonalScheduleClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleCollection.GetIfExists");
             scope.Start();

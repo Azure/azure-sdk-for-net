@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriList"/> is null. </exception>
         public PostgreSqlFlexibleServerBackupStoreDetails(IEnumerable<string> sasUriList)
         {
-            if (sasUriList == null)
-            {
-                throw new ArgumentNullException(nameof(sasUriList));
-            }
+            Argument.AssertNotNull(sasUriList, nameof(sasUriList));
 
             SasUriList = sasUriList.ToList();
         }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
+        [WirePath("sasUriList")]
         public IList<string> SasUriList { get; }
     }
 }

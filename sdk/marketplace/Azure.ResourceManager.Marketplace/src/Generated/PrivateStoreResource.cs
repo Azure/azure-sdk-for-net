@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Resources;
 
@@ -409,7 +407,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.DeleteAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -451,7 +451,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.Delete(Guid.Parse(Id.Name), cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -490,17 +492,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.Update");
             scope.Start();
             try
             {
                 var response = await _privateStoreRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -539,17 +540,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation Update(WaitUntil waitUntil, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.Update");
             scope.Start();
             try
             {
                 var response = _privateStoreRestClient.CreateOrUpdate(Guid.Parse(Id.Name), data, cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1165,14 +1165,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual async Task<Response> AcknowledgeOfferNotificationAsync(string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.AcknowledgeOfferNotification");
             scope.Start();
@@ -1212,14 +1205,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual Response AcknowledgeOfferNotification(string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.AcknowledgeOfferNotification");
             scope.Start();

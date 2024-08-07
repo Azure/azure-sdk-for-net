@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsDisasterRecoveryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string @alias, EventHubsDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsDisasterRecoveryResource> CreateOrUpdate(WaitUntil waitUntil, string @alias, EventHubsDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<Response<EventHubsDisasterRecoveryResource>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
             scope.Start();
@@ -236,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<EventHubsDisasterRecoveryResource> Get(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
             scope.Start();
@@ -288,7 +256,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +286,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +316,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
             scope.Start();
@@ -398,7 +359,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
             scope.Start();
@@ -448,7 +402,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsDisasterRecoveryResource>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
             scope.Start();
@@ -500,7 +447,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual NullableResponse<EventHubsDisasterRecoveryResource> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
             scope.Start();

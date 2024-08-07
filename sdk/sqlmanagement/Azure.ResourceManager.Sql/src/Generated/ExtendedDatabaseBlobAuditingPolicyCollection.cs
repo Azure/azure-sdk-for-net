@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -82,17 +80,16 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExtendedDatabaseBlobAuditingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _extendedDatabaseBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicyResource>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _extendedDatabaseBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicyResource>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -132,17 +129,16 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExtendedDatabaseBlobAuditingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedDatabaseBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _extendedDatabaseBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedDatabaseBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _extendedDatabaseBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data, cancellationToken);
-                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicyResource>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _extendedDatabaseBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<ExtendedDatabaseBlobAuditingPolicyResource>(Response.FromValue(new ExtendedDatabaseBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

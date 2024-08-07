@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The resource scope Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public string ResourceType { get; }
     }
 }

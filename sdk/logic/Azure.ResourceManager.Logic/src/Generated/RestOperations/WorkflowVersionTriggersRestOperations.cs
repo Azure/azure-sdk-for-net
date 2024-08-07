@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -37,6 +36,25 @@ namespace Azure.ResourceManager.Logic
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListCallbackUrlRequestUri(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(versionId, true);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendPath("/listCallbackUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info)
         {
             var message = _pipeline.CreateMessage();
@@ -62,7 +80,7 @@ namespace Azure.ResourceManager.Logic
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(info);
+                content.JsonWriter.WriteObjectValue(info, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -81,46 +99,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogicWorkflowTriggerCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -150,46 +133,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogicWorkflowTriggerCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, info);
             _pipeline.Send(message, cancellationToken);

@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="runCommandParameterDefinitionType"/> is null. </exception>
         internal RunCommandParameterDefinition(string name, string runCommandParameterDefinitionType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (runCommandParameterDefinitionType == null)
-            {
-                throw new ArgumentNullException(nameof(runCommandParameterDefinitionType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(runCommandParameterDefinitionType, nameof(runCommandParameterDefinitionType));
 
             Name = name;
             RunCommandParameterDefinitionType = runCommandParameterDefinitionType;

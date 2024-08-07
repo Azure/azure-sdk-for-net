@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -45,6 +43,14 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
             }
             return new RoleAssignmentListResult(value ?? new ChangeTrackingList<KeyVaultRoleAssignment>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoleAssignmentListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRoleAssignmentListResult(document.RootElement);
         }
     }
 }

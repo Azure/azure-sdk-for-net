@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -16,14 +15,14 @@ namespace Azure.AI.OpenAI.Assistants
     [PersistableModelProxy(typeof(UnknownRunStepToolCall))]
     public partial class RunStepToolCall : IUtf8JsonSerializable, IJsonModel<RunStepToolCall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepToolCall>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepToolCall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStepToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStepToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepToolCall)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RunStepToolCall DeserializeRunStepToolCall(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,8 +73,8 @@ namespace Azure.AI.OpenAI.Assistants
                 switch (discriminator.GetString())
                 {
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
-                    case "retrieval": return RunStepRetrievalToolCall.DeserializeRunStepRetrievalToolCall(element, options);
                     case "function": return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
+                    case "retrieval": return RunStepRetrievalToolCall.DeserializeRunStepRetrievalToolCall(element, options);
                 }
             }
             return UnknownRunStepToolCall.DeserializeUnknownRunStepToolCall(element, options);
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +105,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeRunStepToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -120,11 +119,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStepToolCall(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

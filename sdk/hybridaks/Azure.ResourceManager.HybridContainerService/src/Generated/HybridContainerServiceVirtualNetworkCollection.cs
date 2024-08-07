@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridContainerService
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridContainerServiceVirtualNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkName, HybridContainerServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridContainerServiceVirtualNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkName, HybridContainerServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<HybridContainerServiceVirtualNetworkResource> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridContainerServiceVirtualNetworkResource>> GetIfExistsAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual NullableResponse<HybridContainerServiceVirtualNetworkResource> GetIfExists(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetIfExists");
             scope.Start();

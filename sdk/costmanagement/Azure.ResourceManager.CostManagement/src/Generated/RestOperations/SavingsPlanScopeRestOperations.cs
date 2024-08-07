@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -36,6 +35,19 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGenerateBenefitUtilizationSummariesReportAsyncRequestUri(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -53,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -68,26 +80,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GenerateBenefitUtilizationSummariesReportAsyncAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -110,26 +105,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GenerateBenefitUtilizationSummariesReportAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             _pipeline.Send(message, cancellationToken);

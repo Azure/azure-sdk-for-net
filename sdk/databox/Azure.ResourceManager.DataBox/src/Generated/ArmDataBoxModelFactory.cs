@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -342,7 +340,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.
         /// Please note <see cref="Models.DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/>, <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="Models.AddressValidationResult"/>.
+        /// The available derived classes include <see cref="Models.AddressValidationResult"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/> and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataBoxValidationResult"/> instance for mocking. </returns>
         public static DataBoxValidationResult DataBoxValidationResult(OverallValidationStatus? status = null, IEnumerable<DataBoxValidationInputResult> individualResponseDetails = null)

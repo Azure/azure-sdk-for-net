@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
@@ -71,14 +70,16 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             Sku = sku;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,20 +89,28 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
         /// <summary> Approval state of the private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

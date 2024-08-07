@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="idProvider"/> is null. </exception>
         public TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent(string name, Uri idProvider)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (idProvider == null)
-            {
-                throw new ArgumentNullException(nameof(idProvider));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(idProvider, nameof(idProvider));
 
             Name = name;
             IdProvider = idProvider;

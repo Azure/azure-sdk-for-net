@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Automatic tuning option desired state. </summary>
+        [WirePath("desiredState")]
         public AutomaticTuningOptionModeDesired? DesiredState { get; set; }
         /// <summary> Automatic tuning option actual state. </summary>
+        [WirePath("actualState")]
         public AutomaticTuningOptionModeActual? ActualState { get; }
         /// <summary> Reason code if desired and actual state are different. </summary>
+        [WirePath("reasonCode")]
         public int? ReasonCode { get; }
         /// <summary> Reason description if desired and actual state are different. </summary>
+        [WirePath("reasonDesc")]
         public AutomaticTuningServerReason? ReasonDesc { get; }
     }
 }

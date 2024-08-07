@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
 using Moq;
 using NUnit.Framework;
@@ -283,6 +284,36 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic(9).ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetDynamic("column9").ToString());
             Assert.AreEqual("{\"a\":123,\"b\":\"hello\",\"c\":[1,2,3],\"d\":{}}", logsTable.Rows[0].GetObject("column9").ToString());
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesDefaultEndpoint()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+
+            // Act
+            var client = new LogsQueryClient(credential);
+
+            // Assert
+            Assert.AreEqual(LogsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNotNull_UsesOptionsAudience()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = "https://custom.audience"
+            };
+
+            // Act
+            var client = new LogsQueryClient(credential, options);
+
+            // Assert
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownJobInput. </summary>
+    /// <summary> Unknown version of JobInput. </summary>
     internal partial class UnknownJobInput : MachineLearningJobInput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobInput"/>. </summary>

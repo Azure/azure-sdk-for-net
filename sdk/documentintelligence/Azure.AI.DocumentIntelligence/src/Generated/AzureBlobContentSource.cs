@@ -50,10 +50,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
         public AzureBlobContentSource(Uri containerUrl)
         {
-            if (containerUrl == null)
-            {
-                throw new ArgumentNullException(nameof(containerUrl));
-            }
+            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
 
             ContainerUrl = containerUrl;
         }

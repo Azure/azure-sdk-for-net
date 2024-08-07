@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp.Mocking
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -103,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,10 +139,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
@@ -174,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,10 +178,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppNameAvailability");
             scope.Start();
@@ -216,7 +207,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,10 +217,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
@@ -258,7 +246,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,10 +256,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability");
             scope.Start();
@@ -300,7 +285,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,10 +295,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
@@ -342,7 +324,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,10 +334,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability");
             scope.Start();
@@ -384,7 +363,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,7 +398,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,7 +433,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,10 +443,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -496,7 +472,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,10 +482,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -538,7 +511,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,10 +522,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -584,7 +554,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -595,10 +565,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource");
             scope.Start();
@@ -630,7 +597,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -656,7 +623,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -682,7 +649,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -693,14 +660,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            if (quotaLimitName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaLimitName));
-            }
-            if (quotaLimitName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaLimitName));
-            }
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppQuotaLimit");
             scope.Start();
@@ -729,7 +689,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -740,14 +700,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            if (quotaLimitName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaLimitName));
-            }
-            if (quotaLimitName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaLimitName));
-            }
+            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
 
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppQuotaLimit");
             scope.Start();
@@ -776,7 +729,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -806,7 +759,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

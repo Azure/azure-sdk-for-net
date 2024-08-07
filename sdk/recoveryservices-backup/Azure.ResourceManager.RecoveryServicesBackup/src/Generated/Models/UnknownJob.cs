@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownJob. </summary>
+    /// <summary> Unknown version of Job. </summary>
     internal partial class UnknownJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJob"/>. </summary>

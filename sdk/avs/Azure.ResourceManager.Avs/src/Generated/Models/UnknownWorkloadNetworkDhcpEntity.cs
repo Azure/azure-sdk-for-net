@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The UnknownWorkloadNetworkDhcpEntity. </summary>
+    /// <summary> Unknown version of WorkloadNetworkDhcpEntity. </summary>
     internal partial class UnknownWorkloadNetworkDhcpEntity : WorkloadNetworkDhcpEntity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkloadNetworkDhcpEntity"/>. </summary>

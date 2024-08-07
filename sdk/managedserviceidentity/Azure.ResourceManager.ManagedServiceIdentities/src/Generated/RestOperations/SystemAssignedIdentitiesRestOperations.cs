@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -36,6 +35,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/identities/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByScopeRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -59,10 +69,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<SystemAssignedIdentityData>> GetByScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateGetByScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -88,10 +95,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<SystemAssignedIdentityData> GetByScope(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateGetByScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);

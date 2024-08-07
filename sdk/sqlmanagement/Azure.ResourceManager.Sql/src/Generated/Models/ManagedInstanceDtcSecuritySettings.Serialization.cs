@@ -8,29 +8,29 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceDtcSecuritySettings : IUtf8JsonSerializable, IJsonModel<ManagedInstanceDtcSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcSecuritySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcSecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceDtcSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceDtcSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
-                writer.WriteObjectValue(TransactionManagerCommunicationSettings);
+                writer.WriteObjectValue(TransactionManagerCommunicationSettings, options);
             }
             if (Optional.IsDefined(IsXATransactionsEnabled))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceDtcSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? xaTransactionsDefaultTimeout = default;
             int? xaTransactionsMaximumTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transactionManagerCommunicationSettings"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstanceDtcSecuritySettings(
                 transactionManagerCommunicationSettings,
                 xaTransactionsEnabled,
@@ -157,6 +157,98 @@ namespace Azure.ResourceManager.Sql.Models
                 xaTransactionsDefaultTimeout,
                 xaTransactionsMaximumTimeout,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransactionManagerCommunicationSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transactionManagerCommunicationSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransactionManagerCommunicationSettings))
+                {
+                    builder.Append("  transactionManagerCommunicationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TransactionManagerCommunicationSettings, options, 2, false, "  transactionManagerCommunicationSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsXATransactionsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  xaTransactionsEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsXATransactionsEnabled))
+                {
+                    builder.Append("  xaTransactionsEnabled: ");
+                    var boolValue = IsXATransactionsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SnaLu6Point2TransactionsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  snaLu6point2TransactionsEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
+                {
+                    builder.Append("  snaLu6point2TransactionsEnabled: ");
+                    var boolValue = SnaLu6Point2TransactionsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(XATransactionsDefaultTimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  xaTransactionsDefaultTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
+                {
+                    builder.Append("  xaTransactionsDefaultTimeout: ");
+                    builder.AppendLine($"{XATransactionsDefaultTimeoutInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(XATransactionsMaximumTimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  xaTransactionsMaximumTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
+                {
+                    builder.Append("  xaTransactionsMaximumTimeout: ");
+                    builder.AppendLine($"{XATransactionsMaximumTimeoutInSeconds.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcSecuritySettings>.Write(ModelReaderWriterOptions options)
@@ -167,8 +259,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +278,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceDtcSecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceDtcSecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

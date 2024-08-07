@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The id of the key to regenerate. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

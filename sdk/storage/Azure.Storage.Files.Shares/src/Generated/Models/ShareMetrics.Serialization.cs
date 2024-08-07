@@ -8,7 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Files.Shares;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -23,13 +23,13 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeApis))
+            if (Common.Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (Common.Optional.IsDefined(RetentionPolicy))
             {
                 writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }

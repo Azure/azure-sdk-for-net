@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<Response<DeletedDataProtectionBackupInstanceResource>> GetAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual Response<DeletedDataProtectionBackupInstanceResource> Get(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +184,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +214,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.Exists");
             scope.Start();
@@ -280,7 +257,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.Exists");
             scope.Start();
@@ -330,7 +300,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeletedDataProtectionBackupInstanceResource>> GetIfExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();
@@ -382,7 +345,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
         public virtual NullableResponse<DeletedDataProtectionBackupInstanceResource> GetIfExists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
-            if (backupInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(backupInstanceName));
-            }
-            if (backupInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
             using var scope = _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics.CreateScope("DeletedDataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownAutoMLVertical. </summary>
+    /// <summary> Unknown version of AutoMLVertical. </summary>
     internal partial class UnknownAutoMLVertical : AutoMLVertical
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAutoMLVertical"/>. </summary>

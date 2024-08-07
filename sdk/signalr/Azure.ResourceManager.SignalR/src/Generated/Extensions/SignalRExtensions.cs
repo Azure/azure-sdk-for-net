@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SignalR.Mocking;
 using Azure.ResourceManager.SignalR.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRResource"/> object. </returns>
         public static SignalRResource GetSignalRResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomCertificateResource"/> object. </returns>
         public static SignalRCustomCertificateResource GetSignalRCustomCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRCustomCertificateResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomDomainResource"/> object. </returns>
         public static SignalRCustomDomainResource GetSignalRCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRCustomDomainResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
         public static SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRPrivateEndpointConnectionResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
         public static SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRSharedPrivateLinkResource(id);
         }
@@ -157,10 +140,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRResources and their operations over a SignalRResource. </returns>
         public static SignalRCollection GetSignalRs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRs();
         }
@@ -198,10 +178,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static async Task<Response<SignalRResource>> GetSignalRAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -239,10 +216,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static Response<SignalRResource> GetSignalR(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalR(resourceName, cancellationToken);
         }
@@ -279,10 +253,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -319,10 +290,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
         }
@@ -358,10 +326,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRResource> GetSignalRsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).GetSignalRsAsync(cancellationToken);
         }
@@ -397,10 +362,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRResource> GetSignalRs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).GetSignalRs(cancellationToken);
         }
@@ -433,10 +395,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
@@ -469,10 +428,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }

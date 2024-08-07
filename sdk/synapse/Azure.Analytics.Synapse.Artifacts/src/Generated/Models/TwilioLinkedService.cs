@@ -23,14 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public TwilioLinkedService(object userName, SecretBase password)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
 
             UserName = userName;
             Password = password;

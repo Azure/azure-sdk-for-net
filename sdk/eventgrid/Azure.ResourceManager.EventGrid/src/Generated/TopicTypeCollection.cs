@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual async Task<Response<TopicTypeResource>> GetAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.Get");
             scope.Start();
@@ -119,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual Response<TopicTypeResource> Get(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.Get");
             scope.Start();
@@ -171,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +184,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,7 +213,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -243,14 +227,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.Exists");
             scope.Start();
@@ -279,7 +256,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,14 +270,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.Exists");
             scope.Start();
@@ -329,7 +299,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,14 +313,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<TopicTypeResource>> GetIfExistsAsync(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetIfExists");
             scope.Start();
@@ -381,7 +344,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-15-preview</description>
+        /// <description>2024-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,14 +358,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
         public virtual NullableResponse<TopicTypeResource> GetIfExists(string topicTypeName, CancellationToken cancellationToken = default)
         {
-            if (topicTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(topicTypeName));
-            }
-            if (topicTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
 
             using var scope = _topicTypeClientDiagnostics.CreateScope("TopicTypeCollection.GetIfExists");
             scope.Start();

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -103,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,10 +198,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<Response> DisableRecommendationForHostingEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationResource.DisableRecommendationForHostingEnvironment");
             scope.Start();
@@ -232,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,10 +240,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response DisableRecommendationForHostingEnvironment(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
 
             using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationResource.DisableRecommendationForHostingEnvironment");
             scope.Start();

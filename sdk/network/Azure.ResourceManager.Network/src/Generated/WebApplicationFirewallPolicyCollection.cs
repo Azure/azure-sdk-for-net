@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, WebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webApplicationFirewallPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<WebApplicationFirewallPolicyResource>(Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _webApplicationFirewallPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, policyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<WebApplicationFirewallPolicyResource>(Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebApplicationFirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, WebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webApplicationFirewallPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, data, cancellationToken);
-                var operation = new NetworkArmOperation<WebApplicationFirewallPolicyResource>(Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _webApplicationFirewallPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, policyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<WebApplicationFirewallPolicyResource>(Response.FromValue(new WebApplicationFirewallPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<WebApplicationFirewallPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -237,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<WebApplicationFirewallPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -289,7 +257,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +317,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -399,7 +360,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -449,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebApplicationFirewallPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
@@ -501,7 +448,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual NullableResponse<WebApplicationFirewallPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (policyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
-            }
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
             using var scope = _webApplicationFirewallPolicyClientDiagnostics.CreateScope("WebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();

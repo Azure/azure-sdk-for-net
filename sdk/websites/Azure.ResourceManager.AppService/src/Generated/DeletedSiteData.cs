@@ -85,22 +85,31 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Numeric id for the deleted site. </summary>
+        [WirePath("properties.deletedSiteId")]
         public int? DeletedSiteId { get; }
         /// <summary> Time in UTC when the app was deleted. </summary>
+        [WirePath("properties.deletedTimestamp")]
         public string DeletedTimestamp { get; }
         /// <summary> Subscription containing the deleted site. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription { get; }
         /// <summary> ResourceGroup that contained the deleted site. </summary>
+        [WirePath("properties.resourceGroup")]
         public string ResourceGroup { get; }
         /// <summary> Name of the deleted site. </summary>
+        [WirePath("properties.deletedSiteName")]
         public string DeletedSiteName { get; }
         /// <summary> Slot of the deleted site. </summary>
+        [WirePath("properties.slot")]
         public string Slot { get; }
         /// <summary> Kind of site that was deleted. </summary>
+        [WirePath("properties.kind")]
         public string KindPropertiesKind { get; }
         /// <summary> Geo Region of the deleted site. </summary>
+        [WirePath("properties.geoRegionName")]
         public string GeoRegionName { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "AppendBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.AppendBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
@@ -41,6 +41,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        internal AppendBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -136,7 +140,10 @@ namespace Azure.Storage.DataMovement.Blobs
             if (position == 0)
             {
                 await BlobClient.CreateAsync(
-                    _options.ToCreateOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
@@ -174,7 +181,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Create Append blob beforehand
             await BlobClient.CreateAsync(
-                options: _options.ToCreateOptions(overwrite),
+                options: DataMovementBlobsExtensions.GetCreateOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // There is no synchronous single-call copy API for Append/Page -> Append Blob
@@ -218,7 +228,10 @@ namespace Azure.Storage.DataMovement.Blobs
             if (range.Offset == 0)
             {
                 await BlobClient.CreateAsync(
-                    _options.ToCreateOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
 
@@ -269,7 +282,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -293,17 +309,34 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Append);
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                BlobType.Append,
-                _options?.HttpHeaders,
-                _options?.AccessTier,
-                _options?.Metadata,
-                _options?.Tags);
+                blobType: new(BlobType.Append),
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata:_options?.Metadata,
+                tags: default);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

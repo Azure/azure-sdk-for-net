@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.MixedReality.Authentication;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {

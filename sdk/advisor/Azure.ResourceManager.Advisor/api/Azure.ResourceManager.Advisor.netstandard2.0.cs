@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MetadataEntityResource : Azure.ResourceManager.ArmResource
+    public partial class MetadataEntityResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.MetadataEntityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MetadataEntityResource() { }
@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Advisor
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.MetadataEntityResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.MetadataEntityResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Advisor.MetadataEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.MetadataEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.MetadataEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.MetadataEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.MetadataEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceRecommendationBaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>, System.Collections.IEnumerable
     {
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.Advisor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceRecommendationBaseResource : Azure.ResourceManager.ArmResource
+    public partial class ResourceRecommendationBaseResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ResourceRecommendationBaseResource() { }
@@ -119,6 +124,11 @@ namespace Azure.ResourceManager.Advisor
         public virtual Azure.Response<Azure.ResourceManager.Advisor.SuppressionContractResource> GetSuppressionContract(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.SuppressionContractResource>> GetSuppressionContractAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Advisor.SuppressionContractCollection GetSuppressionContracts() { throw null; }
+        Azure.ResourceManager.Advisor.ResourceRecommendationBaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.ResourceRecommendationBaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.ResourceRecommendationBaseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SuppressionContractCollection : Azure.ResourceManager.ArmCollection
     {
@@ -144,7 +154,7 @@ namespace Azure.ResourceManager.Advisor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SuppressionContractResource : Azure.ResourceManager.ArmResource
+    public partial class SuppressionContractResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.SuppressionContractData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SuppressionContractResource() { }
@@ -155,6 +165,11 @@ namespace Azure.ResourceManager.Advisor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.SuppressionContractResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.SuppressionContractResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Advisor.SuppressionContractData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.SuppressionContractData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Advisor.SuppressionContractData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Advisor.SuppressionContractData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Advisor.SuppressionContractData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Advisor.SuppressionContractResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Advisor.SuppressionContractData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Advisor.SuppressionContractResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Advisor.SuppressionContractData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

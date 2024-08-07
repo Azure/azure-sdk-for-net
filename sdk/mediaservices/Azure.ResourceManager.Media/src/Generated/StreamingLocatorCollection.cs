@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingLocatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _streamingLocatorRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingLocatorRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingLocatorResource> CreateOrUpdate(WaitUntil waitUntil, string streamingLocatorName, StreamingLocatorData data, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _streamingLocatorRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingLocatorRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingLocatorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<StreamingLocatorResource>(Response.FromValue(new StreamingLocatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual async Task<Response<StreamingLocatorResource>> GetAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual Response<StreamingLocatorResource> Get(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual Response<bool> Exists(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual async Task<NullableResponse<StreamingLocatorResource>> GetIfExistsAsync(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingLocatorName"/> is null. </exception>
         public virtual NullableResponse<StreamingLocatorResource> GetIfExists(string streamingLocatorName, CancellationToken cancellationToken = default)
         {
-            if (streamingLocatorName == null)
-            {
-                throw new ArgumentNullException(nameof(streamingLocatorName));
-            }
-            if (streamingLocatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingLocatorName));
-            }
+            Argument.AssertNotNullOrEmpty(streamingLocatorName, nameof(streamingLocatorName));
 
             using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetIfExists");
             scope.Start();

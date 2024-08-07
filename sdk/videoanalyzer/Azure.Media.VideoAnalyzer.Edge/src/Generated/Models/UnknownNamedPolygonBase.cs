@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownNamedPolygonBase. </summary>
+    /// <summary> Unknown version of NamedPolygonBase. </summary>
     internal partial class UnknownNamedPolygonBase : NamedPolygonBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNamedPolygonBase"/>. </summary>

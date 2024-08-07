@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsPrivateCloudAddonResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addonName, AvsPrivateCloudAddonData data, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvsPrivateCloudAddonResource> CreateOrUpdate(WaitUntil waitUntil, string addonName, AvsPrivateCloudAddonData data, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<AvsPrivateCloudAddonResource> Get(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<bool> Exists(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<NullableResponse<AvsPrivateCloudAddonResource>> GetIfExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual NullableResponse<AvsPrivateCloudAddonResource> GetIfExists(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _avsPrivateCloudAddonAddonsClientDiagnostics.CreateScope("AvsPrivateCloudAddonCollection.GetIfExists");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -91,28 +90,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                writer.WriteObjectValue(TraceLevel);
+                writer.WriteObjectValue<object>(TraceLevel);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                writer.WriteObjectValue(ContinueOnError);
+                writer.WriteObjectValue<object>(ContinueOnError);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                writer.WriteObjectValue(RunConcurrently);
+                writer.WriteObjectValue<object>(RunConcurrently);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                writer.WriteObjectValue(SourceStagingConcurrency);
+                writer.WriteObjectValue<object>(SourceStagingConcurrency);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -327,12 +326,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sourceStagingConcurrency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteDataFlowActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteDataFlowActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>
         {
             public override void Write(Utf8JsonWriter writer, ExecuteDataFlowActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ExecuteDataFlowActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

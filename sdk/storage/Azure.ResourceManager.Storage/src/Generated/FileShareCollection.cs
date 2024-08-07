@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FileShareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string shareName, FileShareData data, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _fileShareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()));
+                var uri = _fileShareRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FileShareResource> CreateOrUpdate(WaitUntil waitUntil, string shareName, FileShareData data, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _fileShareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand, cancellationToken);
-                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()));
+                var uri = _fileShareRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, data, expand);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<FileShareResource>(Response.FromValue(new FileShareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,7 +168,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,14 +184,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<FileShareResource>> GetAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
@@ -240,7 +215,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,14 +231,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<FileShareResource> Get(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
@@ -294,7 +262,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -307,10 +275,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FileShareResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FileShareResource> GetAllAsync(string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FileShareResource> GetAllAsync(int? maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -327,7 +295,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -340,10 +308,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: deleted, snapshots. Should be passed as a string with delimiter ','. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FileShareResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FileShareResource> GetAll(string maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FileShareResource> GetAll(int? maxpagesize = null, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -360,7 +328,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,14 +344,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
@@ -412,7 +373,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,14 +389,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<bool> Exists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
@@ -464,7 +418,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -480,14 +434,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<NullableResponse<FileShareResource>> GetIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();
@@ -518,7 +465,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2023-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -534,14 +481,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual NullableResponse<FileShareResource> GetIfExists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();

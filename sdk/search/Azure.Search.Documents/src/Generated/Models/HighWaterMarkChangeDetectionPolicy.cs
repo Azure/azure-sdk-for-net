@@ -17,10 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="highWaterMarkColumnName"/> is null. </exception>
         public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
-            if (highWaterMarkColumnName == null)
-            {
-                throw new ArgumentNullException(nameof(highWaterMarkColumnName));
-            }
+            Argument.AssertNotNull(highWaterMarkColumnName, nameof(highWaterMarkColumnName));
 
             HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";

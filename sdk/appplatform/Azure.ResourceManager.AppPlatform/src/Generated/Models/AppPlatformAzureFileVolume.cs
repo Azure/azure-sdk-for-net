@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> or <paramref name="shareName"/> is null. </exception>
         public AppPlatformAzureFileVolume(string mountPath, string shareName) : base(mountPath)
         {
-            if (mountPath == null)
-            {
-                throw new ArgumentNullException(nameof(mountPath));
-            }
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
+            Argument.AssertNotNull(mountPath, nameof(mountPath));
+            Argument.AssertNotNull(shareName, nameof(shareName));
 
             ShareName = shareName;
             UnderlyingResourceType = UnderlyingResourceType.AzureFileVolume;

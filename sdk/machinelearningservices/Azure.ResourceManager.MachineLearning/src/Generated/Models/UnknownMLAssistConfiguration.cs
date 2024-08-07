@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownMLAssistConfiguration. </summary>
+    /// <summary> Unknown version of MLAssistConfiguration. </summary>
     internal partial class UnknownMLAssistConfiguration : MachineLearningAssistConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMLAssistConfiguration"/>. </summary>

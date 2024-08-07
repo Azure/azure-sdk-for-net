@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExposureControlContent : IUtf8JsonSerializable, IJsonModel<ExposureControlContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExposureControlContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExposureControlContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExposureControlContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExposureControlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExposureControlContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExposureControlContent DeserializeExposureControlContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string featureName = default;
             string featureType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -93,10 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExposureControlContent(featureName, featureType, serializedAdditionalRawData);
         }
 
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExposureControlContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlContent)} does not support reading '{options.Format}' format.");
             }
         }
 

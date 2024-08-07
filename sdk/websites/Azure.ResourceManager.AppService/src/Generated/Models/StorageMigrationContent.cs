@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> AzureFiles connection string. </summary>
+        [WirePath("properties.azurefilesConnectionString")]
         public string AzurefilesConnectionString { get; set; }
         /// <summary> AzureFiles share. </summary>
+        [WirePath("properties.azurefilesShare")]
         public string AzurefilesShare { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.switchSiteAfterMigration")]
         public bool? SwitchSiteAfterMigration { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.blockWriteAccessToSite")]
         public bool? BlockWriteAccessToSite { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -15,22 +15,19 @@ namespace Azure.ResourceManager.DevSpaces.Models
     [PersistableModelProxy(typeof(UnknownOrchestratorSpecificConnectionDetails))]
     public partial class OrchestratorSpecificConnectionDetails : IUtf8JsonSerializable, IJsonModel<OrchestratorSpecificConnectionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestratorSpecificConnectionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestratorSpecificConnectionDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrchestratorSpecificConnectionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OrchestratorSpecificConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
-            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrchestratorSpecificConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +60,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static OrchestratorSpecificConnectionDetails DeserializeOrchestratorSpecificConnectionDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +85,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +101,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                         return DeserializeOrchestratorSpecificConnectionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

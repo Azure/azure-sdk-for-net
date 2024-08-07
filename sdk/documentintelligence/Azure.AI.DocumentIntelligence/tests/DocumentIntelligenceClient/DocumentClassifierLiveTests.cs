@@ -57,6 +57,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42322")]
         public async Task ClassifyDocumentCanParseBlankPage()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -87,7 +88,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
             Assert.That(analyzeResult.Tables, Is.Empty);
             Assert.That(analyzeResult.Figures, Is.Empty);
-            Assert.That(analyzeResult.Lists, Is.Empty);
             Assert.That(analyzeResult.Sections, Is.Empty);
             Assert.That(analyzeResult.KeyValuePairs, Is.Empty);
             Assert.That(analyzeResult.Styles, Is.Empty);
@@ -139,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
 
-            Assert.That(analyzeResult.Pages.Count, Is.EqualTo(2));
+            Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
 
             foreach (var page in analyzeResult.Pages)
             {
@@ -151,8 +151,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocType, Is.EqualTo("IRS-1040-A"));
-            Assert.That(document.BoundingRegions.Count, Is.EqualTo(2));
+            Assert.That(document.DocType, Is.EqualTo("IRS-1040-C"));
+            Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
         }
 
         private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)

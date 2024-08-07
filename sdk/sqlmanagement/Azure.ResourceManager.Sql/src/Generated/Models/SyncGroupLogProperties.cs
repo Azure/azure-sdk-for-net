@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Timestamp of the sync group log. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Type of the sync group log. </summary>
+        [WirePath("type")]
         public SyncGroupLogType? LogType { get; }
         /// <summary> Source of the sync group log. </summary>
+        [WirePath("source")]
         public string Source { get; }
         /// <summary> Details of the sync group log. </summary>
+        [WirePath("details")]
         public string Details { get; }
         /// <summary> TracingId of the sync group log. </summary>
+        [WirePath("tracingId")]
         public Guid? TracingId { get; }
         /// <summary> OperationStatus of the sync group log. </summary>
+        [WirePath("operationStatus")]
         public string OperationStatus { get; }
     }
 }

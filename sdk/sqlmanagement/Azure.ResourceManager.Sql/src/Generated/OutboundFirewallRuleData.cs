@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The state of the outbound rule. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

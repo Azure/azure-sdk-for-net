@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> Provisioning state of the resource. </summary>
+    /// <summary> Provisioning state of resource. </summary>
     public readonly partial struct SphereProvisioningState : IEquatable<SphereProvisioningState>
     {
         private readonly string _value;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

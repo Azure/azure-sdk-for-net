@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkServiceDesignGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkServiceDesignGroupName, NetworkServiceDesignGroupData data, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkServiceDesignGroupResource> CreateOrUpdate(WaitUntil waitUntil, string networkServiceDesignGroupName, NetworkServiceDesignGroupData data, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual async Task<Response<NetworkServiceDesignGroupResource>> GetAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual Response<NetworkServiceDesignGroupResource> Get(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkServiceDesignGroupResource>> GetIfExistsAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
         public virtual NullableResponse<NetworkServiceDesignGroupResource> GetIfExists(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.GetIfExists");
             scope.Start();

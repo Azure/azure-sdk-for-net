@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -37,6 +36,15 @@ namespace Azure.ResourceManager.FrontDoor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckRequestUri(FrontDoorNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Network/checkFrontDoorNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckRequest(FrontDoorNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -50,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -62,10 +70,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<FrontDoorNameAvailabilityResult>> CheckAsync(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,10 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<FrontDoorNameAvailabilityResult> Check(FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckRequest(content);
             _pipeline.Send(message, cancellationToken);

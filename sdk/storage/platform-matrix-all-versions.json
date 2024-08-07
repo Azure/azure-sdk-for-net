@@ -2,11 +2,11 @@
   "matrix": {
     "Agent": {
       "ubuntu-20.04": {
-          "OSVmImage": "MMSUbuntu20.04",
+          "OSVmImage": "env:LINUXVMIMAGE",
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
       "windows-2022": {
-          "OSVmImage": "windows-2022",
+          "OSVmImage": "env:WINDOWSVMIMAGE",
           "Pool": "azsdk-pool-mms-win-2022-storage"
       }
     },

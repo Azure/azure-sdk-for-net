@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public AccountSasContent(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress)
         {
-            if (ipAddress == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddress));
-            }
+            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
 
             StartTimeStamp = startTimeStamp;
             ExpiryTimeStamp = expiryTimeStamp;

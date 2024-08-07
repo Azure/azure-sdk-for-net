@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TimeSeriesDatabaseConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TimeSeriesDatabaseConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string timeSeriesDatabaseConnectionName, TimeSeriesDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual async Task<Response<TimeSeriesDatabaseConnectionResource>> GetAsync(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual Response<TimeSeriesDatabaseConnectionResource> Get(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<TimeSeriesDatabaseConnectionResource>> GetIfExistsAsync(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesDatabaseConnectionName"/> is null. </exception>
         public virtual NullableResponse<TimeSeriesDatabaseConnectionResource> GetIfExists(string timeSeriesDatabaseConnectionName, CancellationToken cancellationToken = default)
         {
-            if (timeSeriesDatabaseConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesDatabaseConnectionName));
-            }
-            if (timeSeriesDatabaseConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(timeSeriesDatabaseConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(timeSeriesDatabaseConnectionName, nameof(timeSeriesDatabaseConnectionName));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionCollection.GetIfExists");
             scope.Start();

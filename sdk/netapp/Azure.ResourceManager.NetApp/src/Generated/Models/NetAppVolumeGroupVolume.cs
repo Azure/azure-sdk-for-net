@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
-            if (creationToken == null)
-            {
-                throw new ArgumentNullException(nameof(creationToken));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(creationToken, nameof(creationToken));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
@@ -86,16 +80,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="snapshotId"> UUID v4 or resource identifier used to identify the Snapshot. </param>
+        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
-        /// <param name="backupId"> UUID v4 or resource identifier used to identify the Backup. </param>
+        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
         /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <param name="networkFeatures"> Network features available to the volume, or current state of update. </param>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
         /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
@@ -138,9 +132,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
-        /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -201,7 +194,6 @@ namespace Azure.ResourceManager.NetApp.Models
             ProvisionedAvailabilityZone = provisionedAvailabilityZone;
             IsLargeVolume = isLargeVolume;
             OriginatingResourceId = originatingResourceId;
-            InheritedSizeInBytes = inheritedSizeInBytes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -245,11 +237,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public IList<string> ProtocolTypes { get; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary> UUID v4 or resource identifier used to identify the Snapshot. </summary>
+        /// <summary> Resource identifier used to identify the Snapshot. </summary>
         public string SnapshotId { get; set; }
         /// <summary> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </summary>
         public bool? DeleteBaseSnapshot { get; set; }
-        /// <summary> UUID v4 or resource identifier used to identify the Backup. </summary>
+        /// <summary> Resource identifier used to identify the Backup. </summary>
         public string BackupId { get; set; }
         /// <summary> Unique Baremetal Tenant Identifier. </summary>
         public string BaremetalTenantId { get; }
@@ -263,7 +255,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get; }
         /// <summary> List of mount targets. </summary>
         public IReadOnlyList<NetAppVolumeMountTarget> MountTargets { get; }
-        /// <summary> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </summary>
+        /// <summary> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </summary>
         public string VolumeType { get; set; }
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         public NetAppVolumeDataProtection DataProtection { get; set; }
@@ -344,7 +336,5 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsLargeVolume { get; set; }
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
         public ResourceIdentifier OriginatingResourceId { get; }
-        /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
-        public long? InheritedSizeInBytes { get; }
     }
 }

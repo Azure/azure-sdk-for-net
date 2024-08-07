@@ -32,12 +32,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsRouterWorkerDeregisteredEventData(workerId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterWorkerDeregisteredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerDeregisteredEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterWorkerDeregisteredEventDataConverter : JsonConverter<AcsRouterWorkerDeregisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerDeregisteredEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterWorkerDeregisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

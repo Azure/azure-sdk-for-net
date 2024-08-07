@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownBackupEngineBase. </summary>
+    /// <summary> Unknown version of BackupEngineBase. </summary>
     internal partial class UnknownBackupEngineBase : BackupGenericEngine
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupEngineBase"/>. </summary>

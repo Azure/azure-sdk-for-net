@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkRackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkRackName, NetworkRackData data, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkRackResource> CreateOrUpdate(WaitUntil waitUntil, string networkRackName, NetworkRackData data, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual async Task<Response<NetworkRackResource>> GetAsync(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual Response<NetworkRackResource> Get(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkRackResource>> GetIfExistsAsync(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackName"/> is null. </exception>
         public virtual NullableResponse<NetworkRackResource> GetIfExists(string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (networkRackName == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackName));
-            }
-            if (networkRackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkRackName));
-            }
+            Argument.AssertNotNullOrEmpty(networkRackName, nameof(networkRackName));
 
             using var scope = _networkRackClientDiagnostics.CreateScope("NetworkRackCollection.GetIfExists");
             scope.Start();

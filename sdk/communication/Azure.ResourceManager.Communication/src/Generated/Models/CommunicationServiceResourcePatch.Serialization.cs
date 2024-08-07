@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
 {
     public partial class CommunicationServiceResourcePatch : IUtf8JsonSerializable, IJsonModel<CommunicationServiceResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationServiceResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationServiceResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunicationServiceResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static CommunicationServiceResourcePatch DeserializeCommunicationServiceResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Communication.Models
             IDictionary<string, string> tags = default;
             IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -155,10 +154,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommunicationServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, linkedDomains ?? new ChangeTrackingList<string>());
         }
 
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeCommunicationServiceResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationServiceResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

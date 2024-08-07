@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerServiceFleet.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> Returns a <see cref="ContainerServiceFleetResource"/> object. </returns>
         public static ContainerServiceFleetResource GetContainerServiceFleetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource"/> object. </returns>
         public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetMemberResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource"/> object. </returns>
         public static ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetUpdateRunResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> Returns a <see cref="FleetUpdateStrategyResource"/> object. </returns>
         public static FleetUpdateStrategyResource GetFleetUpdateStrategyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceFleetArmClient(client).GetFleetUpdateStrategyResource(id);
         }
@@ -134,10 +120,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceFleetResourceGroupResource(resourceGroupResource).GetContainerServiceFleets();
         }
@@ -175,10 +158,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceFleetResource>> GetContainerServiceFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableContainerServiceFleetResourceGroupResource(resourceGroupResource).GetContainerServiceFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
@@ -216,10 +196,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [ForwardsClientCalls]
         public static Response<ContainerServiceFleetResource> GetContainerServiceFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceFleetResourceGroupResource(resourceGroupResource).GetContainerServiceFleet(fleetName, cancellationToken);
         }
@@ -255,10 +232,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> An async collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
@@ -294,10 +268,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }

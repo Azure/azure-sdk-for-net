@@ -17,10 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroup"/> is null. </exception>
         public AzureEventHubsParameter(string consumerGroup)
         {
-            if (consumerGroup == null)
-            {
-                throw new ArgumentNullException(nameof(consumerGroup));
-            }
+            Argument.AssertNotNull(consumerGroup, nameof(consumerGroup));
 
             ConsumerGroup = consumerGroup;
         }

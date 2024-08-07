@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public ContainerGroupImageRegistryCredential(string server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
+            Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
         }

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class ProvisionedClusterUpgradeProfileData : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterUpgradeProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile);
+            writer.WriteObjectValue(ControlPlaneProfile, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static ProvisionedClusterUpgradeProfileData DeserializeProvisionedClusterUpgradeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService
             HybridContainerServiceResourceProvisioningState? provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProvisionedClusterUpgradeProfileData(
                 id,
                 name,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         return DeserializeProvisionedClusterUpgradeProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterUpgradeProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

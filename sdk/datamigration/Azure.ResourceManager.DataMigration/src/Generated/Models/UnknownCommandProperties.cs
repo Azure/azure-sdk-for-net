@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownCommandProperties. </summary>
+    /// <summary> Unknown version of CommandProperties. </summary>
     internal partial class UnknownCommandProperties : CommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/>. </summary>

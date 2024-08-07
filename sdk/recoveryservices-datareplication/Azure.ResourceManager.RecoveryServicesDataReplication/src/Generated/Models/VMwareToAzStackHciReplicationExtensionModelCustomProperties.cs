@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareFabricArmId"/> or <paramref name="azStackHciFabricArmId"/> is null. </exception>
         public VMwareToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier vmwareFabricArmId, ResourceIdentifier azStackHciFabricArmId)
         {
-            if (vmwareFabricArmId == null)
-            {
-                throw new ArgumentNullException(nameof(vmwareFabricArmId));
-            }
-            if (azStackHciFabricArmId == null)
-            {
-                throw new ArgumentNullException(nameof(azStackHciFabricArmId));
-            }
+            Argument.AssertNotNull(vmwareFabricArmId, nameof(vmwareFabricArmId));
+            Argument.AssertNotNull(azStackHciFabricArmId, nameof(azStackHciFabricArmId));
 
             VmwareFabricArmId = vmwareFabricArmId;
             AzStackHciFabricArmId = azStackHciFabricArmId;

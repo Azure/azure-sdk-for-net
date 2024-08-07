@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
         public CdnManagedHttpsContent(SecureDeliveryProtocolType protocolType, CdnCertificateSource certificateSourceParameters) : base(protocolType)
         {
-            if (certificateSourceParameters == null)
-            {
-                throw new ArgumentNullException(nameof(certificateSourceParameters));
-            }
+            Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
 
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = CertificateSource.Cdn;

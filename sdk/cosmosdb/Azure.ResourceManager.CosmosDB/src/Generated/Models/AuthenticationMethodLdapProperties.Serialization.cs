@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class AuthenticationMethodLdapProperties : IUtf8JsonSerializable, IJsonModel<AuthenticationMethodLdapProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationMethodLdapProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationMethodLdapProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthenticationMethodLdapProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AuthenticationMethodLdapProperties DeserializeAuthenticationMethodLdapProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<CassandraCertificate> serverCertificates = default;
             int? connectionTimeoutInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverHostname"u8))
@@ -181,10 +182,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AuthenticationMethodLdapProperties(
                 serverHostname,
                 serverPort,
@@ -197,6 +198,189 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerHostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverHostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerHostname))
+                {
+                    builder.Append("  serverHostname: ");
+                    if (ServerHostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerHostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerHostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerPort))
+                {
+                    builder.Append("  serverPort: ");
+                    builder.AppendLine($"{ServerPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserDistinguishedName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceUserDistinguishedName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserDistinguishedName))
+                {
+                    builder.Append("  serviceUserDistinguishedName: ");
+                    if (ServiceUserDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceUserPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserPassword))
+                {
+                    builder.Append("  serviceUserPassword: ");
+                    if (ServiceUserPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchBaseDistinguishedName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  searchBaseDistinguishedName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchBaseDistinguishedName))
+                {
+                    builder.Append("  searchBaseDistinguishedName: ");
+                    if (SearchBaseDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchBaseDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchBaseDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchFilterTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  searchFilterTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchFilterTemplate))
+                {
+                    builder.Append("  searchFilterTemplate: ");
+                    if (SearchFilterTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchFilterTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchFilterTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerCertificates))
+                {
+                    if (ServerCertificates.Any())
+                    {
+                        builder.Append("  serverCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serverCertificates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionTimeoutInMs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectionTimeoutInMs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionTimeoutInMs))
+                {
+                    builder.Append("  connectionTimeoutInMs: ");
+                    builder.AppendLine($"{ConnectionTimeoutInMs.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,8 +389,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +408,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; set; }
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Properties of Cognitive Services account deployment. </summary>
+        [WirePath("properties")]
         public CognitiveServicesAccountDeploymentProperties Properties { get; set; }
     }
 }

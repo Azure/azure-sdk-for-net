@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
@@ -281,17 +279,16 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SignalRPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = await _signalRPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _signalRPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,17 +327,16 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SignalRPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = _signalRPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _signalRPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkFabricName, NetworkFabricData data, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricResource> CreateOrUpdate(WaitUntil waitUntil, string networkFabricName, NetworkFabricData data, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricResource>> GetAsync(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual Response<NetworkFabricResource> Get(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricResource>> GetIfExistsAsync(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricResource> GetIfExists(string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.GetIfExists");
             scope.Start();

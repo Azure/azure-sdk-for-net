@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="blobContainerName"/> is null. </exception>
         public AzureStorageBlobContainerEndpointProperties(string storageAccountResourceId, string blobContainerName)
         {
-            if (storageAccountResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountResourceId));
-            }
-            if (blobContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(blobContainerName));
-            }
+            Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
+            Argument.AssertNotNull(blobContainerName, nameof(blobContainerName));
 
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;

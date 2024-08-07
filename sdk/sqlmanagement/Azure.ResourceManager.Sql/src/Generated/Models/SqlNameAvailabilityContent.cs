@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlNameAvailabilityContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
@@ -76,8 +73,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the resource type. </summary>
+        [WirePath("type")]
         public SqlNameAvailabilityResourceType ResourceType { get; }
     }
 }

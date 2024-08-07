@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -54,25 +53,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server);
+            writer.WriteObjectValue<object>(Server);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             writer.WritePropertyName("databaseName"u8);
-            writer.WriteObjectValue(DatabaseName);
+            writer.WriteObjectValue<object>(DatabaseName);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -82,33 +81,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AuthSource))
             {
                 writer.WritePropertyName("authSource"u8);
-                writer.WriteObjectValue(AuthSource);
+                writer.WriteObjectValue<object>(AuthSource);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port);
+                writer.WriteObjectValue<object>(Port);
             }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-                writer.WriteObjectValue(EnableSsl);
+                writer.WriteObjectValue<object>(EnableSsl);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-                writer.WriteObjectValue(AllowSelfSignedServerCert);
+                writer.WriteObjectValue<object>(AllowSelfSignedServerCert);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -308,12 +307,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MongoDbLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMongoDbLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class MongoDbLinkedServiceConverter : JsonConverter<MongoDbLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, MongoDbLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override MongoDbLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

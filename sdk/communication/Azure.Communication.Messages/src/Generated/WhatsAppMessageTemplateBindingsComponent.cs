@@ -50,10 +50,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsComponent(string refValue)
         {
-            if (refValue == null)
-            {
-                throw new ArgumentNullException(nameof(refValue));
-            }
+            Argument.AssertNotNull(refValue, nameof(refValue));
 
             RefValue = refValue;
         }

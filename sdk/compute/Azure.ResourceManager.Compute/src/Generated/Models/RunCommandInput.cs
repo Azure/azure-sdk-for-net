@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public RunCommandInput(string commandId)
         {
-            if (commandId == null)
-            {
-                throw new ArgumentNullException(nameof(commandId));
-            }
+            Argument.AssertNotNull(commandId, nameof(commandId));
 
             CommandId = commandId;
             Script = new ChangeTrackingList<string>();

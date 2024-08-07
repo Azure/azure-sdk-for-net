@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagementPartner
@@ -79,21 +77,16 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _partnerResponsePartnerRestClient.CreateAsync(partnerId, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerResponsePartnerRestClient.CreateCreateRequestUri(partnerId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,21 +126,16 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual ArmOperation<PartnerResponseResource> CreateOrUpdate(WaitUntil waitUntil, string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _partnerResponsePartnerRestClient.Create(partnerId, cancellationToken);
-                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerResponsePartnerRestClient.CreateCreateRequestUri(partnerId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation<PartnerResponseResource>(Response.FromValue(new PartnerResponseResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -186,14 +174,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual async Task<Response<PartnerResponseResource>> GetAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.Get");
             scope.Start();
@@ -238,14 +219,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual Response<PartnerResponseResource> Get(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.Get");
             scope.Start();
@@ -290,14 +264,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.Exists");
             scope.Start();
@@ -340,14 +307,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual Response<bool> Exists(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.Exists");
             scope.Start();
@@ -390,14 +350,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerResponseResource>> GetIfExistsAsync(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.GetIfExists");
             scope.Start();
@@ -442,14 +395,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         public virtual NullableResponse<PartnerResponseResource> GetIfExists(string partnerId, CancellationToken cancellationToken = default)
         {
-            if (partnerId == null)
-            {
-                throw new ArgumentNullException(nameof(partnerId));
-            }
-            if (partnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerId));
-            }
+            Argument.AssertNotNullOrEmpty(partnerId, nameof(partnerId));
 
             using var scope = _partnerResponsePartnerClientDiagnostics.CreateScope("PartnerResponseCollection.GetIfExists");
             scope.Start();

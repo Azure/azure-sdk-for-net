@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="targetConnectionInfo"/> or <paramref name="sourceConnectionInfo"/> is null. </exception>
         public MigrateOracleAzureDBPostgreSqlSyncTaskInput(IEnumerable<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, PostgreSqlConnectionInfo targetConnectionInfo, OracleConnectionInfo sourceConnectionInfo)
         {
-            if (selectedDatabases == null)
-            {
-                throw new ArgumentNullException(nameof(selectedDatabases));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
+            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
             SelectedDatabases = selectedDatabases.ToList();
             TargetConnectionInfo = targetConnectionInfo;

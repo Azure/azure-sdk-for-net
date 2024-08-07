@@ -12,25 +12,24 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class DiskPoolCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DiskPoolCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskPoolCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolCreateOrUpdateContent DeserializeDiskPoolCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             ResourceIdentifier subnetId = default;
             IList<string> additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -297,10 +296,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskPoolCreateOrUpdateContent(
                 id,
                 name,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterProjectEnvironmentData : IUtf8JsonSerializable, IJsonModel<DevCenterProjectEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectEnvironmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterProjectEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue(CreatorRoleAssignment);
+                writer.WriteObjectValue(CreatorRoleAssignment, options);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterProjectEnvironmentData DeserializeDevCenterProjectEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterProjectEnvironmentData(
                 id,
                 name,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterProjectEnvironmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

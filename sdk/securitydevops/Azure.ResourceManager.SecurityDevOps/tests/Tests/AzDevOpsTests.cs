@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Tests
             : base(async)//, RecordedTestMode.Record)
         {
             // Sanitize Azure DevOps OAuth code for Connector creation
-            BodyKeySanitizers.Add(new BodyKeySanitizer("Sanitized") { JsonPath = "properties.authorization.code" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.authorization.code"));
         }
 
         [Test]

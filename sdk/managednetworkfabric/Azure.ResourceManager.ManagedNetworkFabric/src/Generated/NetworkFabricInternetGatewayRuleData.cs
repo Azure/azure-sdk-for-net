@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ruleProperties"/> is null. </exception>
         public NetworkFabricInternetGatewayRuleData(AzureLocation location, InternetGatewayRules ruleProperties) : base(location)
         {
-            if (ruleProperties == null)
-            {
-                throw new ArgumentNullException(nameof(ruleProperties));
-            }
+            Argument.AssertNotNull(ruleProperties, nameof(ruleProperties));
 
             RuleProperties = ruleProperties;
             InternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();

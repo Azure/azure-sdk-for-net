@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary>
     /// An abstract representation of a single item of thread message content.
     /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+    /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {

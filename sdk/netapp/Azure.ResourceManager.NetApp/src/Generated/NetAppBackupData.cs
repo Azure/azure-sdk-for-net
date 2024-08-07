@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeResourceId"/> is null. </exception>
         public NetAppBackupData(ResourceIdentifier volumeResourceId)
         {
-            if (volumeResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(volumeResourceId));
-            }
+            Argument.AssertNotNull(volumeResourceId, nameof(volumeResourceId));
 
             VolumeResourceId = volumeResourceId;
         }

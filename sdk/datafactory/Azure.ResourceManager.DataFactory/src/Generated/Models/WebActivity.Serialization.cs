@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class WebActivity : IUtf8JsonSerializable, IJsonModel<WebActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,11 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -95,7 +94,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -107,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsDefined(DisableCertValidation))
             {
@@ -130,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivity DeserializeWebActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityUserProperty> userProperties = default;
             WebActivityMethod method = default;
             DataFactoryElement<string> url = default;
-            IDictionary<string, DataFactoryElement<string>> headers = default;
+            IDictionary<string, BinaryData> headers = default;
             DataFactoryElement<string> body = default;
             WebActivityAuthentication authentication = default;
             bool? disableCertValidation = default;
@@ -313,7 +319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 }
                                 else
                                 {
-                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                                 }
                             }
                             headers = dictionary;
@@ -429,7 +435,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 method,
                 url,
-                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 body,
                 authentication,
                 disableCertValidation,
@@ -449,7 +455,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -465,7 +471,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeWebActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

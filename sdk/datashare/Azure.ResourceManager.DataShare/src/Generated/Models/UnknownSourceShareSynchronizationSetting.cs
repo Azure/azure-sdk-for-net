@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    /// <summary> The UnknownSourceShareSynchronizationSetting. </summary>
+    /// <summary> Unknown version of SourceShareSynchronizationSetting. </summary>
     internal partial class UnknownSourceShareSynchronizationSetting : SourceShareSynchronizationSetting
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSourceShareSynchronizationSetting"/>. </summary>

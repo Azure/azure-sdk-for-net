@@ -29,15 +29,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public partial class ShareFileStorageResourceOptions
     {
         public ShareFileStorageResourceOptions() { }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> CacheControl { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentDisposition { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string[]> ContentEncoding { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string[]> ContentLanguage { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> DirectoryMetadata { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
-        public string FilePermissions { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> DirectoryMetadata { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Files.Shares.Models.NtfsFileAttributes?> FileAttributes { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileChangedOn { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileCreatedOn { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileLastWrittenOn { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> FileMetadata { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty FilePermissions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Files.Shares

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ThroughputSettingsResourceInfo : IUtf8JsonSerializable, IJsonModel<ThroughputSettingsResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThroughputSettingsResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings);
+                writer.WriteObjectValue(AutoscaleSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputSettingsResourceInfo DeserializeThroughputSettingsResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string instantMaximumThroughput = default;
             string softAllowedMaximumThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ThroughputSettingsResourceInfo(
                 throughput,
                 autoscaleSettings,
@@ -159,6 +159,143 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  throughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
+                {
+                    builder.Append("  throughput: ");
+                    builder.AppendLine($"{Throughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoscaleSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleSettings))
+                {
+                    builder.Append("  autoscaleSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumThroughput))
+                {
+                    builder.Append("  minimumThroughput: ");
+                    if (MinimumThroughput.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinimumThroughput}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinimumThroughput}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OfferReplacePending), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  offerReplacePending: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OfferReplacePending))
+                {
+                    builder.Append("  offerReplacePending: ");
+                    if (OfferReplacePending.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OfferReplacePending}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OfferReplacePending}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstantMaximumThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instantMaximumThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstantMaximumThroughput))
+                {
+                    builder.Append("  instantMaximumThroughput: ");
+                    if (InstantMaximumThroughput.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InstantMaximumThroughput}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InstantMaximumThroughput}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SoftAllowedMaximumThroughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  softAllowedMaximumThroughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SoftAllowedMaximumThroughput))
+                {
+                    builder.Append("  softAllowedMaximumThroughput: ");
+                    if (SoftAllowedMaximumThroughput.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SoftAllowedMaximumThroughput}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SoftAllowedMaximumThroughput}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ThroughputSettingsResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,8 +304,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeThroughputSettingsResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownBaseResourceProperties. </summary>
+    /// <summary> Unknown version of BaseResourceProperties. </summary>
     internal partial class UnknownBaseResourceProperties : BaseResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseResourceProperties"/>. </summary>

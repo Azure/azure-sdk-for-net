@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lineRegistrations"/> is null. </exception>
         public LineChannelProperties(IEnumerable<LineRegistration> lineRegistrations)
         {
-            if (lineRegistrations == null)
-            {
-                throw new ArgumentNullException(nameof(lineRegistrations));
-            }
+            Argument.AssertNotNull(lineRegistrations, nameof(lineRegistrations));
 
             LineRegistrations = lineRegistrations.ToList();
         }

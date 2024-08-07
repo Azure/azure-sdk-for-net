@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("template")]
         public BinaryData Template { get; }
     }
 }

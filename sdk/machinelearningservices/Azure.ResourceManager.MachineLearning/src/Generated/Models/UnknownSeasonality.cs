@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownSeasonality. </summary>
+    /// <summary> Unknown version of Seasonality. </summary>
     internal partial class UnknownSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSeasonality"/>. </summary>

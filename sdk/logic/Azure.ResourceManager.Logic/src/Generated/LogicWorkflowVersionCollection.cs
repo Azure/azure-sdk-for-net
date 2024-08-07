@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowVersionResource>> GetAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual Response<LogicWorkflowVersionResource> Get(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual Response<bool> Exists(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowVersionResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowVersionResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
         {
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
             scope.Start();

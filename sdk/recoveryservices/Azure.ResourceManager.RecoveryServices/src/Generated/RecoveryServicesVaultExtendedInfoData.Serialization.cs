@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     public partial class RecoveryServicesVaultExtendedInfoData : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultExtendedInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultExtendedInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultExtendedInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryServicesVaultExtendedInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultExtendedInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServices
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultExtendedInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServices
 
         internal static RecoveryServicesVaultExtendedInfoData DeserializeRecoveryServicesVaultExtendedInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServices
             string encryptionKeyThumbprint = default;
             string algorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -194,10 +193,10 @@ namespace Azure.ResourceManager.RecoveryServices
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryServicesVaultExtendedInfoData(
                 id,
                 name,
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServices
                         return DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevSpaces.Models;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.DevSpaces
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetContainerHostMappingRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevSpaces/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkContainerHostMapping", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetContainerHostMappingRequest(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.DevSpaces
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerHostMapping);
+            content.JsonWriter.WriteObjectValue(containerHostMapping, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -72,26 +86,9 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerHostMapping>> GetContainerHostMappingAsync(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerHostMapping == null)
-            {
-                throw new ArgumentNullException(nameof(containerHostMapping));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
             using var message = CreateGetContainerHostMappingRequest(subscriptionId, resourceGroupName, location, containerHostMapping);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -121,26 +118,9 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerHostMapping> GetContainerHostMapping(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerHostMapping == null)
-            {
-                throw new ArgumentNullException(nameof(containerHostMapping));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
 
             using var message = CreateGetContainerHostMappingRequest(subscriptionId, resourceGroupName, location, containerHostMapping);
             _pipeline.Send(message, cancellationToken);

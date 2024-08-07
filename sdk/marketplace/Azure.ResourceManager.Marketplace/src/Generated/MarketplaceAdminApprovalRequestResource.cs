@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -114,10 +112,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> is null. </exception>
         public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetAsync(string publisherId, CancellationToken cancellationToken = default)
         {
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Get");
             scope.Start();
@@ -161,10 +156,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> is null. </exception>
         public virtual Response<MarketplaceAdminApprovalRequestResource> Get(string publisherId, CancellationToken cancellationToken = default)
         {
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Get");
             scope.Start();
@@ -209,17 +201,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
             try
             {
                 var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,17 +249,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
             try
             {
                 var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApproval(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

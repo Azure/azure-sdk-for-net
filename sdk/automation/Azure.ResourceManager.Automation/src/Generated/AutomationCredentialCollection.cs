@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialName, AutomationCredentialCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationCredentialCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string credentialName, AutomationCredentialCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationCredentialCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<Response<AutomationCredentialResource>> GetAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<AutomationCredentialResource> Get(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual Response<bool> Exists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationCredentialResource>> GetIfExistsAsync(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         public virtual NullableResponse<AutomationCredentialResource> GetIfExists(string credentialName, CancellationToken cancellationToken = default)
         {
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var scope = _automationCredentialCredentialClientDiagnostics.CreateScope("AutomationCredentialCollection.GetIfExists");
             scope.Start();

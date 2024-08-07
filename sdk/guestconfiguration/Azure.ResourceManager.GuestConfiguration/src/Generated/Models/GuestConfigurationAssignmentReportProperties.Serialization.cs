@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationAssignmentReportProperties : IUtf8JsonSerializable, IJsonModel<GuestConfigurationAssignmentReportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationAssignmentReportProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationAssignmentReportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationAssignmentReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                writer.WriteObjectValue(Assignment, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                writer.WriteObjectValue(Vm, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (Details != null)
                 {
                     writer.WritePropertyName("details"u8);
-                    writer.WriteObjectValue(Details);
+                    writer.WriteObjectValue(Details, options);
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationAssignmentReportProperties DeserializeGuestConfigurationAssignmentReportProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationAssignmentReportDetails details = default;
             string vmssResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationAssignmentReportProperties(
                 complianceStatus,
                 reportId,
@@ -211,6 +211,151 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComplianceStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  complianceStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    builder.Append("  complianceStatus: ");
+                    builder.AppendLine($"'{ComplianceStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReportId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reportId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReportId))
+                {
+                    builder.Append("  reportId: ");
+                    builder.AppendLine($"'{ReportId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Assignment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Assignment))
+                {
+                    builder.Append("  assignment: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Assignment, options, 2, false, "  assignment: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Vm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Vm))
+                {
+                    builder.Append("  vm: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Vm, options, 2, false, "  vm: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  details: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Details))
+                {
+                    builder.Append("  details: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Details, options, 2, false, "  details: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmssResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmssResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmssResourceId))
+                {
+                    builder.Append("  vmssResourceId: ");
+                    if (VmssResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VmssResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VmssResourceId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GuestConfigurationAssignmentReportProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -219,8 +364,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +383,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationAssignmentReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

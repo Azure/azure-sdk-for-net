@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extractName"/> or <paramref name="expression"/> is null. </exception>
         public KpiExtract(string extractName, string expression)
         {
-            if (extractName == null)
-            {
-                throw new ArgumentNullException(nameof(extractName));
-            }
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(extractName, nameof(extractName));
+            Argument.AssertNotNull(expression, nameof(expression));
 
             ExtractName = extractName;
             Expression = expression;

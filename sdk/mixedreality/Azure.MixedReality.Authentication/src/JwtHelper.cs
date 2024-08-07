@@ -4,6 +4,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.Authentication
 {

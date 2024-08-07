@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -81,21 +79,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityOperatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityOperatorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,21 +128,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual ArmOperation<SecurityOperatorResource> CreateOrUpdate(WaitUntil waitUntil, string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityOperatorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,14 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual async Task<Response<SecurityOperatorResource>> GetAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
             scope.Start();
@@ -240,14 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual Response<SecurityOperatorResource> Get(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
             scope.Start();
@@ -350,14 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
             scope.Start();
@@ -400,14 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
             scope.Start();
@@ -450,14 +410,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityOperatorResource>> GetIfExistsAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
             scope.Start();
@@ -502,14 +455,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
         public virtual NullableResponse<SecurityOperatorResource> GetIfExists(string securityOperatorName, CancellationToken cancellationToken = default)
         {
-            if (securityOperatorName == null)
-            {
-                throw new ArgumentNullException(nameof(securityOperatorName));
-            }
-            if (securityOperatorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityOperatorName));
-            }
+            Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
             using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
             scope.Start();

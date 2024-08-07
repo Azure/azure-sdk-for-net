@@ -10,53 +10,52 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetVmProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetVmProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                writer.WriteObjectValue(DiagnosticsProfile, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                writer.WriteObjectValue(ExtensionProfile, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -76,12 +75,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile);
+                writer.WriteObjectValue(BillingProfile, options);
             }
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile);
+                writer.WriteObjectValue(ScheduledEventsProfile, options);
             }
             if (Optional.IsDefined(UserData))
             {
@@ -91,17 +90,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation);
+                writer.WriteObjectValue(CapacityReservation, options);
             }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile);
+                writer.WriteObjectValue(ApplicationProfile, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityPostureReference))
             {
                 writer.WritePropertyName("securityPostureReference"u8);
-                writer.WriteObjectValue(SecurityPostureReference);
+                writer.WriteObjectValue(SecurityPostureReference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmProfile DeserializeVirtualMachineScaleSetVmProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeSecurityPostureReference securityPostureReference = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"u8))
@@ -334,10 +333,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetVmProfile(
                 osProfile,
                 storageProfile,
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -385,7 +384,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetVmProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

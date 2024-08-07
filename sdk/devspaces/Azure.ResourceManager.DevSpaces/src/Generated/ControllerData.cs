@@ -56,18 +56,9 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="targetContainerHostResourceId"/> or <paramref name="targetContainerHostCredentialsBase64"/> is null. </exception>
         public ControllerData(AzureLocation location, DevSpacesSku sku, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (targetContainerHostResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetContainerHostResourceId));
-            }
-            if (targetContainerHostCredentialsBase64 == null)
-            {
-                throw new ArgumentNullException(nameof(targetContainerHostCredentialsBase64));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(targetContainerHostResourceId, nameof(targetContainerHostResourceId));
+            Argument.AssertNotNull(targetContainerHostCredentialsBase64, nameof(targetContainerHostCredentialsBase64));
 
             Sku = sku;
             TargetContainerHostResourceId = targetContainerHostResourceId;

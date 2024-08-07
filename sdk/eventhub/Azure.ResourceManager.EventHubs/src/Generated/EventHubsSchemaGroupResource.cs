@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -91,6 +89,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets the details of an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,6 +129,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets the details of an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,6 +169,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Deletes an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +198,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsSchemaGroupSchemaRegistryRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(response);
+                var uri = _eventHubsSchemaGroupSchemaRegistryRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,6 +213,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Deletes an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,7 +242,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsSchemaGroupSchemaRegistryRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(response);
+                var uri = _eventHubsSchemaGroupSchemaRegistryRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -251,6 +257,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Creates or Updates an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -262,7 +269,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -276,17 +283,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsSchemaGroupResource>> UpdateAsync(WaitUntil waitUntil, EventHubsSchemaGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupResource.Update");
             scope.Start();
             try
             {
                 var response = await _eventHubsSchemaGroupSchemaRegistryRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsSchemaGroupResource>(Response.FromValue(new EventHubsSchemaGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsSchemaGroupSchemaRegistryRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation<EventHubsSchemaGroupResource>(Response.FromValue(new EventHubsSchemaGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -299,6 +305,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Creates or Updates an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -310,7 +317,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,17 +331,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsSchemaGroupResource> Update(WaitUntil waitUntil, EventHubsSchemaGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsSchemaGroupSchemaRegistryClientDiagnostics.CreateScope("EventHubsSchemaGroupResource.Update");
             scope.Start();
             try
             {
                 var response = _eventHubsSchemaGroupSchemaRegistryRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsSchemaGroupResource>(Response.FromValue(new EventHubsSchemaGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsSchemaGroupSchemaRegistryRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventHubsArmOperation<EventHubsSchemaGroupResource>(Response.FromValue(new EventHubsSchemaGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

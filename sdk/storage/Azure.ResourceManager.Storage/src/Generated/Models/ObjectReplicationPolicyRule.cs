@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceContainer"/> or <paramref name="destinationContainer"/> is null. </exception>
         public ObjectReplicationPolicyRule(string sourceContainer, string destinationContainer)
         {
-            if (sourceContainer == null)
-            {
-                throw new ArgumentNullException(nameof(sourceContainer));
-            }
-            if (destinationContainer == null)
-            {
-                throw new ArgumentNullException(nameof(destinationContainer));
-            }
+            Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
+            Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
 
             SourceContainer = sourceContainer;
             DestinationContainer = destinationContainer;
@@ -85,12 +79,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Rule Id is auto-generated for each new rule on destination account. It is required for put policy on source account. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
         /// <summary> Required. Source container name. </summary>
+        [WirePath("sourceContainer")]
         public string SourceContainer { get; set; }
         /// <summary> Required. Destination container name. </summary>
+        [WirePath("destinationContainer")]
         public string DestinationContainer { get; set; }
         /// <summary> Optional. An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public ObjectReplicationPolicyFilter Filters { get; set; }
     }
 }

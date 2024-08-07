@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups.Models;
@@ -35,6 +34,47 @@ namespace Azure.ResourceManager.ManagementGroups
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/getEntities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("$search", search.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (view != null)
+            {
+                uri.AppendQuery("$view", view.Value.ToString(), true);
+            }
+            if (groupName != null)
+            {
+                uri.AppendQuery("groupName", groupName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
@@ -174,6 +214,14 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -221,10 +269,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<EntityListResult>> ListNextPageAsync(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,10 +316,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<EntityListResult> ListNextPage(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             _pipeline.Send(message, cancellationToken);

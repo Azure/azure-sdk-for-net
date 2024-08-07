@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Models;
 using Azure.ResourceManager.Resources;
 
@@ -88,18 +86,8 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, MySqlServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.CreateOrUpdate");
             scope.Start();
@@ -147,18 +135,8 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MySqlServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, MySqlServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.CreateOrUpdate");
             scope.Start();
@@ -204,14 +182,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<MySqlServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.Get");
             scope.Start();
@@ -256,14 +227,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<MySqlServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlServerResource> GetReplicasAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
@@ -400,14 +357,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlServerResource> GetReplicas(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
@@ -440,14 +390,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.Exists");
             scope.Start();
@@ -490,14 +433,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.Exists");
             scope.Start();
@@ -540,14 +476,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.GetIfExists");
             scope.Start();
@@ -592,14 +521,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual NullableResponse<MySqlServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlServerServersClientDiagnostics.CreateScope("MySqlServerCollection.GetIfExists");
             scope.Start();

@@ -77,10 +77,12 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> Private endpoint. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> Full qualified Id of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -93,8 +95,10 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Group IDs. </summary>
+        [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public WebPubSubPrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }

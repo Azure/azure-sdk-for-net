@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldMappings"/> is null. </exception>
         public RelationshipTypeMapping(IEnumerable<RelationshipTypeFieldMapping> fieldMappings)
         {
-            if (fieldMappings == null)
-            {
-                throw new ArgumentNullException(nameof(fieldMappings));
-            }
+            Argument.AssertNotNull(fieldMappings, nameof(fieldMappings));
 
             FieldMappings = fieldMappings.ToList();
         }

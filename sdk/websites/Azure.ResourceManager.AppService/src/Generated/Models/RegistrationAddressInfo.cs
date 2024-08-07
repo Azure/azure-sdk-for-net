@@ -54,26 +54,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="address1"/>, <paramref name="city"/>, <paramref name="country"/>, <paramref name="postalCode"/> or <paramref name="state"/> is null. </exception>
         public RegistrationAddressInfo(string address1, string city, string country, string postalCode, string state)
         {
-            if (address1 == null)
-            {
-                throw new ArgumentNullException(nameof(address1));
-            }
-            if (city == null)
-            {
-                throw new ArgumentNullException(nameof(city));
-            }
-            if (country == null)
-            {
-                throw new ArgumentNullException(nameof(country));
-            }
-            if (postalCode == null)
-            {
-                throw new ArgumentNullException(nameof(postalCode));
-            }
-            if (state == null)
-            {
-                throw new ArgumentNullException(nameof(state));
-            }
+            Argument.AssertNotNull(address1, nameof(address1));
+            Argument.AssertNotNull(city, nameof(city));
+            Argument.AssertNotNull(country, nameof(country));
+            Argument.AssertNotNull(postalCode, nameof(postalCode));
+            Argument.AssertNotNull(state, nameof(state));
 
             Address1 = address1;
             City = city;
@@ -107,16 +92,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> First line of an Address. </summary>
+        [WirePath("address1")]
         public string Address1 { get; set; }
         /// <summary> The second line of the Address. Optional. </summary>
+        [WirePath("address2")]
         public string Address2 { get; set; }
         /// <summary> The city for the address. </summary>
+        [WirePath("city")]
         public string City { get; set; }
         /// <summary> The country for the address. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
         /// <summary> The postal code for the address. </summary>
+        [WirePath("postalCode")]
         public string PostalCode { get; set; }
         /// <summary> The state or province for the address. </summary>
+        [WirePath("state")]
         public string State { get; set; }
     }
 }

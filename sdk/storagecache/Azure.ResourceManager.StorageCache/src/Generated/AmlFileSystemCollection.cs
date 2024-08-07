@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StorageCache
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AmlFileSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AmlFileSystemResource> CreateOrUpdate(WaitUntil waitUntil, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual async Task<Response<AmlFileSystemResource>> GetAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual Response<AmlFileSystemResource> Get(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual Response<bool> Exists(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual async Task<NullableResponse<AmlFileSystemResource>> GetIfExistsAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         public virtual NullableResponse<AmlFileSystemResource> GetIfExists(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            if (amlFileSystemName == null)
-            {
-                throw new ArgumentNullException(nameof(amlFileSystemName));
-            }
-            if (amlFileSystemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(amlFileSystemName));
-            }
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
             using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.GetIfExists");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -37,6 +36,22 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateWalkUpdateDomainRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateWalkUpdateDomainRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier)
         {
             var message = _pipeline.CreateMessage();
@@ -59,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(updateDomainIdentifier);
+                content.JsonWriter.WriteObjectValue(updateDomainIdentifier, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -77,30 +92,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> WalkUpdateDomainAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateWalkUpdateDomainRequest(subscriptionId, resourceGroupName, cloudServiceName, updateDomain, updateDomainIdentifier);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,30 +119,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response WalkUpdateDomain(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, UpdateDomainIdentifier updateDomainIdentifier = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateWalkUpdateDomainRequest(subscriptionId, resourceGroupName, cloudServiceName, updateDomain, updateDomainIdentifier);
             _pipeline.Send(message, cancellationToken);
@@ -160,6 +133,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateDomainRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateDomainRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain)
@@ -194,30 +183,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateDomainIdentifier>> GetUpdateDomainAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateGetUpdateDomainRequest(subscriptionId, resourceGroupName, cloudServiceName, updateDomain);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -245,30 +213,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateDomainIdentifier> GetUpdateDomain(string subscriptionId, string resourceGroupName, string cloudServiceName, int updateDomain, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateGetUpdateDomainRequest(subscriptionId, resourceGroupName, cloudServiceName, updateDomain);
             _pipeline.Send(message, cancellationToken);
@@ -284,6 +231,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUpdateDomainsRequestUri(string subscriptionId, string resourceGroupName, string cloudServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListUpdateDomainsRequest(string subscriptionId, string resourceGroupName, string cloudServiceName)
@@ -316,30 +278,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateDomainListResult>> ListUpdateDomainsAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListUpdateDomainsRequest(subscriptionId, resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -366,30 +307,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateDomainListResult> ListUpdateDomains(string subscriptionId, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListUpdateDomainsRequest(subscriptionId, resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);
@@ -405,6 +325,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUpdateDomainsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListUpdateDomainsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName)
@@ -431,34 +359,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UpdateDomainListResult>> ListUpdateDomainsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListUpdateDomainsNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -486,34 +390,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UpdateDomainListResult> ListUpdateDomainsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServiceName));
-            }
-            if (cloudServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServiceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
 
             using var message = CreateListUpdateDomainsNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);

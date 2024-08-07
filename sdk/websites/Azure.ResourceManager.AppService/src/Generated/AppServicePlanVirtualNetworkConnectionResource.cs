@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -174,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +281,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,18 +321,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual async Task<Response<AppServiceVirtualNetworkRoute>> CreateOrUpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(route, nameof(route));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.CreateOrUpdateVnetRoute");
             scope.Start();
@@ -363,7 +351,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,18 +362,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual Response<AppServiceVirtualNetworkRoute> CreateOrUpdateVnetRoute(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(route, nameof(route));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.CreateOrUpdateVnetRoute");
             scope.Start();
@@ -414,7 +392,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,14 +402,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual async Task<Response> DeleteVnetRouteAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.DeleteVnetRoute");
             scope.Start();
@@ -460,7 +431,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,14 +441,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response DeleteVnetRoute(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.DeleteVnetRoute");
             scope.Start();
@@ -506,7 +470,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,18 +481,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual async Task<Response<AppServiceVirtualNetworkRoute>> UpdateVnetRouteAsync(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(route, nameof(route));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.UpdateVnetRoute");
             scope.Start();
@@ -557,7 +511,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -568,18 +522,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="route"/> is null. </exception>
         public virtual Response<AppServiceVirtualNetworkRoute> UpdateVnetRoute(string routeName, AppServiceVirtualNetworkRoute route, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(route, nameof(route));
 
             using var scope = _appServicePlanVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionResource.UpdateVnetRoute");
             scope.Start();

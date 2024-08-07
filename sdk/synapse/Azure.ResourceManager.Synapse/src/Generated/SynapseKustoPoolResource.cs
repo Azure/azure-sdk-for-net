@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -505,10 +503,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseKustoPoolResource>> UpdateAsync(WaitUntil waitUntil, SynapseKustoPoolPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.Update");
             scope.Start();
@@ -555,10 +550,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SynapseKustoPoolResource> Update(WaitUntil waitUntil, SynapseKustoPoolPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.Update");
             scope.Start();
@@ -888,10 +880,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
-            }
+            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddLanguageExtensions");
             scope.Start();
@@ -937,10 +926,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
-            }
+            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddLanguageExtensions");
             scope.Start();
@@ -986,10 +972,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
-            }
+            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1035,10 +1018,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
-            }
+            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1142,10 +1122,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> DetachFollowerDatabasesAsync(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            if (followerDatabaseToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
-            }
+            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.DetachFollowerDatabases");
             scope.Start();
@@ -1191,10 +1168,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual ArmOperation DetachFollowerDatabases(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            if (followerDatabaseToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
-            }
+            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.DetachFollowerDatabases");
             scope.Start();
@@ -1235,10 +1209,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolChildResourceNameAvailabilityAsync(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
@@ -1276,10 +1247,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolChildResourceNameAvailability(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
@@ -1321,10 +1289,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolPrincipalAssignmentNameAvailabilityAsync(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1366,10 +1331,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolPrincipalAssignmentNameAvailability(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1462,14 +1424,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddTag");
             scope.Start();
@@ -1530,14 +1486,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.AddTag");
             scope.Start();
@@ -1597,10 +1547,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.SetTags");
             scope.Start();
@@ -1657,10 +1604,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.SetTags");
             scope.Start();
@@ -1717,10 +1661,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveTag");
             scope.Start();
@@ -1780,10 +1721,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.RemoveTag");
             scope.Start();

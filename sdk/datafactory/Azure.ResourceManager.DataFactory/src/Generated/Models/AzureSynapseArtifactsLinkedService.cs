@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public AzureSynapseArtifactsLinkedService(DataFactoryElement<string> endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
             LinkedServiceType = "AzureSynapseArtifacts";

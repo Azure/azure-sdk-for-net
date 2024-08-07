@@ -57,7 +57,7 @@ validUntil = validFrom.AddDays(30);
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-// Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
+// Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
 {
     ValidFrom = validFrom,

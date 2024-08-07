@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> CreateOrUpdate(WaitUntil waitUntil, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryIntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual Response<DataFactoryIntegrationRuntimeResource> Get(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Get");
             scope.Start();
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual Response<bool> Exists(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryIntegrationRuntimeResource>> GetIfExistsAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetIfExists");
             scope.Start();
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryIntegrationRuntimeResource> GetIfExists(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetIfExists");
             scope.Start();

@@ -180,10 +180,16 @@ namespace Azure.Storage.DataMovement
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             long? fileLength = _sourceResource.Length;
+            StorageResourceItemProperties sourceProperties = default;
             try
             {
-                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                fileLength = properties.ResourceLength;
+                sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                await _destinationResource.SetPermissionsAsync(
+                    _sourceResource,
+                    sourceProperties,
+                    _cancellationToken).ConfigureAwait(false);
+
+                fileLength = sourceProperties.ResourceLength;
             }
             catch (Exception ex)
             {
@@ -215,19 +221,24 @@ namespace Azure.Storage.DataMovement
                 expectedLength: length,
                 blockSize: blockSize,
                 this,
-                _destinationResource.TransferType);
+                _destinationResource.TransferType,
+                sourceProperties);
             // If we cannot upload in one shot, initiate the parallel block uploader
             if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
             {
                 List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
                 if (_destinationResource.TransferType == DataTransferOrder.Unordered)
                 {
-                    await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
+                    await QueueStageBlockRequests(commitBlockList, length, sourceProperties).ConfigureAwait(false);
                 }
                 else // Sequential
                 {
                     // Queue the first partitioned block task
-                    await QueueStageBlockRequest(commitBlockList[0].Offset, commitBlockList[0].Length, length).ConfigureAwait(false);
+                    await QueueStageBlockRequest(
+                        commitBlockList[0].Offset,
+                        commitBlockList[0].Length,
+                        length,
+                        sourceProperties).ConfigureAwait(false);
                 }
             }
             else
@@ -295,7 +306,7 @@ namespace Azure.Storage.DataMovement
 
                 if (blockSize == length)
                 {
-                    await CompleteTransferAsync().ConfigureAwait(false);
+                    await CompleteTransferAsync(options.SourceProperties).ConfigureAwait(false);
                     return false;
                 }
                 return true;
@@ -318,13 +329,15 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             ServiceToServiceJobPart jobPart,
-            DataTransferOrder transferType)
+            DataTransferOrder transferType,
+            StorageResourceItemProperties sourceProperties)
         => new CommitChunkHandler(
             expectedLength,
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
             transferType,
             ClientDiagnostics,
+            sourceProperties,
             _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
@@ -340,13 +353,14 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        internal async Task CompleteTransferAsync()
+        internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
             try
             {
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    completeTransferOptions: new() { SourceProperties = sourceProperties },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
@@ -361,7 +375,10 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> commitBlockList, long expectedLength)
+        private async Task QueueStageBlockRequests(
+            List<(long Offset, long Size)> commitBlockList,
+            long expectedLength,
+            StorageResourceItemProperties sourceProperties)
         {
             _queueingTasks = true;
             // Partition the stream into individual blocks
@@ -373,14 +390,22 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Queue partitioned block task
-                await QueueStageBlockRequest(block.Offset, block.Length, expectedLength).ConfigureAwait(false);
+                await QueueStageBlockRequest(
+                    block.Offset,
+                    block.Length,
+                    expectedLength,
+                    sourceProperties).ConfigureAwait(false);
             }
 
             _queueingTasks = false;
             await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
         }
 
-        private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
+        private Task QueueStageBlockRequest(
+            long offset,
+            long blockSize,
+            long expectedLength,
+            StorageResourceItemProperties properties)
         {
             return QueueChunkToChannelAsync(
                 async () =>
@@ -483,7 +508,11 @@ namespace Azure.Storage.DataMovement
 
         private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
         {
-            StorageResourceCopyFromUriOptions options = default;
+            StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SourceProperties = properties
+            };
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
             {

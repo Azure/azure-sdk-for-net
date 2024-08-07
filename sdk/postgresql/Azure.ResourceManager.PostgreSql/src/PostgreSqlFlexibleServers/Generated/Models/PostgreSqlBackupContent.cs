@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings)
         {
-            if (backupSettings == null)
-            {
-                throw new ArgumentNullException(nameof(backupSettings));
-            }
+            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
 
             BackupSettings = backupSettings;
         }
@@ -75,6 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Backup Settings. </summary>
         internal PostgreSqlFlexibleServerBackupSettings BackupSettings { get; }
         /// <summary> Backup Name for the current backup. </summary>
+        [WirePath("backupSettings.backupName")]
         public string BackupName
         {
             get => BackupSettings?.BackupName;

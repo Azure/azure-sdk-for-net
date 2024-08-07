@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
@@ -195,14 +192,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
@@ -235,14 +225,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
@@ -275,14 +258,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
@@ -315,14 +291,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
@@ -355,14 +324,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
@@ -395,14 +357,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
@@ -621,14 +576,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
@@ -661,14 +609,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
@@ -701,14 +642,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
@@ -740,14 +674,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
@@ -779,14 +706,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
@@ -819,14 +739,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
@@ -859,14 +772,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
@@ -898,14 +804,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
@@ -937,14 +836,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
@@ -977,14 +869,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
@@ -1017,14 +902,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
@@ -1056,14 +934,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (policyAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(policyAssignmentName));
-            }
-            if (policyAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
@@ -1091,10 +962,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.CheckPolicyRestrictions");
             scope.Start();
@@ -1132,10 +1000,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.CheckPolicyRestrictions");
             scope.Start();

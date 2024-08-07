@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationNavigation : IUtf8JsonSerializable, IJsonModel<GuestConfigurationNavigation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationNavigation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationNavigation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationNavigation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
+            }
+            if (Optional.IsDefined(ContentManagedIdentity))
+            {
+                writer.WritePropertyName("contentManagedIdentity"u8);
+                writer.WriteStringValue(ContentManagedIdentity);
             }
             if (Optional.IsDefined(AssignmentType))
             {
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +117,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +126,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (ConfigurationSetting != null)
                 {
                     writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting);
+                    writer.WriteObjectValue(ConfigurationSetting, options);
                 }
                 else
                 {
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,6 +176,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             string version = default;
             Uri contentUri = default;
             string contentHash = default;
+            string contentManagedIdentity = default;
             GuestConfigurationAssignmentType? assignmentType = default;
             string assignmentSource = default;
             string contentType = default;
@@ -177,7 +184,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             IList<GuestConfigurationParameter> configurationProtectedParameter = default;
             LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -212,6 +219,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (property.NameEquals("contentHash"u8))
                 {
                     contentHash = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contentManagedIdentity"u8))
+                {
+                    contentManagedIdentity = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))
@@ -284,16 +296,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationNavigation(
                 kind,
                 name,
                 version,
                 contentUri,
                 contentHash,
+                contentManagedIdentity,
                 assignmentType,
                 assignmentSource,
                 contentType,
@@ -301,6 +314,265 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
                 configurationSetting,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentUri))
+                {
+                    builder.Append("  contentUri: ");
+                    builder.AppendLine($"'{ContentUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentHash), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentHash: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentHash))
+                {
+                    builder.Append("  contentHash: ");
+                    if (ContentHash.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentHash}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentHash}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentManagedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentManagedIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentManagedIdentity))
+                {
+                    builder.Append("  contentManagedIdentity: ");
+                    if (ContentManagedIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentManagedIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentManagedIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignmentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignmentType))
+                {
+                    builder.Append("  assignmentType: ");
+                    builder.AppendLine($"'{AssignmentType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentSource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  assignmentSource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignmentSource))
+                {
+                    builder.Append("  assignmentSource: ");
+                    if (AssignmentSource.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AssignmentSource}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AssignmentSource}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentType))
+                {
+                    builder.Append("  contentType: ");
+                    if (ContentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationParameter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConfigurationParameters))
+                {
+                    if (ConfigurationParameters.Any())
+                    {
+                        builder.Append("  configurationParameter: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ConfigurationParameters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationParameter: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationProtectedParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationProtectedParameter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
+                {
+                    if (ConfigurationProtectedParameters.Any())
+                    {
+                        builder.Append("  configurationProtectedParameter: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ConfigurationProtectedParameters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationProtectedParameter: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationSetting), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationSetting: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationSetting))
+                {
+                    builder.Append("  configurationSetting: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConfigurationSetting, options, 2, false, "  configurationSetting: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)
@@ -311,8 +583,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +602,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationNavigation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{options.Format}' format.");
             }
         }
 

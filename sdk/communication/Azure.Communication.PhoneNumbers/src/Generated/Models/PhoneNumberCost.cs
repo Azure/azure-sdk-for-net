@@ -19,10 +19,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
         internal PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency)
         {
-            if (isoCurrencySymbol == null)
-            {
-                throw new ArgumentNullException(nameof(isoCurrencySymbol));
-            }
+            Argument.AssertNotNull(isoCurrencySymbol, nameof(isoCurrencySymbol));
 
             Amount = amount;
             IsoCurrencySymbol = isoCurrencySymbol;

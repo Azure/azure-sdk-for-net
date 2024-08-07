@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Mocking;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> Returns a <see cref="DataLakeStoreAccountResource"/> object. </returns>
         public static DataLakeStoreAccountResource GetDataLakeStoreAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataLakeStoreArmClient(client).GetDataLakeStoreAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> Returns a <see cref="DataLakeStoreFirewallRuleResource"/> object. </returns>
         public static DataLakeStoreFirewallRuleResource GetDataLakeStoreFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataLakeStoreArmClient(client).GetDataLakeStoreFirewallRuleResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> Returns a <see cref="DataLakeStoreVirtualNetworkRuleResource"/> object. </returns>
         public static DataLakeStoreVirtualNetworkRuleResource GetDataLakeStoreVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataLakeStoreArmClient(client).GetDataLakeStoreVirtualNetworkRuleResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> Returns a <see cref="DataLakeStoreTrustedIdProviderResource"/> object. </returns>
         public static DataLakeStoreTrustedIdProviderResource GetDataLakeStoreTrustedIdProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataLakeStoreArmClient(client).GetDataLakeStoreTrustedIdProviderResource(id);
         }
@@ -135,10 +121,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An object representing collection of DataLakeStoreAccountResources and their operations over a DataLakeStoreAccountResource. </returns>
         public static DataLakeStoreAccountCollection GetDataLakeStoreAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDataLakeStoreResourceGroupResource(resourceGroupResource).GetDataLakeStoreAccounts();
         }
@@ -176,10 +159,7 @@ namespace Azure.ResourceManager.DataLakeStore
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeStoreAccountResource>> GetDataLakeStoreAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDataLakeStoreResourceGroupResource(resourceGroupResource).GetDataLakeStoreAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -217,10 +197,7 @@ namespace Azure.ResourceManager.DataLakeStore
         [ForwardsClientCalls]
         public static Response<DataLakeStoreAccountResource> GetDataLakeStoreAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDataLakeStoreResourceGroupResource(resourceGroupResource).GetDataLakeStoreAccount(accountName, cancellationToken);
         }
@@ -257,10 +234,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
@@ -297,10 +271,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetAccounts(options, cancellationToken);
         }
@@ -337,10 +308,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).CheckDataLakeStoreAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -377,10 +345,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).CheckDataLakeStoreAccountNameAvailability(location, content, cancellationToken);
         }
@@ -412,10 +377,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetCapabilityByLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -447,10 +409,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<DataLakeStoreCapabilityInformation> GetCapabilityByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetCapabilityByLocation(location, cancellationToken);
         }
@@ -483,10 +442,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
@@ -519,10 +475,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }

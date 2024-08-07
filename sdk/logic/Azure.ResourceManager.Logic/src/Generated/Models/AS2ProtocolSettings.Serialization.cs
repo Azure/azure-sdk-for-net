@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class AS2ProtocolSettings : IUtf8JsonSerializable, IJsonModel<AS2ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ProtocolSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AS2ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("messageConnectionSettings"u8);
-            writer.WriteObjectValue(MessageConnectionSettings);
+            writer.WriteObjectValue(MessageConnectionSettings, options);
             writer.WritePropertyName("acknowledgementConnectionSettings"u8);
-            writer.WriteObjectValue(AcknowledgementConnectionSettings);
+            writer.WriteObjectValue(AcknowledgementConnectionSettings, options);
             writer.WritePropertyName("mdnSettings"u8);
-            writer.WriteObjectValue(MdnSettings);
+            writer.WriteObjectValue(MdnSettings, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            writer.WriteObjectValue(SecuritySettings, options);
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            writer.WriteObjectValue(ValidationSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            writer.WriteObjectValue(EnvelopeSettings, options);
             writer.WritePropertyName("errorSettings"u8);
-            writer.WriteObjectValue(ErrorSettings);
+            writer.WriteObjectValue(ErrorSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             AS2EnvelopeSettings envelopeSettings = default;
             AS2ErrorSettings errorSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageConnectionSettings"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AS2ProtocolSettings(
                 messageConnectionSettings,
                 acknowledgementConnectionSettings,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeAS2ProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

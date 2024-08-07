@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the destination. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary> Gets or sets the log analytics configuration. </summary>
+        [WirePath("logAnalyticsConfiguration")]
         public LogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }
 }

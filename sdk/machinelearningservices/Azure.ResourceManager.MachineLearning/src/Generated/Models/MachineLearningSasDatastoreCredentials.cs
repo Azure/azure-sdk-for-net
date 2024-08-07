@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public MachineLearningSasDatastoreCredentials(MachineLearningSasDatastoreSecrets secrets)
         {
-            if (secrets == null)
-            {
-                throw new ArgumentNullException(nameof(secrets));
-            }
+            Argument.AssertNotNull(secrets, nameof(secrets));
 
             Secrets = secrets;
             CredentialsType = CredentialsType.Sas;

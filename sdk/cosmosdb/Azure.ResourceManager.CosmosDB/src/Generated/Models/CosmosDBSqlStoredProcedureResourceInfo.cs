@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
 
             StoredProcedureName = storedProcedureName;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL storedProcedure. </summary>
+        [WirePath("id")]
         public string StoredProcedureName { get; set; }
         /// <summary> Body of the Stored Procedure. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
     }
 }

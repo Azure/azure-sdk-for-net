@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -102,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +180,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,7 +197,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.DeleteSwiftVirtualNetworkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteNetworkConfigWebAppsRestClient.CreateDeleteSwiftVirtualNetworkRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +241,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.DeleteSwiftVirtualNetwork(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteNetworkConfigWebAppsRestClient.CreateDeleteSwiftVirtualNetworkRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -280,10 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SiteNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
             scope.Start();
@@ -313,7 +312,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,10 +325,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SiteNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
             scope.Start();
@@ -359,7 +355,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,17 +369,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _siteNetworkConfigWebAppsRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -409,7 +404,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,17 +418,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _siteNetworkConfigWebAppsRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

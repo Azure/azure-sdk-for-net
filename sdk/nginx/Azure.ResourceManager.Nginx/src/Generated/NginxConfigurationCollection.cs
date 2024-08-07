@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NginxConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, NginxConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NginxConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, NginxConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<NginxConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<NginxConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +282,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +312,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
             scope.Start();
@@ -398,7 +355,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.Exists");
             scope.Start();
@@ -448,7 +398,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<NginxConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
             scope.Start();
@@ -500,7 +443,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual NullableResponse<NginxConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationCollection.GetIfExists");
             scope.Start();

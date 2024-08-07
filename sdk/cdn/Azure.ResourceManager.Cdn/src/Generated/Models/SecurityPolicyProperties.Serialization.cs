@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
     [PersistableModelProxy(typeof(UnknownSecurityPolicyProperties))]
     public partial class SecurityPolicyProperties : IUtf8JsonSerializable, IJsonModel<SecurityPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyProperties DeserializeSecurityPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeSecurityPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

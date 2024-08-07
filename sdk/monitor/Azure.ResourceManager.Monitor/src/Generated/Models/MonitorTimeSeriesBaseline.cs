@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,18 +53,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/>, <paramref name="timestamps"/> or <paramref name="data"/> is null. </exception>
         internal MonitorTimeSeriesBaseline(string aggregation, IEnumerable<DateTimeOffset> timestamps, IEnumerable<MonitorSingleBaseline> data)
         {
-            if (aggregation == null)
-            {
-                throw new ArgumentNullException(nameof(aggregation));
-            }
-            if (timestamps == null)
-            {
-                throw new ArgumentNullException(nameof(timestamps));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            Argument.AssertNotNull(timestamps, nameof(timestamps));
+            Argument.AssertNotNull(data, nameof(data));
 
             Aggregation = aggregation;
             Dimensions = new ChangeTrackingList<MonitorMetricSingleDimension>();

@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable, IJsonModel<ContainerServiceManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceManagedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceManagedClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(ClusterIdentity);
+                writer.WriteObjectValue(ClusterIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                writer.WriteObjectValue(PowerState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxAgentPools))
             {
@@ -135,24 +135,24 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                writer.WriteObjectValue(LinuxProfile, options);
             }
             if (Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile);
+                writer.WriteObjectValue(WindowsProfile, options);
             }
             if (Optional.IsDefined(ServicePrincipalProfile))
             {
                 writer.WritePropertyName("servicePrincipalProfile"u8);
-                writer.WriteObjectValue(ServicePrincipalProfile);
+                writer.WriteObjectValue(ServicePrincipalProfile, options);
             }
             if (Optional.IsCollectionDefined(AddonProfiles))
             {
@@ -161,19 +161,19 @@ namespace Azure.ResourceManager.ContainerService
                 foreach (var item in AddonProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(PodIdentityProfile))
             {
                 writer.WritePropertyName("podIdentityProfile"u8);
-                writer.WriteObjectValue(PodIdentityProfile);
+                writer.WriteObjectValue(PodIdentityProfile, options);
             }
             if (Optional.IsDefined(OidcIssuerProfile))
             {
                 writer.WritePropertyName("oidcIssuerProfile"u8);
-                writer.WriteObjectValue(OidcIssuerProfile);
+                writer.WriteObjectValue(OidcIssuerProfile, options);
             }
             if (Optional.IsDefined(NodeResourceGroup))
             {
@@ -198,32 +198,32 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
-                writer.WriteObjectValue(AadProfile);
+                writer.WriteObjectValue(AadProfile, options);
             }
             if (Optional.IsDefined(AutoUpgradeProfile))
             {
                 writer.WritePropertyName("autoUpgradeProfile"u8);
-                writer.WriteObjectValue(AutoUpgradeProfile);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                writer.WriteObjectValue(UpgradeSettings, options);
             }
             if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile);
+                writer.WriteObjectValue(AutoScalerProfile, options);
             }
             if (Optional.IsDefined(ApiServerAccessProfile))
             {
                 writer.WritePropertyName("apiServerAccessProfile"u8);
-                writer.WriteObjectValue(ApiServerAccessProfile);
+                writer.WriteObjectValue(ApiServerAccessProfile, options);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ContainerService
                 foreach (var item in IdentityProfile)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                writer.WriteObjectValue(HttpProxyConfig, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -279,17 +279,17 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(WorkloadAutoScalerProfile))
             {
                 writer.WritePropertyName("workloadAutoScalerProfile"u8);
-                writer.WriteObjectValue(WorkloadAutoScalerProfile);
+                writer.WriteObjectValue(WorkloadAutoScalerProfile, options);
             }
             if (Optional.IsDefined(AzureMonitorProfile))
             {
                 writer.WritePropertyName("azureMonitorProfile"u8);
-                writer.WriteObjectValue(AzureMonitorProfile);
+                writer.WriteObjectValue(AzureMonitorProfile, options);
             }
             if (Optional.IsDefined(ServiceMeshProfile))
             {
                 writer.WritePropertyName("serviceMeshProfile"u8);
-                writer.WriteObjectValue(ServiceMeshProfile);
+                writer.WriteObjectValue(ServiceMeshProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerService
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerService
             ServiceMeshProfile serviceMeshProfile = default;
             ResourceIdentifier resourceUID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -806,10 +806,10 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceManagedClusterData(
                 id,
                 name,
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.ContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.ContainerService
                         return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

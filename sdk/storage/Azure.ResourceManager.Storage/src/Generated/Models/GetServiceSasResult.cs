@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List service SAS credentials of specific resource. </summary>
+        [WirePath("serviceSasToken")]
         public string ServiceSasToken { get; }
     }
 }

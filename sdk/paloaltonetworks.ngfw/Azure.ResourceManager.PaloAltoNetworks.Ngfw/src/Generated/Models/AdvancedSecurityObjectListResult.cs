@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }

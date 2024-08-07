@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.BillingBenefits.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string savingsPlanOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string savingsPlanOrderId)
         {
             var message = _pipeline.CreateMessage();
@@ -61,14 +71,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SavingsPlanModelList>> ListAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var message = CreateListRequest(savingsPlanOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +96,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SavingsPlanModelList> List(string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var message = CreateListRequest(savingsPlanOrderId);
             _pipeline.Send(message, cancellationToken);
@@ -116,6 +112,39 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllRequestUri(string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderby", orderBy, true);
+            }
+            if (refreshSummary != null)
+            {
+                uri.AppendQuery("refreshSummary", refreshSummary, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken.Value, true);
+            }
+            if (selectedState != null)
+            {
+                uri.AppendQuery("selectedState", selectedState, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("take", take.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAllRequest(string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
@@ -209,6 +238,22 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string savingsPlanOrderId, string savingsPlanId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string savingsPlanOrderId, string savingsPlanId, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -240,22 +285,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BillingBenefitsSavingsPlanData>> GetAsync(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
             using var message = CreateGetRequest(savingsPlanOrderId, savingsPlanId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,22 +315,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BillingBenefitsSavingsPlanData> Get(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
 
             using var message = CreateGetRequest(savingsPlanOrderId, savingsPlanId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -319,6 +336,18 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -335,7 +364,7 @@ namespace Azure.ResourceManager.BillingBenefits
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -350,26 +379,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BillingBenefitsSavingsPlanData>> UpdateAsync(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(savingsPlanOrderId, savingsPlanId, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -398,26 +410,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BillingBenefitsSavingsPlanData> Update(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(savingsPlanOrderId, savingsPlanId, patch);
             _pipeline.Send(message, cancellationToken);
@@ -437,6 +432,19 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
+        internal RequestUriBuilder CreateValidateUpdateRequestUri(string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateUpdateRequest(string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -454,7 +462,7 @@ namespace Azure.ResourceManager.BillingBenefits
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -469,26 +477,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateAsync(string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateUpdateRequest(savingsPlanOrderId, savingsPlanId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -515,26 +506,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SavingsPlanValidateResponse> ValidateUpdate(string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateUpdateRequest(savingsPlanOrderId, savingsPlanId, content);
             _pipeline.Send(message, cancellationToken);
@@ -550,6 +524,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string savingsPlanOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string savingsPlanOrderId)
@@ -574,18 +556,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SavingsPlanModelList>> ListNextPageAsync(string nextLink, string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var message = CreateListNextPageRequest(nextLink, savingsPlanOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -611,18 +583,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SavingsPlanModelList> ListNextPage(string nextLink, string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
             using var message = CreateListNextPageRequest(nextLink, savingsPlanOrderId);
             _pipeline.Send(message, cancellationToken);
@@ -638,6 +600,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
@@ -666,10 +636,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SavingsPlanModelListResult>> ListAllNextPageAsync(string nextLink, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListAllNextPageRequest(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -699,10 +666,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SavingsPlanModelListResult> ListAllNextPage(string nextLink, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListAllNextPageRequest(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take);
             _pipeline.Send(message, cancellationToken);
@@ -718,6 +682,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateUpdateNextPageRequestUri(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateValidateUpdateNextPageRequest(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content)
@@ -744,30 +716,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateNextPageAsync(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateUpdateNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -795,30 +747,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SavingsPlanValidateResponse> ValidateUpdateNextPage(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateUpdateNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, content);
             _pipeline.Send(message, cancellationToken);

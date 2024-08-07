@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +209,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementNotificationNotificationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementNotificationNotificationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementNotificationNotificationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementNotificationNotificationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementNotificationResource>(Response.FromValue(new ApiManagementNotificationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -279,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,14 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckNotificationRecipientUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
@@ -375,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,14 +380,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<bool> CheckNotificationRecipientUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
@@ -421,7 +409,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,14 +419,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<RecipientUserContract>> CreateOrUpdateNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientUser");
             scope.Start();
@@ -467,7 +448,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -477,14 +458,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<RecipientUserContract> CreateOrUpdateNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientUser");
             scope.Start();
@@ -513,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -523,14 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response> DeleteNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientUser");
             scope.Start();
@@ -559,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,14 +536,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response DeleteNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientUser");
             scope.Start();
@@ -605,7 +565,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -630,7 +590,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,7 +615,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,14 +625,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckNotificationRecipientEmailEntityExistsAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
@@ -701,7 +654,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -711,14 +664,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response<bool> CheckNotificationRecipientEmailEntityExists(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
@@ -747,7 +693,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -757,14 +703,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response<RecipientEmailContract>> CreateOrUpdateNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientEmail");
             scope.Start();
@@ -793,7 +732,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -803,14 +742,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response<RecipientEmailContract> CreateOrUpdateNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientEmail");
             scope.Start();
@@ -839,7 +771,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -849,14 +781,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response> DeleteNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientEmail");
             scope.Start();
@@ -885,7 +810,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2022-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -895,14 +820,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response DeleteNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientEmail");
             scope.Start();

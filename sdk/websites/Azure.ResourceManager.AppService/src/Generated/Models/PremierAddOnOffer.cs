@@ -86,26 +86,37 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
         public string Sku { get; set; }
         /// <summary> Premier add on offer Product. </summary>
+        [WirePath("properties.product")]
         public string Product { get; set; }
         /// <summary> Premier add on offer Vendor. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.promoCodeRequired")]
         public bool? IsPromoCodeRequired { get; set; }
         /// <summary> Premier add on offer Quota. </summary>
+        [WirePath("properties.quota")]
         public int? Quota { get; set; }
         /// <summary> App Service plans this offer is restricted to. </summary>
+        [WirePath("properties.webHostingPlanRestrictions")]
         public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
         /// <summary> Privacy policy URL. </summary>
+        [WirePath("properties.privacyPolicyUrl")]
         public Uri PrivacyPolicyUri { get; set; }
         /// <summary> Legal terms URL. </summary>
+        [WirePath("properties.legalTermsUrl")]
         public Uri LegalTermsUri { get; set; }
         /// <summary> Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher { get; set; }
         /// <summary> Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

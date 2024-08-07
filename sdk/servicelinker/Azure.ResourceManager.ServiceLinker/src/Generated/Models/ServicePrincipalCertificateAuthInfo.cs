@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="certificate"/> is null. </exception>
         public ServicePrincipalCertificateAuthInfo(string clientId, Guid principalId, string certificate)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (certificate == null)
-            {
-                throw new ArgumentNullException(nameof(certificate));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             ClientId = clientId;
             PrincipalId = principalId;

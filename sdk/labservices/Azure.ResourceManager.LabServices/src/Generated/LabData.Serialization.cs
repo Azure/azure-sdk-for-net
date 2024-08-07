@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabData : IUtf8JsonSerializable, IJsonModel<LabData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,27 +66,27 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                writer.WriteObjectValue(AutoShutdownProfile, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                writer.WriteObjectValue(ConnectionProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                writer.WriteObjectValue(RosterProfile, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabData DeserializeLabData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.LabServices
             LabNetworkProfile networkProfile = default;
             LabState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.LabServices
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabData(
                 id,
                 name,
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.LabServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.LabServices
                         return DeserializeLabData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support reading '{options.Format}' format.");
             }
         }
 

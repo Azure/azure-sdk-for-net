@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvent : IUtf8JsonSerializable, IJsonModel<PolicyEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyEvent DeserializePolicyEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -500,7 +499,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
         public ElasticSanVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId)
         {
-            if (virtualNetworkResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkResourceId));
-            }
+            Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
 
             VirtualNetworkResourceId = virtualNetworkResourceId;
         }

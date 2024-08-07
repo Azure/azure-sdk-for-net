@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationDraResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationDraResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationDraResource() { }
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationDraData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationEmailConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationEmailConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationEmailConfigurationResource() { }
@@ -77,6 +82,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string emailConfigurationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -105,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationEventResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationEventResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationEventResource() { }
@@ -114,6 +124,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string eventName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataReplicationFabricCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>, System.Collections.IEnumerable
     {
@@ -142,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationFabricResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationFabricResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationFabricResource() { }
@@ -162,6 +177,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationFabricPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationFabricResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationFabricPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -192,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationPolicyResource() { }
@@ -203,6 +223,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -233,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationProtectedItemResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationProtectedItemResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationProtectedItemResource() { }
@@ -249,6 +274,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointCollection GetDataReplicationRecoveryPoints() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.Models.PlannedFailoverModel> PlannedFailover(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.PlannedFailoverModel body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.Models.PlannedFailoverModel>> PlannedFailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.PlannedFailoverModel body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationProtectedItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -277,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationRecoveryPointResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationRecoveryPointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationRecoveryPointResource() { }
@@ -286,6 +316,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationRecoveryPointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataReplicationReplicationExtensionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource>, System.Collections.IEnumerable
     {
@@ -314,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationReplicationExtensionResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationReplicationExtensionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationReplicationExtensionResource() { }
@@ -325,6 +360,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationReplicationExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -355,7 +395,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationVaultResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationVaultResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationVaultResource() { }
@@ -390,6 +430,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -418,7 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataReplicationWorkflowResource : Azure.ResourceManager.ArmResource
+    public partial class DataReplicationWorkflowResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataReplicationWorkflowResource() { }
@@ -427,6 +472,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationWorkflowData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class RecoveryServicesDataReplicationExtensions
     {

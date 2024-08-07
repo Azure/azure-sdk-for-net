@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azStackHciSiteId"/>, <paramref name="cluster"/> or <paramref name="migrationSolutionId"/> is null. </exception>
         public AzStackHciFabricModelCustomProperties(ResourceIdentifier azStackHciSiteId, AzStackHciClusterProperties cluster, ResourceIdentifier migrationSolutionId)
         {
-            if (azStackHciSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(azStackHciSiteId));
-            }
-            if (cluster == null)
-            {
-                throw new ArgumentNullException(nameof(cluster));
-            }
-            if (migrationSolutionId == null)
-            {
-                throw new ArgumentNullException(nameof(migrationSolutionId));
-            }
+            Argument.AssertNotNull(azStackHciSiteId, nameof(azStackHciSiteId));
+            Argument.AssertNotNull(cluster, nameof(cluster));
+            Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
 
             AzStackHciSiteId = azStackHciSiteId;
             ApplianceName = new ChangeTrackingList<string>();

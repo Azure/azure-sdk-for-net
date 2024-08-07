@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CryptoCertificateResult : IUtf8JsonSerializable, IJsonModel<CryptoCertificateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CryptoCertificateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Subject != null)
                 {
                     writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue(Subject);
+                    writer.WriteObjectValue(Subject, options);
                 }
                 else
                 {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Issuer != null)
                 {
                     writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue(Issuer);
+                    writer.WriteObjectValue(Issuer, options);
                 }
                 else
                 {
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey);
+                    writer.WriteObjectValue(PairedKey, options);
                 }
                 else
                 {
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CryptoCertificateResult DeserializeCryptoCertificateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -364,7 +363,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             bool? isWeakSignature = default;
             bool? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -613,10 +612,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CryptoCertificateResult(
                 id,
                 name,
@@ -654,7 +653,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -670,7 +669,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoCertificateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoCertificateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

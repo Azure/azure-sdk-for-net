@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PredictionResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string predictionName, PredictionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PredictionResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string predictionName, PredictionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual async Task<Response<PredictionResourceFormatResource>> GetAsync(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual Response<PredictionResourceFormatResource> Get(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual Response<bool> Exists(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual async Task<NullableResponse<PredictionResourceFormatResource>> GetIfExistsAsync(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
         public virtual NullableResponse<PredictionResourceFormatResource> GetIfExists(string predictionName, CancellationToken cancellationToken = default)
         {
-            if (predictionName == null)
-            {
-                throw new ArgumentNullException(nameof(predictionName));
-            }
-            if (predictionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predictionName));
-            }
+            Argument.AssertNotNullOrEmpty(predictionName, nameof(predictionName));
 
             using var scope = _predictionResourceFormatPredictionsClientDiagnostics.CreateScope("PredictionResourceFormatCollection.GetIfExists");
             scope.Start();

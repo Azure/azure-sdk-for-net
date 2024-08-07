@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
@@ -198,7 +196,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _scheduledActionRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _scheduledActionRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _scheduledActionRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _scheduledActionRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -280,17 +282,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScheduledActionResource>> UpdateAsync(WaitUntil waitUntil, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
             scope.Start();
             try
             {
                 var response = await _scheduledActionRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,17 +331,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScheduledActionResource> Update(WaitUntil waitUntil, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
             scope.Start();
             try
             {
                 var response = _scheduledActionRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

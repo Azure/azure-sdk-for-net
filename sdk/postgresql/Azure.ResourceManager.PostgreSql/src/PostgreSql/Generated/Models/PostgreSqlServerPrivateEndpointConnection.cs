@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Resource ID of the Private Endpoint Connection. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Private endpoint connection properties. </summary>
+        [WirePath("properties")]
         public PostgreSqlServerPrivateEndpointConnectionProperties Properties { get; }
     }
 }

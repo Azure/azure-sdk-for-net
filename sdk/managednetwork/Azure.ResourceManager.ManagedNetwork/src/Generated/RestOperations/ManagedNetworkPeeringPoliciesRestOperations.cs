@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.ManagedNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkPeeringPolicies/", false);
+            uri.AppendPath(managedNetworkPeeringPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName)
@@ -69,38 +84,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkPeeringPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +117,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkPeeringPolicyData> Get(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -179,6 +138,22 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkPeeringPolicies/", false);
+            uri.AppendPath(managedNetworkPeeringPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data)
@@ -201,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -218,42 +193,11 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,42 +222,11 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, ManagedNetworkPeeringPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -325,6 +238,22 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkPeeringPolicies/", false);
+            uri.AppendPath(managedNetworkPeeringPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName)
@@ -359,38 +288,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,38 +316,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkPeeringPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkPeeringPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkPeeringPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkPeeringPolicyName));
-            }
-            if (managedNetworkPeeringPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkPeeringPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkPeeringPolicyName, nameof(managedNetworkPeeringPolicyName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkPeeringPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -459,6 +332,29 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByManagedNetworkRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkPeeringPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByManagedNetworkRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
@@ -501,30 +397,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkPeeringPolicyListResult>> ListByManagedNetworkAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkRequest(subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,30 +428,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkPeeringPolicyListResult> ListByManagedNetwork(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkRequest(subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -592,6 +446,14 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByManagedNetworkNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByManagedNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
@@ -620,34 +482,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkPeeringPolicyListResult>> ListByManagedNetworkNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -677,34 +515,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkPeeringPolicyListResult> ListByManagedNetworkNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             _pipeline.Send(message, cancellationToken);

@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
-            if (backupSettings == null)
-            {
-                throw new ArgumentNullException(nameof(backupSettings));
-            }
-            if (targetDetails == null)
-            {
-                throw new ArgumentNullException(nameof(targetDetails));
-            }
+            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
+            Argument.AssertNotNull(targetDetails, nameof(targetDetails));
 
             TargetDetails = targetDetails;
         }
@@ -48,6 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Backup store detail for target server. </summary>
         internal PostgreSqlFlexibleServerBackupStoreDetails TargetDetails { get; }
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
+        [WirePath("targetDetails.sasUriList")]
         public IList<string> TargetDetailsSasUriList
         {
             get => TargetDetails?.SasUriList;

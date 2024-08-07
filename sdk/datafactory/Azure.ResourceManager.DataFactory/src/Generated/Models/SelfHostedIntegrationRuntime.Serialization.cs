@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SelfHostedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<SelfHostedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHostedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                writer.WriteObjectValue(LinkedInfo, options);
             }
             if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSelfHostedIntegrationRuntime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support reading '{options.Format}' format.");
             }
         }
 

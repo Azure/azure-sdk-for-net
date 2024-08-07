@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The type of restore point. </summary>
+        [WirePath("properties.restorePointType")]
         public RestorePointType? RestorePointType { get; }
         /// <summary> The earliest time to which this database can be restored. </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The time the backup was taken. </summary>
+        [WirePath("properties.restorePointCreationDate")]
         public DateTimeOffset? RestorePointCreatedOn { get; }
         /// <summary> The label of restore point for backup request by user. </summary>
+        [WirePath("properties.restorePointLabel")]
         public string RestorePointLabel { get; }
     }
 }

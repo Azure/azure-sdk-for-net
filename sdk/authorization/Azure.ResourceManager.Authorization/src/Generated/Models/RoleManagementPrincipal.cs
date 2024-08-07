@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The id of the principal made changes. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The name of the principal made changes. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Type of the principal. </summary>
+        [WirePath("type")]
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Email of principal. </summary>
+        [WirePath("email")]
         public string Email { get; }
     }
 }

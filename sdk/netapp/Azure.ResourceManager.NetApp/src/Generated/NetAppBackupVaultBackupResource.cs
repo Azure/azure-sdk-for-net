@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +147,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,7 +229,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +271,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppBackupVaultBackupResource>> UpdateAsync(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.Update");
             scope.Start();
@@ -322,7 +317,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -336,10 +331,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetAppBackupVaultBackupResource> Update(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.Update");
             scope.Start();
@@ -371,7 +363,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,10 +373,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreFilesBackupsUnderBackupVaultAsync(WaitUntil waitUntil, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderBackupVaultClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.RestoreFilesBackupsUnderBackupVault");
             scope.Start();
@@ -416,7 +405,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,10 +415,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation RestoreFilesBackupsUnderBackupVault(WaitUntil waitUntil, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderBackupVaultClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.RestoreFilesBackupsUnderBackupVault");
             scope.Start();

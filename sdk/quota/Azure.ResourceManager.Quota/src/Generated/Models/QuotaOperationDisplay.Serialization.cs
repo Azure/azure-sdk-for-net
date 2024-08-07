@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     public partial class QuotaOperationDisplay : IUtf8JsonSerializable, IJsonModel<QuotaOperationDisplay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaOperationDisplay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaOperationDisplay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaOperationDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaOperationDisplay DeserializeQuotaOperationDisplay(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quota.Models
             string operation = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -115,11 +115,118 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuotaOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Provider))
+                {
+                    builder.Append("  provider: ");
+                    if (Provider.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Provider}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Provider}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resource))
+                {
+                    builder.Append("  resource: ");
+                    if (Resource.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Resource}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Resource}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    builder.Append("  operation: ");
+                    if (Operation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Operation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Operation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<QuotaOperationDisplay>.Write(ModelReaderWriterOptions options)
@@ -130,8 +237,10 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +256,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaOperationDisplay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationDisplay)} does not support reading '{options.Format}' format.");
             }
         }
 

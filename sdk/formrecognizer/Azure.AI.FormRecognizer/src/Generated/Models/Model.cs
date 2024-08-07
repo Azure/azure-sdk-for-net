@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         internal Model(CustomFormModelInfo modelInfo)
         {
-            if (modelInfo == null)
-            {
-                throw new ArgumentNullException(nameof(modelInfo));
-            }
+            Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
             ModelInfo = modelInfo;
             ComposedTrainResults = new ChangeTrackingList<TrainResult>();

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareTriggerData : IUtf8JsonSerializable, IJsonModel<DataShareTriggerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareTriggerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareTriggerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataShareTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataShareTriggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataShare
             var format = options.Format == "W" ? ((IPersistableModel<DataShareTriggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareTriggerData DeserializeDataShareTriggerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataShare
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataShare
                         return DeserializeDataShareTriggerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareTriggerData)} does not support reading '{options.Format}' format.");
             }
         }
 

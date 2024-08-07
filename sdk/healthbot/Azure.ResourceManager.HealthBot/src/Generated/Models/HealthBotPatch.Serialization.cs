@@ -10,28 +10,27 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthBot;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
     public partial class HealthBotPatch : IUtf8JsonSerializable, IJsonModel<HealthBotPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthBotPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotPatch DeserializeHealthBotPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             ManagedServiceIdentity identity = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -158,10 +157,10 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HealthBotPatch(
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                         return DeserializeHealthBotPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

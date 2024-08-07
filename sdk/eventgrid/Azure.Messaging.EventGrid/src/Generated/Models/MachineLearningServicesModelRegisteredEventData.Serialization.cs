@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -59,12 +58,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MachineLearningServicesModelRegisteredEventData(modelName, modelVersion, modelTags, modelProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesModelRegisteredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesModelRegisteredEventData(document.RootElement);
+        }
+
         internal partial class MachineLearningServicesModelRegisteredEventDataConverter : JsonConverter<MachineLearningServicesModelRegisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelRegisteredEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesModelRegisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

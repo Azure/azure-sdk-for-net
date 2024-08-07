@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<P2SVpnGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, P2SVpnGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<P2SVpnGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, P2SVpnGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<Response<P2SVpnGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<P2SVpnGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<P2SVpnGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual NullableResponse<P2SVpnGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            if (gatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayName));
-            }
-            if (gatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
             using var scope = _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateScope("P2SVpnGatewayCollection.GetIfExists");
             scope.Start();

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -63,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -106,18 +105,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Optional.IsDefined(Cache))
-            {
-                if (Cache != null)
-                {
-                    writer.WritePropertyName("cache"u8);
-                    writer.WriteObjectValue(Cache);
-                }
-                else
-                {
-                    writer.WriteNull("cache");
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -139,7 +126,6 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? disabled = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            SearchIndexerCache cache = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -240,16 +226,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cache"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        cache = null;
-                        continue;
-                    }
-                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(property.Value);
-                    continue;
-                }
             }
             return new SearchIndexer(
                 name,
@@ -263,8 +239,23 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
                 disabled,
                 odataEtag,
-                encryptionKey,
-                cache);
+                encryptionKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

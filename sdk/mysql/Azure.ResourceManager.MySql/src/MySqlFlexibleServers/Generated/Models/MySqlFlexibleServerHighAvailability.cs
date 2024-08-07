@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Network related properties of a server. </summary>
+    /// <summary> High availability properties of a server. </summary>
     public partial class MySqlFlexibleServerHighAvailability
     {
         /// <summary>

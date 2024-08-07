@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationModuleData : IUtf8JsonSerializable, IJsonModel<AutomationModuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationModuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationModuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationModuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,12 +96,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue(ContentLink, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationModuleData DeserializeAutomationModuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Automation
             string description = default;
             bool? isComposite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -342,10 +341,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationModuleData(
                 id,
                 name,
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationModuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

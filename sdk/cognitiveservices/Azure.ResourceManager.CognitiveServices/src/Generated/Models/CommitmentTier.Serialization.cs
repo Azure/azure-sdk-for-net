@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentTier : IUtf8JsonSerializable, IJsonModel<CommitmentTier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentTier>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentTier>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentTier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentTier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                writer.WriteObjectValue(Quota, options);
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue(Cost);
+                writer.WriteObjectValue(Cost, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentTier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentTier DeserializeCommitmentTier(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CommitmentQuota quota = default;
             CommitmentCost cost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommitmentTier(
                 kind,
                 skuName,
@@ -191,6 +191,173 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skuName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuName))
+                {
+                    builder.Append("  skuName: ");
+                    if (SkuName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostingModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostingModel))
+                {
+                    builder.Append("  hostingModel: ");
+                    builder.AppendLine($"'{HostingModel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlanType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  planType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlanType))
+                {
+                    builder.Append("  planType: ");
+                    if (PlanType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PlanType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PlanType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tier))
+                {
+                    builder.Append("  tier: ");
+                    if (Tier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Tier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Tier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxCount))
+                {
+                    builder.Append("  maxCount: ");
+                    builder.AppendLine($"{MaxCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Quota), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quota: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Quota))
+                {
+                    builder.Append("  quota: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Quota, options, 2, false, "  quota: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cost), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cost: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cost))
+                {
+                    builder.Append("  cost: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cost, options, 2, false, "  cost: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CommitmentTier>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentTier>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,8 +366,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentTier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +385,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCommitmentTier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentTier)} does not support reading '{options.Format}' format.");
             }
         }
 

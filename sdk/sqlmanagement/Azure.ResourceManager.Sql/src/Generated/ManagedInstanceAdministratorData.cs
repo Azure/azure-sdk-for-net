@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Type of the managed instance administrator. </summary>
+        [WirePath("properties.administratorType")]
         public ManagedInstanceAdministratorType? AdministratorType { get; set; }
         /// <summary> Login name of the managed instance administrator. </summary>
+        [WirePath("properties.login")]
         public string Login { get; set; }
         /// <summary> SID (object ID) of the managed instance administrator. </summary>
+        [WirePath("properties.sid")]
         public Guid? Sid { get; set; }
         /// <summary> Tenant ID of the managed instance administrator. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

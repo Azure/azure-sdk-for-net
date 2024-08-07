@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InteractionResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string interactionName, InteractionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InteractionResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string interactionName, InteractionResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual async Task<Response<InteractionResourceFormatResource>> GetAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.Get");
             scope.Start();
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual Response<InteractionResourceFormatResource> Get(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual Response<bool> Exists(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual async Task<NullableResponse<InteractionResourceFormatResource>> GetIfExistsAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
         public virtual NullableResponse<InteractionResourceFormatResource> GetIfExists(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
-            if (interactionName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionName));
-            }
-            if (interactionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(interactionName));
-            }
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
 
             using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
             scope.Start();

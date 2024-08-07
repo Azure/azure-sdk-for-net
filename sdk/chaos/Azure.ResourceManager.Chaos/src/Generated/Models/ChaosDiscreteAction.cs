@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="parameters"/> or <paramref name="selectorId"/> is null. </exception>
         public ChaosDiscreteAction(string name, IEnumerable<ChaosKeyValuePair> parameters, string selectorId) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-            if (selectorId == null)
-            {
-                throw new ArgumentNullException(nameof(selectorId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(selectorId, nameof(selectorId));
 
             Parameters = parameters.ToList();
             SelectorId = selectorId;

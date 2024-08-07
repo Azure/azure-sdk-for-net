@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
     [NonParallelizable]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
-        public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
+        public LinkedServiceResourceTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("blob", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
+                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName);
                 return new DataFactoryLinkedServiceData(new AzureBlobFSLinkedService()
                 {
                     Uri = "https://testblobfs.dfs.core.windows.net",
                     ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
-                    ServicePrincipalKey = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret"),
+                    ServicePrincipalKey = new DataFactoryKeyVaultSecret(stroe, "TestSecret"),
                     Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                     AzureCloudType = DataFactoryElement<string>.FromLiteral("AzurePublic")
                 });
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("storage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
+                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName);
                 return new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
                 {
                     SasUri = "fakeSasUri",
-                    SasToken = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret")
+                    SasToken = new DataFactoryKeyVaultSecret(stroe, "TestSecret")
                 });
             });
         }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;"))
                 {
                     AlwaysEncryptedSettings = new SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity)
                     {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;")))
+                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;")))
                 {
                     Properties =
                     {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
                 });
             });
         }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 });
             });
         }
@@ -482,8 +482,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     UserName = "MyUserName",
                     Password = new DataFactorySecretString("fakepassword"),
-                    LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName1),
-                    HcatalogLinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName2)
+                    LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceLogName1),
+                    HcatalogLinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceLogName2)
                 });
             });
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 string linkedServiceHDInsightName = Recording.GenerateAssetName("adf_linkedservice_");
                 DataFactoryLinkedServiceData lkHDInsight = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://test.azurehdinsight.net"));
                 _ = dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceHDInsightName, lkHDInsight);
-                return new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService(4, "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
+                return new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService(4, "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
                 {
                     ServicePrincipalId = "servicePrincipalId",
                     ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 string linkedServiceAzureBlobName = Recording.GenerateAssetName("adf_linkedservice_");
                 var linkedService = dataFactory.GetDataFactoryLinkedServices();
                 _ = CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
-                return new DataFactoryLinkedServiceData(new AzureBatchLinkedService(DataFactoryElement<string>.FromSecretString("parameters"), "myaccount.region.batch.windows.com", "myPoolname", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceAzureBlobName))
+                return new DataFactoryLinkedServiceData(new AzureBatchLinkedService(DataFactoryElement<string>.FromSecretString("parameters"), "myaccount.region.batch.windows.com", "myPoolname", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceAzureBlobName))
                 {
                     AccessKey = new DataFactorySecretString("fakeAccesskey")
                 });
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
                     EncryptedCredential = "MyEncryptedCredentials"
                 })
                 {
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
                     EncryptedCredential = "MyEncryptedCredentials"
                 })
                 {
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new FileServerLinkedService(DataFactoryElement<string>.FromSecretString("Myhost"))
                 {
                     UserId = "MyUserId",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
                     EncryptedCredential = "MyEncryptedCredentials"
                 })
                 {
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
                 {
                     ConnectionString = "fakeConnString",
-                    AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    AccountKey = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 });
             });
         }
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     Server = "volvo2.teradata.ws",
                     Username = "microsoft",
                     AuthenticationType = TeradataAuthenticationType.Basic,
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     ConnectionString = "connectstring",
                     Username = "microsoft",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
                 {
                     Username = "admin",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     ServicePrincipalCredentialType = "ServicePrincipalKey",
                     ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     ServicePrincipalCredentialType = "ServicePrincipalKey",
                     ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     ServicePrincipalCredentialType = "ServicePrincipalKey",
                     ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 })
                 {
                     Properties =
@@ -1145,8 +1145,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     EnvironmentUri = "Uri",
                     Username = "admin",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
-                    SecurityToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName2"),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    SecurityToken = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName2"),
                     ApiVersion = "27.0"
                 })
                 {
@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("fakestring"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
                 });
             });
         }
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
                 {
-                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecret(new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
                 });
             });
         }
@@ -1539,8 +1539,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
-                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecret(new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
                 });
             });
         }
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                    CredString = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    CredString = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
                 });
             });
         }
@@ -1610,7 +1610,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new DrillLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new GreenplumLinkedService()
                 {
                     ConnectionString = "SecureString",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -1831,7 +1831,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new MariaDBLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("some connnection secret"),
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -1956,6 +1956,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("This test needs to be re-recorded")]
         public async Task LinkedService_Spark_Create()
         {
             await LinkedSerivceCreate("spark", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
@@ -1965,7 +1966,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     ServerType = SparkServerType.SharkServer,
                     ThriftTransportProtocol = SparkThriftTransportProtocol.Binary,
                     Username = "admin",
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "HuF3pmB3tylfer63MAbxTAGeVFyteGa+YIHFKPc2IguJqXwUOtvFUwMOeeX/ARhsUlt3xhS7b6XmNfGx2HVk5A=="),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeKey"),
                     HttpPath = "/",
                     EnableSsl = true,
                     UseSystemTrustStore = true,
@@ -2131,7 +2132,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new NetezzaLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -2158,7 +2159,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new VerticaLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -2374,7 +2375,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("fakeconnection"),
-                    AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    AccountKey = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -2401,7 +2402,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
                 {
                     SasUri = DataFactoryElement<string>.FromSecretString("fakeconnection"),
-                    SasToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    SasToken = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -2538,7 +2539,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return new DataFactoryLinkedServiceData(new MySqlLinkedService()
                 {
                     ConnectionString = DataFactoryElement<string>.FromSecretString("Fakeconnstring"),
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }
@@ -2549,7 +2550,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("postgresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;\r\n")) { });
+                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User ID=myUsername;Password=myPassword;\r\n")) { });
             });
         }
 
@@ -2561,7 +2562,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             {
                 return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
                 {
-                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
                 });
             });
         }

@@ -12,10 +12,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -114,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +256,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +288,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +327,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +358,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +396,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +427,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -474,7 +472,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +503,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -557,7 +555,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -588,7 +586,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -626,7 +624,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +655,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -709,7 +707,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -740,7 +738,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -778,7 +776,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -809,7 +807,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,7 +845,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -878,7 +876,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -923,7 +921,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -954,7 +952,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -992,7 +990,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1023,7 +1021,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1061,7 +1059,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1092,7 +1090,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1130,7 +1128,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1161,7 +1159,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1199,7 +1197,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1230,7 +1228,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1275,7 +1273,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1306,7 +1304,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1351,7 +1349,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1382,7 +1380,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1398,6 +1396,75 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<WebSiteSlotPublicCertificateResource> GetWebSiteSlotPublicCertificate(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             return GetWebSiteSlotPublicCertificates().Get(publicCertificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SiteSlotSiteContainerResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of SiteSlotSiteContainerResources and their operations over a SiteSlotSiteContainerResource. </returns>
+        public virtual SiteSlotSiteContainerCollection GetSiteSlotSiteContainers()
+        {
+            return GetCachedClient(client => new SiteSlotSiteContainerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a site container of a site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> Site Container Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SiteSlotSiteContainerResource>> GetSiteSlotSiteContainerAsync(string containerName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotSiteContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a site container of a site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteContainerSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> Site Container Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteSlotSiteContainerResource> GetSiteSlotSiteContainer(string containerName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotSiteContainers().Get(containerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteSlotExtensionResources in the WebSiteSlot. </summary>
@@ -1420,7 +1487,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1451,7 +1518,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1496,7 +1563,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1527,7 +1594,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1572,7 +1639,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1603,7 +1670,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1641,7 +1708,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1672,7 +1739,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1690,6 +1757,75 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteSlotWebJobs().Get(webJobName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SiteSlotWorkflowResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of SiteSlotWorkflowResources and their operations over a SiteSlotWorkflowResource. </returns>
+        public virtual SiteSlotWorkflowCollection GetSiteSlotWorkflows()
+        {
+            return GetCachedClient(client => new SiteSlotWorkflowCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceWorkflowSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SiteSlotWorkflowResource>> GetSiteSlotWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceWorkflowSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SiteSlotWorkflowResource> GetSiteSlotWorkflow(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotWorkflows().Get(workflowName, cancellationToken);
+        }
+
         /// <summary>
         /// Description for Gets the details of a web, mobile, or API app.
         /// <list type="bullet">
@@ -1703,7 +1839,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1743,7 +1879,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1783,7 +1919,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1802,7 +1938,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotWebAppsRestClient.DeleteSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _webSiteSlotWebAppsRestClient.CreateDeleteSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1827,7 +1965,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1846,7 +1984,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.DeleteSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _webSiteSlotWebAppsRestClient.CreateDeleteSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteMetrics, deleteEmptyServerFarm);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1871,7 +2011,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1884,10 +2024,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotResource>> UpdateAsync(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.Update");
             scope.Start();
@@ -1916,7 +2053,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1929,10 +2066,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<WebSiteSlotResource> Update(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.Update");
             scope.Start();
@@ -1961,7 +2095,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2000,7 +2134,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2039,7 +2173,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2052,10 +2186,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual async Task<Response> ApplySlotConfigurationSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.ApplySlotConfigurationSlot");
             scope.Start();
@@ -2084,7 +2215,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2097,10 +2228,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual Response ApplySlotConfigurationSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.ApplySlotConfigurationSlot");
             scope.Start();
@@ -2129,7 +2257,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2142,10 +2270,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<WebAppBackupData>> BackupSlotAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.BackupSlot");
             scope.Start();
@@ -2174,7 +2299,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2187,10 +2312,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<WebAppBackupData> BackupSlot(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.BackupSlot");
             scope.Start();
@@ -2219,7 +2341,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2232,10 +2354,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> UpdateApplicationSettingsSlotAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateApplicationSettingsSlot");
             scope.Start();
@@ -2264,7 +2383,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2277,10 +2396,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> UpdateApplicationSettingsSlot(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateApplicationSettingsSlot");
             scope.Start();
@@ -2309,7 +2425,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2343,7 +2459,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2377,7 +2493,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2390,10 +2506,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
         public virtual async Task<Response<SiteAuthSettings>> UpdateAuthSettingsSlotAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettings == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettings));
-            }
+            Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAuthSettingsSlot");
             scope.Start();
@@ -2422,7 +2535,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2435,10 +2548,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
         public virtual Response<SiteAuthSettings> UpdateAuthSettingsSlot(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettings == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettings));
-            }
+            Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAuthSettingsSlot");
             scope.Start();
@@ -2467,7 +2577,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2501,7 +2611,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2513,6 +2623,74 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotWebAppsRestClient.GetAuthSettingsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2WithoutSecretsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2WithoutSecretsSlotAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetAuthSettingsV2WithoutSecretsSlot");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.GetAuthSettingsV2WithoutSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via the V2 format
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetAuthSettingsV2WithoutSecretsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteAuthSettingsV2> GetAuthSettingsV2WithoutSecretsSlot(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetAuthSettingsV2WithoutSecretsSlot");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.GetAuthSettingsV2WithoutSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2535,7 +2713,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2548,10 +2726,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public virtual async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettingsV2 == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettingsV2));
-            }
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAuthSettingsV2Slot");
             scope.Start();
@@ -2580,7 +2755,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2593,10 +2768,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
         public virtual Response<SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
-            if (siteAuthSettingsV2 == null)
-            {
-                throw new ArgumentNullException(nameof(siteAuthSettingsV2));
-            }
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAuthSettingsV2Slot");
             scope.Start();
@@ -2625,7 +2797,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2659,7 +2831,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2693,7 +2865,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2706,10 +2878,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
         public virtual async Task<Response<AzureStoragePropertyDictionary>> UpdateAzureStorageAccountsSlotAsync(AzureStoragePropertyDictionary azureStorageAccounts, CancellationToken cancellationToken = default)
         {
-            if (azureStorageAccounts == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccounts));
-            }
+            Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAzureStorageAccountsSlot");
             scope.Start();
@@ -2738,7 +2907,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2751,10 +2920,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
         public virtual Response<AzureStoragePropertyDictionary> UpdateAzureStorageAccountsSlot(AzureStoragePropertyDictionary azureStorageAccounts, CancellationToken cancellationToken = default)
         {
-            if (azureStorageAccounts == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccounts));
-            }
+            Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateAzureStorageAccountsSlot");
             scope.Start();
@@ -2783,7 +2949,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2817,7 +2983,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2851,7 +3017,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2864,10 +3030,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<WebAppBackupInfo>> UpdateBackupConfigurationSlotAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateBackupConfigurationSlot");
             scope.Start();
@@ -2896,7 +3059,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2909,10 +3072,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<WebAppBackupInfo> UpdateBackupConfigurationSlot(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateBackupConfigurationSlot");
             scope.Start();
@@ -2941,7 +3101,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2979,7 +3139,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3017,7 +3177,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3051,7 +3211,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3085,7 +3245,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3098,10 +3258,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
         public virtual async Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsSlotAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
-            if (connectionStrings == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStrings));
-            }
+            Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateConnectionStringsSlot");
             scope.Start();
@@ -3130,7 +3287,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3143,10 +3300,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
         public virtual Response<ConnectionStringDictionary> UpdateConnectionStringsSlot(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
-            if (connectionStrings == null)
-            {
-                throw new ArgumentNullException(nameof(connectionStrings));
-            }
+            Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateConnectionStringsSlot");
             scope.Start();
@@ -3175,7 +3329,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3209,7 +3363,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3243,7 +3397,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3256,10 +3410,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> UpdateMetadataSlotAsync(AppServiceConfigurationDictionary metadata, CancellationToken cancellationToken = default)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateMetadataSlot");
             scope.Start();
@@ -3288,7 +3439,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3301,10 +3452,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> UpdateMetadataSlot(AppServiceConfigurationDictionary metadata, CancellationToken cancellationToken = default)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateMetadataSlot");
             scope.Start();
@@ -3333,7 +3481,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3367,7 +3515,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3401,7 +3549,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3439,7 +3587,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3477,7 +3625,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3490,10 +3638,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
         public virtual async Task<Response<WebAppPushSettings>> UpdateSitePushSettingsSlotAsync(WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
-            if (pushSettings == null)
-            {
-                throw new ArgumentNullException(nameof(pushSettings));
-            }
+            Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateSitePushSettingsSlot");
             scope.Start();
@@ -3522,7 +3667,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3535,10 +3680,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
         public virtual Response<WebAppPushSettings> UpdateSitePushSettingsSlot(WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
-            if (pushSettings == null)
-            {
-                throw new ArgumentNullException(nameof(pushSettings));
-            }
+            Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.UpdateSitePushSettingsSlot");
             scope.Start();
@@ -3567,7 +3709,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3601,7 +3743,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3635,7 +3777,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3673,7 +3815,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3711,7 +3853,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3745,7 +3887,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3767,6 +3909,152 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// List deployment statuses for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListSlotSiteDeploymentStatusesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CsmDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CsmDeploymentStatus> GetSlotSiteDeploymentStatusesSlotAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSlotSiteDeploymentStatusesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebAppsRestClient.CreateListSlotSiteDeploymentStatusesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmDeploymentStatus.DeserializeCsmDeploymentStatus(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetSlotSiteDeploymentStatusesSlot", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List deployment statuses for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListSlotSiteDeploymentStatusesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CsmDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CsmDeploymentStatus> GetSlotSiteDeploymentStatusesSlot(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSlotSiteDeploymentStatusesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebAppsRestClient.CreateListSlotSiteDeploymentStatusesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmDeploymentStatus.DeserializeCsmDeploymentStatus(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetSlotSiteDeploymentStatusesSlot", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the deployment status for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus/{deploymentStatusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSlotSiteDeploymentStatusSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
+        public virtual async Task<ArmOperation<CsmDeploymentStatus>> GetSlotSiteDeploymentStatusSlotAsync(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetSlotSiteDeploymentStatusSlot");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.GetSlotSiteDeploymentStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<CsmDeploymentStatus>(new CsmDeploymentStatusOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the deployment status for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus/{deploymentStatusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSlotSiteDeploymentStatusSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
+        public virtual ArmOperation<CsmDeploymentStatus> GetSlotSiteDeploymentStatusSlot(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
+
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetSlotSiteDeploymentStatusSlot");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.GetSlotSiteDeploymentStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, cancellationToken);
+                var operation = new AppServiceArmOperation<CsmDeploymentStatus>(new CsmDeploymentStatusOperationSource(), _webSiteSlotWebAppsClientDiagnostics, Pipeline, _webSiteSlotWebAppsRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Description for Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup.
         /// <list type="bullet">
         /// <item>
@@ -3779,7 +4067,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3792,10 +4080,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<RestoreRequestInfo>> DiscoverBackupSlotAsync(RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DiscoverBackupSlot");
             scope.Start();
@@ -3824,7 +4109,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3837,10 +4122,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<RestoreRequestInfo> DiscoverBackupSlot(RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DiscoverBackupSlot");
             scope.Start();
@@ -3869,7 +4151,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3903,7 +4185,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3937,7 +4219,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3971,7 +4253,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4005,7 +4287,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4039,7 +4321,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4073,7 +4355,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4107,7 +4389,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4141,7 +4423,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4153,26 +4435,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
@@ -4201,7 +4466,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4213,26 +4478,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         public virtual Response<WebAppKeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
@@ -4261,7 +4509,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4272,22 +4520,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public virtual async Task<Response> DeleteHostSecretSlotAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DeleteHostSecretSlot");
             scope.Start();
@@ -4316,7 +4550,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4327,22 +4561,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
         public virtual Response DeleteHostSecretSlot(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
-            if (keyType == null)
-            {
-                throw new ArgumentNullException(nameof(keyType));
-            }
-            if (keyType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyType));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
-            }
+            Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DeleteHostSecretSlot");
             scope.Start();
@@ -4359,6 +4579,64 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListHybridConnectionsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionData> GetHybridConnectionsSlotAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListHybridConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetHybridConnectionsSlot", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListHybridConnectionsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionData> GetHybridConnectionsSlot(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListHybridConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetHybridConnectionsSlot", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Shows whether an app can be cloned to another resource group or subscription.
         /// <list type="bullet">
         /// <item>
@@ -4371,7 +4649,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4409,7 +4687,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4447,7 +4725,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4485,7 +4763,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4523,7 +4801,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4534,14 +4812,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTraceOperationSlot", "", null, cancellationToken);
@@ -4560,7 +4831,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4571,14 +4842,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperationSlot(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTraceOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTraceOperationSlot", "", null, cancellationToken);
@@ -4597,7 +4861,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4634,7 +4898,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4671,7 +4935,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4712,7 +4976,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4753,7 +5017,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4787,7 +5051,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4821,7 +5085,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4832,14 +5096,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTracesSlotAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTracesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTracesSlot", "", null, cancellationToken);
@@ -4858,7 +5115,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4869,14 +5126,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTracesSlot(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTracesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTracesSlot", "", null, cancellationToken);
@@ -4895,7 +5145,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4906,14 +5156,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTraceOperationSlotV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTraceOperationSlotV2", "", null, cancellationToken);
@@ -4932,7 +5175,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4943,14 +5186,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTraceOperationSlotV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTraceOperationSlotV2", "", null, cancellationToken);
@@ -4969,7 +5205,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4980,14 +5216,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTracesSlotV2Async(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTracesSlotV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTracesSlotV2", "", null, cancellationToken);
@@ -5006,7 +5235,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5017,14 +5246,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTracesSlotV2(string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetNetworkTracesSlotV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetNetworkTracesSlotV2", "", null, cancellationToken);
@@ -5043,7 +5265,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5081,7 +5303,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5119,7 +5341,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5150,7 +5372,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5181,7 +5403,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5219,7 +5441,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5257,7 +5479,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5286,7 +5508,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5315,7 +5537,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5328,10 +5550,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
         {
-            if (publishingProfileOptions == null)
-            {
-                throw new ArgumentNullException(nameof(publishingProfileOptions));
-            }
+            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
@@ -5360,7 +5579,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5373,10 +5592,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
         public virtual Response<Stream> GetPublishingProfileXmlWithSecretsSlot(CsmPublishingProfile publishingProfileOptions, CancellationToken cancellationToken = default)
         {
-            if (publishingProfileOptions == null)
-            {
-                throw new ArgumentNullException(nameof(publishingProfileOptions));
-            }
+            Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetPublishingProfileXmlWithSecretsSlot");
             scope.Start();
@@ -5405,7 +5621,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5443,7 +5659,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5481,7 +5697,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5521,7 +5737,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5561,7 +5777,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5575,10 +5791,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreFromBackupBlobSlotAsync(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreFromBackupBlobSlot");
             scope.Start();
@@ -5610,7 +5823,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5624,10 +5837,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation RestoreFromBackupBlobSlot(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreFromBackupBlobSlot");
             scope.Start();
@@ -5659,7 +5869,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5673,10 +5883,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreFromDeletedAppSlotAsync(WaitUntil waitUntil, DeletedAppRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreFromDeletedAppSlot");
             scope.Start();
@@ -5708,7 +5915,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5722,10 +5929,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation RestoreFromDeletedAppSlot(WaitUntil waitUntil, DeletedAppRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreFromDeletedAppSlot");
             scope.Start();
@@ -5757,7 +5961,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5771,10 +5975,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreSnapshotSlotAsync(WaitUntil waitUntil, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreSnapshotSlot");
             scope.Start();
@@ -5806,7 +6007,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5820,10 +6021,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
         public virtual ArmOperation RestoreSnapshotSlot(WaitUntil waitUntil, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
-            if (restoreRequest == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequest));
-            }
+            Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.RestoreSnapshotSlot");
             scope.Start();
@@ -5855,7 +6053,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5869,10 +6067,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SlotDifference"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SlotDifference> GetSlotDifferencesSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSlotDifferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebAppsRestClient.CreateListSlotDifferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity);
@@ -5892,7 +6087,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5906,10 +6101,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SlotDifference"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SlotDifference> GetSlotDifferencesSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSlotDifferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebAppsRestClient.CreateListSlotDifferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, slotSwapEntity);
@@ -5925,11 +6117,11 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_SwapSlotSlot</description>
+        /// <description>WebApps_SwapSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5943,10 +6135,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual async Task<ArmOperation> SwapSlotAsync(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlot");
             scope.Start();
@@ -5974,11 +6163,11 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_SwapSlotSlot</description>
+        /// <description>WebApps_SwapSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5992,10 +6181,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
         public virtual ArmOperation SwapSlot(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
-            if (slotSwapEntity == null)
-            {
-                throw new ArgumentNullException(nameof(slotSwapEntity));
-            }
+            Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.SwapSlot");
             scope.Start();
@@ -6027,7 +6213,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6057,7 +6243,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6087,7 +6273,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6117,7 +6303,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6147,7 +6333,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6185,7 +6371,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6223,7 +6409,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6268,7 +6454,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6313,7 +6499,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6351,7 +6537,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6389,7 +6575,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6427,7 +6613,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6465,7 +6651,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6503,7 +6689,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6541,7 +6727,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6579,7 +6765,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6617,7 +6803,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6648,7 +6834,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6664,6 +6850,160 @@ namespace Azure.ResourceManager.AppService
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListUsagesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotWebAppsRestClient.CreateListUsagesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmUsageQuota.DeserializeCsmUsageQuota(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetUsagesSlot", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Creates the artifacts for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployWorkflowArtifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_DeployWorkflowArtifactsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeployWorkflowArtifactsSlotAsync(WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DeployWorkflowArtifactsSlot");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.DeployWorkflowArtifactsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workflowArtifacts, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Creates the artifacts for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployWorkflowArtifacts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_DeployWorkflowArtifactsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeployWorkflowArtifactsSlot(WorkflowArtifacts workflowArtifacts = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.DeployWorkflowArtifactsSlot");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.DeployWorkflowArtifactsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workflowArtifacts, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists logic app's connections for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/listWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListWorkflowsConnectionsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkflowEnvelopeData>> GetWorkflowsConnectionsSlotAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetWorkflowsConnectionsSlot");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotWebAppsRestClient.ListWorkflowsConnectionsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists logic app's connections for web site, or a deployment slot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/listWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListWorkflowsConnectionsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkflowEnvelopeData> GetWorkflowsConnectionsSlot(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotResource.GetWorkflowsConnectionsSlot");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotWebAppsRestClient.ListWorkflowsConnectionsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

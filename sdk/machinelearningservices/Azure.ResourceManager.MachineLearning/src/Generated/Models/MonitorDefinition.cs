@@ -59,14 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="computeConfiguration"/> or <paramref name="signals"/> is null. </exception>
         public MonitorDefinition(MonitorComputeConfigurationBase computeConfiguration, IDictionary<string, MonitoringSignalBase> signals)
         {
-            if (computeConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(computeConfiguration));
-            }
-            if (signals == null)
-            {
-                throw new ArgumentNullException(nameof(signals));
-            }
+            Argument.AssertNotNull(computeConfiguration, nameof(computeConfiguration));
+            Argument.AssertNotNull(signals, nameof(signals));
 
             ComputeConfiguration = computeConfiguration;
             Signals = signals;

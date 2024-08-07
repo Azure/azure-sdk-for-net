@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -53,6 +52,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsSmsDeliveryAttemptProperties(timestamp, segmentsSucceeded, segmentsFailed);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsSmsDeliveryAttemptProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsSmsDeliveryAttemptProperties(document.RootElement);
         }
     }
 }

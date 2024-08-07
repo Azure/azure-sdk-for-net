@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
@@ -120,8 +121,8 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -194,6 +195,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
+            Argument.AssertNotNull(blobContainerName, nameof(blobContainerName));
+            Argument.AssertNotNull(blobName, nameof(blobName));
+
             options ??= new BlobClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
@@ -3256,7 +3260,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3411,7 +3415,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -6526,6 +6530,127 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion
 
+        #region GetAccountInfo
+        /// <summary>
+        /// The <see cref="GetAccountInfo"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<AccountInfo> GetAccountInfo(
+            CancellationToken cancellationToken = default) =>
+            GetAccountInfoInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetAccountInfoInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccountInfo>> GetAccountInfoInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetAccountInfo)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobGetAccountInfoHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.GetAccountInfoAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.GetAccountInfo(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToAccountInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetAccountInfo
+
         #region GenerateSas
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasPermissions, DateTimeOffset)"/>
@@ -6557,6 +6682,42 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(permissions, expiresOn, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, out string stringToSign) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
                 BlobContainerName = BlobContainerName,
@@ -6564,7 +6725,7 @@ namespace Azure.Storage.Blobs.Specialized
                 Snapshot = _snapshot,
                 BlobVersionId = _blobVersionId,
                 EncryptionScope = _clientConfiguration.EncryptionScope
-            });
+            }, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
@@ -6591,6 +6752,37 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
+            => GenerateSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and and builder. The SAS is signed
+        /// by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateSasUri(BlobSasBuilder builder, out string stringToSign)
         {
             if (builder == null)
             {
@@ -6635,7 +6827,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
-                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign)
             };
             return sasUri.ToUri();
         }

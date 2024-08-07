@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Count of running and suspended queries. </summary>
+        [WirePath("properties.activeQueriesCount")]
         public int? ActiveQueriesCount { get; }
     }
 }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual async Task<Response<SphereCertificateResource>> GetAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual Response<SphereCertificateResource> Get(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,7 +188,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,7 +222,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +236,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
             scope.Start();
@@ -288,7 +265,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,14 +279,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual Response<bool> Exists(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.Exists");
             scope.Start();
@@ -338,7 +308,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,14 +322,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereCertificateResource>> GetIfExistsAsync(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
             scope.Start();
@@ -390,7 +353,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,14 +367,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         public virtual NullableResponse<SphereCertificateResource> GetIfExists(string serialNumber, CancellationToken cancellationToken = default)
         {
-            if (serialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(serialNumber));
-            }
-            if (serialNumber.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serialNumber));
-            }
+            Argument.AssertNotNullOrEmpty(serialNumber, nameof(serialNumber));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateCollection.GetIfExists");
             scope.Start();

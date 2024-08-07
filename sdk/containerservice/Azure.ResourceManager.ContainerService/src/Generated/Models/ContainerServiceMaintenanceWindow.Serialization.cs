@@ -10,25 +10,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<ContainerServiceMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceWindow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceWindow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceWindow DeserializeContainerServiceMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string startTime = default;
             IList<ContainerServiceDateSpan> notAllowedDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedule"u8))
@@ -142,10 +141,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceMaintenanceWindow(
                 schedule,
                 durationHours,
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceMaintenanceWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support reading '{options.Format}' format.");
             }
         }
 

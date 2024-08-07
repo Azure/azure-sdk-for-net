@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="logs"/> is null. </exception>
         internal RunStepCodeInterpreterLogOutput(string logs)
         {
-            if (logs == null)
-            {
-                throw new ArgumentNullException(nameof(logs));
-            }
+            Argument.AssertNotNull(logs, nameof(logs));
 
             Type = "logs";
             Logs = logs;

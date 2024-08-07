@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupPolicyName, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string backupPolicyName, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupPolicyResource>> GetAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
             scope.Start();
@@ -236,7 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<DataProtectionBackupPolicyResource> Get(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
             scope.Start();
@@ -288,7 +256,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +286,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +316,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
             scope.Start();
@@ -398,7 +359,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
             scope.Start();
@@ -448,7 +402,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataProtectionBackupPolicyResource>> GetIfExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
             scope.Start();
@@ -500,7 +447,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual NullableResponse<DataProtectionBackupPolicyResource> GetIfExists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            if (backupPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(backupPolicyName));
-            }
-            if (backupPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
             using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
             scope.Start();

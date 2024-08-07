@@ -52,14 +52,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> or <paramref name="items"/> is null. </exception>
         internal DocumentList(IEnumerable<DocumentSpan> spans, IEnumerable<DocumentListItem> items)
         {
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
+            Argument.AssertNotNull(spans, nameof(spans));
+            Argument.AssertNotNull(items, nameof(items));
 
             Spans = spans.ToList();
             Items = items.ToList();

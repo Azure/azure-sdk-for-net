@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     public partial class PrivateDnsMXRecordInfo : IUtf8JsonSerializable, IJsonModel<PrivateDnsMXRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsMXRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsMXRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateDnsMXRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsMXRecordInfo DeserializePrivateDnsMXRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             int? preference = default;
             string exchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preference"u8))
@@ -97,10 +96,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateDnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
 
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         return DeserializePrivateDnsMXRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsMXRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

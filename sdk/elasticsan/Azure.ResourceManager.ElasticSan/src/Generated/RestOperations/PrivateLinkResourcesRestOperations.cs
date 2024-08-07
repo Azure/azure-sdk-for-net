@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.ElasticSan
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByElasticSanRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ElasticSanPrivateLinkResourceListResult>> ListByElasticSanAsync(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (elasticSanName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticSanName));
-            }
-            if (elasticSanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticSanName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
             using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ElasticSanPrivateLinkResourceListResult> ListByElasticSan(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (elasticSanName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticSanName));
-            }
-            if (elasticSanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticSanName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
             using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
             _pipeline.Send(message, cancellationToken);

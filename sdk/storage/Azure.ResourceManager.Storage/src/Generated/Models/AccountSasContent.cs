@@ -87,20 +87,28 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </summary>
+        [WirePath("signedServices")]
         public StorageAccountSasSignedService Services { get; }
         /// <summary> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </summary>
+        [WirePath("signedResourceTypes")]
         public StorageAccountSasSignedResourceType ResourceTypes { get; }
         /// <summary> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>
+        [WirePath("signedPermission")]
         public StorageAccountSasPermission Permissions { get; }
         /// <summary> An IP address or a range of IP addresses from which to accept requests. </summary>
+        [WirePath("signedIp")]
         public string IPAddressOrRange { get; set; }
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>
+        [WirePath("signedProtocol")]
         public StorageAccountHttpProtocol? Protocols { get; set; }
         /// <summary> The time at which the SAS becomes valid. </summary>
+        [WirePath("signedStart")]
         public DateTimeOffset? SharedAccessStartOn { get; set; }
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
+        [WirePath("signedExpiry")]
         public DateTimeOffset SharedAccessExpireOn { get; }
         /// <summary> The key to sign the account SAS token with. </summary>
+        [WirePath("keyToSign")]
         public string KeyToSign { get; set; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Private endpoint connection properties. </summary>
+        [WirePath("properties")]
         public ServerPrivateEndpointConnectionProperties Properties { get; }
     }
 }

@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudL3NetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             long vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudL3NetworkData(
                 id,
                 name,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

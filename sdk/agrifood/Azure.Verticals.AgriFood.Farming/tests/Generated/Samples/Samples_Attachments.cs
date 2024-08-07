@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -26,7 +24,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
 
@@ -40,7 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
 
@@ -54,7 +52,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
 
@@ -81,7 +79,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
 
@@ -108,10 +106,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             using RequestContent content = null;
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -123,10 +121,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             using RequestContent content = null;
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -138,10 +136,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -166,10 +164,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -194,7 +192,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.Delete("<partyId>", "<attachmentId>");
 
@@ -207,7 +205,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 
@@ -220,7 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.Delete("<partyId>", "<attachmentId>");
 
@@ -233,7 +231,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 
@@ -246,7 +244,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.Download("<partyId>", "<attachmentId>", null);
 
@@ -263,7 +261,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
 
@@ -280,7 +278,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = client.Download("<partyId>", "<attachmentId>", null);
 
@@ -297,7 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
 
@@ -314,7 +312,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -329,7 +327,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -344,7 +342,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -372,7 +370,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient();
 
             await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

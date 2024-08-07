@@ -15,13 +15,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeBackupConfiguration()
         {
         }
-
-        /// <summary> Backup Policy Resource ID. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier BackupPolicyId { get; set; }
-
         /// <summary> Vault Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier VaultId { get; set; }
+
+        /// <summary> Backup Enabled. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsBackupEnabled { get; set; }
     }
 }

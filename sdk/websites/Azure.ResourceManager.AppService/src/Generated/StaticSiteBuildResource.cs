@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -92,6 +90,75 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of StaticSiteBuildDatabaseConnectionResources in the StaticSiteBuild. </summary>
+        /// <returns> An object representing collection of StaticSiteBuildDatabaseConnectionResources and their operations over a StaticSiteBuildDatabaseConnectionResource. </returns>
+        public virtual StaticSiteBuildDatabaseConnectionCollection GetStaticSiteBuildDatabaseConnections()
+        {
+            return GetCachedClient(client => new StaticSiteBuildDatabaseConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns overview of a database connection for a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseConnectionName"> Name of the database connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteBuildDatabaseConnectionResource>> GetStaticSiteBuildDatabaseConnectionAsync(string databaseConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetStaticSiteBuildDatabaseConnections().GetAsync(databaseConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns overview of a database connection for a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseConnectionName"> Name of the database connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteBuildDatabaseConnectionResource> GetStaticSiteBuildDatabaseConnection(string databaseConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetStaticSiteBuildDatabaseConnections().Get(databaseConnectionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of StaticSiteBuildUserProvidedFunctionAppResources in the StaticSiteBuild. </summary>
         /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionAppResources and their operations over a StaticSiteBuildUserProvidedFunctionAppResource. </returns>
         public virtual StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps()
@@ -112,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,6 +228,75 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteBuildUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of StaticSiteBuildLinkedBackendResources in the StaticSiteBuild. </summary>
+        /// <returns> An object representing collection of StaticSiteBuildLinkedBackendResources and their operations over a StaticSiteBuildLinkedBackendResource. </returns>
+        public virtual StaticSiteBuildLinkedBackendCollection GetStaticSiteBuildLinkedBackends()
+        {
+            return GetCachedClient(client => new StaticSiteBuildLinkedBackendCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteBuildLinkedBackendResource>> GetStaticSiteBuildLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return await GetStaticSiteBuildLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteBuildLinkedBackendResource> GetStaticSiteBuildLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return GetStaticSiteBuildLinkedBackends().Get(linkedBackendName, cancellationToken);
+        }
+
         /// <summary>
         /// Description for Gets the details of a static site build.
         /// <list type="bullet">
@@ -174,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +390,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +432,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +474,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,10 +483,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateAppSettings");
             scope.Start();
@@ -379,7 +512,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,10 +521,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateAppSettings");
             scope.Start();
@@ -420,7 +550,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,10 +559,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateFunctionAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateFunctionAppSettings");
             scope.Start();
@@ -461,7 +588,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,10 +597,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateFunctionAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateFunctionAppSettings");
             scope.Start();
@@ -502,7 +626,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -532,7 +656,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -562,7 +686,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -600,7 +724,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -638,7 +762,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -676,7 +800,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -702,6 +826,66 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Returns details of database connections for a static site build
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/showDatabaseConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBuildDatabaseConnectionsWithDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="StaticSiteDatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteDatabaseConnectionData> GetBuildDatabaseConnectionsWithDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetBuildDatabaseConnectionsWithDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetBuildDatabaseConnectionsWithDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetBuildDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns details of database connections for a static site build
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/showDatabaseConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBuildDatabaseConnectionsWithDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StaticSiteDatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteDatabaseConnectionData> GetBuildDatabaseConnectionsWithDetails(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateGetBuildDatabaseConnectionsWithDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateGetBuildDatabaseConnectionsWithDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetBuildDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Deploys zipped content to a specific environment of a static site.
         /// <list type="bullet">
         /// <item>
@@ -714,7 +898,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,10 +912,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateZipDeploymentAsync(WaitUntil waitUntil, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateZipDeployment");
             scope.Start();
@@ -763,7 +944,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -777,10 +958,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         public virtual ArmOperation CreateZipDeployment(WaitUntil waitUntil, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateZipDeployment");
             scope.Start();

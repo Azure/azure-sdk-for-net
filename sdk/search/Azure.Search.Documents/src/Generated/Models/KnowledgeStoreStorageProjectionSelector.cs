@@ -18,10 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreStorageProjectionSelector(string storageContainer)
         {
-            if (storageContainer == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainer));
-            }
+            Argument.AssertNotNull(storageContainer, nameof(storageContainer));
 
             StorageContainer = storageContainer;
         }

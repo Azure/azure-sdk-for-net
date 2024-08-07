@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Aggregate maximum bit rate. </summary>
+    /// <summary>
+    /// Aggregate maximum bit rate.
+    /// Serialized Name: Ambr
+    /// </summary>
     public partial class Ambr
     {
         /// <summary>
@@ -46,27 +49,33 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
-        /// <param name="uplink"> Uplink bit rate. </param>
-        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="uplink">
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </param>
+        /// <param name="downlink">
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public Ambr(string uplink, string downlink)
         {
-            if (uplink == null)
-            {
-                throw new ArgumentNullException(nameof(uplink));
-            }
-            if (downlink == null)
-            {
-                throw new ArgumentNullException(nameof(downlink));
-            }
+            Argument.AssertNotNull(uplink, nameof(uplink));
+            Argument.AssertNotNull(downlink, nameof(downlink));
 
             Uplink = uplink;
             Downlink = downlink;
         }
 
         /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
-        /// <param name="uplink"> Uplink bit rate. </param>
-        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="uplink">
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </param>
+        /// <param name="downlink">
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Ambr(string uplink, string downlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,9 +89,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> Uplink bit rate. </summary>
+        /// <summary>
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </summary>
+        [WirePath("uplink")]
         public string Uplink { get; set; }
-        /// <summary> Downlink bit rate. </summary>
+        /// <summary>
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </summary>
+        [WirePath("downlink")]
         public string Downlink { get; set; }
     }
 }

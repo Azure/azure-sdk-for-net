@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -244,7 +245,10 @@ namespace Azure.Storage.DataMovement
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             if (File.Exists(_uri.LocalPath))
             {
@@ -285,5 +289,18 @@ namespace Azure.Storage.DataMovement
         {
             return new LocalDestinationCheckpointData();
         }
+
+        // no-op for get permissions
+        protected internal override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected internal override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

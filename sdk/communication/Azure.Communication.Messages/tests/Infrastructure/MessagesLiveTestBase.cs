@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages.Tests
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("Repeatability-Request-ID");
             SanitizedHeaders.Add("Repeatability-First-Sent");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
         }
 
         protected NotificationMessagesClient CreateInstrumentedNotificationMessagesClient()

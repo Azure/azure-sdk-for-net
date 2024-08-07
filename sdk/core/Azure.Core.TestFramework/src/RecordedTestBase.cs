@@ -22,6 +22,8 @@ namespace Azure.Core.TestFramework
     {
         public TestRecording Recording { get; private set; }
 
+        private static string EmptyGuid = Guid.Empty.ToString();
+
         public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -54,8 +56,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
         /// </summary>
-        public List<string> JsonPathSanitizers { get; } =
-            new() { "$..primaryKey", "$..secondaryKey", "$..primaryConnectionString", "$..secondaryConnectionString", "$..connectionString" };
+        public List<string> JsonPathSanitizers { get; } = new();
 
         /// <summary>
         /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
@@ -74,7 +75,11 @@ namespace Azure.Core.TestFramework
         /// a regex for matching on the URI. <seealso cref="SanitizedQueryParameters"/> is a convenience property that allows you to sanitize
         /// query parameters without constructing the <see cref="UriRegexSanitizer"/> yourself.
         /// </summary>
-        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
+        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
+        {
+            UriRegexSanitizer.CreateWithQueryParameter("skoid", EmptyGuid),
+            UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
+        };
 
         /// <summary>
         /// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
@@ -92,18 +97,56 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// The list of headers that will be sanitized on the request and response. By default, the "Authorization" header is included.
         /// </summary>
-        public List<string> SanitizedHeaders { get; } = new() { "Authorization" };
+        public List<string> SanitizedHeaders { get; } = new();
 
         /// <summary>
         /// The list of query parameters that will be sanitized on the request and response URIs.
         /// </summary>
-        public List<string> SanitizedQueryParameters { get; } = new();
+        public List<string> SanitizedQueryParameters { get; } = new()
+        {
+            "sig",
+            "sip",
+            "client_id",
+            "client_secret"
+        };
 
         /// <summary>
         /// The list of header keys and query parameter tuples where the associated query parameter that should be sanitized from the corresponding
         /// request and response headers.
         /// </summary>
         public List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
+
+        /// <summary>
+        /// The list of sanitizers to remove. Sanitizer IDs can be found in Test Proxy docs.
+        /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md
+        /// </summary>
+        public List<string> SanitizersToRemove { get; } = new()
+        {
+            "AZSDK2003", // Location header
+            "AZSDK2006", // x-ms-rename-source
+            "AZSDK2007", // x-ms-file-rename-source
+            "AZSDK2008", // x-ms-copy-source
+            "AZSDK2020", // x-ms-request-id
+            "AZSDK2030", // Operation-location header
+            "AZSDK3420", // $..targetResourceId
+            "AZSDK3423", // $..source
+            "AZSDK3424", // $..to
+            "AZSDK3425", // $..from
+            "AZSDK3430", // $..id
+            "AZSDK3433", // $..userId
+            "AZSDK3447", // $.key - app config key - not a secret
+            "AZSDK3448", // $.value[*].key - search key - not a secret
+            "AZSDK3451", // $..storageContainerUri - used for mixed reality - no sas token
+            "AZSDK3478", // $..accountName
+            "AZSDK3488", // $..targetResourceRegion
+            "AZSDK3490", // $..etag
+            "AZSDK3491", // $..functionUri
+            "AZSDK3493", // $..name
+            "AZSDK3494", // $..friendlyName
+            "AZSDK3495", // $..targetModelLocation
+            "AZSDK3496", // $..resourceLocation
+            "AZSDK4001", // host name regex
+        };
 
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
@@ -134,9 +177,10 @@ namespace Azure.Core.TestFramework
             {
                 _replacementHost = value;
                 UriRegexSanitizers.Add(
-                    new UriRegexSanitizer(@"https://(?<host>[^/]+)/", _replacementHost)
+                    new UriRegexSanitizer(@"https://(?<host>[^/]+)/")
                     {
-                        GroupForReplace = "host"
+                        GroupForReplace = "host",
+                        Value = _replacementHost
                     });
             }
         }

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
         public AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId)
         {
-            if (logicAppResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(logicAppResourceId));
-            }
+            Argument.AssertNotNull(logicAppResourceId, nameof(logicAppResourceId));
 
             LogicAppResourceId = logicAppResourceId;
         }

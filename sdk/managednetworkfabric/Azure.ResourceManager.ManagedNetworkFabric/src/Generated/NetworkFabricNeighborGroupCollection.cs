@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricNeighborGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string neighborGroupName, NetworkFabricNeighborGroupData data, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricNeighborGroupResource> CreateOrUpdate(WaitUntil waitUntil, string neighborGroupName, NetworkFabricNeighborGroupData data, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricNeighborGroupResource>> GetAsync(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual Response<NetworkFabricNeighborGroupResource> Get(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricNeighborGroupResource>> GetIfExistsAsync(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricNeighborGroupResource> GetIfExists(string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (neighborGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(neighborGroupName));
-            }
-            if (neighborGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(neighborGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
 
             using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.GetIfExists");
             scope.Start();

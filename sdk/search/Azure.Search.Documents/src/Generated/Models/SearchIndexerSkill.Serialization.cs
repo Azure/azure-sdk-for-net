@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -38,14 +37,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -61,7 +60,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Skills.Custom.AmlSkill": return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element);
                     case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill": return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element);
                     case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element);
@@ -84,6 +82,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -67,7 +65,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
         /// <param name="classificationPolicyId"> Id of a classification policy used for classifying this job. </param>
         /// <param name="queueId"> Id of a queue that this job is queued to. </param>
-        /// <param name="priority"> Priority of this job. </param>
+        /// <param name="priority"> Priority of this job. Value must be between -100 to 100. </param>
         /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
         /// <param name="requestedWorkerSelectors"> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </param>
         /// <param name="attachedWorkerSelectors"> A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
@@ -76,7 +74,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="tags"> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </param>
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
-        /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
+        /// <param name="matchingMode">
+        /// If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.
+        /// Please note <see cref="JobMatchingMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QueueAndMatchMode"/>, <see cref="ScheduleAndSuspendMode"/> and <see cref="SuspendMode"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

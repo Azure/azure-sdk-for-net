@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,8 +32,18 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-15-preview";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string verifiedPartnerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners/", false);
+            uri.AppendPath(verifiedPartnerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string verifiedPartnerName)
@@ -60,14 +69,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VerifiedPartnerData>> GetAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var message = CreateGetRequest(verifiedPartnerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,14 +96,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VerifiedPartnerData> Get(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var message = CreateGetRequest(verifiedPartnerName);
             _pipeline.Send(message, cancellationToken);
@@ -119,6 +114,23 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string filter, int? top)
@@ -188,6 +200,14 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -210,10 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<VerifiedPartnersListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -239,10 +256,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<VerifiedPartnersListResult> ListNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, filter, top);
             _pipeline.Send(message, cancellationToken);

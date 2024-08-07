@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
@@ -104,6 +102,75 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ServiceFabricManagedNodeTypeResources in the ServiceFabricManagedCluster. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedNodeTypeResources and their operations over a ServiceFabricManagedNodeTypeResource. </returns>
+        public virtual ServiceFabricManagedNodeTypeCollection GetServiceFabricManagedNodeTypes()
+        {
+            return GetCachedClient(client => new ServiceFabricManagedNodeTypeCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Service Fabric node type of a given managed cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetServiceFabricManagedNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceFabricManagedNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Service Fabric node type of a given managed cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeTypeName"> The name of the node type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricManagedNodeTypeResource> GetServiceFabricManagedNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceFabricManagedNodeTypes().Get(nodeTypeName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ServiceFabricManagedApplicationTypeResources in the ServiceFabricManagedCluster. </summary>
         /// <returns> An object representing collection of ServiceFabricManagedApplicationTypeResources and their operations over a ServiceFabricManagedApplicationTypeResource. </returns>
         public virtual ServiceFabricManagedApplicationTypeCollection GetServiceFabricManagedApplicationTypes()
@@ -124,7 +191,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +222,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,7 +260,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +291,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,75 +309,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return GetServiceFabricManagedApplications().Get(applicationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceFabricManagedNodeTypeResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedNodeTypeResources and their operations over a ServiceFabricManagedNodeTypeResource. </returns>
-        public virtual ServiceFabricManagedNodeTypeCollection GetServiceFabricManagedNodeTypes()
-        {
-            return GetCachedClient(client => new ServiceFabricManagedNodeTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetServiceFabricManagedNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceFabricManagedNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeTypeName"> The name of the node type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedNodeTypeResource> GetServiceFabricManagedNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetServiceFabricManagedNodeTypes().Get(nodeTypeName, cancellationToken);
-        }
-
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
         /// <list type="bullet">
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +362,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,7 +402,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -446,7 +444,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -488,7 +486,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -501,10 +499,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> UpdateAsync(ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
             scope.Start();
@@ -533,7 +528,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -546,10 +541,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterResource> Update(ServiceFabricManagedClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.Update");
             scope.Start();
@@ -578,7 +570,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -612,7 +604,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,7 +638,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -680,7 +672,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -714,7 +706,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -748,7 +740,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,7 +774,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -796,14 +788,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
             scope.Start();
@@ -850,7 +836,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -864,14 +850,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.AddTag");
             scope.Start();
@@ -918,7 +898,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -931,10 +911,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
             scope.Start();
@@ -978,7 +955,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -991,10 +968,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.SetTags");
             scope.Start();
@@ -1038,7 +1012,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1051,10 +1025,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
             scope.Start();
@@ -1101,7 +1072,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1114,10 +1085,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ServiceFabricManagedClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _serviceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.RemoveTag");
             scope.Start();

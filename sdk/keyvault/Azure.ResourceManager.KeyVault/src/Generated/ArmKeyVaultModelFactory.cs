@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -267,8 +266,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null)
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -281,6 +281,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 properties,
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -375,8 +376,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null, ManagedHsmSku sku = null)
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -392,6 +394,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 privateLinkServiceConnectionState,
                 provisioningState,
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -446,8 +449,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null)
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
@@ -464,6 +468,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
                 sku,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -564,6 +569,59 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 tags,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the managed HSM. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku)
+        {
+            return ManagedHsmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, sku: sku, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
+        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier privateEndpointId, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku)
+        {
+            return ManagedHsmPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, privateEndpointId: privateEndpointId, privateLinkServiceConnectionState: privateLinkServiceConnectionState, provisioningState: provisioningState, sku: sku, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="groupId"> Group identifier of private link resource. </param>
+        /// <param name="requiredMembers"> Required member names of private link resource. </param>
+        /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkResourceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames, ManagedHsmSku sku)
+        {
+            return ManagedHsmPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames, sku: sku, identity: default);
         }
     }
 }

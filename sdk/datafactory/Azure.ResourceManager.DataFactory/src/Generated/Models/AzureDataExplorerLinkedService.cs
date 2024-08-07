@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
         public AzureDataExplorerLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> database)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(database, nameof(database));
 
             Endpoint = endpoint;
             Database = database;
@@ -47,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDataExplorerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> database, DataFactoryElement<string> tenant, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDataExplorerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> database, DataFactoryElement<string> tenant, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ServicePrincipalId = servicePrincipalId;
@@ -68,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Kusto. </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>

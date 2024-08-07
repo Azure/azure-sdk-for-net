@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal FacetErrorDetails(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;

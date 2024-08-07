@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the blob endpoint. </summary>
+        [WirePath("blob")]
         public Uri BlobUri { get; }
         /// <summary> Gets the queue endpoint. </summary>
+        [WirePath("queue")]
         public Uri QueueUri { get; }
         /// <summary> Gets the table endpoint. </summary>
+        [WirePath("table")]
         public Uri TableUri { get; }
         /// <summary> Gets the file endpoint. </summary>
+        [WirePath("file")]
         public Uri FileUri { get; }
         /// <summary> Gets the web endpoint. </summary>
+        [WirePath("web")]
         public Uri WebUri { get; }
         /// <summary> Gets the dfs endpoint. </summary>
+        [WirePath("dfs")]
         public Uri DfsUri { get; }
     }
 }

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -69,6 +69,14 @@ namespace Azure.Maps.Routing.Models
                 }
             }
             return new RouteDirections(formatVersion, routes ?? new ChangeTrackingList<RouteData>(), optimizedWaypoints ?? new ChangeTrackingList<RouteOptimizedWaypoint>(), report);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteDirections FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteDirections(document.RootElement);
         }
     }
 }

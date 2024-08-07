@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inviteeEmail"/> is null. </exception>
         public DatabaseInviteFollowerContent(string inviteeEmail)
         {
-            if (inviteeEmail == null)
-            {
-                throw new ArgumentNullException(nameof(inviteeEmail));
-            }
+            Argument.AssertNotNull(inviteeEmail, nameof(inviteeEmail));
 
             InviteeEmail = inviteeEmail;
         }

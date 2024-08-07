@@ -11,25 +11,24 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class TumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<TumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline);
+            writer.WriteObjectValue(Pipeline, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                writer.WriteObjectValue(RetryPolicy, options);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeTumblingWindowTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

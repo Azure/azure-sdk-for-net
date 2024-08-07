@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicObservabilityAccountInfo : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilityAccountInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityAccountInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityAccountInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicObservabilityAccountInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicObservabilityAccountInfo DeserializeNewRelicObservabilityAccountInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string ingestionKey = default;
             AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -108,11 +108,87 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NewRelicObservabilityAccountInfo(accountId, ingestionKey, region, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountId))
+                {
+                    builder.Append("  accountId: ");
+                    if (AccountId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestionKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ingestionKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngestionKey))
+                {
+                    builder.Append("  ingestionKey: ");
+                    if (IngestionKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IngestionKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IngestionKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  region: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Region))
+                {
+                    builder.Append("  region: ");
+                    builder.AppendLine($"'{Region.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityAccountInfo>.Write(ModelReaderWriterOptions options)
@@ -123,8 +199,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +218,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicObservabilityAccountInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

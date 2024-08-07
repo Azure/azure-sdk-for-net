@@ -79,16 +79,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The workload group minimum percentage resource. </summary>
+        [WirePath("properties.minResourcePercent")]
         public int? MinResourcePercent { get; set; }
         /// <summary> The workload group cap percentage resource. </summary>
+        [WirePath("properties.maxResourcePercent")]
         public int? MaxResourcePercent { get; set; }
         /// <summary> The workload group request minimum grant percentage. </summary>
+        [WirePath("properties.minResourcePercentPerRequest")]
         public double? MinResourcePercentPerRequest { get; set; }
         /// <summary> The workload group request maximum grant percentage. </summary>
+        [WirePath("properties.maxResourcePercentPerRequest")]
         public double? MaxResourcePercentPerRequest { get; set; }
         /// <summary> The workload group importance level. </summary>
+        [WirePath("properties.importance")]
         public string Importance { get; set; }
         /// <summary> The workload group query execution timeout. </summary>
+        [WirePath("properties.queryExecutionTimeout")]
         public int? QueryExecutionTimeout { get; set; }
     }
 }

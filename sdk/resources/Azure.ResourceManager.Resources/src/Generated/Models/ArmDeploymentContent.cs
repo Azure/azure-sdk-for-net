@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentContent(ArmDeploymentProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -79,10 +76,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location to store the deployment data. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The deployment properties. </summary>
+        [WirePath("properties")]
         public ArmDeploymentProperties Properties { get; }
         /// <summary> Deployment tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

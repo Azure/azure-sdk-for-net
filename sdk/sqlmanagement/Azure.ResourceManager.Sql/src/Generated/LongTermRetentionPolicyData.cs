@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The setting whether to make LTR backups immutable. </summary>
+        [WirePath("properties.makeBackupsImmutable")]
         public bool? MakeBackupsImmutable { get; set; }
         /// <summary> The BackupStorageAccessTier for the LTR backups. </summary>
+        [WirePath("properties.backupStorageAccessTier")]
         public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; set; }
         /// <summary> The weekly retention policy for an LTR backup in an ISO 8601 format. </summary>
+        [WirePath("properties.weeklyRetention")]
         public string WeeklyRetention { get; set; }
         /// <summary> The monthly retention policy for an LTR backup in an ISO 8601 format. </summary>
+        [WirePath("properties.monthlyRetention")]
         public string MonthlyRetention { get; set; }
         /// <summary> The yearly retention policy for an LTR backup in an ISO 8601 format. </summary>
+        [WirePath("properties.yearlyRetention")]
         public string YearlyRetention { get; set; }
         /// <summary> The week of year to take the yearly backup in an ISO 8601 format. </summary>
+        [WirePath("properties.weekOfYear")]
         public int? WeekOfYear { get; set; }
     }
 }

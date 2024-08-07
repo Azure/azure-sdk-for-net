@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleDefinitionPermission : IUtf8JsonSerializable, IJsonModel<RoleDefinitionPermission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionPermission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleDefinitionPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleDefinitionPermission DeserializeRoleDefinitionPermission(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
             IList<string> dataActions = default;
             IList<string> notDataActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -171,11 +172,170 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleDefinitionPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Actions))
+                {
+                    if (Actions.Any())
+                    {
+                        builder.Append("  actions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Actions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotActions))
+                {
+                    if (NotActions.Any())
+                    {
+                        builder.Append("  notActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataActions))
+                {
+                    if (DataActions.Any())
+                    {
+                        builder.Append("  dataActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotDataActions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotDataActions))
+                {
+                    if (NotDataActions.Any())
+                    {
+                        builder.Append("  notDataActions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NotDataActions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RoleDefinitionPermission>.Write(ModelReaderWriterOptions options)
@@ -186,8 +346,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +365,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleDefinitionPermission(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleDefinitionPermission)} does not support reading '{options.Format}' format.");
             }
         }
 

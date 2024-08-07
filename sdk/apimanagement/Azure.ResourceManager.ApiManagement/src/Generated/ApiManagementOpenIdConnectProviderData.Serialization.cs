@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementOpenIdConnectProviderData : IUtf8JsonSerializable, IJsonModel<ApiManagementOpenIdConnectProviderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementOpenIdConnectProviderData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementOpenIdConnectProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,6 +75,16 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
+            if (Optional.IsDefined(UseInTestConsole))
+            {
+                writer.WritePropertyName("useInTestConsole"u8);
+                writer.WriteBooleanValue(UseInTestConsole.Value);
+            }
+            if (Optional.IsDefined(UseInApiDocumentation))
+            {
+                writer.WritePropertyName("useInApiDocumentation"u8);
+                writer.WriteBooleanValue(UseInApiDocumentation.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementOpenIdConnectProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementOpenIdConnectProviderData DeserializeApiManagementOpenIdConnectProviderData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,8 +133,10 @@ namespace Azure.ResourceManager.ApiManagement
             string metadataEndpoint = default;
             string clientId = default;
             string clientSecret = default;
+            bool? useInTestConsole = default;
+            bool? useInApiDocumentation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -184,15 +197,33 @@ namespace Azure.ResourceManager.ApiManagement
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useInTestConsole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useInTestConsole = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("useInApiDocumentation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useInApiDocumentation = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementOpenIdConnectProviderData(
                 id,
                 name,
@@ -203,7 +234,227 @@ namespace Azure.ResourceManager.ApiManagement
                 metadataEndpoint,
                 clientId,
                 clientSecret,
+                useInTestConsole,
+                useInApiDocumentation,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetadataEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    metadataEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MetadataEndpoint))
+                {
+                    builder.Append("    metadataEndpoint: ");
+                    if (MetadataEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetadataEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetadataEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("    clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecret))
+                {
+                    builder.Append("    clientSecret: ");
+                    if (ClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseInTestConsole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useInTestConsole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseInTestConsole))
+                {
+                    builder.Append("    useInTestConsole: ");
+                    var boolValue = UseInTestConsole.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseInApiDocumentation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useInApiDocumentation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseInApiDocumentation))
+                {
+                    builder.Append("    useInApiDocumentation: ");
+                    var boolValue = UseInApiDocumentation.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ApiManagementOpenIdConnectProviderData>.Write(ModelReaderWriterOptions options)
@@ -214,8 +465,10 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementOpenIdConnectProviderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementOpenIdConnectProviderData)} does not support reading '{options.Format}' format.");
             }
         }
 

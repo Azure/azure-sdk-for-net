@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -103,6 +102,14 @@ namespace Azure.Containers.ContainerRegistry
                 fsLayers ?? new ChangeTrackingList<FsLayer>(),
                 history ?? new ChangeTrackingList<History>(),
                 signatures ?? new ChangeTrackingList<ImageSignature>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new V1Manifest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeV1Manifest(document.RootElement);
         }
     }
 }

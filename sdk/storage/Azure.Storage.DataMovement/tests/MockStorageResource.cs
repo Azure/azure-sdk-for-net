@@ -44,7 +44,10 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResource(default, uri, failAfter, transferOrder);
         }
 
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -119,5 +122,18 @@ namespace Azure.Storage.DataMovement.Tests
             stream.Position += streamLength;
             return Task.CompletedTask;
         }
+
+        // no-op for get permissions
+        protected internal override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected internal override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

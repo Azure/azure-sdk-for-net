@@ -87,8 +87,6 @@ steps:
     - ${{ if ne(parameters.DocValidationImageId, '') }}:
       - template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
         parameters:
-          ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
-          ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
           ImageId: '${{ parameters.DocValidationImageId }}'
     - pwsh: |
         $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")

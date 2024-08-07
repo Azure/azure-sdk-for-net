@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -36,12 +35,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The display name for the parameter. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> The description of the parameter. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </summary>
+        [WirePath("strongType")]
         public string StrongType { get; set; }
         /// <summary> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </summary>
+        [WirePath("assignPermissions")]
         public bool? AssignPermissions { get; set; }
         /// <summary>
         /// Additional Properties
@@ -73,6 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> File name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

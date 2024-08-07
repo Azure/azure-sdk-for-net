@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProviderRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerNamespace, ProviderRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProviderRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string providerNamespace, ProviderRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual async Task<Response<ProviderRegistrationResource>> GetAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual Response<ProviderRegistrationResource> Get(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual Response<bool> Exists(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual async Task<NullableResponse<ProviderRegistrationResource>> GetIfExistsAsync(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="providerNamespace"/> is null. </exception>
         public virtual NullableResponse<ProviderRegistrationResource> GetIfExists(string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var scope = _providerRegistrationClientDiagnostics.CreateScope("ProviderRegistrationCollection.GetIfExists");
             scope.Start();

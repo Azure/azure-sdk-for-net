@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointList(IEnumerable<OutboundEnvironmentEndpoint> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -76,8 +73,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<OutboundEnvironmentEndpoint> Value { get; }
         /// <summary> Link to next page of resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

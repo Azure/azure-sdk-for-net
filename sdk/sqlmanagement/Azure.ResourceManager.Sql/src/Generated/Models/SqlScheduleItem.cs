@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="stopTime"/> is null. </exception>
         public SqlScheduleItem(SqlDayOfWeek startDay, string startTime, SqlDayOfWeek stopDay, string stopTime)
         {
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
-            if (stopTime == null)
-            {
-                throw new ArgumentNullException(nameof(stopTime));
-            }
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(stopTime, nameof(stopTime));
 
             StartDay = startDay;
             StartTime = startTime;
@@ -89,12 +83,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Start day. </summary>
+        [WirePath("startDay")]
         public SqlDayOfWeek StartDay { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary> Stop day. </summary>
+        [WirePath("stopDay")]
         public SqlDayOfWeek StopDay { get; set; }
         /// <summary> Stop time. </summary>
+        [WirePath("stopTime")]
         public string StopTime { get; set; }
     }
 }

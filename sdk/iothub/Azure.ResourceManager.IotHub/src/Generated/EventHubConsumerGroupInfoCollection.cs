@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
@@ -88,25 +86,17 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubConsumerGroupInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateEventHubConsumerGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -147,25 +137,17 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<EventHubConsumerGroupInfoResource> CreateOrUpdate(WaitUntil waitUntil, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateEventHubConsumerGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content, cancellationToken);
-                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -204,14 +186,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<EventHubConsumerGroupInfoResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.Get");
             scope.Start();
@@ -256,14 +231,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<EventHubConsumerGroupInfoResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubConsumerGroupInfoResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<EventHubConsumerGroupInfoResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _eventHubConsumerGroupInfoIotHubResourceClientDiagnostics.CreateScope("EventHubConsumerGroupInfoCollection.GetIfExists");
             scope.Start();

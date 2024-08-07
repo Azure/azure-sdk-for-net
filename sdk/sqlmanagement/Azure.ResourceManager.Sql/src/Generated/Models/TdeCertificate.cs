@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The base64 encoded certificate private blob. </summary>
+        [WirePath("properties.privateBlob")]
         public string PrivateBlob { get; set; }
         /// <summary> The certificate password. </summary>
+        [WirePath("properties.certPassword")]
         public string CertPassword { get; set; }
     }
 }

@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The certificate public blob. </summary>
+        [WirePath("properties.publicBlob")]
         public string PublicBlob { get; set; }
         /// <summary> The certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint { get; }
         /// <summary> The certificate name. </summary>
+        [WirePath("properties.certificateName")]
         public string CertificateName { get; }
     }
 }

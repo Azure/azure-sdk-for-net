@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -36,6 +35,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string start, string end)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("start", start, true);
+            uri.AppendQuery("end", end, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, string start, string end)
@@ -72,38 +88,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AnnotationsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string start, string end, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
-            if (end == null)
-            {
-                throw new ArgumentNullException(nameof(end));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(start, nameof(start));
+            Argument.AssertNotNull(end, nameof(end));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, start, end);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -132,38 +121,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AnnotationsListResult> List(string subscriptionId, string resourceGroupName, string resourceName, string start, string end, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
-            if (end == null)
-            {
-                throw new ArgumentNullException(nameof(end));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(start, nameof(start));
+            Argument.AssertNotNull(end, nameof(end));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, start, end);
             _pipeline.Send(message, cancellationToken);
@@ -181,7 +143,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,7 +177,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(annotationProperties);
+            content.JsonWriter.WriteObjectValue(annotationProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -214,36 +191,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationProperties == null)
-            {
-                throw new ArgumentNullException(nameof(annotationProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, annotationProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,12 +204,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -274,36 +227,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, Annotation annotationProperties, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Create(string subscriptionId, string resourceGroupName, string resourceName, ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationProperties == null)
-            {
-                throw new ArgumentNullException(nameof(annotationProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, annotationProperties);
             _pipeline.Send(message, cancellationToken);
@@ -311,12 +240,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -324,6 +253,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations/", false);
+            uri.AppendPath(annotationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
@@ -357,38 +302,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationId == null)
-            {
-                throw new ArgumentNullException(nameof(annotationId));
-            }
-            if (annotationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, annotationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -411,38 +328,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationId == null)
-            {
-                throw new ArgumentNullException(nameof(annotationId));
-            }
-            if (annotationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, annotationId);
             _pipeline.Send(message, cancellationToken);
@@ -453,6 +342,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/Annotations/", false);
+            uri.AppendPath(annotationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string annotationId)
@@ -485,40 +390,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Annotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ApplicationInsightsAnnotation>>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationId == null)
-            {
-                throw new ArgumentNullException(nameof(annotationId));
-            }
-            if (annotationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, annotationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -526,12 +403,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -549,40 +426,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Annotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ApplicationInsightsAnnotation>> Get(string subscriptionId, string resourceGroupName, string resourceName, string annotationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (annotationId == null)
-            {
-                throw new ArgumentNullException(nameof(annotationId));
-            }
-            if (annotationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, annotationId);
             _pipeline.Send(message, cancellationToken);
@@ -590,12 +439,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<Annotation> value = default;
+                        IReadOnlyList<ApplicationInsightsAnnotation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Annotation> array = new List<Annotation>();
+                        List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

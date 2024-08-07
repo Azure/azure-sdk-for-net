@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,6 +33,20 @@ namespace Azure.ResourceManager.Compute
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-07-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publicGalleryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/communityGalleries/", false);
+            uri.AppendPath(publicGalleryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publicGalleryName)
@@ -65,22 +78,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommunityGalleryData>> GetAsync(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publicGalleryName == null)
-            {
-                throw new ArgumentNullException(nameof(publicGalleryName));
-            }
-            if (publicGalleryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicGalleryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,22 +108,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommunityGalleryData> Get(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publicGalleryName == null)
-            {
-                throw new ArgumentNullException(nameof(publicGalleryName));
-            }
-            if (publicGalleryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicGalleryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);
             _pipeline.Send(message, cancellationToken);

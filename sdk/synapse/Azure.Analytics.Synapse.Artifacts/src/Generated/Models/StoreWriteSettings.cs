@@ -6,20 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
     /// Connector write settings.
     /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/> and <see cref="SftpWriteSettings"/>.
+    /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="LakeHouseWriteSettings"/> and <see cref="SftpWriteSettings"/>.
     /// </summary>
     public abstract partial class StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
         protected StoreWriteSettings()
         {
+            Metadata = new ChangeTrackingList<MetadataItem>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -27,12 +27,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties)
+        internal StoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IList<MetadataItem> metadata, IDictionary<string, object> additionalProperties)
         {
             Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
             CopyBehavior = copyBehavior;
+            Metadata = metadata;
             AdditionalProperties = additionalProperties;
         }
 
@@ -42,6 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MaxConcurrentConnections { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
         public object CopyBehavior { get; set; }
+        /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<MetadataItem> Metadata { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, object> AdditionalProperties { get; }
     }

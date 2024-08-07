@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     [PersistableModelProxy(typeof(UnknownMeterDetails))]
     public partial class EdgeOrderProductMeterDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductMeterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductMeterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductMeterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderProductMeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderProductMeterDetails DeserializeEdgeOrderProductMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

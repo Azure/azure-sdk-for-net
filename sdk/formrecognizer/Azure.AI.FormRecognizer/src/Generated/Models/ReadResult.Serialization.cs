@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -91,6 +90,14 @@ namespace Azure.AI.FormRecognizer.Models
                 unit,
                 lines ?? new ChangeTrackingList<TextLine>(),
                 selectionMarks ?? new ChangeTrackingList<SelectionMark>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReadResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReadResult(document.RootElement);
         }
     }
 }

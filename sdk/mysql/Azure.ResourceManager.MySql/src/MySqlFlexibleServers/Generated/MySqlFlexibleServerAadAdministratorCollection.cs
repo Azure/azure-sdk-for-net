@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlFlexibleServerAadAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerAdministratorName administratorName, MySqlFlexibleServerAadAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -117,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlFlexibleServerAadAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, MySqlFlexibleServerAdministratorName administratorName, MySqlFlexibleServerAadAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -167,7 +159,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,7 +200,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +241,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +271,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +301,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +340,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +379,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,7 +420,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

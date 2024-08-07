@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationRecoveryPointProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationRecoveryPointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationRecoveryPointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationRecoveryPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationRecoveryPointProperties DeserializeDataReplicationRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationRecoveryPointType recoveryPointType = default;
             RecoveryPointModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointTime"u8))
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationRecoveryPointProperties(recoveryPointTime, recoveryPointType, customProperties, serializedAdditionalRawData);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationRecoveryPointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationRecoveryPointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

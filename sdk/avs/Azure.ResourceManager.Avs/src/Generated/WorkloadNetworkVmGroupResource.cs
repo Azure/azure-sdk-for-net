@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -99,7 +97,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +137,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +177,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVMGroup</description>
+        /// <description>WorkloadNetworks_DeleteVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +219,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVMGroup</description>
+        /// <description>WorkloadNetworks_DeleteVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +261,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVMGroup</description>
+        /// <description>WorkloadNetworks_UpdateVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkVmGroupResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Update");
             scope.Start();
@@ -312,7 +307,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVMGroup</description>
+        /// <description>WorkloadNetworks_UpdateVmGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -330,10 +325,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkVmGroupResource> Update(WaitUntil waitUntil, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupResource.Update");
             scope.Start();

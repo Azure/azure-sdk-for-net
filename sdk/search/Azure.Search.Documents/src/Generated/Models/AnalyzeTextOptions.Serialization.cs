@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -27,11 +26,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
-            }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                writer.WritePropertyName("normalizer"u8);
-                writer.WriteStringValue(NormalizerName.Value.ToString());
             }
             if (Optional.IsCollectionDefined(TokenFilters))
             {
@@ -54,6 +48,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

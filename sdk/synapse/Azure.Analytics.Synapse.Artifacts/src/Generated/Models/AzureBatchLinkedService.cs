@@ -21,22 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBatchLinkedService(object accountName, object batchUri, object poolName, LinkedServiceReference linkedServiceName)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (batchUri == null)
-            {
-                throw new ArgumentNullException(nameof(batchUri));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(batchUri, nameof(batchUri));
+            Argument.AssertNotNull(poolName, nameof(poolName));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             AccountName = accountName;
             BatchUri = batchUri;

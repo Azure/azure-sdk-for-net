@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
         public ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(status, nameof(status));
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;
@@ -83,10 +77,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; }
     }
 }

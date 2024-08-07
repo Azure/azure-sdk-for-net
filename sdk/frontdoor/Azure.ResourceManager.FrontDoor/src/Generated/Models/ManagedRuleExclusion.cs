@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selector"/> is null. </exception>
         public ManagedRuleExclusion(ManagedRuleExclusionMatchVariable matchVariable, ManagedRuleExclusionSelectorMatchOperator selectorMatchOperator, string selector)
         {
-            if (selector == null)
-            {
-                throw new ArgumentNullException(nameof(selector));
-            }
+            Argument.AssertNotNull(selector, nameof(selector));
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;

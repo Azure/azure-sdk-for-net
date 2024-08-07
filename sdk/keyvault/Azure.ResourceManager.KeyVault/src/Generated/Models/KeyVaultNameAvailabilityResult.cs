@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
         /// <summary> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
+        [WirePath("reason")]
         public KeyVaultNameUnavailableReason? Reason { get; }
         /// <summary> An error message explaining the Reason value in more detail. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

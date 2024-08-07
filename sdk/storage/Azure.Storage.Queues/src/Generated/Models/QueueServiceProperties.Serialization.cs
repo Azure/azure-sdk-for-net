@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Queues;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -18,19 +18,19 @@ namespace Azure.Storage.Queues.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Optional.IsDefined(Logging))
+            if (Common.Optional.IsDefined(Logging))
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (Optional.IsDefined(HourMetrics))
+            if (Common.Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Optional.IsDefined(MinuteMetrics))
+            if (Common.Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Common.Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

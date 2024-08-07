@@ -56,14 +56,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="actions"/> is null. </exception>
         public ChaosExperimentBranch(string name, IEnumerable<ChaosExperimentAction> actions)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(actions, nameof(actions));
 
             Name = name;
             Actions = actions.ToList();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual async Task<Response<IotSecurityAggregatedRecommendationResource>> GetAsync(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual Response<IotSecurityAggregatedRecommendationResource> Get(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual Response<bool> Exists(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual async Task<NullableResponse<IotSecurityAggregatedRecommendationResource>> GetIfExistsAsync(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
         public virtual NullableResponse<IotSecurityAggregatedRecommendationResource> GetIfExists(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
         {
-            if (aggregatedRecommendationName == null)
-            {
-                throw new ArgumentNullException(nameof(aggregatedRecommendationName));
-            }
-            if (aggregatedRecommendationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedRecommendationName));
-            }
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
 
             using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.GetIfExists");
             scope.Start();

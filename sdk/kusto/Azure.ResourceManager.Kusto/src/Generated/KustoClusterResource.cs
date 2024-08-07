@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Resources;
 
@@ -793,10 +791,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoClusterResource>> UpdateAsync(WaitUntil waitUntil, KustoClusterPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Update");
             scope.Start();
@@ -843,10 +838,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<KustoClusterResource> Update(WaitUntil waitUntil, KustoClusterPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Update");
             scope.Start();
@@ -1060,10 +1052,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> MigrateAsync(WaitUntil waitUntil, ClusterMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Migrate");
             scope.Start();
@@ -1109,10 +1098,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Migrate(WaitUntil waitUntil, ClusterMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Migrate");
             scope.Start();
@@ -1216,10 +1202,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> DetachFollowerDatabasesAsync(WaitUntil waitUntil, KustoFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            if (followerDatabaseToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
-            }
+            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.DetachFollowerDatabases");
             scope.Start();
@@ -1265,10 +1248,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
         public virtual ArmOperation DetachFollowerDatabases(WaitUntil waitUntil, KustoFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
-            if (followerDatabaseToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(followerDatabaseToRemove));
-            }
+            Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.DetachFollowerDatabases");
             scope.Start();
@@ -1574,10 +1554,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
-            }
+            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.AddLanguageExtensions");
             scope.Start();
@@ -1623,10 +1600,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
         public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToAdd));
-            }
+            Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.AddLanguageExtensions");
             scope.Start();
@@ -1672,10 +1646,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
-            }
+            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1721,10 +1692,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
         public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
-            if (languageExtensionsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(languageExtensionsToRemove));
-            }
+            Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.RemoveLanguageExtensions");
             scope.Start();
@@ -1769,10 +1737,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterPrincipalAssignmentNameAvailabilityAsync(KustoClusterPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoClusterPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1814,10 +1779,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoClusterPrincipalAssignmentNameAvailability(KustoClusterPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoClusterPrincipalAssignmentNameAvailability");
             scope.Start();
@@ -1859,10 +1821,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoDatabaseNameAvailabilityAsync(KustoDatabaseNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoDatabaseNameAvailability");
             scope.Start();
@@ -1904,10 +1863,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoDatabaseNameAvailability(KustoDatabaseNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoDatabaseNameAvailability");
             scope.Start();
@@ -1949,10 +1905,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoAttachedDatabaseConfigurationNameAvailabilityAsync(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoAttachedDatabaseConfigurationNameAvailability");
             scope.Start();
@@ -1994,10 +1947,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoAttachedDatabaseConfigurationNameAvailability(KustoAttachedDatabaseConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoAttachedDatabaseConfigurationNameAvailability");
             scope.Start();
@@ -2039,10 +1989,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoManagedPrivateEndpointNameAvailabilityAsync(KustoManagedPrivateEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoManagedPrivateEndpointNameAvailability");
             scope.Start();
@@ -2084,10 +2031,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoManagedPrivateEndpointNameAvailability(KustoManagedPrivateEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("KustoClusterResource.CheckKustoManagedPrivateEndpointNameAvailability");
             scope.Start();
@@ -2129,10 +2073,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilitySandboxCustomImageAsync(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
             scope.Start();
@@ -2174,10 +2115,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckNameAvailabilitySandboxCustomImage(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
             scope.Start();
@@ -2220,14 +2158,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<KustoClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.AddTag");
             scope.Start();
@@ -2288,14 +2220,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<KustoClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.AddTag");
             scope.Start();
@@ -2355,10 +2281,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<KustoClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.SetTags");
             scope.Start();
@@ -2415,10 +2338,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<KustoClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.SetTags");
             scope.Start();
@@ -2475,10 +2395,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<KustoClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.RemoveTag");
             scope.Start();
@@ -2538,10 +2455,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<KustoClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.RemoveTag");
             scope.Start();

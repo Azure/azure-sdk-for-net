@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
         public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList)
         {
-            if (addressList == null)
-            {
-                throw new ArgumentNullException(nameof(addressList));
-            }
+            Argument.AssertNotNull(addressList, nameof(addressList));
 
             Action = action;
             AddressList = addressList.ToList();

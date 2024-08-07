@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StorageCache.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.StorageCache
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDnsRefreshRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/dnsRefresh", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDnsRefreshRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -70,38 +86,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DnsRefreshAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateDnsRefreshRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +113,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DnsRefresh(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateDnsRefreshRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -168,6 +128,21 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCacheRequestUri(string subscriptionId, string resourceGroupName, string cacheName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCacheRequest(string subscriptionId, string resourceGroupName, string cacheName)
@@ -200,30 +175,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StorageTargetsResult>> ListByCacheAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListByCacheRequest(subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -250,30 +204,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StorageTargetsResult> ListByCache(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListByCacheRequest(subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);
@@ -289,6 +222,26 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, string force)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", force, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, string force)
@@ -328,38 +281,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, string force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName, force);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -385,38 +310,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, string force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName, force);
             _pipeline.Send(message, cancellationToken);
@@ -429,6 +326,22 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -463,38 +376,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StorageTargetData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -524,38 +409,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StorageTargetData> Get(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -573,6 +430,22 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, StorageTargetData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, StorageTargetData data)
@@ -595,7 +468,7 @@ namespace Azure.ResourceManager.StorageCache
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -612,42 +485,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, StorageTargetData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -673,42 +515,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, StorageTargetData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName, data);
             _pipeline.Send(message, cancellationToken);
@@ -721,6 +532,23 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFlushRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/flush", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFlushRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -756,38 +584,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> FlushAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateFlushRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -812,38 +612,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Flush(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateFlushRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -856,6 +628,23 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSuspendRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/suspend", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSuspendRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -891,38 +680,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SuspendAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -947,38 +708,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Suspend(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -991,6 +724,23 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResumeRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/resume", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -1026,38 +776,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResumeAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateResumeRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1082,38 +804,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Resume(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateResumeRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -1126,6 +820,23 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInvalidateRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/invalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateInvalidateRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -1161,38 +872,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> InvalidateAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateInvalidateRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1217,38 +900,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Invalidate(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateInvalidateRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -1261,6 +916,23 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestoreDefaultsRequestUri(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/caches/", false);
+            uri.AppendPath(cacheName, true);
+            uri.AppendPath("/storageTargets/", false);
+            uri.AppendPath(storageTargetName, true);
+            uri.AppendPath("/restoreDefaults", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestoreDefaultsRequest(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
@@ -1296,38 +968,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RestoreDefaultsAsync(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateRestoreDefaultsRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1351,38 +995,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RestoreDefaults(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var message = CreateRestoreDefaultsRequest(subscriptionId, resourceGroupName, cacheName, storageTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -1394,6 +1010,14 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCacheNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCacheNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cacheName)
@@ -1420,34 +1044,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StorageTargetsResult>> ListByCacheNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListByCacheNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1475,34 +1075,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StorageTargetsResult> ListByCacheNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListByCacheNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);

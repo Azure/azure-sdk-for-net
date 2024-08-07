@@ -57,8 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="accessKey"> Access key for the storage account. </param>
         /// <param name="mountPath"> Path to mount the storage within the site's runtime environment. </param>
         /// <param name="state"> State of the storage account. </param>
+        /// <param name="protocol"> Mounting protocol to use for the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceStorageAccessInfo(AppServiceStorageType? storageType, string accountName, string shareName, string accessKey, string mountPath, AppServiceStorageAccountState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceStorageAccessInfo(AppServiceStorageType? storageType, string accountName, string shareName, string accessKey, string mountPath, AppServiceStorageAccountState? state, AppServiceStorageProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageType = storageType;
             AccountName = accountName;
@@ -66,20 +67,30 @@ namespace Azure.ResourceManager.AppService.Models
             AccessKey = accessKey;
             MountPath = mountPath;
             State = state;
+            Protocol = protocol;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of storage. </summary>
+        [WirePath("type")]
         public AppServiceStorageType? StorageType { get; set; }
         /// <summary> Name of the storage account. </summary>
+        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> Name of the file share (container name, for Blob storage). </summary>
+        [WirePath("shareName")]
         public string ShareName { get; set; }
         /// <summary> Access key for the storage account. </summary>
+        [WirePath("accessKey")]
         public string AccessKey { get; set; }
         /// <summary> Path to mount the storage within the site's runtime environment. </summary>
+        [WirePath("mountPath")]
         public string MountPath { get; set; }
         /// <summary> State of the storage account. </summary>
+        [WirePath("state")]
         public AppServiceStorageAccountState? State { get; }
+        /// <summary> Mounting protocol to use for the storage account. </summary>
+        [WirePath("protocol")]
+        public AppServiceStorageProtocol? Protocol { get; set; }
     }
 }

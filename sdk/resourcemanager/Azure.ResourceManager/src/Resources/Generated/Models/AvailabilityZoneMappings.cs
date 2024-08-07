@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The logical zone id for the availability zone. </summary>
+        [WirePath("logicalZone")]
         public string LogicalZone { get; }
         /// <summary> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </summary>
+        [WirePath("physicalZone")]
         public string PhysicalZone { get; }
     }
 }

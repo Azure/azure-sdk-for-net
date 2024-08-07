@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class NicIPConfigurationResourceSettings : IUtf8JsonSerializable, IJsonModel<NicIPConfigurationResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPConfigurationResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPConfigurationResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NicIPConfigurationResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,14 +67,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
-                writer.WriteObjectValue(PublicIP);
+                writer.WriteObjectValue(PublicIP, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules = default;
             PublicIPReferenceInfo publicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -199,10 +198,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NicIPConfigurationResourceSettings(
                 name,
                 privateIPAddress,
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeNicIPConfigurationResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

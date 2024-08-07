@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets or sets the op. </summary>
+        [WirePath("properties.op")]
         public RecommendedSensitivityLabelUpdateKind? Op { get; set; }
         /// <summary> Schema name of the column to update. </summary>
+        [WirePath("properties.schema")]
         public string Schema { get; set; }
         /// <summary> Table name of the column to update. </summary>
+        [WirePath("properties.table")]
         public string Table { get; set; }
         /// <summary> Column name to update. </summary>
+        [WirePath("properties.column")]
         public string Column { get; set; }
     }
 }

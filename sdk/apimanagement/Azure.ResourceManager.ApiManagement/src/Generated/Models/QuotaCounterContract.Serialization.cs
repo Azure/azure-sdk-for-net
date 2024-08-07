@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class QuotaCounterContract : IUtf8JsonSerializable, IJsonModel<QuotaCounterContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaCounterContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaCounterContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaCounterContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue(Value, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static QuotaCounterContract DeserializeQuotaCounterContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset periodEndTime = default;
             QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counterKey"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuotaCounterContract(
                 counterKey,
                 periodKey,
@@ -129,6 +129,108 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 periodEndTime,
                 value,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CounterKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  counterKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CounterKey))
+                {
+                    builder.Append("  counterKey: ");
+                    if (CounterKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CounterKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CounterKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeriodKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  periodKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeriodKey))
+                {
+                    builder.Append("  periodKey: ");
+                    if (PeriodKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PeriodKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PeriodKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeriodStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  periodStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  periodStartTime: ");
+                var formattedDateTimeString = TypeFormatters.ToString(PeriodStartOn, "o");
+                builder.AppendLine($"'{formattedDateTimeString}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeriodEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  periodEndTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  periodEndTime: ");
+                var formattedDateTimeString = TypeFormatters.ToString(PeriodEndOn, "o");
+                builder.AppendLine($"'{formattedDateTimeString}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    builder.Append("  value: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Value, options, 2, false, "  value: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<QuotaCounterContract>.Write(ModelReaderWriterOptions options)
@@ -139,8 +241,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeQuotaCounterContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support reading '{options.Format}' format.");
             }
         }
 

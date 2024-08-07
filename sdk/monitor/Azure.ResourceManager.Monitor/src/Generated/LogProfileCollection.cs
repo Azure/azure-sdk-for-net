@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string logProfileName, LogProfileData data, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _logProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, logProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()));
+                var uri = _logProfileRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, logProfileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogProfileResource> CreateOrUpdate(WaitUntil waitUntil, string logProfileName, LogProfileData data, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _logProfileRestClient.CreateOrUpdate(Id.SubscriptionId, logProfileName, data, cancellationToken);
-                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()));
+                var uri = _logProfileRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, logProfileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<LogProfileResource>(Response.FromValue(new LogProfileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual async Task<Response<LogProfileResource>> GetAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual Response<LogProfileResource> Get(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Get");
             scope.Start();
@@ -361,14 +329,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
@@ -411,14 +372,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.Exists");
             scope.Start();
@@ -461,14 +415,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogProfileResource>> GetIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
             scope.Start();
@@ -513,14 +460,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
         public virtual NullableResponse<LogProfileResource> GetIfExists(string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
             scope.Start();

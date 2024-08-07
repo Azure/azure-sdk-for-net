@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<KeyVaultSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _keyVaultSecretSecretsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultSecretSecretsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<KeyVaultSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _keyVaultSecretSecretsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content, cancellationToken);
-                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultSecretSecretsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<KeyVaultSecretResource>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Get");
             scope.Start();
@@ -237,7 +212,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<KeyVaultSecretResource> Get(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Get");
             scope.Start();
@@ -289,7 +257,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +288,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +319,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,14 +333,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Exists");
             scope.Start();
@@ -401,7 +362,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,14 +376,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Exists");
             scope.Start();
@@ -451,7 +405,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -465,14 +419,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<NullableResponse<KeyVaultSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
             scope.Start();
@@ -503,7 +450,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -517,14 +464,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual NullableResponse<KeyVaultSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
-            if (secretName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
-            }
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
             scope.Start();

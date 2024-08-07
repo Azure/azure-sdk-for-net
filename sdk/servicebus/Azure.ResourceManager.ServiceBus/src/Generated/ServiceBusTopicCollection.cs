@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicName, ServiceBusTopicData data, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _serviceBusTopicTopicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusTopicResource>(Response.FromValue(new ServiceBusTopicResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusTopicTopicsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusTopicResource>(Response.FromValue(new ServiceBusTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusTopicResource> CreateOrUpdate(WaitUntil waitUntil, string topicName, ServiceBusTopicData data, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _serviceBusTopicTopicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusTopicResource>(Response.FromValue(new ServiceBusTopicResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusTopicTopicsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusTopicResource>(Response.FromValue(new ServiceBusTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual async Task<Response<ServiceBusTopicResource>> GetAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<ServiceBusTopicResource> Get(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Get");
             scope.Start();
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual Response<bool> Exists(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.Exists");
             scope.Start();
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceBusTopicResource>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         public virtual NullableResponse<ServiceBusTopicResource> GetIfExists(string topicName, CancellationToken cancellationToken = default)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(nameof(topicName));
-            }
-            if (topicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicName));
-            }
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
             using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
             scope.Start();

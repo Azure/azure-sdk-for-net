@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +182,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,10 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.Update");
             scope.Start();
@@ -229,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,10 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HostingEnvironmentMultiRolePoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.Update");
             scope.Start();
@@ -274,7 +266,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,10 +280,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.CreateOrUpdate");
             scope.Start();
@@ -323,7 +312,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,10 +326,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HostingEnvironmentMultiRolePoolResource> CreateOrUpdate(WaitUntil waitUntil, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.CreateOrUpdate");
             scope.Start();
@@ -372,7 +358,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,14 +369,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
@@ -410,7 +389,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,14 +400,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
@@ -448,7 +420,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -478,7 +450,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,7 +480,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -538,7 +510,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -568,7 +540,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -598,7 +570,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

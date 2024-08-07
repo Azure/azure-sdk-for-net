@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public StorageAccountIPRule(string ipAddressOrRange)
         {
-            if (ipAddressOrRange == null)
-            {
-                throw new ArgumentNullException(nameof(ipAddressOrRange));
-            }
+            Argument.AssertNotNull(ipAddressOrRange, nameof(ipAddressOrRange));
 
             IPAddressOrRange = ipAddressOrRange;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>
+        [WirePath("value")]
         public string IPAddressOrRange { get; set; }
         /// <summary> The action of IP ACL rule. </summary>
+        [WirePath("action")]
         public StorageAccountNetworkRuleAction? Action { get; set; }
     }
 }

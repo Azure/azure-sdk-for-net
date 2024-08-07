@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
         internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
         {
-            if (exposureControlResults == null)
-            {
-                throw new ArgumentNullException(nameof(exposureControlResults));
-            }
+            Argument.AssertNotNull(exposureControlResults, nameof(exposureControlResults));
 
             ExposureControlResults = exposureControlResults.ToList();
         }

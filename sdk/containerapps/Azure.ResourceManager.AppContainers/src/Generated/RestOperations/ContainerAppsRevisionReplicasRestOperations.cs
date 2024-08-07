@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppContainers.Models;
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetReplicaRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/replicas/", false);
+            uri.AppendPath(replicaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetReplicaRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
@@ -72,46 +89,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppReplicaData>> GetReplicaAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, replicaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -142,46 +124,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppReplicaData> GetReplica(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, replicaName);
             _pipeline.Send(message, cancellationToken);
@@ -199,6 +146,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListReplicasRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/replicas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListReplicasRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
@@ -234,38 +198,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicaCollection>> ListReplicasAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateListReplicasRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -293,38 +229,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicaCollection> ListReplicas(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (containerAppName == null)
-            {
-                throw new ArgumentNullException(nameof(containerAppName));
-            }
-            if (containerAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerAppName));
-            }
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var message = CreateListReplicasRequest(subscriptionId, resourceGroupName, containerAppName, revisionName);
             _pipeline.Send(message, cancellationToken);

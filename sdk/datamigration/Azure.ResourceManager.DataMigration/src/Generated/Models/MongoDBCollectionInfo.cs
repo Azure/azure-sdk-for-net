@@ -27,18 +27,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="qualifiedName"/> or <paramref name="databaseName"/> is null. </exception>
         internal MongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, string databaseName, bool isCapped, bool isSystemCollection, bool isView, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (qualifiedName == null)
-            {
-                throw new ArgumentNullException(nameof(qualifiedName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             DatabaseName = databaseName;
             IsCapped = isCapped;

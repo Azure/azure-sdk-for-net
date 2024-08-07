@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -32,8 +31,23 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerCommit networkManagerCommit)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/commit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerCommit networkManagerCommit)
@@ -55,7 +69,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkManagerCommit);
+            content.JsonWriter.WriteObjectValue(networkManagerCommit, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -71,34 +85,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PostAsync(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerName));
-            }
-            if (networkManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerName));
-            }
-            if (networkManagerCommit == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerCommit));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
             using var message = CreatePostRequest(subscriptionId, resourceGroupName, networkManagerName, networkManagerCommit);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -122,34 +112,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Post(string subscriptionId, string resourceGroupName, string networkManagerName, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerName));
-            }
-            if (networkManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerName));
-            }
-            if (networkManagerCommit == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerCommit));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+            Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
             using var message = CreatePostRequest(subscriptionId, resourceGroupName, networkManagerName, networkManagerCommit);
             _pipeline.Send(message, cancellationToken);

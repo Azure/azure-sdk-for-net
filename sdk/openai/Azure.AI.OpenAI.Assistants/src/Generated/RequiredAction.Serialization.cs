@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -16,14 +15,14 @@ namespace Azure.AI.OpenAI.Assistants
     [PersistableModelProxy(typeof(UnknownRequiredAction))]
     public partial class RequiredAction : IUtf8JsonSerializable, IJsonModel<RequiredAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequiredAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequiredAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequiredAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RequiredAction DeserializeRequiredAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +101,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeRequiredAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredAction)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -116,11 +115,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRequiredAction(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

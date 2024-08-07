@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.DataBoxEdge
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByStorageAccountRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByStorageAccountRequest(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName)
@@ -70,38 +86,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerList>> ListByStorageAccountAsync(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListByStorageAccountRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +117,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerList> ListByStorageAccount(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListByStorageAccountRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -176,6 +136,24 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
@@ -213,46 +191,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeStorageContainerData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -283,46 +226,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeStorageContainerData> Get(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);
@@ -340,6 +248,24 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, DataBoxEdgeStorageContainerData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, DataBoxEdgeStorageContainerData data)
@@ -364,7 +290,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -382,50 +308,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, DataBoxEdgeStorageContainerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -451,50 +339,12 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, DataBoxEdgeStorageContainerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName, data);
             _pipeline.Send(message, cancellationToken);
@@ -506,6 +356,24 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
@@ -543,46 +411,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -607,46 +440,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);
@@ -658,6 +456,25 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRefreshRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/storageAccounts/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/refresh", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRefreshRequest(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName)
@@ -696,46 +513,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RefreshAsync(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateRefreshRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -760,46 +542,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Refresh(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateRefreshRequest(subscriptionId, resourceGroupName, deviceName, storageAccountName, containerName);
             _pipeline.Send(message, cancellationToken);
@@ -811,6 +558,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStorageAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByStorageAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName)
@@ -838,42 +593,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerList>> ListByStorageAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListByStorageAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, deviceName, storageAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -902,42 +626,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerList> ListByStorageAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var message = CreateListByStorageAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, deviceName, storageAccountName);
             _pipeline.Send(message, cancellationToken);

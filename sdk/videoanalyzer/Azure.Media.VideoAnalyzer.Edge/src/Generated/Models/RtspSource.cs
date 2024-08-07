@@ -22,14 +22,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endpoint"/> is null. </exception>
         public RtspSource(string name, EndpointBase endpoint) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
             Type = "#Microsoft.VideoAnalyzer.RtspSource";

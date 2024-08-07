@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PredictionTrainingResults : IUtf8JsonSerializable, IJsonModel<PredictionTrainingResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionTrainingResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionTrainingResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredictionTrainingResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PredictionTrainingResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
             {
                 writer.WritePropertyName("predictionDistribution"u8);
-                writer.WriteObjectValue(PredictionDistribution);
+                writer.WriteObjectValue(PredictionDistribution, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CanonicalProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionTrainingResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles = default;
             long? primaryProfileInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -152,10 +151,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PredictionTrainingResults(
                 tenantId,
                 scoreName,
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionTrainingResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionTrainingResults)} does not support reading '{options.Format}' format.");
             }
         }
 

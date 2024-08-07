@@ -10,43 +10,42 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class AutoscaleProfile : IUtf8JsonSerializable, IJsonModel<AutoscaleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoscaleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            writer.WriteObjectValue(Capacity, options);
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
-                writer.WriteObjectValue(FixedDate);
+                writer.WriteObjectValue(FixedDate, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorTimeWindow fixedDate = default;
             MonitorRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -135,10 +134,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutoscaleProfile(
                 name,
                 capacity,
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

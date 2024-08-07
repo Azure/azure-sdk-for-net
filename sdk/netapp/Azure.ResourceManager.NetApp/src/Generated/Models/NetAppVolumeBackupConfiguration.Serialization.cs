@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeBackupConfiguration : IUtf8JsonSerializable, IJsonModel<NetAppVolumeBackupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeBackupConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeBackupConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeBackupConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,11 +35,6 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("policyEnforced"u8);
                 writer.WriteBooleanValue(IsPolicyEnforced.Value);
-            }
-            if (Optional.IsDefined(IsBackupEnabled))
-            {
-                writer.WritePropertyName("backupEnabled"u8);
-                writer.WriteBooleanValue(IsBackupEnabled.Value);
             }
             if (Optional.IsDefined(BackupVaultId))
             {
@@ -70,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeBackupConfiguration DeserializeNetAppVolumeBackupConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,10 +81,9 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             ResourceIdentifier backupPolicyId = default;
             bool? policyEnforced = default;
-            bool? backupEnabled = default;
             ResourceIdentifier backupVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupPolicyId"u8))
@@ -111,15 +104,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     policyEnforced = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("backupEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backupEnabled = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("backupVaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -131,11 +115,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupConfiguration(backupPolicyId, policyEnforced, backupEnabled, backupVaultId, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppVolumeBackupConfiguration(backupPolicyId, policyEnforced, backupVaultId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupConfiguration>.Write(ModelReaderWriterOptions options)
@@ -147,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeBackupConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

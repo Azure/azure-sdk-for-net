@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,6 +33,18 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string applicationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/applications/", false);
+            uri.AppendPath(applicationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string applicationId)
@@ -62,22 +73,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityApplicationData>> GetAsync(string subscriptionId, string applicationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var message = CreateGetRequest(subscriptionId, applicationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +102,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityApplicationData> Get(string subscriptionId, string applicationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var message = CreateGetRequest(subscriptionId, applicationId);
             _pipeline.Send(message, cancellationToken);
@@ -140,6 +123,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string applicationId, SecurityApplicationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/applications/", false);
+            uri.AppendPath(applicationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string applicationId, SecurityApplicationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -156,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -171,26 +166,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityApplicationData>> CreateOrUpdateAsync(string subscriptionId, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, applicationId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -218,26 +196,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityApplicationData> CreateOrUpdate(string subscriptionId, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, applicationId, data);
             _pipeline.Send(message, cancellationToken);
@@ -254,6 +215,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string applicationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/applications/", false);
+            uri.AppendPath(applicationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string applicationId)
@@ -281,22 +254,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string applicationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var message = CreateDeleteRequest(subscriptionId, applicationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -318,22 +277,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string applicationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var message = CreateDeleteRequest(subscriptionId, applicationId);
             _pipeline.Send(message, cancellationToken);

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.PolicyInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListDeploymentsAtResourceRequestUri(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendPath("/listDeployments", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDeploymentsAtResourceRequest(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
@@ -69,18 +85,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceAsync(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,18 +113,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemediationDeploymentsListResult> ListDeploymentsAtResource(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateListDeploymentsAtResourceRequest(resourceId, remediationName, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -134,6 +130,19 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelAtResourceRequest(string resourceId, string remediationName)
@@ -163,18 +172,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyRemediationData>> CancelAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateCancelAtResourceRequest(resourceId, remediationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -200,18 +199,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyRemediationData> CancelAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateCancelAtResourceRequest(resourceId, remediationName);
             _pipeline.Send(message, cancellationToken);
@@ -227,6 +216,25 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForResourceRequestUri(string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceRequest(string resourceId, PolicyQuerySettings policyQuerySettings)
@@ -261,10 +269,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<RemediationListResult>> ListForResourceAsync(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -289,10 +294,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<RemediationListResult> ListForResource(string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceRequest(resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -308,6 +310,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtResourceRequestUri(string resourceId, string remediationName, PolicyRemediationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string remediationName, PolicyRemediationData data)
@@ -326,7 +340,7 @@ namespace Azure.ResourceManager.PolicyInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -341,22 +355,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyRemediationData>> CreateOrUpdateAtResourceAsync(string resourceId, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, remediationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -384,22 +385,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyRemediationData> CreateOrUpdateAtResource(string resourceId, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, remediationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -416,6 +404,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAtResourceRequest(string resourceId, string remediationName)
@@ -444,18 +444,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyRemediationData>> GetAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateGetAtResourceRequest(resourceId, remediationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -483,18 +473,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyRemediationData> GetAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateGetAtResourceRequest(resourceId, remediationName);
             _pipeline.Send(message, cancellationToken);
@@ -512,6 +492,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtResourceRequest(string resourceId, string remediationName)
@@ -540,18 +532,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicyRemediationData>> DeleteAtResourceAsync(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateDeleteAtResourceRequest(resourceId, remediationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -579,18 +561,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicyRemediationData> DeleteAtResource(string resourceId, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateDeleteAtResourceRequest(resourceId, remediationName);
             _pipeline.Send(message, cancellationToken);
@@ -608,6 +580,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDeploymentsAtResourceNextPageRequestUri(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListDeploymentsAtResourceNextPageRequest(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
@@ -634,22 +614,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemediationDeploymentsListResult>> ListDeploymentsAtResourceNextPageAsync(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -677,22 +644,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemediationDeploymentsListResult> ListDeploymentsAtResourceNextPage(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var message = CreateListDeploymentsAtResourceNextPageRequest(nextLink, resourceId, remediationName, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
@@ -708,6 +662,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForResourceNextPageRequestUri(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
@@ -732,14 +694,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<RemediationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -765,14 +721,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public Response<RemediationListResult> ListForResourceNextPage(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListForResourceNextPageRequest(nextLink, resourceId, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);

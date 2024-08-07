@@ -22,12 +22,12 @@ public abstract class PipelineResponse : IDisposable
 
     /// <summary>
     /// Gets the reason phrase that accompanies the status code on the HTTP
-    /// reponse.
+    /// response.
     /// </summary>
     public abstract string ReasonPhrase { get; }
 
     /// <summary>
-    /// Gets the collection of HTTP request headers.
+    /// Gets the collection of HTTP response headers.
     /// </summary>
     public PipelineResponseHeaders Headers => HeadersCore;
 
@@ -42,7 +42,7 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     /// <remarks>
     /// <see cref="ContentStream"/> may be a stream that contains the buffered
-    /// contents transfered from the network stream that originally held the
+    /// contents transferred from the network stream that originally held the
     /// contents of the service response; or it may be the live network stream
     /// itself, depending on the value of
     /// <see cref="PipelineMessage.BufferResponse"/> on the message sent via
@@ -82,7 +82,7 @@ public abstract class PipelineResponse : IDisposable
     /// use while buffering the content.</param>
     /// <returns>The buffered content.</returns>
     /// <remarks>
-    /// This method will read the full content from the response cpntent
+    /// This method will read the full content from the response content
     /// network stream into memory. Please be sure the contents will fit into
     /// memory before calling this method.
     /// </remarks>
@@ -97,7 +97,7 @@ public abstract class PipelineResponse : IDisposable
     /// use while buffering the content.</param>
     /// <returns>The buffered content.</returns>
     /// <remarks>
-    /// This method will read the full content from the response cpntent
+    /// This method will read the full content from the response content
     /// network stream into memory. Please be sure the contents will fit into
     /// memory before calling this method.
     /// </remarks>

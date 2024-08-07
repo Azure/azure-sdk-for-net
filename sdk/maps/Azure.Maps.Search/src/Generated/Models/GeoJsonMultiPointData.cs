@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonMultiPointData(IEnumerable<IList<double>> coordinates)
+        internal GeoJsonMultiPointData(IEnumerable<IList<double>> coordinates)
         {
-            if (coordinates == null)
-            {
-                throw new ArgumentNullException(nameof(coordinates));
-            }
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        internal GeoJsonMultiPointData(IList<IList<double>> coordinates)
+        internal GeoJsonMultiPointData(IReadOnlyList<IList<double>> coordinates)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> Coordinates for the `GeoJson MultiPoint` geometry. </summary>
-        public IList<IList<double>> Coordinates { get; }
+        public IReadOnlyList<IList<double>> Coordinates { get; }
     }
 }

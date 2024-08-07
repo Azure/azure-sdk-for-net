@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The datatype for which the indexing behavior is applied to. </summary>
+        [WirePath("dataType")]
         public CosmosDBDataType? DataType { get; set; }
         /// <summary> The precision of the index. -1 is maximum precision. </summary>
+        [WirePath("precision")]
         public int? Precision { get; set; }
         /// <summary> Indicates the type of index. </summary>
+        [WirePath("kind")]
         public CosmosDBIndexKind? Kind { get; set; }
     }
 }

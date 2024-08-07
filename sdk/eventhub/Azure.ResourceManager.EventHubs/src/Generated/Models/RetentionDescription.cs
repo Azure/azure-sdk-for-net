@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="RetentionDescription"/>. </summary>
         /// <param name="cleanupPolicy"> Enumerates the possible values for cleanup policy. </param>
-        /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compaction the returned value of this property is Long.MaxValue. </param>
-        /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compaction. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
+        /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compact the returned value of this property is Long.MaxValue. </param>
+        /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, int? tombstoneRetentionTimeInHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Enumerates the possible values for cleanup policy. </summary>
+        [WirePath("cleanupPolicy")]
         public CleanupPolicyRetentionDescription? CleanupPolicy { get; set; }
-        /// <summary> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compaction the returned value of this property is Long.MaxValue. </summary>
+        /// <summary> Number of hours to retain the events for this Event Hub. This value is only used when cleanupPolicy is Delete. If cleanupPolicy is Compact the returned value of this property is Long.MaxValue. </summary>
+        [WirePath("retentionTimeInHours")]
         public long? RetentionTimeInHours { get; set; }
-        /// <summary> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compaction. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </summary>
+        /// <summary> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is only used when cleanupPolicy is Compact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </summary>
+        [WirePath("tombstoneRetentionTimeInHours")]
         public int? TombstoneRetentionTimeInHours { get; set; }
     }
 }

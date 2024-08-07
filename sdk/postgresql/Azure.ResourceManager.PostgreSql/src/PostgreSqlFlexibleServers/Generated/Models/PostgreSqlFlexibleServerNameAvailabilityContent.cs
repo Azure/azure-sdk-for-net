@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlFlexibleServerNameAvailabilityContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -76,8 +73,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

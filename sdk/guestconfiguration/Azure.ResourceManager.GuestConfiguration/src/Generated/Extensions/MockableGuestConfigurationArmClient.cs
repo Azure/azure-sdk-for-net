@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
@@ -65,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +138,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +170,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +214,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +246,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-25</description>
+        /// <description>2024-04-05</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,6 +263,82 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         public virtual Response<GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             return GetGuestConfigurationVmssAssignments(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GuestConfigurationVMwarevSphereAssignmentResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GuestConfigurationVMwarevSphereAssignmentResources and their operations over a GuestConfigurationVMwarevSphereAssignmentResource. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(ResourceIdentifier scope)
+        {
+            if (!scope.ResourceType.Equals("Microsoft.ConnectedVMwarevSphere/virtualmachines"))
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0}, expected Microsoft.ConnectedVMwarevSphere/virtualmachines", scope.ResourceType));
+            }
+            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get information about a guest configuration assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetGuestConfigurationVMwarevSphereAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information about a guest configuration assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return GetGuestConfigurationVMwarevSphereAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -302,6 +375,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         {
             GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationVmssAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVMwarevSphereAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentResource GetGuestConfigurationVMwarevSphereAssignmentResource(ResourceIdentifier id)
+        {
+            GuestConfigurationVMwarevSphereAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationVMwarevSphereAssignmentResource(Client, id);
         }
     }
 }

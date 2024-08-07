@@ -83,18 +83,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The name of the global database account. </summary>
+        [WirePath("properties.accountName")]
         public string AccountName { get; }
         /// <summary> The creation time of the restorable database account (ISO-8601 format). </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The least recent time at which the database account can be restored to (ISO-8601 format). </summary>
+        [WirePath("properties.oldestRestorableTime")]
         public DateTimeOffset? OldestRestorableOn { get; }
         /// <summary> The time at which the restorable database account has been deleted (ISO-8601 format). </summary>
+        [WirePath("properties.deletionTime")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The API type of the restorable database account. </summary>
+        [WirePath("properties.apiType")]
         public CosmosDBApiType? ApiType { get; }
         /// <summary> List of regions where the of the database account can be restored from. </summary>
+        [WirePath("properties.restorableLocations")]
         public IReadOnlyList<RestorableLocationResourceInfo> RestorableLocations { get; }
     }
 }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskAccessResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskAccessName, DiskAccessData data, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiskAccessResource> CreateOrUpdate(WaitUntil waitUntil, string diskAccessName, DiskAccessData data, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual async Task<Response<DiskAccessResource>> GetAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual Response<DiskAccessResource> Get(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual Response<bool> Exists(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual async Task<NullableResponse<DiskAccessResource>> GetIfExistsAsync(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         public virtual NullableResponse<DiskAccessResource> GetIfExists(string diskAccessName, CancellationToken cancellationToken = default)
         {
-            if (diskAccessName == null)
-            {
-                throw new ArgumentNullException(nameof(diskAccessName));
-            }
-            if (diskAccessName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskAccessName));
-            }
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessCollection.GetIfExists");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -58,10 +57,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
-            if (virtualNetwork == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetwork));
-            }
+            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
             Metadata = new ChangeTrackingDictionary<string, string>();

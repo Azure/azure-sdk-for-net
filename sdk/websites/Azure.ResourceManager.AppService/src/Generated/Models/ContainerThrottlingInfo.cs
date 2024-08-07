@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the periods. </summary>
+        [WirePath("periods")]
         public int? Periods { get; set; }
         /// <summary> Gets or sets the throttled periods. </summary>
+        [WirePath("throttledPeriods")]
         public int? ThrottledPeriods { get; set; }
         /// <summary> Gets or sets the throttled time. </summary>
+        [WirePath("throttledTime")]
         public int? ThrottledTime { get; set; }
     }
 }

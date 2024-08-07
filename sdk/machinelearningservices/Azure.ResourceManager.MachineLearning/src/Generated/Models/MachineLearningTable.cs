@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningTable(Uri dataUri) : base(dataUri)
         {
-            if (dataUri == null)
-            {
-                throw new ArgumentNullException(nameof(dataUri));
-            }
+            Argument.AssertNotNull(dataUri, nameof(dataUri));
 
             ReferencedUris = new ChangeTrackingList<Uri>();
             DataType = MachineLearningDataType.Mltable;

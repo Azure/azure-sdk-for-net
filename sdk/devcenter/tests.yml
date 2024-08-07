@@ -5,7 +5,8 @@ extends:
   parameters:
     ServiceDirectory: devcenter
     SDKType: client
-    DeployTestResources: false
+    DeployTestResources: true
+    TimeoutInMinutes: 240
     CloudConfig:
         Public:
             SubscriptionConfiguration: $(sub-config-devcenter-test-resources)

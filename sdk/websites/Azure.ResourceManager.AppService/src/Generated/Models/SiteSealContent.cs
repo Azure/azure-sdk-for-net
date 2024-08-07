@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </summary>
+        [WirePath("lightTheme")]
         public bool? IsLightTheme { get; set; }
         /// <summary> Locale of site seal. </summary>
+        [WirePath("locale")]
         public string Locale { get; set; }
     }
 }

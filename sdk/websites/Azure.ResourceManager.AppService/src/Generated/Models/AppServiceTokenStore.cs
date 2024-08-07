@@ -75,15 +75,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </summary>
+        [WirePath("tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
         internal FileSystemTokenStore FileSystem { get; set; }
         /// <summary> The directory in which the tokens will be stored. </summary>
+        [WirePath("fileSystem.directory")]
         public string FileSystemDirectory
         {
             get => FileSystem is null ? default : FileSystem.Directory;
@@ -98,6 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
         internal AppServiceBlobStorageTokenStore AzureBlobStorage { get; set; }
         /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
+        [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {
             get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProximityPlacementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string proximityPlacementGroupName, ProximityPlacementGroupData data, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _proximityPlacementGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _proximityPlacementGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProximityPlacementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string proximityPlacementGroupName, ProximityPlacementGroupData data, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _proximityPlacementGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data, cancellationToken);
-                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _proximityPlacementGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual async Task<Response<ProximityPlacementGroupResource>> GetAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Get");
             scope.Start();
@@ -238,7 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,14 +228,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual Response<ProximityPlacementGroupResource> Get(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Get");
             scope.Start();
@@ -291,7 +259,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +289,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Exists");
             scope.Start();
@@ -402,7 +363,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,14 +378,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.Exists");
             scope.Start();
@@ -453,7 +407,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProximityPlacementGroupResource>> GetIfExistsAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExists");
             scope.Start();
@@ -506,7 +453,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         public virtual NullableResponse<ProximityPlacementGroupResource> GetIfExists(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            if (proximityPlacementGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(proximityPlacementGroupName));
-            }
-            if (proximityPlacementGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(proximityPlacementGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
 
             using var scope = _proximityPlacementGroupClientDiagnostics.CreateScope("ProximityPlacementGroupCollection.GetIfExists");
             scope.Start();

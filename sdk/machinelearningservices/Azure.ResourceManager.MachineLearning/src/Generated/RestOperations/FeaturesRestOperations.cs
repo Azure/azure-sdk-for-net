@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -35,6 +34,41 @@ namespace Azure.ResourceManager.MachineLearning
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/featuresets/", false);
+            uri.AppendPath(featuresetName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(featuresetVersion, true);
+            uri.AppendPath("/features", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (tags != null)
+            {
+                uri.AppendQuery("tags", tags, true);
+            }
+            if (featureName != null)
+            {
+                uri.AppendQuery("featureName", featureName, true);
+            }
+            if (description != null)
+            {
+                uri.AppendQuery("description", description, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
@@ -93,46 +127,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FeatureResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -165,46 +164,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FeatureResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
             _pipeline.Send(message, cancellationToken);
@@ -220,6 +184,26 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/featuresets/", false);
+            uri.AppendPath(featuresetName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(featuresetVersion, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName)
@@ -260,54 +244,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/>, <paramref name="featuresetVersion"/> or <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MachineLearningFeatureData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
-            if (featureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, featureName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -339,54 +281,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/>, <paramref name="featuresetVersion"/> or <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MachineLearningFeatureData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
-            if (featureName == null)
-            {
-                throw new ArgumentNullException(nameof(featureName));
-            }
-            if (featureName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featureName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, featureName);
             _pipeline.Send(message, cancellationToken);
@@ -404,6 +304,14 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
@@ -436,50 +344,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FeatureResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -513,50 +383,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="featuresetName"/> or <paramref name="featuresetVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FeatureResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (featuresetName == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetName));
-            }
-            if (featuresetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetName));
-            }
-            if (featuresetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(featuresetVersion));
-            }
-            if (featuresetVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(featuresetVersion));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(featuresetName, nameof(featuresetName));
+            Argument.AssertNotNullOrEmpty(featuresetVersion, nameof(featuresetVersion));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, featuresetName, featuresetVersion, skip, tags, featureName, description);
             _pipeline.Send(message, cancellationToken);

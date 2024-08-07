@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Azure storage accounts. </summary>
+        [WirePath("properties")]
         public IDictionary<string, AppServiceStorageAccessInfo> Properties { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

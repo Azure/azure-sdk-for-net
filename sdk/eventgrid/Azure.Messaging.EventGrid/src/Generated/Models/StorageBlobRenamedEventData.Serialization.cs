@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -87,12 +86,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 storageDiagnostics);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobRenamedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobRenamedEventData(document.RootElement);
+        }
+
         internal partial class StorageBlobRenamedEventDataConverter : JsonConverter<StorageBlobRenamedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobRenamedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override StorageBlobRenamedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

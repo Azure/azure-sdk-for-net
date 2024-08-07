@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
@@ -198,17 +196,16 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = await _iotHubCertificateDescriptionCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation(response);
+                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -247,17 +244,16 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = _iotHubCertificateDescriptionCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new IotHubArmOperation(response);
+                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -297,17 +293,16 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> UpdateAsync(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Update");
             scope.Start();
             try
             {
                 var response = await _iotHubCertificateDescriptionCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()));
+                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -347,17 +342,16 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotHubCertificateDescriptionResource> Update(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Update");
             scope.Start();
             try
             {
                 var response = _iotHubCertificateDescriptionCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()));
+                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -395,10 +389,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public virtual async Task<Response<IotHubCertificateWithNonceDescription>> GenerateVerificationCodeAsync(string ifMatch, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.GenerateVerificationCode");
             scope.Start();
@@ -440,10 +431,7 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public virtual Response<IotHubCertificateWithNonceDescription> GenerateVerificationCode(string ifMatch, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.GenerateVerificationCode");
             scope.Start();
@@ -486,14 +474,8 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotHubCertificateDescriptionResource>> VerifyAsync(string ifMatch, IotHubCertificateVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Verify");
             scope.Start();
@@ -536,14 +518,8 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<IotHubCertificateDescriptionResource> Verify(string ifMatch, IotHubCertificateVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionResource.Verify");
             scope.Start();

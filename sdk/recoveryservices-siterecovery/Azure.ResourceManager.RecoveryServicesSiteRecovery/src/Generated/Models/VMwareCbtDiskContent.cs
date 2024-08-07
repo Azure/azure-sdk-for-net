@@ -54,22 +54,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/>, <paramref name="isOSDisk"/>, <paramref name="logStorageAccountId"/> or <paramref name="logStorageAccountSasSecretName"/> is null. </exception>
         public VMwareCbtDiskContent(string diskId, string isOSDisk, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
-            if (isOSDisk == null)
-            {
-                throw new ArgumentNullException(nameof(isOSDisk));
-            }
-            if (logStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(logStorageAccountId));
-            }
-            if (logStorageAccountSasSecretName == null)
-            {
-                throw new ArgumentNullException(nameof(logStorageAccountSasSecretName));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
+            Argument.AssertNotNull(isOSDisk, nameof(isOSDisk));
+            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
+            Argument.AssertNotNull(logStorageAccountSasSecretName, nameof(logStorageAccountSasSecretName));
 
             DiskId = diskId;
             IsOSDisk = isOSDisk;

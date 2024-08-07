@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataConnectionProperties"/>. </summary>
-        internal DataConnectionProperties()
+        public DataConnectionProperties()
         {
         }
 

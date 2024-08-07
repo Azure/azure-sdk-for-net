@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class SecretDeploymentResourceReference : IUtf8JsonSerializable, IJsonModel<SecretDeploymentResourceReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretDeploymentResourceReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretDeploymentResourceReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretDeploymentResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static SecretDeploymentResourceReference DeserializeSecretDeploymentResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ResourceIdentifier id = default;
             IdType idType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,10 +93,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecretDeploymentResourceReference(idType, serializedAdditionalRawData, id);
         }
 
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeSecretDeploymentResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 

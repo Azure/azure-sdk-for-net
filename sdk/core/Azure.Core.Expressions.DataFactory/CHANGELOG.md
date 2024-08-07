@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,18 +10,32 @@
 
 ### Other Changes
 
+## 1.0.0 (2024-03-05)
+
+### Features Added
+
+- Azure.Core.Expressions.DataFactory is now generally available.
+
+### Other Changes
+
+- `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecret`.
+- `DataFactoryKeyVaultSecretReference` has been renamed to `DataFactoryKeyVaultSecret`.
+- `DataFactoryLinkedServiceReferenceType` has been renamed to `DataFactoryLinkedServiceReferenceKind`.
+- `DataFactoryModelFactory` has been removed.
+- The `keyVaultSecretReference` parameter of the `DataFactoryElement<T>.FromKeyVaultSecretReference` method  has been renamed to `secretReference`.
+
 ## 1.0.0-beta.6 (2023-11-02)
 
 ### Bugs Fixed
 
-- Fixed deserialization of `DataFactoryElement<BinaryData>` properties where the underlying data 
+- Fixed deserialization of `DataFactoryElement<BinaryData>` properties where the underlying data
   is not a JSON object.
 
 ## 1.0.0-beta.5 (2023-08-15)
 
 ### Bugs Fixed
 
-- Added serialization support for `DataFactoryElement<BinaryData>` where the underlying 
+- Added serialization support for `DataFactoryElement<BinaryData>` where the underlying
   `BinaryData` is a JSON object.
 
 ## 1.0.0-beta.4 (2023-07-13)

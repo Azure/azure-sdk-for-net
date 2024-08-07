@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Fully qualified identifier of the resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Guid of the resource. </summary>
+        [WirePath("perimeterGuid")]
         public string PerimeterGuid { get; }
         /// <summary> Location of the resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

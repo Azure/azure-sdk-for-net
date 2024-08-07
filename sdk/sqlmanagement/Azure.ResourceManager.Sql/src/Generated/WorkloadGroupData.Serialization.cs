@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,14 +17,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class WorkloadGroupData : IUtf8JsonSerializable, IJsonModel<WorkloadGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static WorkloadGroupData DeserializeWorkloadGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Sql
             string importance = default;
             int? queryExecutionTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -220,10 +221,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadGroupData(
                 id,
                 name,
@@ -238,6 +239,175 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    minResourcePercent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinResourcePercent))
+                {
+                    builder.Append("    minResourcePercent: ");
+                    builder.AppendLine($"{MinResourcePercent.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxResourcePercent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxResourcePercent))
+                {
+                    builder.Append("    maxResourcePercent: ");
+                    builder.AppendLine($"{MaxResourcePercent.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercentPerRequest), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    minResourcePercentPerRequest: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinResourcePercentPerRequest))
+                {
+                    builder.Append("    minResourcePercentPerRequest: ");
+                    builder.AppendLine($"'{MinResourcePercentPerRequest.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercentPerRequest), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxResourcePercentPerRequest: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxResourcePercentPerRequest))
+                {
+                    builder.Append("    maxResourcePercentPerRequest: ");
+                    builder.AppendLine($"'{MaxResourcePercentPerRequest.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Importance), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    importance: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Importance))
+                {
+                    builder.Append("    importance: ");
+                    if (Importance.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Importance}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Importance}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryExecutionTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    queryExecutionTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryExecutionTimeout))
+                {
+                    builder.Append("    queryExecutionTimeout: ");
+                    builder.AppendLine($"{QueryExecutionTimeout.Value}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WorkloadGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,8 +416,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +435,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeWorkloadGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

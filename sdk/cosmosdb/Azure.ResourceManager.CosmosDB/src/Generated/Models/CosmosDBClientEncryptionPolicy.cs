@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="includedPaths"/> is null. </exception>
         public CosmosDBClientEncryptionPolicy(IEnumerable<CosmosDBClientEncryptionIncludedPath> includedPaths, int policyFormatVersion)
         {
-            if (includedPaths == null)
-            {
-                throw new ArgumentNullException(nameof(includedPaths));
-            }
+            Argument.AssertNotNull(includedPaths, nameof(includedPaths));
 
             IncludedPaths = includedPaths.ToList();
             PolicyFormatVersion = policyFormatVersion;
@@ -78,8 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Paths of the item that need encryption along with path-specific settings. </summary>
+        [WirePath("includedPaths")]
         public IList<CosmosDBClientEncryptionIncludedPath> IncludedPaths { get; }
         /// <summary> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </summary>
+        [WirePath("policyFormatVersion")]
         public int PolicyFormatVersion { get; set; }
     }
 }

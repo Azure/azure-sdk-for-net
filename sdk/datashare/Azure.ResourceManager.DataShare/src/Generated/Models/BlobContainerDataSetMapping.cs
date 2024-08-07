@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -25,22 +24,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public BlobContainerDataSetMapping(string containerName, Guid dataSetId, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             ContainerName = containerName;
             DataSetId = dataSetId;

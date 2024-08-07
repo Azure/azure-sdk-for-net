@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public PostgreSqlServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword)
         {
-            if (administratorLogin == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLogin));
-            }
-            if (administratorLoginPassword == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLoginPassword));
-            }
+            Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
+            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -57,8 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
     }
 }

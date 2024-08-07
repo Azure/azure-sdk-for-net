@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.VoiceServices.Mocking;
 using Azure.ResourceManager.VoiceServices.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource"/> object. </returns>
         public static VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableVoiceServicesArmClient(client).GetVoiceServicesCommunicationsGatewayResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesTestLineResource"/> object. </returns>
         public static VoiceServicesTestLineResource GetVoiceServicesTestLineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableVoiceServicesArmClient(client).GetVoiceServicesTestLineResource(id);
         }
@@ -91,10 +83,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
         public static VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
         }
@@ -132,10 +121,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static async Task<Response<VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGatewayAsync(communicationsGatewayName, cancellationToken).ConfigureAwait(false);
         }
@@ -173,10 +159,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static Response<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGateway(communicationsGatewayName, cancellationToken);
         }
@@ -212,10 +195,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
         }
@@ -251,10 +231,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
         }
@@ -287,10 +264,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableVoiceServicesSubscriptionResource(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -323,10 +297,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
         }

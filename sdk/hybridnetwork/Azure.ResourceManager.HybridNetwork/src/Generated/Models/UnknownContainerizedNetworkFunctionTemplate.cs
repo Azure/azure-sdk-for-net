@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownContainerizedNetworkFunctionTemplate. </summary>
+    /// <summary> Unknown version of ContainerizedNetworkFunctionTemplate. </summary>
     internal partial class UnknownContainerizedNetworkFunctionTemplate : ContainerizedNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContainerizedNetworkFunctionTemplate"/>. </summary>

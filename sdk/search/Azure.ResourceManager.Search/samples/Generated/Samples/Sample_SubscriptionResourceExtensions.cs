@@ -9,9 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search.Samples
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUsagesBySubscription_GetQuotaUsagesList()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/GetQuotaUsagesList.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetQuotaUsagesList.json
             // this example is just showing the usage of "Usages_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +50,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UsageBySubscriptionSku_GetQuotaUsage()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/GetQuotaUsage.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/GetQuotaUsage.json
             // this example is just showing the usage of "UsageBySubscriptionSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

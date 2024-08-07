@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
 
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,7 +189,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +220,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +258,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +358,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +396,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +427,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +458,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -500,7 +498,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +538,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -582,7 +580,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -624,7 +622,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -638,10 +636,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppAccountResource>> UpdateAsync(WaitUntil waitUntil, NetAppAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.Update");
             scope.Start();
@@ -673,7 +668,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -687,10 +682,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetAppAccountResource> Update(WaitUntil waitUntil, NetAppAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.Update");
             scope.Start();
@@ -722,7 +714,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -764,7 +756,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -794,92 +786,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Migrates all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateEncryption</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_MigrateEncryptionKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The required parameters to perform encryption migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> MigrateEncryptionKeyAsync(WaitUntil waitUntil, EncryptionMigrationContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.MigrateEncryptionKey");
-            scope.Start();
-            try
-            {
-                var response = await _netAppAccountAccountsRestClient.MigrateEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateMigrateEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Migrates all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateEncryption</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_MigrateEncryptionKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The required parameters to perform encryption migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation MigrateEncryptionKey(WaitUntil waitUntil, EncryptionMigrationContent content = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.MigrateEncryptionKey");
-            scope.Start();
-            try
-            {
-                var response = _netAppAccountAccountsRestClient.MigrateEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateMigrateEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// List all volume groups for given account
         /// <list type="bullet">
         /// <item>
@@ -892,7 +798,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -921,7 +827,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -950,7 +856,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -960,10 +866,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderAccountAsync(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
             scope.Start();
@@ -995,7 +898,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1005,10 +908,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation MigrateBackupsBackupsUnderAccount(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
             scope.Start();
@@ -1040,7 +940,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1054,14 +954,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetAppAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.AddTag");
             scope.Start();
@@ -1108,7 +1002,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1122,14 +1016,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetAppAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.AddTag");
             scope.Start();
@@ -1176,7 +1064,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1189,10 +1077,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetAppAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.SetTags");
             scope.Start();
@@ -1236,7 +1121,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1249,10 +1134,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetAppAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.SetTags");
             scope.Start();
@@ -1296,7 +1178,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1309,10 +1191,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetAppAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.RemoveTag");
             scope.Start();
@@ -1359,7 +1238,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1372,10 +1251,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetAppAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.RemoveTag");
             scope.Start();

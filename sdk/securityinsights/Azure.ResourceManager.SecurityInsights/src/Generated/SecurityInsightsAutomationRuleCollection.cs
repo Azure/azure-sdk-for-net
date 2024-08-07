@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsAutomationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string automationRuleId, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityInsightsAutomationRuleAutomationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsAutomationRuleAutomationRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsAutomationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string automationRuleId, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityInsightsAutomationRuleAutomationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsAutomationRuleAutomationRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, automationRuleId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsAutomationRuleResource>(Response.FromValue(new SecurityInsightsAutomationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsAutomationRuleResource>> GetAsync(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual Response<SecurityInsightsAutomationRuleResource> Get(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual Response<bool> Exists(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsAutomationRuleResource>> GetIfExistsAsync(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsAutomationRuleResource> GetIfExists(string automationRuleId, CancellationToken cancellationToken = default)
         {
-            if (automationRuleId == null)
-            {
-                throw new ArgumentNullException(nameof(automationRuleId));
-            }
-            if (automationRuleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationRuleId));
-            }
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleCollection.GetIfExists");
             scope.Start();

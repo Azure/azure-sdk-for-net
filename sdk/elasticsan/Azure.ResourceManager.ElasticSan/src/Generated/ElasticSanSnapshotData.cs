@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
         public ElasticSanSnapshotData(SnapshotCreationInfo creationData)
         {
-            if (creationData == null)
-            {
-                throw new ArgumentNullException(nameof(creationData));
-            }
+            Argument.AssertNotNull(creationData, nameof(creationData));
 
             CreationData = creationData;
         }

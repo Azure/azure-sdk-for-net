@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 
 namespace Azure.ResourceManager.DataBox.Mocking
@@ -134,10 +131,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AddressValidationOutput>> ValidateAddressAsync(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.ValidateAddress");
             scope.Start();
@@ -176,10 +170,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AddressValidationOutput> ValidateAddress(AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.ValidateAddress");
             scope.Start();
@@ -218,10 +209,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.ValidateInputs");
             scope.Start();
@@ -260,10 +248,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.ValidateInputs");
             scope.Start();
@@ -302,10 +287,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.GetRegionConfiguration");
             scope.Start();
@@ -344,10 +326,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxSubscriptionResource.GetRegionConfiguration");
             scope.Start();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotFirmwareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firmwareId, IotFirmwareData data, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _iotFirmwareFirmwaresRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation<IotFirmwareResource>(Response.FromValue(new IotFirmwareResource(Client, response), response.GetRawResponse()));
+                var uri = _iotFirmwareFirmwaresRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<IotFirmwareResource>(Response.FromValue(new IotFirmwareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotFirmwareResource> CreateOrUpdate(WaitUntil waitUntil, string firmwareId, IotFirmwareData data, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _iotFirmwareFirmwaresRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation<IotFirmwareResource>(Response.FromValue(new IotFirmwareResource(Client, response), response.GetRawResponse()));
+                var uri = _iotFirmwareFirmwaresRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<IotFirmwareResource>(Response.FromValue(new IotFirmwareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual async Task<Response<IotFirmwareResource>> GetAsync(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual Response<IotFirmwareResource> Get(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual Response<bool> Exists(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual async Task<NullableResponse<IotFirmwareResource>> GetIfExistsAsync(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareId"/> is null. </exception>
         public virtual NullableResponse<IotFirmwareResource> GetIfExists(string firmwareId, CancellationToken cancellationToken = default)
         {
-            if (firmwareId == null)
-            {
-                throw new ArgumentNullException(nameof(firmwareId));
-            }
-            if (firmwareId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firmwareId));
-            }
+            Argument.AssertNotNullOrEmpty(firmwareId, nameof(firmwareId));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareCollection.GetIfExists");
             scope.Start();

@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     [PersistableModelProxy(typeof(UnknownBenefitRecommendationProperties))]
     public partial class BenefitRecommendationProperties : IUtf8JsonSerializable, IJsonModel<BenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitRecommendationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitRecommendationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitRecommendationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                writer.WriteObjectValue(Usage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
@@ -80,12 +79,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue(RecommendationDetails);
+                writer.WriteObjectValue(RecommendationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue(AllRecommendationDetails);
+                writer.WriteObjectValue(AllRecommendationDetails, options);
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static BenefitRecommendationProperties DeserializeBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitRecommendationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

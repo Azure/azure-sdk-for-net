@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ChangeAnalysis;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Mocking

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CdnCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customDomainName, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CdnCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string customDomainName, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<CdnCustomDomainResource>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<CdnCustomDomainResource> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +283,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +313,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
@@ -399,7 +356,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.Exists");
             scope.Start();
@@ -449,7 +399,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<NullableResponse<CdnCustomDomainResource>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();
@@ -501,7 +444,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual NullableResponse<CdnCustomDomainResource> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
-            if (customDomainName == null)
-            {
-                throw new ArgumentNullException(nameof(customDomainName));
-            }
-            if (customDomainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customDomainName));
-            }
+            Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainCollection.GetIfExists");
             scope.Start();

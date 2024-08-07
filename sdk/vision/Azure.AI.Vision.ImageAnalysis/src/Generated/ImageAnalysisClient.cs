@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -21,6 +20,8 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -53,23 +54,49 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ImageAnalysisClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
+        /// <param name="endpoint">
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
+        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ImageAnalysisClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
+        /// <param name="endpoint">
+        /// Azure AI Computer Vision endpoint (protocol and hostname, for example:
+        /// https://&lt;resource-name&gt;.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ImageAnalysisClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -80,7 +107,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
@@ -105,20 +132,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageData"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageData, nameof(imageData));
 
+            using RequestContent content = imageData;
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent;
             Response response = await AnalyzeFromImageDataAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -129,7 +150,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
@@ -154,20 +175,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageData"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageData, nameof(imageData));
 
+            using RequestContent content = imageData;
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent;
             Response response = AnalyzeFromImageData(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -222,14 +237,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
@@ -295,14 +304,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
@@ -324,7 +327,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUrl"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
@@ -349,20 +352,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageUrl"/> is null. </exception>
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
+            using RequestContent content = imageUrl.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent.ToRequestContent();
             Response response = await AnalyzeFromUrlAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -373,7 +370,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Seven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.
         /// At least one visual feature must be specified.
         /// </param>
-        /// <param name="imageContent"> The image to be analyzed. </param>
+        /// <param name="imageUrl"> The image to be analyzed. </param>
         /// <param name="language">
         /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
@@ -398,20 +395,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// If however you would like to make sure analysis results do not change over time, set this value to a specific model version.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageUrl"/> is null. </exception>
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 
+            using RequestContent content = imageUrl.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = imageContent.ToRequestContent();
             Response response = AnalyzeFromUrl(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -466,14 +457,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
@@ -539,14 +524,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
@@ -594,7 +573,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/octet-stream");
+            request.Headers.Add("Content-Type", "application/octet-stream");
             request.Content = content;
             return message;
         }
@@ -631,7 +610,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }

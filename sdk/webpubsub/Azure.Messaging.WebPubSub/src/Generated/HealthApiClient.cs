@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -45,10 +44,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new WebPubSubServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

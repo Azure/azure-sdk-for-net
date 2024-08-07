@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -63,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -77,14 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<Response<NetworkFeatureResource>> GetAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Get");
             scope.Start();
@@ -115,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,14 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<NetworkFeatureResource> Get(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Get");
             scope.Start();
@@ -167,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,14 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Exists");
             scope.Start();
@@ -217,7 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,14 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.Exists");
             scope.Start();
@@ -267,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,14 +251,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFeatureResource>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
             scope.Start();
@@ -319,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,14 +296,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         public virtual NullableResponse<NetworkFeatureResource> GetIfExists(string view, CancellationToken cancellationToken = default)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-            if (view.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(view));
-            }
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using var scope = _networkFeatureWebAppsClientDiagnostics.CreateScope("NetworkFeatureCollection.GetIfExists");
             scope.Start();

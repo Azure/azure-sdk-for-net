@@ -23,53 +23,6 @@ namespace Azure.AI.DocumentIntelligence
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AddressValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AddressValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class AIDocumentIntelligenceModelFactory
-    {
-        public static Azure.AI.DocumentIntelligence.AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.AnalyzedDocument AnalyzedDocument(string docType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> fields = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, Azure.AI.DocumentIntelligence.StringIndexType stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType), Azure.AI.DocumentIntelligence.ContentFormat? contentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentList> lists = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzedDocument> documents = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.AuthorizeCopyContent AuthorizeCopyContent(string modelId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.BoundingRegion BoundingRegion(int pageNumber = 0, System.Collections.Generic.IEnumerable<float> polygon = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent BuildDocumentClassifierContent(string classifierId = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, Azure.AI.DocumentIntelligence.DocumentBuildMode buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode), Azure.AI.DocumentIntelligence.AzureBlobContentSource azureBlobSource = null, Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource azureBlobFileListSource = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.ComposeDocumentModelContent ComposeDocumentModelContent(string modelId = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.ComponentDocumentModelDetails> componentModels = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.CurrencyValue CurrencyValue(double amount = 0, string currencySymbol = null, string currencyCode = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = 0, int limit = 0) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcode DocumentBarcode(Azure.AI.DocumentIntelligence.DocumentBarcodeKind kind = default(Azure.AI.DocumentIntelligence.DocumentBarcodeKind), string value = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentCaption DocumentCaption(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentClassifierDetails result = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentField DocumentField(Azure.AI.DocumentIntelligence.DocumentFieldType type = default(Azure.AI.DocumentIntelligence.DocumentFieldType), string valueString = null, System.DateTimeOffset? valueDate = default(System.DateTimeOffset?), System.TimeSpan? valueTime = default(System.TimeSpan?), string valuePhoneNumber = null, double? valueNumber = default(double?), long? valueInteger = default(long?), Azure.AI.DocumentIntelligence.DocumentSelectionMarkState? valueSelectionMark = default(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState?), Azure.AI.DocumentIntelligence.DocumentSignatureType? valueSignature = default(Azure.AI.DocumentIntelligence.DocumentSignatureType?), string valueCountryRegion = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentField> valueArray = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> valueObject = null, Azure.AI.DocumentIntelligence.CurrencyValue valueCurrency = null, Azure.AI.DocumentIntelligence.AddressValue valueAddress = null, bool? valueBoolean = default(bool?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentFieldSchema DocumentFieldSchema(Azure.AI.DocumentIntelligence.DocumentFieldType type = default(Azure.AI.DocumentIntelligence.DocumentFieldType), string description = null, string example = null, Azure.AI.DocumentIntelligence.DocumentFieldSchema items = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentFieldSchema> properties = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentFigure DocumentFigure(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.DocumentIntelligence.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentFootnote DocumentFootnote(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentFormula DocumentFormula(Azure.AI.DocumentIntelligence.DocumentFormulaKind kind = default(Azure.AI.DocumentIntelligence.DocumentFormulaKind), string value = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceError> details = null, Azure.AI.DocumentIntelligence.InnerError innererror = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentKeyValueElement DocumentKeyValueElement(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentKeyValuePair DocumentKeyValuePair(Azure.AI.DocumentIntelligence.DocumentKeyValueElement key = null, Azure.AI.DocumentIntelligence.DocumentKeyValueElement value = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentLanguage DocumentLanguage(string locale = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentLine DocumentLine(string content = null, System.Collections.Generic.IEnumerable<float> polygon = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentList DocumentList(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentListItem> items = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentListItem DocumentListItem(int level = 0, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentBuildMode? buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode?), Azure.AI.DocumentIntelligence.AzureBlobContentSource azureBlobSource = null, Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource azureBlobFileListSource = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentTypeDetails> docTypes = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentPage DocumentPage(int pageNumber = 0, float? angle = default(float?), float? width = default(float?), float? height = default(float?), Azure.AI.DocumentIntelligence.LengthUnit? unit = default(Azure.AI.DocumentIntelligence.LengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSelectionMark> selectionMarks = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLine> lines = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFormula> formulas = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentParagraph DocumentParagraph(Azure.AI.DocumentIntelligence.ParagraphRole? role = default(Azure.AI.DocumentIntelligence.ParagraphRole?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentSection DocumentSection(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentSelectionMark DocumentSelectionMark(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState state = default(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState), System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentSpan DocumentSpan(int offset = 0, int length = 0) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentStyle DocumentStyle(bool? isHandwritten = default(bool?), string similarFontFamily = null, Azure.AI.DocumentIntelligence.FontStyle? fontStyle = default(Azure.AI.DocumentIntelligence.FontStyle?), Azure.AI.DocumentIntelligence.FontWeight? fontWeight = default(Azure.AI.DocumentIntelligence.FontWeight?), string color = null, string backgroundColor = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTableCell> cells = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, Azure.AI.DocumentIntelligence.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentTableCell DocumentTableCell(Azure.AI.DocumentIntelligence.DocumentTableCellKind? kind = default(Azure.AI.DocumentIntelligence.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentTypeDetails DocumentTypeDetails(string description = null, Azure.AI.DocumentIntelligence.DocumentBuildMode? buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentFieldSchema> fieldSchema = null, System.Collections.Generic.IReadOnlyDictionary<string, float> fieldConfidence = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.DocumentWord DocumentWord(string content = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.InnerError InnerError(string code = null, string message = null, Azure.AI.DocumentIntelligence.InnerError innerErrorObject = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.OperationDetails OperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), string kind = "Unknown", System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null) { throw null; }
-        public static Azure.AI.DocumentIntelligence.QuotaDetails QuotaDetails(int used = 0, int quota = 0, System.DateTimeOffset quotaResetDateTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.AI.DocumentIntelligence.ResourceDetails ResourceDetails(Azure.AI.DocumentIntelligence.CustomDocumentModelsDetails customDocumentModels = null, Azure.AI.DocumentIntelligence.QuotaDetails customNeuralDocumentModelBuilds = null) { throw null; }
-    }
     public partial class AnalyzedDocument : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AnalyzedDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AnalyzedDocument>
     {
         internal AnalyzedDocument() { }
@@ -131,14 +84,6 @@ namespace Azure.AI.DocumentIntelligence
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AuthorizeCopyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AuthorizeCopyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureAIDocumentIntelligenceClientOptions : Azure.Core.ClientOptions
-    {
-        public AzureAIDocumentIntelligenceClientOptions(Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions.ServiceVersion version = Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions.ServiceVersion.V2023_10_31_Preview) { }
-        public enum ServiceVersion
-        {
-            V2023_10_31_Preview = 1,
-        }
-    }
     public partial class AzureBlobContentSource : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AzureBlobContentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AzureBlobContentSource>
     {
         public AzureBlobContentSource(System.Uri containerUrl) { }
@@ -175,6 +120,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class BuildDocumentClassifierContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent>
     {
         public BuildDocumentClassifierContent(string classifierId, System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes) { }
+        public string BaseClassifierId { get { throw null; } set { } }
         public string ClassifierId { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> DocTypes { get { throw null; } }
@@ -372,15 +318,15 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind DataBar { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind DataBarExpanded { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind DataMatrix { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind EAN13 { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind EAN8 { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind ITF { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Ean13 { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Ean8 { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Itf { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind MaxiCode { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind MicroQRCode { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind PDF417 { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind QRCode { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind UPCA { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind UPCE { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind MicroQrCode { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Pdf417 { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind QrCode { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Upca { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Upce { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentBarcodeKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -436,11 +382,13 @@ namespace Azure.AI.DocumentIntelligence
     {
         internal DocumentClassifierDetails() { }
         public string ApiVersion { get { throw null; } }
+        public string BaseClassifierId { get { throw null; } }
         public string ClassifierId { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> DocTypes { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get { throw null; } }
         Azure.AI.DocumentIntelligence.DocumentClassifierDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.DocumentIntelligence.DocumentClassifierDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentClassifierDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -456,15 +404,16 @@ namespace Azure.AI.DocumentIntelligence
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get { throw null; } }
         public Azure.AI.DocumentIntelligence.DocumentFieldType Type { get { throw null; } }
         public Azure.AI.DocumentIntelligence.AddressValue ValueAddress { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentField> ValueArray { get { throw null; } }
         public bool? ValueBoolean { get { throw null; } }
         public string ValueCountryRegion { get { throw null; } }
         public Azure.AI.DocumentIntelligence.CurrencyValue ValueCurrency { get { throw null; } }
         public System.DateTimeOffset? ValueDate { get { throw null; } }
-        public long? ValueInteger { get { throw null; } }
-        public double? ValueNumber { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> ValueObject { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> ValueDictionary { get { throw null; } }
+        public double? ValueDouble { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentField> ValueList { get { throw null; } }
+        public long? ValueLong { get { throw null; } }
         public string ValuePhoneNumber { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ValueSelectionGroup { get { throw null; } }
         public Azure.AI.DocumentIntelligence.DocumentSelectionMarkState? ValueSelectionMark { get { throw null; } }
         public Azure.AI.DocumentIntelligence.DocumentSignatureType? ValueSignature { get { throw null; } }
         public string ValueString { get { throw null; } }
@@ -496,15 +445,16 @@ namespace Azure.AI.DocumentIntelligence
         private readonly int _dummyPrimitive;
         public DocumentFieldType(string value) { throw null; }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Address { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentFieldType Array { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Boolean { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType CountryRegion { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Currency { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Date { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentFieldType Integer { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentFieldType Number { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.DocumentFieldType Object { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldType Dictionary { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldType Double { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldType List { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldType Long { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType PhoneNumber { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldType SelectionGroup { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType SelectionMark { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Signature { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType String { get { throw null; } }
@@ -532,6 +482,42 @@ namespace Azure.AI.DocumentIntelligence
         Azure.AI.DocumentIntelligence.DocumentFigure System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentFigure>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentFigure>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentFigure>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentFontStyle : System.IEquatable<Azure.AI.DocumentIntelligence.DocumentFontStyle>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentFontStyle(string value) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFontStyle Italic { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFontStyle Normal { get { throw null; } }
+        public bool Equals(Azure.AI.DocumentIntelligence.DocumentFontStyle other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFontStyle left, Azure.AI.DocumentIntelligence.DocumentFontStyle right) { throw null; }
+        public static implicit operator Azure.AI.DocumentIntelligence.DocumentFontStyle (string value) { throw null; }
+        public static bool operator !=(Azure.AI.DocumentIntelligence.DocumentFontStyle left, Azure.AI.DocumentIntelligence.DocumentFontStyle right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentFontWeight : System.IEquatable<Azure.AI.DocumentIntelligence.DocumentFontWeight>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentFontWeight(string value) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFontWeight Bold { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.DocumentFontWeight Normal { get { throw null; } }
+        public bool Equals(Azure.AI.DocumentIntelligence.DocumentFontWeight other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFontWeight left, Azure.AI.DocumentIntelligence.DocumentFontWeight right) { throw null; }
+        public static implicit operator Azure.AI.DocumentIntelligence.DocumentFontWeight (string value) { throw null; }
+        public static bool operator !=(Azure.AI.DocumentIntelligence.DocumentFontWeight left, Azure.AI.DocumentIntelligence.DocumentFontWeight right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentFootnote : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentFootnote>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentFootnote>
     {
@@ -582,9 +568,9 @@ namespace Azure.AI.DocumentIntelligence
     {
         protected DocumentIntelligenceAdministrationClient() { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.DocumentIntelligence.CopyAuthorization> AuthorizeModelCopy(Azure.AI.DocumentIntelligence.AuthorizeCopyContent authorizeCopyRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AuthorizeModelCopy(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -643,9 +629,9 @@ namespace Azure.AI.DocumentIntelligence
     {
         protected DocumentIntelligenceClient() { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions options) { }
+        public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.ContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, Azure.RequestContext context = null) { throw null; }
@@ -655,6 +641,14 @@ namespace Azure.AI.DocumentIntelligence
         public virtual Azure.Operation<System.BinaryData> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentContent classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class DocumentIntelligenceClientOptions : Azure.Core.ClientOptions
+    {
+        public DocumentIntelligenceClientOptions(Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion version = Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion.V2024_02_29_Preview) { }
+        public enum ServiceVersion
+        {
+            V2024_02_29_Preview = 1,
+        }
     }
     public partial class DocumentIntelligenceError : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>
     {
@@ -669,6 +663,66 @@ namespace Azure.AI.DocumentIntelligence
         Azure.AI.DocumentIntelligence.DocumentIntelligenceError System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public static partial class DocumentIntelligenceModelFactory
+    {
+        public static Azure.AI.DocumentIntelligence.AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.AnalyzedDocument AnalyzedDocument(string docType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> fields = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, Azure.AI.DocumentIntelligence.StringIndexType stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType), Azure.AI.DocumentIntelligence.ContentFormat? contentFormat = default(Azure.AI.DocumentIntelligence.ContentFormat?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentList> lists = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzedDocument> documents = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.AuthorizeCopyContent AuthorizeCopyContent(string modelId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.BoundingRegion BoundingRegion(int pageNumber = 0, System.Collections.Generic.IEnumerable<float> polygon = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.BuildDocumentClassifierContent BuildDocumentClassifierContent(string classifierId = null, string description = null, string baseClassifierId = null, System.Collections.Generic.IDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, Azure.AI.DocumentIntelligence.DocumentBuildMode buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode), Azure.AI.DocumentIntelligence.AzureBlobContentSource azureBlobSource = null, Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource azureBlobFileListSource = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.ComposeDocumentModelContent ComposeDocumentModelContent(string modelId = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.ComponentDocumentModelDetails> componentModels = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.CurrencyValue CurrencyValue(double amount = 0, string currencySymbol = null, string currencyCode = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = 0, int limit = 0) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentBarcode DocumentBarcode(Azure.AI.DocumentIntelligence.DocumentBarcodeKind kind = default(Azure.AI.DocumentIntelligence.DocumentBarcodeKind), string value = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentCaption DocumentCaption(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentClassifierDetails result = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string apiVersion = null, string baseClassifierId = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> docTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentField DocumentField(Azure.AI.DocumentIntelligence.DocumentFieldType type = default(Azure.AI.DocumentIntelligence.DocumentFieldType), string valueString = null, System.DateTimeOffset? valueDate = default(System.DateTimeOffset?), System.TimeSpan? valueTime = default(System.TimeSpan?), string valuePhoneNumber = null, double? valueDouble = default(double?), long? valueLong = default(long?), Azure.AI.DocumentIntelligence.DocumentSelectionMarkState? valueSelectionMark = default(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState?), Azure.AI.DocumentIntelligence.DocumentSignatureType? valueSignature = default(Azure.AI.DocumentIntelligence.DocumentSignatureType?), string valueCountryRegion = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentField> valueList = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> valueDictionary = null, Azure.AI.DocumentIntelligence.CurrencyValue valueCurrency = null, Azure.AI.DocumentIntelligence.AddressValue valueAddress = null, bool? valueBoolean = default(bool?), System.Collections.Generic.IEnumerable<string> valueSelectionGroup = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFieldSchema DocumentFieldSchema(Azure.AI.DocumentIntelligence.DocumentFieldType type = default(Azure.AI.DocumentIntelligence.DocumentFieldType), string description = null, string example = null, Azure.AI.DocumentIntelligence.DocumentFieldSchema items = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentFieldSchema> properties = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFigure DocumentFigure(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.DocumentIntelligence.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFootnote DocumentFootnote(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentFormula DocumentFormula(Azure.AI.DocumentIntelligence.DocumentFormulaKind kind = default(Azure.AI.DocumentIntelligence.DocumentFormulaKind), string value = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceError> details = null, Azure.AI.DocumentIntelligence.InnerError innererror = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning DocumentIntelligenceWarning(string code = null, string message = null, string target = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentKeyValueElement DocumentKeyValueElement(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentKeyValuePair DocumentKeyValuePair(Azure.AI.DocumentIntelligence.DocumentKeyValueElement key = null, Azure.AI.DocumentIntelligence.DocumentKeyValueElement value = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentLanguage DocumentLanguage(string locale = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentLine DocumentLine(string content = null, System.Collections.Generic.IEnumerable<float> polygon = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentList DocumentList(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentListItem> items = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentListItem DocumentListItem(int level = 0, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null, Azure.AI.DocumentIntelligence.DocumentModelDetails result = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentBuildMode? buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode?), Azure.AI.DocumentIntelligence.AzureBlobContentSource azureBlobSource = null, Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource azureBlobFileListSource = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentTypeDetails> docTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentPage DocumentPage(int pageNumber = 0, float? angle = default(float?), float? width = default(float?), float? height = default(float?), Azure.AI.DocumentIntelligence.LengthUnit? unit = default(Azure.AI.DocumentIntelligence.LengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSelectionMark> selectionMarks = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLine> lines = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFormula> formulas = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentParagraph DocumentParagraph(Azure.AI.DocumentIntelligence.ParagraphRole? role = default(Azure.AI.DocumentIntelligence.ParagraphRole?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentSection DocumentSection(System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentSelectionMark DocumentSelectionMark(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState state = default(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState), System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentSpan DocumentSpan(int offset = 0, int length = 0) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentStyle DocumentStyle(bool? isHandwritten = default(bool?), string similarFontFamily = null, Azure.AI.DocumentIntelligence.DocumentFontStyle? fontStyle = default(Azure.AI.DocumentIntelligence.DocumentFontStyle?), Azure.AI.DocumentIntelligence.DocumentFontWeight? fontWeight = default(Azure.AI.DocumentIntelligence.DocumentFontWeight?), string color = null, string backgroundColor = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTableCell> cells = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, Azure.AI.DocumentIntelligence.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentTableCell DocumentTableCell(Azure.AI.DocumentIntelligence.DocumentTableCellKind? kind = default(Azure.AI.DocumentIntelligence.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentTypeDetails DocumentTypeDetails(string description = null, Azure.AI.DocumentIntelligence.DocumentBuildMode? buildMode = default(Azure.AI.DocumentIntelligence.DocumentBuildMode?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentFieldSchema> fieldSchema = null, System.Collections.Generic.IReadOnlyDictionary<string, float> fieldConfidence = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.DocumentWord DocumentWord(string content = null, System.Collections.Generic.IEnumerable<float> polygon = null, Azure.AI.DocumentIntelligence.DocumentSpan span = null, float confidence = 0f) { throw null; }
+        public static Azure.AI.DocumentIntelligence.InnerError InnerError(string code = null, string message = null, Azure.AI.DocumentIntelligence.InnerError innerErrorObject = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.OperationDetails OperationDetails(string operationId = null, Azure.AI.DocumentIntelligence.OperationStatus status = default(Azure.AI.DocumentIntelligence.OperationStatus), int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), string kind = null, System.Uri resourceLocation = null, string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.QuotaDetails QuotaDetails(int used = 0, int quota = 0, System.DateTimeOffset quotaResetsOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.DocumentIntelligence.ResourceDetails ResourceDetails(Azure.AI.DocumentIntelligence.CustomDocumentModelsDetails customDocumentModels = null, Azure.AI.DocumentIntelligence.QuotaDetails customNeuralDocumentModelBuilds = null) { throw null; }
+    }
+    public partial class DocumentIntelligenceWarning : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>
+    {
+        internal DocumentIntelligenceWarning() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+        Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DocumentKeyValueElement : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentKeyValueElement>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentKeyValueElement>
     {
@@ -780,12 +834,13 @@ namespace Azure.AI.DocumentIntelligence
         public Azure.AI.DocumentIntelligence.AzureBlobFileListContentSource AzureBlobFileListSource { get { throw null; } }
         public Azure.AI.DocumentIntelligence.AzureBlobContentSource AzureBlobSource { get { throw null; } }
         public Azure.AI.DocumentIntelligence.DocumentBuildMode? BuildMode { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentTypeDetails> DocTypes { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string ModelId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get { throw null; } }
         Azure.AI.DocumentIntelligence.DocumentModelDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentModelDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentModelDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.DocumentIntelligence.DocumentModelDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentModelDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -902,8 +957,8 @@ namespace Azure.AI.DocumentIntelligence
         public string BackgroundColor { get { throw null; } }
         public string Color { get { throw null; } }
         public float Confidence { get { throw null; } }
-        public Azure.AI.DocumentIntelligence.FontStyle? FontStyle { get { throw null; } }
-        public Azure.AI.DocumentIntelligence.FontWeight? FontWeight { get { throw null; } }
+        public Azure.AI.DocumentIntelligence.DocumentFontStyle? FontStyle { get { throw null; } }
+        public Azure.AI.DocumentIntelligence.DocumentFontWeight? FontWeight { get { throw null; } }
         public bool? IsHandwritten { get { throw null; } }
         public string SimilarFontFamily { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentSpan> Spans { get { throw null; } }
@@ -994,42 +1049,6 @@ namespace Azure.AI.DocumentIntelligence
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentWord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentWord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FontStyle : System.IEquatable<Azure.AI.DocumentIntelligence.FontStyle>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FontStyle(string value) { throw null; }
-        public static Azure.AI.DocumentIntelligence.FontStyle Italic { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.FontStyle Normal { get { throw null; } }
-        public bool Equals(Azure.AI.DocumentIntelligence.FontStyle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.DocumentIntelligence.FontStyle left, Azure.AI.DocumentIntelligence.FontStyle right) { throw null; }
-        public static implicit operator Azure.AI.DocumentIntelligence.FontStyle (string value) { throw null; }
-        public static bool operator !=(Azure.AI.DocumentIntelligence.FontStyle left, Azure.AI.DocumentIntelligence.FontStyle right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FontWeight : System.IEquatable<Azure.AI.DocumentIntelligence.FontWeight>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FontWeight(string value) { throw null; }
-        public static Azure.AI.DocumentIntelligence.FontWeight Bold { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.FontWeight Normal { get { throw null; } }
-        public bool Equals(Azure.AI.DocumentIntelligence.FontWeight other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.DocumentIntelligence.FontWeight left, Azure.AI.DocumentIntelligence.FontWeight right) { throw null; }
-        public static implicit operator Azure.AI.DocumentIntelligence.FontWeight (string value) { throw null; }
-        public static bool operator !=(Azure.AI.DocumentIntelligence.FontWeight left, Azure.AI.DocumentIntelligence.FontWeight right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class InnerError : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.InnerError>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.InnerError>
     {
         internal InnerError() { }
@@ -1062,11 +1081,11 @@ namespace Azure.AI.DocumentIntelligence
     }
     public abstract partial class OperationDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.OperationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.OperationDetails>
     {
-        protected OperationDetails(string operationId, Azure.AI.DocumentIntelligence.OperationStatus status, System.DateTimeOffset createdDateTime, System.DateTimeOffset lastUpdatedDateTime, System.Uri resourceLocation) { }
+        protected OperationDetails(string operationId, Azure.AI.DocumentIntelligence.OperationStatus status, System.DateTimeOffset createdOn, System.DateTimeOffset lastUpdatedOn, System.Uri resourceLocation) { }
         public string ApiVersion { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public Azure.AI.DocumentIntelligence.DocumentIntelligenceError Error { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string OperationId { get { throw null; } }
         public int? PercentCompleted { get { throw null; } }
         public System.Uri ResourceLocation { get { throw null; } }
@@ -1085,6 +1104,7 @@ namespace Azure.AI.DocumentIntelligence
         private readonly int _dummyPrimitive;
         public OperationStatus(string value) { throw null; }
         public static Azure.AI.DocumentIntelligence.OperationStatus Canceled { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.OperationStatus Completed { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.OperationStatus Failed { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.OperationStatus NotStarted { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.OperationStatus Running { get { throw null; } }
@@ -1126,7 +1146,7 @@ namespace Azure.AI.DocumentIntelligence
     {
         internal QuotaDetails() { }
         public int Quota { get { throw null; } }
-        public System.DateTimeOffset QuotaResetDateTime { get { throw null; } }
+        public System.DateTimeOffset QuotaResetsOn { get { throw null; } }
         public int Used { get { throw null; } }
         Azure.AI.DocumentIntelligence.QuotaDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.QuotaDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.QuotaDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1186,13 +1206,13 @@ namespace Azure.AI.DocumentIntelligence
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AIDocumentIntelligenceClientBuilderExtensions
+    public static partial class DocumentIntelligenceClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.DocumentIntelligence.DocumentIntelligenceClient, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

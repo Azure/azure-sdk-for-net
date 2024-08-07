@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
@@ -46,10 +44,10 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerRestOperations _serverOperationsRestClient;
         private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
         private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
-        private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
-        private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
+        private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly SqlServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -83,12 +81,12 @@ namespace Azure.ResourceManager.Sql
             _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
-            _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -2046,7 +2044,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2077,7 +2075,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2288,10 +2286,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerResource>> UpdateAsync(WaitUntil waitUntil, SqlServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.Update");
             scope.Start();
@@ -2337,10 +2332,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SqlServerResource> Update(WaitUntil waitUntil, SqlServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.Update");
             scope.Start();
@@ -2484,10 +2476,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            if (tdeCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(tdeCertificate));
-            }
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
             using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
@@ -2529,10 +2518,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
         public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            if (tdeCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(tdeCertificate));
-            }
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
             using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
@@ -2549,66 +2535,6 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2698,10 +2624,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            if (databaseImportDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(databaseImportDefinition));
-            }
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
@@ -2747,10 +2670,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
         public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            if (databaseImportDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(databaseImportDefinition));
-            }
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
@@ -2854,6 +2774,66 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -2880,14 +2860,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.AddTag");
             scope.Start();
@@ -2948,14 +2922,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SqlServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.AddTag");
             scope.Start();
@@ -3015,10 +2983,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.SetTags");
             scope.Start();
@@ -3075,10 +3040,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SqlServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.SetTags");
             scope.Start();
@@ -3135,10 +3097,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RemoveTag");
             scope.Start();
@@ -3198,10 +3157,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SqlServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RemoveTag");
             scope.Start();

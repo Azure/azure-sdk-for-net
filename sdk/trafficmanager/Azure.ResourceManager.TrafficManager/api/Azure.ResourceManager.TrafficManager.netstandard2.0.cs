@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.TrafficManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class TrafficManagerEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrafficManagerEndpointResource() { }
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource> Update(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource>> UpdateAsync(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.TrafficManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerGeographicHierarchyResource : Azure.ResourceManager.ArmResource
+    public partial class TrafficManagerGeographicHierarchyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrafficManagerGeographicHierarchyResource() { }
@@ -92,6 +97,11 @@ namespace Azure.ResourceManager.TrafficManager
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerHeatMapCollection : Azure.ResourceManager.ArmCollection
     {
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.TrafficManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerHeatMapResource : Azure.ResourceManager.ArmResource
+    public partial class TrafficManagerHeatMapResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrafficManagerHeatMapResource() { }
@@ -125,6 +135,11 @@ namespace Azure.ResourceManager.TrafficManager
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType heatMapType) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource> Get(System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource>> GetAsync(System.Collections.Generic.IEnumerable<double> topLeft = null, System.Collections.Generic.IEnumerable<double> botRight = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TrafficManagerProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>, System.Collections.IEnumerable
     {
@@ -160,7 +175,7 @@ namespace Azure.ResourceManager.TrafficManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerProfileResource : Azure.ResourceManager.ArmResource
+    public partial class TrafficManagerProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrafficManagerProfileResource() { }
@@ -183,6 +198,11 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrafficManager.TrafficManagerProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> Update(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> UpdateAsync(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -196,7 +216,7 @@ namespace Azure.ResourceManager.TrafficManager
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrafficManagerUserMetricsResource : Azure.ResourceManager.ArmResource
+    public partial class TrafficManagerUserMetricsResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrafficManagerUserMetricsResource() { }
@@ -209,6 +229,11 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.TrafficManager.Mocking

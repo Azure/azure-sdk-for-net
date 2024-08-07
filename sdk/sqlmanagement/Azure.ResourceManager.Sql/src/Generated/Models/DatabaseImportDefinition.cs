@@ -54,22 +54,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public DatabaseImportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword)
         {
-            if (storageKey == null)
-            {
-                throw new ArgumentNullException(nameof(storageKey));
-            }
-            if (storageUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageUri));
-            }
-            if (administratorLogin == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLogin));
-            }
-            if (administratorLoginPassword == null)
-            {
-                throw new ArgumentNullException(nameof(administratorLoginPassword));
-            }
+            Argument.AssertNotNull(storageKey, nameof(storageKey));
+            Argument.AssertNotNull(storageUri, nameof(storageUri));
+            Argument.AssertNotNull(administratorLogin, nameof(administratorLogin));
+            Argument.AssertNotNull(administratorLoginPassword, nameof(administratorLoginPassword));
 
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
@@ -113,26 +101,37 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Name of the import database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Edition of the import database. </summary>
+        [WirePath("edition")]
         public string Edition { get; set; }
         /// <summary> Service level objective name of the import database. </summary>
+        [WirePath("serviceObjectiveName")]
         public string ServiceObjectiveName { get; set; }
         /// <summary> Max size in bytes for the import database. </summary>
+        [WirePath("maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
         /// <summary> Storage key type. </summary>
+        [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
         /// <summary> Storage key. </summary>
+        [WirePath("storageKey")]
         public string StorageKey { get; }
         /// <summary> Storage Uri. </summary>
+        [WirePath("storageUri")]
         public Uri StorageUri { get; }
         /// <summary> Administrator login name. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> Administrator login password. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
         /// <summary> Authentication type. </summary>
+        [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>
+        [WirePath("networkIsolation")]
         public NetworkIsolationSettings NetworkIsolation { get; set; }
     }
 }

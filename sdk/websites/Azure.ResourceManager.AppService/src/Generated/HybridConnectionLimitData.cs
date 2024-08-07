@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The current number of Hybrid Connections. </summary>
+        [WirePath("properties.current")]
         public int? Current { get; }
         /// <summary> The maximum number of Hybrid Connections allowed. </summary>
+        [WirePath("properties.maximum")]
         public int? Maximum { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

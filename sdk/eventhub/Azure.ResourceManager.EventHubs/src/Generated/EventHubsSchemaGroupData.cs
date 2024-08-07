@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -84,18 +83,25 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Exact time the Schema Group was updated. </summary>
+        [WirePath("properties.updatedAtUtc")]
         public DateTimeOffset? UpdatedAtUtc { get; }
         /// <summary> Exact time the Schema Group was created. </summary>
+        [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc { get; }
         /// <summary> The ETag value. </summary>
+        [WirePath("properties.eTag")]
         public ETag? ETag { get; }
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
+        [WirePath("properties.groupProperties")]
         public IDictionary<string, string> GroupProperties { get; }
         /// <summary> Gets or sets the schema compatibility. </summary>
+        [WirePath("properties.schemaCompatibility")]
         public EventHubsSchemaCompatibility? SchemaCompatibility { get; set; }
         /// <summary> Gets or sets the schema type. </summary>
+        [WirePath("properties.schemaType")]
         public EventHubsSchemaType? SchemaType { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

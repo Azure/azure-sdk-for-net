@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -289,9 +287,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = "Unknown", double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
+        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = null, double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
         {
-            return new UnknownMeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData: null);
+            return new UnknownMeterDetails(billingType == null ? default : new BillingType(billingType), multiplier, chargingType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>

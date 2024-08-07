@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public StorageActiveDirectoryProperties(string domainName, Guid domainGuid)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
             DomainGuid = domainGuid;
@@ -89,20 +86,28 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; set; }
         /// <summary> Specifies the NetBIOS domain name. </summary>
+        [WirePath("netBiosDomainName")]
         public string NetBiosDomainName { get; set; }
         /// <summary> Specifies the Active Directory forest to get. </summary>
+        [WirePath("forestName")]
         public string ForestName { get; set; }
         /// <summary> Specifies the domain GUID. </summary>
+        [WirePath("domainGuid")]
         public Guid DomainGuid { get; set; }
         /// <summary> Specifies the security identifier (SID). </summary>
+        [WirePath("domainSid")]
         public string DomainSid { get; set; }
         /// <summary> Specifies the security identifier (SID) for Azure Storage. </summary>
+        [WirePath("azureStorageSid")]
         public string AzureStorageSid { get; set; }
         /// <summary> Specifies the Active Directory SAMAccountName for Azure Storage. </summary>
+        [WirePath("samAccountName")]
         public string SamAccountName { get; set; }
         /// <summary> Specifies the Active Directory account type for Azure Storage. </summary>
+        [WirePath("accountType")]
         public ActiveDirectoryAccountType? AccountType { get; set; }
     }
 }

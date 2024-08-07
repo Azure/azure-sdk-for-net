@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownScheduleAvailabilityRequest. </summary>
+    /// <summary> Unknown version of ScheduleAvailabilityRequest. </summary>
     internal partial class UnknownScheduleAvailabilityRequest : ScheduleAvailabilityContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleAvailabilityRequest"/>. </summary>

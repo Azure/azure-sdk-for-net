@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
         public EncryptionKeyDetails(Uri keyVaultUri, string keyName, string keyVersion)
         {
-            if (keyVaultUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultUri));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(keyVersion, nameof(keyVersion));
 
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;

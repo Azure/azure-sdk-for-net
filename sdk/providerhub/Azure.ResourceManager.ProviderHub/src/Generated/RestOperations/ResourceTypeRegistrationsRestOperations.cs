@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.ProviderHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerNamespace, string resourceType)
@@ -66,30 +79,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeRegistrationData>> GetAsync(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +110,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeRegistrationData> Get(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
@@ -159,6 +130,20 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerNamespace, string resourceType, ResourceTypeRegistrationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerNamespace, string resourceType, ResourceTypeRegistrationData data)
@@ -179,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -195,34 +180,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -246,34 +207,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string providerNamespace, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, data);
             _pipeline.Send(message, cancellationToken);
@@ -285,6 +222,20 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string providerNamespace, string resourceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string providerNamespace, string resourceType)
@@ -316,30 +267,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -362,30 +292,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
@@ -397,6 +306,19 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProviderRegistrationRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/resourcetypeRegistrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProviderRegistrationRequest(string subscriptionId, string providerNamespace)
@@ -426,22 +348,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeRegistrationListResult>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationRequest(subscriptionId, providerNamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,22 +375,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeRegistrationListResult> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationRequest(subscriptionId, providerNamespace);
             _pipeline.Send(message, cancellationToken);
@@ -498,6 +392,14 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProviderRegistrationNextPageRequestUri(string nextLink, string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProviderRegistrationNextPageRequest(string nextLink, string subscriptionId, string providerNamespace)
@@ -523,26 +425,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeRegistrationListResult>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationNextPageRequest(nextLink, subscriptionId, providerNamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -569,26 +454,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeRegistrationListResult> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationNextPageRequest(nextLink, subscriptionId, providerNamespace);
             _pipeline.Send(message, cancellationToken);

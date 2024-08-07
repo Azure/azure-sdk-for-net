@@ -8,29 +8,29 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountEncryption : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageAccountEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
-                writer.WriteObjectValue(Services);
+                writer.WriteObjectValue(Services, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                writer.WriteObjectValue(EncryptionIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountKeyVaultProperties keyvaultproperties = default;
             StorageAccountEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("services"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageAccountEncryption(
                 services,
                 keySource,
@@ -157,6 +157,97 @@ namespace Azure.ResourceManager.Storage.Models
                 keyvaultproperties,
                 identity,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Services), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  services: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Services))
+                {
+                    builder.Append("  services: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Services, options, 2, false, "  services: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keySource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeySource))
+                {
+                    builder.Append("  keySource: ");
+                    builder.AppendLine($"'{KeySource.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requireInfrastructureEncryption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequireInfrastructureEncryption))
+                {
+                    builder.Append("  requireInfrastructureEncryption: ");
+                    var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyvaultproperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultProperties))
+                {
+                    builder.Append("  keyvaultproperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyvaultproperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionIdentity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EncryptionIdentity, options, 2, false, "  identity: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<StorageAccountEncryption>.Write(ModelReaderWriterOptions options)
@@ -167,8 +258,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +277,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

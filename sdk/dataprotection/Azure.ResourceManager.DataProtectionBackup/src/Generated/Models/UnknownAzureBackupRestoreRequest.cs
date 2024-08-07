@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownAzureBackupRestoreRequest. </summary>
+    /// <summary> Unknown version of AzureBackupRestoreRequest. </summary>
     internal partial class UnknownAzureBackupRestoreRequest : BackupRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureBackupRestoreRequest"/>. </summary>
@@ -23,12 +23,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAzureBackupRestoreRequest(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData)
+        internal UnknownAzureBackupRestoreRequest(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests, identityDetails, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
         }

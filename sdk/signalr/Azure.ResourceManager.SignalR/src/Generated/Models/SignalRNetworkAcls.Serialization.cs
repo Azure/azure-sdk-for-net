@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRNetworkAcls : IUtf8JsonSerializable, IJsonModel<SignalRNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue(PublicNetwork);
+                writer.WriteObjectValue(PublicNetwork, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SignalR.Models
             SignalRNetworkAcl publicNetwork = default;
             IList<SignalRPrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -126,11 +127,79 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultAction))
+                {
+                    builder.Append("  defaultAction: ");
+                    builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetwork), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publicNetwork: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetwork))
+                {
+                    builder.Append("  publicNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PublicNetwork, options, 2, false, "  publicNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpoints))
+                {
+                    if (PrivateEndpoints.Any())
+                    {
+                        builder.Append("  privateEndpoints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpoints)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  privateEndpoints: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SignalRNetworkAcls>.Write(ModelReaderWriterOptions options)
@@ -141,8 +210,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +229,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRNetworkAcls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support reading '{options.Format}' format.");
             }
         }
 

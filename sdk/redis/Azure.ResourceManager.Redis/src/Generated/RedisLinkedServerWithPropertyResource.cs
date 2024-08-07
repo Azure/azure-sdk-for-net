@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +182,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +224,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +266,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisLinkedServerWithPropertyResource>> UpdateAsync(WaitUntil waitUntil, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyResource.Update");
             scope.Start();
@@ -317,7 +312,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RedisLinkedServerWithPropertyResource> Update(WaitUntil waitUntil, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyResource.Update");
             scope.Start();

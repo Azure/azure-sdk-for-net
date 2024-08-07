@@ -8,29 +8,29 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBBackupInformation : IUtf8JsonSerializable, IJsonModel<CosmosDBBackupInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBBackupInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBBackupInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBBackupInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ContinuousBackupInformation))
             {
                 writer.WritePropertyName("continuousBackupInformation"u8);
-                writer.WriteObjectValue(ContinuousBackupInformation);
+                writer.WriteObjectValue(ContinuousBackupInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBackupInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBBackupInformation DeserializeCosmosDBBackupInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             ContinuousBackupInformation continuousBackupInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("continuousBackupInformation"u8))
@@ -86,11 +86,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBBackupInformation(continuousBackupInformation, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContinuousBackupInformationLatestRestorableTimestamp", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  continuousBackupInformation: ");
+                builder.AppendLine("{");
+                builder.Append("    latestRestorableTimestamp: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ContinuousBackupInformation))
+                {
+                    builder.Append("  continuousBackupInformation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContinuousBackupInformation, options, 2, false, "  continuousBackupInformation: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBBackupInformation>.Write(ModelReaderWriterOptions options)
@@ -101,8 +134,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBBackupInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBBackupInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricInternalNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricInternalNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricInternalNetworkResource>> GetAsync(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual Response<NetworkFabricInternalNetworkResource> Get(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricInternalNetworkResource>> GetIfExistsAsync(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricInternalNetworkResource> GetIfExists(string internalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (internalNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(internalNetworkName));
-            }
-            if (internalNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internalNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
 
             using var scope = _networkFabricInternalNetworkInternalNetworksClientDiagnostics.CreateScope("NetworkFabricInternalNetworkCollection.GetIfExists");
             scope.Start();

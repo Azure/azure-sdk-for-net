@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class AlertRuleTemplatesList : IUtf8JsonSerializable, IJsonModel<AlertRuleTemplatesList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleTemplatesList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleTemplatesList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertRuleTemplatesList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleTemplatesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleTemplatesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AlertRuleTemplatesList DeserializeAlertRuleTemplatesList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string nextLink = default;
             IReadOnlyList<SecurityInsightsAlertRuleTemplateData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -100,10 +99,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AlertRuleTemplatesList(nextLink, value, serializedAdditionalRawData);
         }
 
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAlertRuleTemplatesList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleTemplatesList)} does not support reading '{options.Format}' format.");
             }
         }
 

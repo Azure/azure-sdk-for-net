@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryPrivateEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedPrivateEndpointName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedPrivateEndpointName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryPrivateEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedPrivateEndpointName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedPrivateEndpointName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -201,14 +183,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryPrivateEndpointResource>> GetAsync(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.Get");
             scope.Start();
@@ -254,14 +229,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<DataFactoryPrivateEndpointResource> Get(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.Get");
             scope.Start();
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryPrivateEndpointResource>> GetIfExistsAsync(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.GetIfExists");
             scope.Start();
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryPrivateEndpointResource> GetIfExists(string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointCollection.GetIfExists");
             scope.Start();

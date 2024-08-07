@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool.Mocking

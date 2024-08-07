@@ -17,17 +17,22 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     public partial class ContainerGroupData : IUtf8JsonSerializable, IJsonModel<ContainerGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -37,11 +42,6 @@ namespace Azure.ResourceManager.ContainerInstance
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance
             writer.WriteStartArray();
             foreach (var item in Containers)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ImageRegistryCredentials))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in ImageRegistryCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress);
+                writer.WriteObjectValue(IPAddress, options);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                writer.WriteObjectValue(Diagnostics, options);
             }
             if (Optional.IsCollectionDefined(SubnetIds))
             {
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in SubnetIds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                writer.WriteObjectValue(DnsConfig, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                writer.WriteObjectValue(EncryptionProperties, options);
             }
             if (Optional.IsCollectionDefined(InitContainers))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties);
+                writer.WriteObjectValue(ConfidentialComputeProperties, options);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.ContainerInstance
 
         internal static ContainerGroupData DeserializeContainerGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> zones = default;
             ManagedServiceIdentity identity = default;
+            IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -252,9 +252,18 @@ namespace Azure.ResourceManager.ContainerInstance
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -267,15 +276,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         array.Add(item.GetString());
                     }
                     zones = array;
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -506,10 +506,10 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerGroupData(
                 id,
                 name,
@@ -517,7 +517,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                zones ?? new ChangeTrackingList<string>(),
                 identity,
                 provisioningState,
                 containers,
@@ -536,6 +535,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 confidentialComputeProperties,
                 priority,
+                zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerInstance
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

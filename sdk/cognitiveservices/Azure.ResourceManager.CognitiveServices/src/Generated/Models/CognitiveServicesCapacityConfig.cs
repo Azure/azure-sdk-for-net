@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The minimum capacity. </summary>
+        [WirePath("minimum")]
         public int? Minimum { get; set; }
         /// <summary> The maximum capacity. </summary>
+        [WirePath("maximum")]
         public int? Maximum { get; set; }
         /// <summary> The minimal incremental between allowed values for capacity. </summary>
+        [WirePath("step")]
         public int? Step { get; set; }
         /// <summary> The default capacity. </summary>
+        [WirePath("default")]
         public int? Default { get; set; }
     }
 }
