@@ -87,12 +87,28 @@ public class MockClient
         return new MockResultCollection<int>(() => FailEnumerate(message));
     }
 
-    private class CounterAsyncCollection : AsyncResultCollection<int>
+    public virtual AsyncPageableCollection<int> PageableCollectionAsync(int num, int increment)
     {
-        public override IAsyncEnumerator<int> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        Interlocked.Increment(ref _asyncHit);
+        return new MockAsyncPageableCollection<int>(() => EnumerateAsync(num, increment), new MockPipelineResponse());
+    }
+
+    public virtual PageableCollection<int> PageableCollection(int num, int increment)
+    {
+        Interlocked.Increment(ref _syncHit);
+        return new MockPageableCollection<int>(() => Enumerate(num, increment), new MockPipelineResponse());
+    }
+
+    public virtual AsyncPageableCollection<int> FailPageableCollectionAsync(string message)
+    {
+        Interlocked.Increment(ref _asyncHit);
+        return new MockAsyncPageableCollection<int>(() => FailEnumerateAsync(message), new MockPipelineResponse());
+    }
+
+    public virtual PageableCollection<int> FailPageableCollection(string message)
+    {
+        Interlocked.Increment(ref _syncHit);
+        return new MockPageableCollection<int>(() => FailEnumerate(message), new MockPipelineResponse());
     }
 
     private async IAsyncEnumerable<int> EnumerateAsync(int num, int increment, [EnumeratorCancellation] CancellationToken token = default)

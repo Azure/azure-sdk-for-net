@@ -12,6 +12,20 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
     private static readonly string EX_MSG = Guid.NewGuid().ToString();
 
     [Test]
+    [SyncOnly]
+    public void OnlyInSyncMode()
+    {
+        Assert.That(IsAsync, Is.False);
+    }
+
+    [Test]
+    [AsyncOnly]
+    public void OnlyInAsyncMode()
+    {
+        Assert.That(IsAsync, Is.True);
+    }
+
+    [Test]
     public void CanGetOriginal()
     {
         MockClient original = new MockClient();
@@ -45,17 +59,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
     {
         MockClient client = WrapClient(new MockClient());
         await client.DoAsync();
-
-        if (IsAsync)
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
-        }
-        else
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
-        }
+        AssertCorrectFunctionCalled(client);
     }
 
     [Test]
@@ -65,17 +69,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => client.FailAsync(EX_MSG));
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
-
-        if (IsAsync)
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
-        }
-        else
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
-        }
+        AssertCorrectFunctionCalled(client);
     }
 
     [Test]
@@ -83,19 +77,8 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
     {
         MockClient client = WrapClient(new MockClient());
         int count = await client.CountAsync();
-
-        if (IsAsync)
-        {
-            Assert.That(count, Is.EqualTo(12));
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
-        }
-        else
-        {
-            Assert.That(count, Is.EqualTo(5));
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
-        }
+        Assert.That(count, Is.EqualTo(IsAsync ? 12 : 5));
+        AssertCorrectFunctionCalled(client);
     }
 
     [Test]
@@ -105,17 +88,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => client.FailWithResultAsync(EX_MSG));
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
-
-        if (IsAsync)
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
-        }
-        else
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
-        }
+        AssertCorrectFunctionCalled(client);
     }
 
     [Test]
@@ -140,17 +113,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         }
 
         Assert.That(numResults, Is.EqualTo(num));
-
-        if (IsAsync)
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
-            Assert.That(client.SyncHit, Is.EqualTo(0));
-        }
-        else
-        {
-            Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
-        }
+        AssertCorrectFunctionCalled(client);
     }
 
     [Test]
@@ -168,24 +131,74 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => enumerator.MoveNextAsync().AsTask());
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
+        AssertCorrectFunctionCalled(client);
+    }
 
+    [Test]
+    public async Task PageableCollectionWorks()
+    {
+        const int num = 50;
+        const int increment = 1;
+        const int itemsPerPage = 20;
+        int expectedPages = (int)Math.Ceiling((double)num / itemsPerPage);
+
+        MockClient client = WrapClient(new MockClient());
+        AsyncPageableCollection<int> coll = client.PageableCollectionAsync(num, increment);
+
+        Assert.IsNotNull(coll);
+        // the response is not yet set since we haven't made a call to the service
+        Assert.Throws<InvalidOperationException>(() => coll.GetRawResponse());
+
+        int numPages = 0;
+        int numResults = 0;
+        await foreach(ResultPage<int> page in coll.AsPages(pageSizeHint: itemsPerPage))
+        {
+            Assert.That(coll.GetRawResponse(), Is.Not.Null);
+            Assert.That(coll.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(coll.GetRawResponse().ReasonPhrase, Is.EqualTo("OK"));
+
+            numPages++;
+            foreach (int actual in page)
+            {
+                Assert.That(actual, Is.EqualTo(numResults * increment));
+                numResults++;
+            }
+        }
+
+        Assert.That(numResults, Is.EqualTo(num));
+        Assert.That(numPages, Is.EqualTo(expectedPages));
+        AssertCorrectFunctionCalled(client);
+    }
+
+    [Test]
+    public void FailedPageableCollection()
+    {
+        MockClient client = WrapClient(new MockClient());
+
+        // For now we mimic how the OpenAI and Azure OpenAI libraries work in that no service requests are sent
+        // until we try to enumerate the async collections. So exceptions aren't expected initially
+        AsyncPageableCollection<int> coll = client.FailPageableCollectionAsync(EX_MSG);
+        Assert.That(coll, Is.Not.Null);
+
+        IAsyncEnumerator<ResultPage<int>> enumerator = coll.AsPages().GetAsyncEnumerator();
+        Assert.That(enumerator, Is.Not.Null);
+        ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => enumerator.MoveNextAsync().AsTask());
+        Assert.That(ex, Is.Not.Null);
+        Assert.That(ex!.Message, Is.EqualTo(EX_MSG));
+        AssertCorrectFunctionCalled(client);
+    }
+
+    private void AssertCorrectFunctionCalled(MockClient client, int expectedCalls = 1)
+    {
         if (IsAsync)
         {
-            Assert.That(client.AsyncHit, Is.EqualTo(1));
+            Assert.That(client.AsyncHit, Is.EqualTo(expectedCalls));
             Assert.That(client.SyncHit, Is.EqualTo(0));
         }
         else
         {
             Assert.That(client.AsyncHit, Is.EqualTo(0));
-            Assert.That(client.SyncHit, Is.EqualTo(1));
+            Assert.That(client.SyncHit, Is.EqualTo(expectedCalls));
         }
     }
-
-    #region Helper classes
-
-    
-
-    
-
-    #endregion
 }

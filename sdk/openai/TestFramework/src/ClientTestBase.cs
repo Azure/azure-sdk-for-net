@@ -16,8 +16,7 @@ namespace OpenAI.TestFramework;
 /// this will only work for public virtual methods. In order for this to work, you should write a test that uses the
 /// async version of a method.
 /// </summary>
-[TestFixture(true)]
-[TestFixture(false)]
+[AutoSyncAsyncTestFixture]
 public abstract class ClientTestBase
 {
     private static ProxyGenerator? s_proxyGenerator = null;
