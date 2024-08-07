@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class AbstractiveSummaryTextResult : IUtf8JsonSerializable, IJsonModel<AbstractiveSummaryTextResult>
+    public partial class ClassificationActionResult : IUtf8JsonSerializable, IJsonModel<ClassificationActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbstractiveSummaryTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AbstractiveSummaryTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClassificationActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,9 +40,9 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("summaries"u8);
+            writer.WritePropertyName("class"u8);
             writer.WriteStartArray();
-            foreach (var item in Summaries)
+            foreach (var item in Class)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -70,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        AbstractiveSummaryTextResult IJsonModel<AbstractiveSummaryTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClassificationActionResult IJsonModel<ClassificationActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAbstractiveSummaryTextResult(document.RootElement, options);
+            return DeserializeClassificationActionResult(document.RootElement, options);
         }
 
-        internal static AbstractiveSummaryTextResult DeserializeAbstractiveSummaryTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClassificationActionResult DeserializeClassificationActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<AbstractiveSummary> summaries = default;
+            IReadOnlyList<ClassificationResult> @class = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,14 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("summaries"u8))
+                if (property.NameEquals("class"u8))
                 {
-                    List<AbstractiveSummary> array = new List<AbstractiveSummary>();
+                    List<ClassificationResult> array = new List<ClassificationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummary.DeserializeAbstractiveSummary(item, options));
+                        array.Add(ClassificationResult.DeserializeClassificationResult(item, options));
                     }
-                    summaries = array;
+                    @class = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -148,52 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AbstractiveSummaryTextResult(
+            return new ClassificationActionResult(
                 id,
                 warnings,
                 statistics,
-                summaries,
+                @class,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AbstractiveSummaryTextResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClassificationActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AbstractiveSummaryTextResult IPersistableModel<AbstractiveSummaryTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClassificationActionResult IPersistableModel<ClassificationActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummaryTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAbstractiveSummaryTextResult(document.RootElement, options);
+                        return DeserializeClassificationActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AbstractiveSummaryTextResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AbstractiveSummaryTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClassificationActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AbstractiveSummaryTextResult FromResponse(Response response)
+        internal static ClassificationActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAbstractiveSummaryTextResult(document.RootElement);
+            return DeserializeClassificationActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

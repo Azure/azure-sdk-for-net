@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class HealthcareTextResult : IUtf8JsonSerializable, IJsonModel<HealthcareTextResult>
+    public partial class ExtractedSummaryActionResult : IUtf8JsonSerializable, IJsonModel<ExtractedSummaryActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtractedSummaryActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExtractedSummaryActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtractedSummaryActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareTextResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtractedSummaryActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,25 +40,13 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("entities"u8);
+            writer.WritePropertyName("sentences"u8);
             writer.WriteStartArray();
-            foreach (var item in Entities)
+            foreach (var item in Sentences)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("relations"u8);
-            writer.WriteStartArray();
-            foreach (var item in Relations)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FhirBundle))
-            {
-                writer.WritePropertyName("fhirBundle"u8);
-                writer.WriteObjectValue(FhirBundle, options);
-            }
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
@@ -82,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        HealthcareTextResult IJsonModel<HealthcareTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExtractedSummaryActionResult IJsonModel<ExtractedSummaryActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtractedSummaryActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareTextResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtractedSummaryActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareTextResult(document.RootElement, options);
+            return DeserializeExtractedSummaryActionResult(document.RootElement, options);
         }
 
-        internal static HealthcareTextResult DeserializeHealthcareTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExtractedSummaryActionResult DeserializeExtractedSummaryActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,9 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<HealthcareEntity> entities = default;
-            IReadOnlyList<HealthcareRelation> relations = default;
-            FhirBundle fhirBundle = default;
+            IReadOnlyList<ExtractedSummarySentence> sentences = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -137,33 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("entities"u8))
+                if (property.NameEquals("sentences"u8))
                 {
-                    List<HealthcareEntity> array = new List<HealthcareEntity>();
+                    List<ExtractedSummarySentence> array = new List<ExtractedSummarySentence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntity.DeserializeHealthcareEntity(item, options));
+                        array.Add(ExtractedSummarySentence.DeserializeExtractedSummarySentence(item, options));
                     }
-                    entities = array;
-                    continue;
-                }
-                if (property.NameEquals("relations"u8))
-                {
-                    List<HealthcareRelation> array = new List<HealthcareRelation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(HealthcareRelation.DeserializeHealthcareRelation(item, options));
-                    }
-                    relations = array;
-                    continue;
-                }
-                if (property.NameEquals("fhirBundle"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fhirBundle = FhirBundle.DeserializeFhirBundle(property.Value, options);
+                    sentences = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -181,54 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareTextResult(
+            return new ExtractedSummaryActionResult(
                 id,
                 warnings,
                 statistics,
-                entities,
-                relations,
-                fhirBundle,
+                sentences,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthcareTextResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExtractedSummaryActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtractedSummaryActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareTextResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtractedSummaryActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareTextResult IPersistableModel<HealthcareTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExtractedSummaryActionResult IPersistableModel<ExtractedSummaryActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtractedSummaryActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthcareTextResult(document.RootElement, options);
+                        return DeserializeExtractedSummaryActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareTextResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtractedSummaryActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExtractedSummaryActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HealthcareTextResult FromResponse(Response response)
+        internal static ExtractedSummaryActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeHealthcareTextResult(document.RootElement);
+            return DeserializeExtractedSummaryActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

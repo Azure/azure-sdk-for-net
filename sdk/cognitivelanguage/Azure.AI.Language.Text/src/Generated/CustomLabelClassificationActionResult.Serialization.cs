@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class CustomEntitiesTextResult : IUtf8JsonSerializable, IJsonModel<CustomEntitiesTextResult>
+    public partial class CustomLabelClassificationActionResult : IUtf8JsonSerializable, IJsonModel<CustomLabelClassificationActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntitiesTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLabelClassificationActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CustomEntitiesTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomLabelClassificationActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomEntitiesTextResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLabelClassificationActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        CustomEntitiesTextResult IJsonModel<CustomEntitiesTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CustomLabelClassificationActionResult IJsonModel<CustomLabelClassificationActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomEntitiesTextResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLabelClassificationActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomEntitiesTextResult(document.RootElement, options);
+            return DeserializeCustomLabelClassificationActionResult(document.RootElement, options);
         }
 
-        internal static CustomEntitiesTextResult DeserializeCustomEntitiesTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CustomLabelClassificationActionResult DeserializeCustomLabelClassificationActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Text
             RequestStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
-            IReadOnlyList<EntityTextResult> documents = default;
+            IReadOnlyList<ClassificationActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,10 +127,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<EntityTextResult> array = new List<EntityTextResult>();
+                    List<ClassificationActionResult> array = new List<ClassificationActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityTextResult.DeserializeEntityTextResult(item, options));
+                        array.Add(ClassificationActionResult.DeserializeClassificationActionResult(item, options));
                     }
                     documents = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomEntitiesTextResult(
+            return new CustomLabelClassificationActionResult(
                 errors,
                 statistics,
                 projectName,
@@ -150,43 +150,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CustomEntitiesTextResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CustomLabelClassificationActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntitiesTextResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLabelClassificationActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CustomEntitiesTextResult IPersistableModel<CustomEntitiesTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CustomLabelClassificationActionResult IPersistableModel<CustomLabelClassificationActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomLabelClassificationActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCustomEntitiesTextResult(document.RootElement, options);
+                        return DeserializeCustomLabelClassificationActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntitiesTextResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLabelClassificationActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CustomEntitiesTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomLabelClassificationActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomEntitiesTextResult FromResponse(Response response)
+        internal static CustomLabelClassificationActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomEntitiesTextResult(document.RootElement);
+            return DeserializeCustomLabelClassificationActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

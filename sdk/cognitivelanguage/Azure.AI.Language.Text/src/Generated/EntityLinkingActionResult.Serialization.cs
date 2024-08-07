@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class SentimentTextResult : IUtf8JsonSerializable, IJsonModel<SentimentTextResult>
+    public partial class EntityLinkingActionResult : IUtf8JsonSerializable, IJsonModel<EntityLinkingActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentimentTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SentimentTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityLinkingActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentTextResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,13 +40,9 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
-            writer.WritePropertyName("sentiment"u8);
-            writer.WriteStringValue(Sentiment.ToSerialString());
-            writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores, options);
-            writer.WritePropertyName("sentences"u8);
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
-            foreach (var item in Sentences)
+            foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -74,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        SentimentTextResult IJsonModel<SentimentTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityLinkingActionResult IJsonModel<EntityLinkingActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentTextResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentTextResult(document.RootElement, options);
+            return DeserializeEntityLinkingActionResult(document.RootElement, options);
         }
 
-        internal static SentimentTextResult DeserializeSentimentTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityLinkingActionResult DeserializeEntityLinkingActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,9 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            DocumentSentiment sentiment = default;
-            SentimentConfidenceScores confidenceScores = default;
-            IReadOnlyList<SentenceSentiment> sentences = default;
+            IReadOnlyList<LinkedEntity> entities = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -129,24 +123,14 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sentiment"u8))
+                if (property.NameEquals("entities"u8))
                 {
-                    sentiment = property.Value.GetString().ToDocumentSentiment();
-                    continue;
-                }
-                if (property.NameEquals("confidenceScores"u8))
-                {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sentences"u8))
-                {
-                    List<SentenceSentiment> array = new List<SentenceSentiment>();
+                    List<LinkedEntity> array = new List<LinkedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceSentiment.DeserializeSentenceSentiment(item, options));
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item, options));
                     }
-                    sentences = array;
+                    entities = array;
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -164,54 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SentimentTextResult(
+            return new EntityLinkingActionResult(
                 id,
                 warnings,
                 statistics,
-                sentiment,
-                confidenceScores,
-                sentences,
+                entities,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SentimentTextResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityLinkingActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentTextResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SentimentTextResult IPersistableModel<SentimentTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityLinkingActionResult IPersistableModel<EntityLinkingActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSentimentTextResult(document.RootElement, options);
+                        return DeserializeEntityLinkingActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentTextResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SentimentTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityLinkingActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SentimentTextResult FromResponse(Response response)
+        internal static EntityLinkingActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSentimentTextResult(document.RootElement);
+            return DeserializeEntityLinkingActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

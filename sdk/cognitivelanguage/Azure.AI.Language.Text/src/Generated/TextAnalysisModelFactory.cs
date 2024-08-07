@@ -172,27 +172,27 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.EntityLinkingResult"/> instance for mocking. </returns>
-        public static EntityLinkingResult EntityLinkingResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntityLinkingTextResult> documents = null)
+        public static EntityLinkingResult EntityLinkingResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntityLinkingActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<EntityLinkingTextResult>();
+            documents ??= new List<EntityLinkingActionResult>();
 
             return new EntityLinkingResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.EntityLinkingTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.EntityLinkingActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingTextResult"/> instance for mocking. </returns>
-        public static EntityLinkingTextResult EntityLinkingTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<LinkedEntity> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.EntityLinkingActionResult"/> instance for mocking. </returns>
+        public static EntityLinkingActionResult EntityLinkingActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<LinkedEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<LinkedEntity>();
 
-            return new EntityLinkingTextResult(
+            return new EntityLinkingActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -548,27 +548,27 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.KeyPhraseResult"/> instance for mocking. </returns>
-        public static KeyPhraseResult KeyPhraseResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<KeyPhrasesTextResult> documents = null)
+        public static KeyPhraseResult KeyPhraseResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<KeyPhrasesActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<KeyPhrasesTextResult>();
+            documents ??= new List<KeyPhrasesActionResult>();
 
             return new KeyPhraseResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.KeyPhrasesTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.KeyPhrasesActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.KeyPhrasesTextResult"/> instance for mocking. </returns>
-        public static KeyPhrasesTextResult KeyPhrasesTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<string> keyPhrases = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.KeyPhrasesActionResult"/> instance for mocking. </returns>
+        public static KeyPhrasesActionResult KeyPhrasesActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<string> keyPhrases = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             keyPhrases ??= new List<string>();
 
-            return new KeyPhrasesTextResult(
+            return new KeyPhrasesActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -626,28 +626,28 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.PiiResult"/> instance for mocking. </returns>
-        public static PiiResult PiiResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<PiiTextResult> documents = null)
+        public static PiiResult PiiResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<PiiActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<PiiTextResult>();
+            documents ??= new List<PiiActionResult>();
 
             return new PiiResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.PiiTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.PiiActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.PiiTextResult"/> instance for mocking. </returns>
-        public static PiiTextResult PiiTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.PiiActionResult"/> instance for mocking. </returns>
+        public static PiiActionResult PiiActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<NamedEntity>();
 
-            return new PiiTextResult(
+            return new PiiActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -691,15 +691,15 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
         /// <returns> A new <see cref="Text.SentimentResult"/> instance for mocking. </returns>
-        public static SentimentResult SentimentResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<SentimentTextResult> documents = null)
+        public static SentimentResult SentimentResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<SentimentActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<SentimentTextResult>();
+            documents ??= new List<SentimentActionResult>();
 
             return new SentimentResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.SentimentTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SentimentActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
@@ -707,13 +707,13 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="sentences"> The document's sentences sentiment. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.SentimentTextResult"/> instance for mocking. </returns>
-        public static SentimentTextResult SentimentTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, DocumentSentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.SentimentActionResult"/> instance for mocking. </returns>
+        public static SentimentActionResult SentimentActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, DocumentSentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             sentences ??= new List<SentenceSentiment>();
 
-            return new SentimentTextResult(
+            return new SentimentActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -890,7 +890,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomEntitiesTextResult results = null)
+        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomEntitiesActionResult results = null)
         {
             return new CustomEntityRecognitionOperationResult(
                 lastUpdateDateTime,
@@ -901,19 +901,19 @@ namespace Azure.AI.Language.Text
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.CustomEntitiesTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.CustomEntitiesActionResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results with detected language. </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesTextResult"/> instance for mocking. </returns>
-        public static CustomEntitiesTextResult CustomEntitiesTextResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<EntityTextResult> documents = null)
+        /// <returns> A new <see cref="Text.CustomEntitiesActionResult"/> instance for mocking. </returns>
+        public static CustomEntitiesActionResult CustomEntitiesActionResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<EntityActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<EntityTextResult>();
+            documents ??= new List<EntityActionResult>();
 
-            return new CustomEntitiesTextResult(
+            return new CustomEntitiesActionResult(
                 errors?.ToList(),
                 statistics,
                 projectName,
@@ -922,19 +922,19 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.EntityTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.EntityActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntityTextResult"/> instance for mocking. </returns>
-        public static EntityTextResult EntityTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.EntityActionResult"/> instance for mocking. </returns>
+        public static EntityActionResult EntityActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<NamedEntity>();
 
-            return new EntityTextResult(
+            return new EntityActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -949,7 +949,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationTextResult results = null)
+        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationActionResult results = null)
         {
             return new CustomSingleLabelClassificationOperationResult(
                 lastUpdateDateTime,
@@ -960,19 +960,19 @@ namespace Azure.AI.Language.Text
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.CustomLabelClassificationTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.CustomLabelClassificationActionResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.CustomLabelClassificationTextResult"/> instance for mocking. </returns>
-        public static CustomLabelClassificationTextResult CustomLabelClassificationTextResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<ClassificationTextResult> documents = null)
+        /// <returns> A new <see cref="Text.CustomLabelClassificationActionResult"/> instance for mocking. </returns>
+        public static CustomLabelClassificationActionResult CustomLabelClassificationActionResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<ClassificationActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<ClassificationTextResult>();
+            documents ??= new List<ClassificationActionResult>();
 
-            return new CustomLabelClassificationTextResult(
+            return new CustomLabelClassificationActionResult(
                 errors?.ToList(),
                 statistics,
                 projectName,
@@ -981,19 +981,19 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.ClassificationTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.ClassificationActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="class"> Contains the classification doc results for all docs. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.ClassificationTextResult"/> instance for mocking. </returns>
-        public static ClassificationTextResult ClassificationTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<ClassificationResult> @class = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.ClassificationActionResult"/> instance for mocking. </returns>
+        public static ClassificationActionResult ClassificationActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<ClassificationResult> @class = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             @class ??= new List<ClassificationResult>();
 
-            return new ClassificationTextResult(
+            return new ClassificationActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -1008,7 +1008,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationTextResult results = null)
+        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationActionResult results = null)
         {
             return new CustomMultiLabelClassificationOperationResult(
                 lastUpdateDateTime,
@@ -1076,15 +1076,15 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> List of result objects for the processed Healthcare documents. </param>
         /// <returns> A new <see cref="Text.HealthcareResult"/> instance for mocking. </returns>
-        public static HealthcareResult HealthcareResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<HealthcareTextResult> documents = null)
+        public static HealthcareResult HealthcareResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<HealthcareActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<HealthcareTextResult>();
+            documents ??= new List<HealthcareActionResult>();
 
             return new HealthcareResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.HealthcareTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.HealthcareActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
@@ -1092,14 +1092,14 @@ namespace Azure.AI.Language.Text
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.HealthcareTextResult"/> instance for mocking. </returns>
-        public static HealthcareTextResult HealthcareTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<HealthcareEntity> entities = null, IEnumerable<HealthcareRelation> relations = null, FhirBundle fhirBundle = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.HealthcareActionResult"/> instance for mocking. </returns>
+        public static HealthcareActionResult HealthcareActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<HealthcareEntity> entities = null, IEnumerable<HealthcareRelation> relations = null, FhirBundle fhirBundle = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<HealthcareEntity>();
             relations ??= new List<HealthcareRelation>();
 
-            return new HealthcareTextResult(
+            return new HealthcareActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -1344,27 +1344,27 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.ExtractiveSummarizationResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationResult ExtractiveSummarizationResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ExtractedSummaryTextResult> documents = null)
+        public static ExtractiveSummarizationResult ExtractiveSummarizationResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ExtractedSummaryActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<ExtractedSummaryTextResult>();
+            documents ??= new List<ExtractedSummaryActionResult>();
 
             return new ExtractiveSummarizationResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.ExtractedSummaryTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.ExtractedSummaryActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="sentences"> Specifies the the extracted sentences from the input document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.ExtractedSummaryTextResult"/> instance for mocking. </returns>
-        public static ExtractedSummaryTextResult ExtractedSummaryTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<ExtractedSummarySentence> sentences = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.ExtractedSummaryActionResult"/> instance for mocking. </returns>
+        public static ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<ExtractedSummarySentence> sentences = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             sentences ??= new List<ExtractedSummarySentence>();
 
-            return new ExtractedSummaryTextResult(
+            return new ExtractedSummaryActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -1407,27 +1407,27 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.AbstractiveSummarizationResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationResult AbstractiveSummarizationResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<AbstractiveSummaryTextResult> documents = null)
+        public static AbstractiveSummarizationResult AbstractiveSummarizationResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<AbstractiveSummaryActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<AbstractiveSummaryTextResult>();
+            documents ??= new List<AbstractiveSummaryActionResult>();
 
             return new AbstractiveSummarizationResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.AbstractiveSummaryTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.AbstractiveSummaryActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummaryTextResult"/> instance for mocking. </returns>
-        public static AbstractiveSummaryTextResult AbstractiveSummaryTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<AbstractiveSummary> summaries = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.AbstractiveSummaryActionResult"/> instance for mocking. </returns>
+        public static AbstractiveSummaryActionResult AbstractiveSummaryActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<AbstractiveSummary> summaries = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             summaries ??= new List<AbstractiveSummary>();
 
-            return new AbstractiveSummaryTextResult(
+            return new AbstractiveSummaryActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -1480,9 +1480,9 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <returns> A new <see cref="Text.CustomAbstractiveSummarizationResult"/> instance for mocking. </returns>
-        public static CustomAbstractiveSummarizationResult CustomAbstractiveSummarizationResult(IEnumerable<AbstractiveSummaryTextResult> documents = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null)
+        public static CustomAbstractiveSummarizationResult CustomAbstractiveSummarizationResult(IEnumerable<AbstractiveSummaryActionResult> documents = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null)
         {
-            documents ??= new List<AbstractiveSummaryTextResult>();
+            documents ??= new List<AbstractiveSummaryActionResult>();
             errors ??= new List<DocumentError>();
 
             return new CustomAbstractiveSummarizationResult(
@@ -1518,10 +1518,10 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> List of custom healthcare results for the document. </param>
         /// <returns> A new <see cref="Text.CustomHealthcareResult"/> instance for mocking. </returns>
-        public static CustomHealthcareResult CustomHealthcareResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<CustomHealthcareTextResult> documents = null)
+        public static CustomHealthcareResult CustomHealthcareResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<CustomHealthcareActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<CustomHealthcareTextResult>();
+            documents ??= new List<CustomHealthcareActionResult>();
 
             return new CustomHealthcareResult(
                 errors?.ToList(),
@@ -1532,21 +1532,21 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.CustomHealthcareTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.CustomHealthcareActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.CustomHealthcareTextResult"/> instance for mocking. </returns>
-        public static CustomHealthcareTextResult CustomHealthcareTextResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<CustomHealthcareEntity> entities = null, IEnumerable<HealthcareRelation> relations = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.CustomHealthcareActionResult"/> instance for mocking. </returns>
+        public static CustomHealthcareActionResult CustomHealthcareActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<CustomHealthcareEntity> entities = null, IEnumerable<HealthcareRelation> relations = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<CustomHealthcareEntity>();
             relations ??= new List<HealthcareRelation>();
 
-            return new CustomHealthcareTextResult(
+            return new CustomHealthcareActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
