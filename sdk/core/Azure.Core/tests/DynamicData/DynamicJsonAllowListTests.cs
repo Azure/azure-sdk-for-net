@@ -785,10 +785,6 @@ namespace Azure.Core.Tests
             public SubUri(Uri baseUri, string relativeUri, bool dontEscape) : base(baseUri, relativeUri, dontEscape)
             {
             }
-
-            protected SubUri(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
-            {
-            }
         }
 
         internal class BinaryDataModel

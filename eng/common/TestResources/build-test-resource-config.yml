@@ -37,50 +37,17 @@ steps:
   - pwsh: |
       . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-      $finalConfig = @{}
-      $baseSubConfigRaw = @'
+      $baseSubConfigJson = @'
         ${{ parameters.SubscriptionConfiguration }}
       '@.Trim()
-      if ($baseSubConfigRaw) {
-        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-        Write-Host "Setting base sub config"
-        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
-      }
-
-      $subConfigJsonsRaw = @'
+      $additionalSubConfigsJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurations) }}
       '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-      if ($subConfigJsonsRaw) {
-        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
-
-        foreach ($subConfig in $subConfigs) {
-          Write-Host "Merging sub config from list"
-          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
-        }
-      }
-
-      $subConfigFilesRaw = @'
+      $subConfigFilesJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
       '@.Trim()
 
-      if ($subConfigFilesRaw) {
-        $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
-        foreach ($file in $subConfigFiles) {
-          # In some cases, $file could be an empty string. Get-Content will fail
-          # if $file is an empty string, so skip those cases.
-          if (!$file) {
-            continue
-          }
-
-          Write-Host "Merging sub config from file: $file"
-          $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
-          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
-        }
-      }
-
-      Write-Host ($finalConfig | ConvertTo-Json)
-      $serialized = $finalConfig | ConvertTo-Json -Compress
-      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+      BuildAndSetSubscriptionConfig $baseSubConfigJson $additionalSubConfigsJson $subConfigFilesJson
     displayName: Merge subscription configurations

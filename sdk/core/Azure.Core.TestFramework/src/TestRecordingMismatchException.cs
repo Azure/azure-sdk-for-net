@@ -21,10 +21,6 @@ namespace Azure.Core.TestFramework
         {
         }
 
-        protected TestRecordingMismatchException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-
         private static string AppendReminder(string message)
         {
             const string Reminder = "If this is a new recording, make sure you have pushed the recordings to the assets repository. For instructions, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md#recording";
