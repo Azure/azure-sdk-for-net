@@ -111,6 +111,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        pipelineLength++; // for logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -143,6 +144,10 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        // Add logging policy just before the transport.
+
+        policies[index++] = options.LoggingPolicy ?? new ClientLoggingPolicy(options.LoggingOptions);
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

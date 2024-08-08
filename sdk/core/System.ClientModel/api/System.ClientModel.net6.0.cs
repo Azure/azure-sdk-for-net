@@ -112,6 +112,19 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
+    public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public ClientLoggingPolicy(System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected ClientLoggingPolicy(string clientAssembly, System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected virtual void OnLogResponse(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseAsync(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { throw null; }
+        protected virtual void OnLogResponseContent(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseContentAsync(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { throw null; }
+        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? encoding) { }
+        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? encoding) { throw null; }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -124,6 +137,8 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Primitives.LoggingOptions LoggingOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -171,6 +186,18 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    public partial class LoggingOptions
+    {
+        public LoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public string? CorrelationIdHeaderName { get { throw null; } set { } }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory LoggerFactory { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public static partial class ModelReaderWriter
     {
