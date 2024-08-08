@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
         /// <param name="downloadType"> Indicates the download type. </param>
-        public SnapshotDownloadContent(DownloadType downloadType)
+        public SnapshotDownloadContent(AppComplianceDownloadType downloadType)
         {
             DownloadType = downloadType;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="downloadType"> Indicates the download type. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotDownloadContent(string reportCreatorTenantId, DownloadType downloadType, string offerGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotDownloadContent(string reportCreatorTenantId, AppComplianceDownloadType downloadType, string offerGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReportCreatorTenantId = reportCreatorTenantId;
             DownloadType = downloadType;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Tenant id. </summary>
         public string ReportCreatorTenantId { get; set; }
         /// <summary> Indicates the download type. </summary>
-        public DownloadType DownloadType { get; }
+        public AppComplianceDownloadType DownloadType { get; }
         /// <summary> The offerGuid which mapping to the reports. </summary>
         public string OfferGuid { get; set; }
     }
