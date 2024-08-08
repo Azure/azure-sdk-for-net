@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The error detail. </summary>
-    internal partial class ErrorDetail
+    public partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         internal ErrorDetail()

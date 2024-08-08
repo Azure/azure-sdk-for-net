@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSIM()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGet.json
             // this example is just showing the usage of "Sims_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetSIM()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGet.json
             // this example is just showing the usage of "Sims_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetSIM()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGet.json
             // this example is just showing the usage of "Sims_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateSIM()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimCreate.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimCreate.json
             // this example is just showing the usage of "Sims_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ StaticIPIPv4Address = "2.4.0.1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSIMsInASIMGroup()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/SimListBySimGroup.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimListBySimGroup.json
             // this example is just showing the usage of "Sims_ListByGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
