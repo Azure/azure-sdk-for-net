@@ -33,6 +33,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
+        [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
         private class MetaObject : DynamicMetaObject
         {
             private static readonly string[] _memberNames = new string[] { "Name", "Value" };
@@ -46,7 +47,6 @@ namespace Azure.Core.Serialization
                 return _memberNames;
             }
 
-            [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);
