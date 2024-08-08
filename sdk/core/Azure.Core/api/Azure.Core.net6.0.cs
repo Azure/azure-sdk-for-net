@@ -1112,7 +1112,7 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {

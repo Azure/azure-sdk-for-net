@@ -19,8 +19,10 @@ namespace Azure.Core.Serialization
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
-        [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
-        [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+        internal const string SerializationRequiresUnreferencedCode = "This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
+
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
+        [RequiresDynamicCode(SerializationRequiresUnreferencedCode)]
         private class MetaObject : DynamicMetaObject
         {
             private DynamicData _value;

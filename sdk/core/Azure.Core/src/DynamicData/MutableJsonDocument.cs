@@ -34,7 +34,7 @@ namespace Azure.Core.Json
         private readonly JsonSerializerOptions _serializerOptions;
         internal JsonSerializerOptions SerializerOptions => _serializerOptions;
 
-        internal const string SerializationRequiresUnreferencedCodeClass = "This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
+        internal const string SerializationRequiresUnreferencedCodeClass = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
 
         private ChangeTracker? _changeTracker;
         internal ChangeTracker Changes
