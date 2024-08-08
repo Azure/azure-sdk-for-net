@@ -18,6 +18,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -118,7 +119,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
                 objectLength,
@@ -139,7 +141,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
                 objectLength,
@@ -198,7 +201,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             BlockBlobClient sourceClient,
-            BlockBlobClient destinationClient)
+            BlockBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);

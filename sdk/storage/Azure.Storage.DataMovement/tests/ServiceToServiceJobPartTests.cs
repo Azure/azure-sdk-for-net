@@ -130,8 +130,11 @@ namespace Azure.Storage.DataMovement.Tests
             // Set up source with properties
             Mock<StorageResourceItem> mockSource = GetStorageResourceItem(length);
             StorageResourceItemProperties properties = GetResourceProperties(length);
+            HttpAuthorization httpAuthorization = new("BearerScheme", "authtoken");
             mockSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties));
+            mockSource.Setup(r => r.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(httpAuthorization));
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
             Mock<StorageResourceItem> mockDestination = GetStorageResourceItem();
@@ -184,8 +187,9 @@ namespace Azure.Storage.DataMovement.Tests
                     mockSource.Object,
                     It.IsAny<bool>(),
                     length,
-                    It.Is<StorageResourceCopyFromUriOptions>( options =>
-                        options.SourceProperties.Equals(properties)),
+                    It.Is<StorageResourceCopyFromUriOptions>(options =>
+                        options.SourceProperties.Equals(properties) &&
+                        options.SourceAuthentication.Equals(httpAuthorization)),
                     It.IsAny<CancellationToken>()));
         }
 

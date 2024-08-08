@@ -80,7 +80,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             PageBlobClient blobClient = container.GetPageBlobClient(objectName);
@@ -131,9 +132,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = new("attachment"),
-                    ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache"),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
                     Metadata = new(_defaultMetadata)
                 };
             }
@@ -144,6 +146,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
                     Metadata = new(false),
                 };
             }
@@ -154,6 +158,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
                     Metadata = new(true),
                 };
             }
@@ -170,7 +176,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -274,7 +281,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
-            PageBlobClient destinationClient)
+            PageBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);

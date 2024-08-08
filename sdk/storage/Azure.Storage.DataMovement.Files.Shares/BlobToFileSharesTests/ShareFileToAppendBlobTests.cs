@@ -80,7 +80,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             AppendBlobClient blobClient = container.GetAppendBlobClient(objectName);
@@ -130,9 +131,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = new("attachment"),
-                    ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache"),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
                     Metadata = new(_defaultMetadata)
                 };
             }
@@ -143,6 +145,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
                     Metadata = new(false),
                 };
             }
@@ -153,6 +157,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
                     Metadata = new(true),
                 };
             }
@@ -169,7 +175,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -188,7 +195,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     {
                         ContentLanguage = _defaultContentLanguage,
                         ContentDisposition = _defaultContentDisposition,
-                        CacheControl = _defaultCacheControl
+                        CacheControl = _defaultCacheControl,
                     };
                     metadata = _defaultMetadata;
                     smbProperties = new FileSmbProperties()
@@ -272,7 +279,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
-            AppendBlobClient destinationClient)
+            AppendBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
@@ -301,8 +309,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
                 Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                     //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
