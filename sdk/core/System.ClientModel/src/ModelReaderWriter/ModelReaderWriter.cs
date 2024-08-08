@@ -40,7 +40,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return model.Write(options);
+            return options.GetPersistableInterface(model).Write(options);
         }
     }
 
@@ -77,7 +77,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return iModel.Write(options);
+            return options.GetPersistableInterface(iModel).Write(options);
         }
     }
 
@@ -101,7 +101,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance<T>().Create(data, options);
+        return options.GetPersistableInterface(GetInstance<T>()).Create(data, options);
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance(returnType).Create(data, options);
+        return options.GetPersistableInterface(GetInstance(returnType)).Create(data, options);
     }
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
@@ -195,7 +195,7 @@ public static class ModelReaderWriter
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
-        => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+        => options.Format == "J" || (options.Format == "W" && options.GetPersistableInterface(model).GetFormatFromOptions(options) == "J");
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)
