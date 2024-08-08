@@ -25,6 +25,13 @@ namespace Azure.Core
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.</returns>
+        public static new RequestContent Create(Stream stream) => new StreamContent(stream);
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="Array"/>of <see cref="Byte"/>.
         /// </summary>
         /// <param name="bytes">The <see cref="Array"/>of <see cref="Byte"/> to use.</param>

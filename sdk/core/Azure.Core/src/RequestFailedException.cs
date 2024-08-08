@@ -138,7 +138,7 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(message, default, innerException)
+            : base(message ?? DefaultMessage, default, innerException)
         {
             Status = status;
             ErrorCode = errorCode;
