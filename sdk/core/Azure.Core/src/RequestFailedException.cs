@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -223,7 +222,7 @@ namespace Azure
 
         private static void AppendContentAndHeaders(Response response, StringBuilder messageBuilder)
         {
-            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+            if (ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
             {
                 messageBuilder
                     .AppendLine()
@@ -247,7 +246,8 @@ namespace Azure
         {
             if (!string.IsNullOrWhiteSpace(error?.Code))
             {
-                messageBuilder.Append("ErrorCode: ")
+                messageBuilder
+                    .Append("ErrorCode: ")
                     .Append(error?.Code)
                     .AppendLine();
             }
@@ -270,13 +270,14 @@ namespace Azure
         private static void AppendStatusAndReason(Response response, ResponseError? error, StringBuilder messageBuilder)
         {
             messageBuilder
-                            .AppendLine(error?.Message ?? DefaultMessage)
-                            .Append("Status: ")
-                            .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+                .AppendLine(error?.Message ?? DefaultMessage)
+                .Append("Status: ")
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
 
             if (!string.IsNullOrEmpty(response.ReasonPhrase))
             {
-                messageBuilder.Append(" (")
+                messageBuilder
+                    .Append(" (")
                     .Append(response.ReasonPhrase)
                     .AppendLine(")");
             }
