@@ -21,4 +21,8 @@
     <ProjectReference Include="..\System.ClientModel.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Internal\NewFolder\" />
+  </ItemGroup>
+
 </Project>
