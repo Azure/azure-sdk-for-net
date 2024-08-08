@@ -24,6 +24,10 @@ namespace Azure.Data.Tables
             {
                 destination[memberInfo.Name] = value.ToString();
             }
+            if (value is decimal)
+            {
+                destination[memberInfo.Name] = Convert.ToString(value, CultureInfo.InvariantCulture);
+            }
             else
             {
                 destination[memberInfo.Name] = value;
@@ -154,6 +158,14 @@ namespace Azure.Data.Tables
             else if (typeof(T).IsEnum)
             {
                 value = (T)Enum.Parse(memberInfo.Type, propertyValue as string );
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                value = (T)(object) decimal.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+            }
+            else if (typeof(T) == typeof(decimal?))
+            {
+                value = (T)(object) decimal.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T).IsGenericType &&
                      typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>) &&
