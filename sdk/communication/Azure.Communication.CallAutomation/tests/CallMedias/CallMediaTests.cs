@@ -817,9 +817,21 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                    callMedia => callMedia.HoldAsync(_holdOptionsNoMusic)
                 },
+                 new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.HoldAsync(targetParticipant:new CommunicationUserIdentifier("id"), playSource:_textSource)
+                },
+                  new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.HoldAsync(targetParticipant:new CommunicationUserIdentifier("id"))
+                },
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.UnholdAsync(_unholdOptions)
+                },
+                 new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.UnholdAsync(targetParticipant:new CommunicationUserIdentifier("id"))
                 }
             };
         }
@@ -843,7 +855,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Response>?[]
                 {
+                   callMedia => callMedia.Hold(targetParticipant:new CommunicationUserIdentifier("id"), playSource:_textSource)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Hold(targetParticipant:new CommunicationUserIdentifier("id"))
+                },
+                new Func<CallMedia, Response>?[]
+                {
                    callMedia => callMedia.Unhold(_unholdOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.Unhold(targetParticipant:new CommunicationUserIdentifier("id"))
                 }
             };
         }
