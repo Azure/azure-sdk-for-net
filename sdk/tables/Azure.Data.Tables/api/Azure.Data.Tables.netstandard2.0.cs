@@ -173,8 +173,8 @@ namespace Azure.Data.Tables
     }
     public partial class TableTransactionFailedException : Azure.RequestFailedException
     {
-        public TableTransactionFailedException(Azure.RequestFailedException requestFailedException) : base (default(string)) { }
-        protected TableTransactionFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
+        public TableTransactionFailedException(Azure.RequestFailedException requestFailedException) : base (default(Azure.Response)) { }
+        protected TableTransactionFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(Azure.Response)) { }
         public int? FailedTransactionActionIndex { get { throw null; } }
     }
     public enum TableUpdateMode
