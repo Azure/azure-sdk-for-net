@@ -3,7 +3,7 @@
 [Health Insights][health_insights] is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
 
 
-Use the client library for to:
+Use the client library to:
 
 * [Get secret](https://docs.microsoft.com/azure)
 
@@ -39,24 +39,28 @@ You can find the endpoint for your Health Insights service resource using the [A
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
 ```
 
-#### Get the API Key
+#### Create RadiologyInsightsClient using Azure Active Directory authentication
 
-You can get the **API Key** from the Health Insights service resource in the Azure Portal.
-Alternatively, you can use **Azure CLI** snippet below to get the API key of your resource.
+You can also create a `RadiologyInsightsClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
 
-```PowerShell
-az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
+Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
+
+To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
+to the `ClientSecretCredential` also in Azure.Identity.
+
+Make sure you use the right namespace for `DefaultAzureCredential` at the top of your source file:
+
+```C# Snippet:Age_Mismatch_SyncCreateWithDefaultAzureCredential
+using Azure.Identity;
 ```
 
-#### Create RadiologyInsightsClient with AzureKeyCredential
+Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
-Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the `RadiologyInsightsClient`:
-
-```C#
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
-var client = new RadiologyInsightsClient(new Uri(endpoint), credential);
+```C# Snippet:Age_Mismatch_Sync_Tests_Samples_TokenCredential
+Uri endpointUri = new Uri(endpoint);
+TokenCredential cred = new DefaultAzureCredential();
+RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
 ```
 
 ## Key concepts
@@ -115,3 +119,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org
 [azure_portal]:https://learn.microsoft.com/azure/search/search-create-service-portal
 [azure_cli]:https://learn.microsoft.com/cli/azure
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package

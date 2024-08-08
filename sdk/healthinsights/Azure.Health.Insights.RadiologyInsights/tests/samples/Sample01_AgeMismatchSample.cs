@@ -9,7 +9,9 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
+#region Snippet:Age_Mismatch_SyncCreateWithDefaultAzureCredential
 using Azure.Identity;
+#endregion
 using System.Net;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
