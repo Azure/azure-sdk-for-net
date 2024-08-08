@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            CustomLabelClassificationResultWithDocumentDetectedLanguage results = default;
+            CustomLabelClassificationActionResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextActionState status = default;
             string taskName = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = CustomLabelClassificationResultWithDocumentDetectedLanguage.DeserializeCustomLabelClassificationResultWithDocumentDetectedLanguage(property.Value, options);
+                    results = CustomLabelClassificationActionResult.DeserializeCustomLabelClassificationActionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))
