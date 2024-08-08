@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <returns> A new <see cref="Hci.PublisherData"/> instance for mocking. </returns>
-        [Obsolete("This method is now deprecated. Please use the new method `HciClusterPublisherata` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterPublisherData` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null)
         {
