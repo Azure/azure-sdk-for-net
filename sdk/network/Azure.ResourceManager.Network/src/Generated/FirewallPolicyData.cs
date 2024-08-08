@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Network
             RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
             Firewalls = new ChangeTrackingList<WritableSubResource>();
             ChildPolicies = new ChangeTrackingList<WritableSubResource>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the firewall policy. </param>
@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal FirewallPolicyData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
         {
             ETag = etag;
             Identity = identity;
@@ -73,6 +75,8 @@ namespace Azure.ResourceManager.Network
             IntrusionDetection = intrusionDetection;
             TransportSecurity = transportSecurity;
             Sku = sku;
+            Location = location;
+            Tags = tags;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -158,5 +162,10 @@ namespace Azure.ResourceManager.Network
                 Sku.Tier = value;
             }
         }
+
+        /// <summary> Resource location. </summary>
+        public AzureLocation? Location { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

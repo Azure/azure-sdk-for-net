@@ -9,30 +9,22 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRuleResource>
+    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRule>
     {
-        private readonly ArmClient _client;
-
-        internal InboundSecurityRuleOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        InboundSecurityRuleResource IOperationSource<InboundSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        InboundSecurityRule IOperationSource<InboundSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(document.RootElement);
-            return new InboundSecurityRuleResource(_client, data);
+            return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);
         }
 
-        async ValueTask<InboundSecurityRuleResource> IOperationSource<InboundSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InboundSecurityRule> IOperationSource<InboundSecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(document.RootElement);
-            return new InboundSecurityRuleResource(_client, data);
+            return InboundSecurityRule.DeserializeInboundSecurityRule(document.RootElement);
         }
     }
 }

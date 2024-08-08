@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Delete Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Delete Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Create or Update Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Create or Update Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get Rule Collection Group Draft. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>

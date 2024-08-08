@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -25,14 +26,14 @@ namespace Azure.ResourceManager.Network
             Zones = new ChangeTrackingList<string>();
             ChildCustomIPPrefixList = new ChangeTrackingList<WritableSubResource>();
             PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of the custom IP prefix. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -52,7 +53,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
-        internal CustomIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<string> zones, string asn, string cidr, string signedMessage, string authorizationMessage, WritableSubResource parentCustomIPPrefix, IReadOnlyList<WritableSubResource> childCustomIPPrefixList, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal CustomIPPrefixData(ResourceIdentifier id, string name, string resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<string> zones, string asn, string cidr, string signedMessage, string authorizationMessage, WritableSubResource parentCustomIPPrefix, IReadOnlyList<WritableSubResource> childCustomIPPrefixList, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -72,6 +75,8 @@ namespace Azure.ResourceManager.Network
             ResourceGuid = resourceGuid;
             FailedReason = failedReason;
             ProvisioningState = provisioningState;
+            Location = location;
+            Tags = tags;
         }
 
         /// <summary> The extended location of the custom IP prefix. </summary>
@@ -122,5 +127,9 @@ namespace Azure.ResourceManager.Network
         public string FailedReason { get; }
         /// <summary> The provisioning state of the custom IP prefix resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Resource location. </summary>
+        public AzureLocation? Location { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

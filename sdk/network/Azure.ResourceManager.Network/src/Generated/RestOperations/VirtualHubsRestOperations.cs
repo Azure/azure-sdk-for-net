@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="data"> Parameters supplied to create or update VirtualHub. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="data"> Parameters supplied to create or update VirtualHub. </param>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VirtualHub tags. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VirtualHub tags. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VirtualHubs in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists all the VirtualHubs in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the inbound routes configured for the Virtual Hub on a particular connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the inbound routes configured for the Virtual Hub on a particular connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the outbound routes configured for the Virtual Hub on a particular connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the outbound routes configured for the Virtual Hub on a particular connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VirtualHubs in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all the VirtualHubs in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

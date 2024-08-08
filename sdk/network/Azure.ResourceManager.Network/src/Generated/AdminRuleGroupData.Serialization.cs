@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -119,7 +114,6 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -132,15 +126,6 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -229,7 +214,6 @@ namespace Azure.ResourceManager.Network
                 appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
                 provisioningState,
                 resourceGuid,
-                etag,
                 serializedAdditionalRawData);
         }
 

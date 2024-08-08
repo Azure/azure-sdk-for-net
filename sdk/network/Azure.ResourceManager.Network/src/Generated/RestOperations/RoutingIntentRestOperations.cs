@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the per VirtualHub singleton Routing Intent resource. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the per VirtualHub singleton Routing Intent resource. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a RoutingIntent. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the RoutingIntent. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of all RoutingIntent child resources of the VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of all RoutingIntent child resources of the VirtualHub. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of all RoutingIntent child resources of the VirtualHub. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of all RoutingIntent child resources of the VirtualHub. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
