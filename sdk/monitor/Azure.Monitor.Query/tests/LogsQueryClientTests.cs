@@ -287,32 +287,49 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
-        public void Constructor_WhenOptionsIsNull_UsesDefaultEndpoint()
+        public void Constructor_WhenOptionsAndEndpointIsNull_UsesDefaultEndpoint()
         {
-            // Arrange
             var credential = new DefaultAzureCredential();
-
-            // Act
             var client = new LogsQueryClient(credential);
-
-            // Assert
             Assert.AreEqual(LogsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
         }
 
         [Test]
-        public void Constructor_WhenOptionsIsNotNull_UsesOptionsAudience()
+        public void Constructor_WhenEndpointIsNull_UsesOptionsAudience()
         {
-            // Arrange
             var credential = new DefaultAzureCredential();
             var options = new LogsQueryClientOptions
             {
                 Audience = "https://custom.audience"
             };
 
-            // Act
             var client = new LogsQueryClient(credential, options);
 
-            // Assert
+            // When endpoint is not passed in, use Audience to contstruct the endpoint
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsDoesNotMatchAudience()
+        {
+            var endpoint = new Uri("https://custom.audience");
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = "https://customs.audience"
+            };
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => new LogsQueryClient(endpoint, credential, options)));
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesEndpoint()
+        {
+            var endpoint = new Uri("https://custom.audience");
+            var credential = new DefaultAzureCredential();
+
+            var client = new LogsQueryClient(endpoint, credential);
+
             Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
         }
     }
