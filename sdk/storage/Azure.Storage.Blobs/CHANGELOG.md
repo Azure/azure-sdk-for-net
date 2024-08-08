@@ -1,5 +1,15 @@
 # Release History
 
+## 12.22.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.22.0-beta.1 (2024-08-06)
 
 ### Features Added
@@ -8,6 +18,7 @@
 
 ### Bugs Fixed
 - Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
+- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
 
 ## 12.21.1 (2024-07-25)
 
