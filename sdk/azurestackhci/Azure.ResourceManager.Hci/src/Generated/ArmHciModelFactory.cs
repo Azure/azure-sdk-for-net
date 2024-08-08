@@ -573,16 +573,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="state"> State of Arc Extension in this node. </param>
-        /// <param name="instanceView"> The extension instance view. </param>
+        /// <param name="extensionInstanceView"> The extension instance view. </param>
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
-        public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, ArcExtensionInstanceView instanceView = null)
+        public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, ArcExtensionInstanceView extensionInstanceView = null)
         {
             return new PerNodeExtensionState(
                 name,
                 extension,
                 typeHandlerVersion,
                 state,
-                instanceView,
+                extensionInstanceView,
                 serializedAdditionalRawData: null);
         }
 

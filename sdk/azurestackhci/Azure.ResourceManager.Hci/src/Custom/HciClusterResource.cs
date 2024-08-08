@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci
     {
         /// <summary> Gets a collection of PublisherResources in the HciCluster. </summary>
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterPublishers` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublishers` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual PublisherCollection GetPublishers()
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterPublisherAsync` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisherAsync` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterPublisher` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisher` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterOffersAsync` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOffersAsync` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<OfferResource> GetOffersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterOffers` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOffers` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<OfferResource> GetOffers(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets an object representing a UpdateSummaryResource along with the instance operations that can be performed on it in the HciCluster. </summary>
         /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdateSummary` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateSummary` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual UpdateSummaryResource GetUpdateSummary()
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets a collection of UpdateResources in the HciCluster. </summary>
         /// <returns> An object representing collection of UpdateResources and their operations over a UpdateResource. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdates` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdates` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual UpdateCollection GetUpdates()
         {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdateAsync` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateAsync` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<UpdateResource>> GetUpdateAsync(string updateName, CancellationToken cancellationToken = default)
         {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdate` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdate` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<UpdateResource> GetUpdate(string updateName, CancellationToken cancellationToken = default)
         {

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterOfferResource` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOfferResource` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterPublisherResource` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisherResource` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="UpdateRunResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdateRunResource` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateRunResource` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdateSummaryResource` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateSummaryResource` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="UpdateResource"/> object. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `GetHciClusterUpdateResource` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateResource` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
         {

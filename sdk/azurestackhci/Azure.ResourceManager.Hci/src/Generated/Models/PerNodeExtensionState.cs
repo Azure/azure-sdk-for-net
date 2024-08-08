@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="state"> State of Arc Extension in this node. </param>
-        /// <param name="instanceView"> The extension instance view. </param>
+        /// <param name="extensionInstanceView"> The extension instance view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView instanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Extension = extension;
             TypeHandlerVersion = typeHandlerVersion;
             State = state;
-            InstanceView = instanceView;
+            ExtensionInstanceView = extensionInstanceView;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Hci.Models
         public NodeExtensionState? State { get; }
         /// <summary> The extension instance view. </summary>
         [WirePath("instanceView")]
-        public ArcExtensionInstanceView InstanceView { get; }
+        public ArcExtensionInstanceView ExtensionInstanceView { get; }
     }
 }

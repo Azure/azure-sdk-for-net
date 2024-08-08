@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && Optional.IsDefined(ExtensionInstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
+                writer.WriteObjectValue(ExtensionInstanceView, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceView), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionInstanceView), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceView: ");
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceView))
+                if (Optional.IsDefined(ExtensionInstanceView))
                 {
                     builder.Append("  instanceView: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, InstanceView, options, 2, false, "  instanceView: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtensionInstanceView, options, 2, false, "  instanceView: ");
                 }
             }
 

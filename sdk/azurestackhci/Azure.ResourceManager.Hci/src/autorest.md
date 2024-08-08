@@ -196,6 +196,7 @@ rename-mapping:
   Step.endTimeUtc: EndOn
   DeviceKind: HciEdgeDeviceKind
   ExtensionProfile: HciEdgeDeviceExtensionProfile
+  PerNodeExtensionState.instanceView: ExtensionInstanceView
 
 directive:
   - from: swagger-document

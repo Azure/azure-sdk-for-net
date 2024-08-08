@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="state"> State of Arc Extension in this node. </param>
         /// <param name="instanceView"> The extension instance view. </param>
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PerNodeExtensionState PerNodeExtensionState(string name = null, string extension = null, string typeHandlerVersion = null, NodeExtensionState? state = null, HciExtensionInstanceView instanceView = null)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HciExtensionInstanceView HciExtensionInstanceView(string name = null, string extensionInstanceViewType = null, string typeHandlerVersion = null, ExtensionInstanceViewStatus status = null)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.ExtensionInstanceViewStatus"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceViewStatus` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceViewStatus` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
         /// <returns> A new <see cref="Hci.OfferData"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `HciClusterOfferData` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterOfferData` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OfferData OfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, string publisherId = null, string content = null, string contentVersion = null, IEnumerable<HciSkuMappings> skuMappings = null)
+        public static OfferData OfferData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null, string publisherId = null, string content = null, string contentVersion = null, IEnumerable<HciSkuMappings> skuMappings = null)
         {
             skuMappings ??= new List<HciSkuMappings>();
 
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <returns> A new <see cref="Hci.PublisherData"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `HciClusterPublisherata` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterPublisherata` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null)
+        public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string provisioningState = null)
         {
             return new PublisherData(
                 id,
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <returns> A new <see cref="Hci.UpdateRunData"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `HciClusterUpdateRunData` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterUpdateRunData` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UpdateRunData UpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? timeStarted = null, DateTimeOffset? lastUpdatedOn = null, string duration = null, UpdateRunPropertiesState? state = null, string namePropertiesProgressName = null, string description = null, string errorMessage = null, string status = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, DateTimeOffset? lastUpdatedTimeUtc = null, IEnumerable<HciUpdateStep> steps = null)
+        public static UpdateRunData UpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? timeStarted = null, DateTimeOffset? lastUpdatedOn = null, string duration = null, UpdateRunPropertiesState? state = null, string namePropertiesProgressName = null, string description = null, string errorMessage = null, string status = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, DateTimeOffset? lastUpdatedTimeUtc = null, IEnumerable<HciUpdateStep> steps = null)
         {
             steps ??= new List<HciUpdateStep>();
 
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
         /// <returns> A new <see cref="Hci.UpdateSummaryData"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `HciClusterUpdateSummaryData` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterUpdateSummaryData` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UpdateSummaryData UpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? lastChecked = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, UpdateSummariesPropertiesState? state = null)
+        public static UpdateSummaryData UpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? lastChecked = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, UpdateSummariesPropertiesState? state = null)
         {
             packageVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
         /// <returns> A new <see cref="Hci.UpdateData"/> instance for mocking. </returns>
-        [Obsolete("This class is now deprecated. Please use the new class `HciClusterUpdateData` moving forward.")]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterUpdateData` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UpdateData UpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? installedOn = null, string description = null, HciUpdateState? state = null, IEnumerable<UpdatePrerequisite> prerequisites = null, IEnumerable<HciPackageVersionInfo> componentVersions = null, HciNodeRebootRequirement? rebootRequired = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, string packagePath = null, float? packageSizeInMb = null, string displayName = null, string version = null, string publisher = null, string releaseLink = null, HciAvailabilityType? availabilityType = null, string packageType = null, string additionalProperties = null, float? progressPercentage = null, string notifyMessage = null)
+        public static UpdateData UpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? installedOn = null, string description = null, HciUpdateState? state = null, IEnumerable<UpdatePrerequisite> prerequisites = null, IEnumerable<HciPackageVersionInfo> componentVersions = null, HciNodeRebootRequirement? rebootRequired = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, string packagePath = null, float? packageSizeInMb = null, string displayName = null, string version = null, string publisher = null, string releaseLink = null, HciAvailabilityType? availabilityType = null, string packageType = null, string additionalProperties = null, float? progressPercentage = null, string notifyMessage = null)
         {
             prerequisites ??= new List<UpdatePrerequisite>();
             componentVersions ??= new List<HciPackageVersionInfo>();
