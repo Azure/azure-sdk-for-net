@@ -70,6 +70,6 @@ internal class ClientModelEventListener : EventListener
 
         // There is a very tight race during the AzureEventSourceListener creation where EnableEvents was called
         // and the thread producing events not observing the `_log` field assignment
-        //_log?.Invoke(eventData, EventSourceEventFormatting.Format(eventData));
+        _log?.Invoke(eventData, EventSourceEventFormatting.Format(eventData));
     }
 }

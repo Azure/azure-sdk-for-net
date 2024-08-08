@@ -16,7 +16,7 @@ internal class LogForwarder
 
     private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
 
-    private readonly Func<EventSourceEvent, Exception, string> _formatMessage = FormatMessage;
+    private readonly Func<EventSourceEvent, Exception?, string> _formatMessage = FormatMessage;
 
     private ClientModelEventListener? _listener;
 
@@ -73,5 +73,21 @@ internal class LogForwarder
         }
     }
 
-    private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception _) => eventSourceEvent.Format();
+    private static KeyValuePair<string, string?>[] GetProperties(object? state)
+    {
+        if (state is IReadOnlyList<KeyValuePair<string, object?>> keyValuePairs)
+        {
+            var arguments = new KeyValuePair<string, string?>[keyValuePairs.Count];
+            for (int i = 0; i < keyValuePairs.Count; i++)
+            {
+                KeyValuePair<string, object?> keyValuePair = keyValuePairs[i];
+                arguments[i] = new KeyValuePair<string, string?>(keyValuePair.Key, keyValuePair.Value?.ToString());
+            }
+            return arguments;
+        }
+
+        return Array.Empty<KeyValuePair<string, string?>>();
+    }
+
+    private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception? _) => eventSourceEvent.Format();
 }

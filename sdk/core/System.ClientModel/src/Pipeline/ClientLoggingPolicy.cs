@@ -27,6 +27,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly int _maxLength;
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly ILogger _logger;
+    private readonly LogForwarder _logForwarder;
     private readonly string? _correlationIdHeaderName;
     private readonly string _clientAssembly = "System-ClientModel";
 
@@ -40,8 +41,14 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
+        _logger = loggingOptions.LoggerFactory.CreateLogger("ClientModel"); // Create one logger so we can check the log level
+        _logForwarder = new LogForwarder(loggingOptions.LoggerFactory);
         _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
+
+        if (_logger is NullLogger)
+        {
+            _logForwarder.Start();
+        }
     }
 
     /// <inheritdoc/>
