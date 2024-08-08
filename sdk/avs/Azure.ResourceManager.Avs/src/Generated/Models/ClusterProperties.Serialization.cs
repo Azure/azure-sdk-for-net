@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class CommonClusterProperties : IUtf8JsonSerializable, IJsonModel<CommonClusterProperties>
+    public partial class ClusterProperties : IUtf8JsonSerializable, IJsonModel<ClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CommonClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(VsanDatastoreName))
+            {
+                writer.WritePropertyName("vsanDatastoreName"u8);
+                writer.WriteStringValue(VsanDatastoreName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,19 +74,19 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndObject();
         }
 
-        CommonClusterProperties IJsonModel<CommonClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterProperties IJsonModel<ClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommonClusterProperties(document.RootElement, options);
+            return DeserializeClusterProperties(document.RootElement, options);
         }
 
-        internal static CommonClusterProperties DeserializeCommonClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterProperties DeserializeClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Avs.Models
             AvsPrivateCloudClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
+            string vsanDatastoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,44 +144,55 @@ namespace Azure.ResourceManager.Avs.Models
                     hosts = array;
                     continue;
                 }
+                if (property.NameEquals("vsanDatastoreName"u8))
+                {
+                    vsanDatastoreName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ClusterProperties(
+                clusterSize,
+                provisioningState,
+                clusterId,
+                hosts ?? new ChangeTrackingList<string>(),
+                vsanDatastoreName,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CommonClusterProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CommonClusterProperties IPersistableModel<CommonClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterProperties IPersistableModel<ClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCommonClusterProperties(document.RootElement, options);
+                        return DeserializeClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CommonClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

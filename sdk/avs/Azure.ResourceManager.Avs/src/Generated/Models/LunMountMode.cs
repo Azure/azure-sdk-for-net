@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Mode that describes whether the LUN has to be mounted as a datastore or attached as a LUN. </summary>
+    /// <summary> mount option. </summary>
     public readonly partial struct LunMountMode : IEquatable<LunMountMode>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MountValue = "MOUNT";
-        private const string AttachValue = "ATTACH";
+        private const string MOUNTValue = "MOUNT";
+        private const string ATTACHValue = "ATTACH";
 
-        /// <summary> MOUNT. </summary>
-        public static LunMountMode Mount { get; } = new LunMountMode(MountValue);
-        /// <summary> ATTACH. </summary>
-        public static LunMountMode Attach { get; } = new LunMountMode(AttachValue);
+        /// <summary> is mount. </summary>
+        public static LunMountMode MOUNT { get; } = new LunMountMode(MOUNTValue);
+        /// <summary> is attach. </summary>
+        public static LunMountMode ATTACH { get; } = new LunMountMode(ATTACHValue);
         /// <summary> Determines if two <see cref="LunMountMode"/> values are the same. </summary>
         public static bool operator ==(LunMountMode left, LunMountMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LunMountMode"/> values are not the same. </summary>

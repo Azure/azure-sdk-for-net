@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of PrivateCloudsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateCloudsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List private clouds in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List PrivateCloud resources by resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List private clouds in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List PrivateCloud resources by resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List private clouds in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List PrivateCloud resources by subscription ID. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List private clouds in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List PrivateCloud resources by subscription ID. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -234,8 +234,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Create or update a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="data"> The private cloud. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="data"> The private cloud. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -426,8 +426,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Update a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Update a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="patch"> The private cloud properties to be updated. </param>
@@ -453,8 +453,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Update a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Update a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="patch"> The private cloud properties to be updated. </param>
@@ -514,8 +514,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -540,8 +540,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Rotate the vCenter password. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Rotate the vCenter password. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Rotate the NSX-T Manager password. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Rotate the NSX-T Manager password. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List the admin credentials for the private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> List the admin credentials for the private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -854,9 +854,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List private clouds in a resource group. </summary>
+        /// <summary> List PrivateCloud resources by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -883,9 +883,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List private clouds in a resource group. </summary>
+        /// <summary> List PrivateCloud resources by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -934,9 +934,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List private clouds in a subscription. </summary>
+        /// <summary> List PrivateCloud resources by subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -961,9 +961,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List private clouds in a subscription. </summary>
+        /// <summary> List PrivateCloud resources by subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

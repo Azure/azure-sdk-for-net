@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Avs
             return resource.GetCachedClient(client => new MockableAvsSubscriptionResource(client, resource.Id));
         }
 
+        private static MockableAvsTenantResource GetMockableAvsTenantResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableAvsTenantResource(client, resource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -471,6 +476,25 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="IscsiPathResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IscsiPathResource.CreateResourceIdentifier" /> to create an <see cref="IscsiPathResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetIscsiPathResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
+        public static IscsiPathResource GetIscsiPathResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAvsArmClient(client).GetIscsiPathResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -488,7 +512,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a private cloud
+        /// Get a PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -500,7 +524,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -526,7 +550,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a private cloud
+        /// Get a PrivateCloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -538,7 +562,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -576,24 +600,25 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckAvsTrialAvailability(AzureLocation,AvsSku,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckTrialAvailabilityLocation(string,AvsSku,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="sku"> The sku to check for trial availability. </param>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckTrialAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckTrialAvailabilityLocationAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -609,24 +634,25 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckAvsTrialAvailability(AzureLocation,AvsSku,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckTrialAvailabilityLocation(string,AvsSku,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="sku"> The sku to check for trial availability. </param>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckTrialAvailabilityLocation(this SubscriptionResource subscriptionResource, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
+            return GetMockableAvsSubscriptionResource(subscriptionResource).CheckTrialAvailabilityLocation(location, sku, cancellationToken);
         }
 
         /// <summary>
@@ -642,23 +668,24 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckAvsQuotaAvailability(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckQuotaAvailabilityLocation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckQuotaAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckQuotaAvailabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -674,27 +701,28 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckAvsQuotaAvailability(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsSubscriptionResource.CheckQuotaAvailabilityLocation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckQuotaAvailabilityLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
+            return GetMockableAvsSubscriptionResource(subscriptionResource).CheckQuotaAvailabilityLocation(location, cancellationToken);
         }
 
         /// <summary>
-        /// List private clouds in a subscription
+        /// List PrivateCloud resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -702,11 +730,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -730,7 +758,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List private clouds in a subscription
+        /// List PrivateCloud resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -738,11 +766,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -763,6 +791,70 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAvsSubscriptionResource(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AVS/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAvsTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Models.Operation> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAvsTenantResource(tenantResource).GetOperationsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AVS/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAvsTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="Models.Operation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Models.Operation> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAvsTenantResource(tenantResource).GetOperations(cancellationToken);
         }
     }
 }

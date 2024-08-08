@@ -26,24 +26,16 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterSize))
+            if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("clusterSize"u8);
-                writer.WriteNumberValue(ClusterSize.Value);
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsCollectionDefined(Hosts))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hosts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,45 +74,28 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            int? clusterSize = default;
-            IList<string> hosts = default;
+            AvsSku sku = default;
+            ClusterUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("clusterSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterSize = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("hosts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            hosts = array;
-                            continue;
-                        }
-                    }
+                    properties = ClusterUpdateProperties.DeserializeClusterUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +104,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsPrivateCloudClusterPatch(clusterSize, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterPatch(sku, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterPatch>.Write(ModelReaderWriterOptions options)

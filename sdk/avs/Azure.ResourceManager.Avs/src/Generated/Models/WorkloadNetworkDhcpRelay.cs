@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         public WorkloadNetworkDhcpRelay()
         {
             ServerAddresses = new ChangeTrackingList<string>();
-            DhcpType = DhcpTypeEnum.Relay;
+            DhcpType = DhcpTypeEnum.RELAY;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpRelay"/>. </summary>

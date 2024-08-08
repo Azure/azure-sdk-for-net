@@ -26,49 +26,11 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(VmMembers))
-            {
-                writer.WritePropertyName("vmMembers"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmMembers)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(HostMembers))
-            {
-                writer.WritePropertyName("hostMembers"u8);
-                writer.WriteStartArray();
-                foreach (var item in HostMembers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AffinityStrength))
-            {
-                writer.WritePropertyName("affinityStrength"u8);
-                writer.WriteStringValue(AffinityStrength.Value.ToString());
-            }
-            if (Optional.IsDefined(AzureHybridBenefitType))
-            {
-                writer.WritePropertyName("azureHybridBenefitType"u8);
-                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,11 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            PlacementPolicyState? state = default;
-            IList<ResourceIdentifier> vmMembers = default;
-            IList<string> hostMembers = default;
-            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
-            AzureHybridBenefitType? azureHybridBenefitType = default;
+            PlacementPolicyUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,74 +78,9 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new PlacementPolicyState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vmMembers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            vmMembers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("hostMembers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            hostMembers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("affinityStrength"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            affinityStrength = new VmHostPlacementPolicyAffinityStrength(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("azureHybridBenefitType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureHybridBenefitType = new AzureHybridBenefitType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = PlacementPolicyUpdateProperties.DeserializePlacementPolicyUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,13 +89,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlacementPolicyPatch(
-                state,
-                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
-                hostMembers ?? new ChangeTrackingList<string>(),
-                affinityStrength,
-                azureHybridBenefitType,
-                serializedAdditionalRawData);
+            return new PlacementPolicyPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyPatch>.Write(ModelReaderWriterOptions options)

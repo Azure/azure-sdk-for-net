@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The type of execution parameter. </summary>
+    /// <summary> script execution parameter type. </summary>
     internal readonly partial struct ScriptExecutionParameterType : IEquatable<ScriptExecutionParameterType>
     {
         private readonly string _value;

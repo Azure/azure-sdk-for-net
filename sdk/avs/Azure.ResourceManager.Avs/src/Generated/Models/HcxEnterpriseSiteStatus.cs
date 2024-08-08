@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The status of the HCX Enterprise Site. </summary>
+    /// <summary> HCX Enterprise Site status. </summary>
     public readonly partial struct HcxEnterpriseSiteStatus : IEquatable<HcxEnterpriseSiteStatus>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Avs.Models
         private const string DeactivatedValue = "Deactivated";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Available. </summary>
+        /// <summary> is available. </summary>
         public static HcxEnterpriseSiteStatus Available { get; } = new HcxEnterpriseSiteStatus(AvailableValue);
-        /// <summary> Consumed. </summary>
+        /// <summary> is consumed. </summary>
         public static HcxEnterpriseSiteStatus Consumed { get; } = new HcxEnterpriseSiteStatus(ConsumedValue);
-        /// <summary> Deactivated. </summary>
+        /// <summary> is deactivated. </summary>
         public static HcxEnterpriseSiteStatus Deactivated { get; } = new HcxEnterpriseSiteStatus(DeactivatedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> is deleted. </summary>
         public static HcxEnterpriseSiteStatus Deleted { get; } = new HcxEnterpriseSiteStatus(DeletedValue);
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are the same. </summary>
         public static bool operator ==(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => left.Equals(right);

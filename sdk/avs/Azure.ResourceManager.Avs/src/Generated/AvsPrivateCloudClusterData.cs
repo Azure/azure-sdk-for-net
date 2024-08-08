@@ -52,14 +52,13 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
-        /// <param name="sku"> The cluster SKU. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudClusterData(AvsSku sku)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            Hosts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
@@ -67,19 +66,13 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku"> The cluster SKU. </param>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterProperties properties, AvsSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Sku = sku;
-            ClusterSize = clusterSize;
-            ProvisioningState = provisioningState;
-            ClusterId = clusterId;
-            Hosts = hosts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,22 +81,9 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> The cluster SKU. </summary>
-        internal AvsSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new AvsSku(value);
-        }
-
-        /// <summary> The cluster size. </summary>
-        public int? ClusterSize { get; set; }
-        /// <summary> The state of the cluster provisioning. </summary>
-        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
-        /// <summary> The identity. </summary>
-        public int? ClusterId { get; }
-        /// <summary> The hosts. </summary>
-        public IList<string> Hosts { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ClusterProperties Properties { get; set; }
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownScriptExecutionParameter : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
+    internal partial class UnknownScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
             return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
         }
 
-        internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownScriptExecutionParameterDetails DeserializeUnknownScriptExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            string name = default;
             ScriptExecutionParameterType type = "Unknown";
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownScriptExecutionParameter(name, type, serializedAdditionalRawData);
+            return new UnknownScriptExecutionParameterDetails(type, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

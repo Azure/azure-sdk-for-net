@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> DNS Service status. </summary>
+    /// <summary> DNS service status. </summary>
     public readonly partial struct DnsServiceStatus : IEquatable<DnsServiceStatus>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SuccessValue = "SUCCESS";
-        private const string FailureValue = "FAILURE";
+        private const string SUCCESSValue = "SUCCESS";
+        private const string FAILUREValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
-        public static DnsServiceStatus Success { get; } = new DnsServiceStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
-        public static DnsServiceStatus Failure { get; } = new DnsServiceStatus(FailureValue);
+        /// <summary> is success. </summary>
+        public static DnsServiceStatus SUCCESS { get; } = new DnsServiceStatus(SUCCESSValue);
+        /// <summary> is failure. </summary>
+        public static DnsServiceStatus FAILURE { get; } = new DnsServiceStatus(FAILUREValue);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are the same. </summary>
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>

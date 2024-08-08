@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -49,36 +48,18 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
         public PlacementPolicyPatch()
         {
-            VmMembers = new ChangeTrackingList<ResourceIdentifier>();
-            HostMembers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
-        /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
-        /// <param name="vmMembers"> Virtual machine members list. </param>
-        /// <param name="hostMembers"> Host members list. </param>
-        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
-        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        /// <param name="properties"> The properties of a placement policy resource that may be updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlacementPolicyPatch(PlacementPolicyUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            State = state;
-            VmMembers = vmMembers;
-            HostMembers = hostMembers;
-            AffinityStrength = affinityStrength;
-            AzureHybridBenefitType = azureHybridBenefitType;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether the placement policy is enabled or disabled. </summary>
-        public PlacementPolicyState? State { get; set; }
-        /// <summary> Virtual machine members list. </summary>
-        public IList<ResourceIdentifier> VmMembers { get; }
-        /// <summary> Host members list. </summary>
-        public IList<string> HostMembers { get; }
-        /// <summary> vm-host placement policy affinity strength (should/must). </summary>
-        public VmHostPlacementPolicyAffinityStrength? AffinityStrength { get; set; }
-        /// <summary> placement policy azure hybrid benefit opt-in type. </summary>
-        public AzureHybridBenefitType? AzureHybridBenefitType { get; set; }
+        /// <summary> The properties of a placement policy resource that may be updated. </summary>
+        public PlacementPolicyUpdateProperties Properties { get; set; }
     }
 }

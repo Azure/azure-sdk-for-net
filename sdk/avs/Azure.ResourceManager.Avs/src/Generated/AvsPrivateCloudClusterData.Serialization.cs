@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Avs
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (options.Format != "W")
@@ -50,34 +55,6 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterSize))
-            {
-                writer.WritePropertyName("clusterSize"u8);
-                writer.WriteNumberValue(ClusterSize.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
-            {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteNumberValue(ClusterId.Value);
-            }
-            if (Optional.IsCollectionDefined(Hosts))
-            {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hosts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -116,19 +93,25 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
+            ClusterProperties properties = default;
             AvsSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            int? clusterSize = default;
-            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
-            int? clusterId = default;
-            IList<string> hosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterProperties.DeserializeClusterProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = AvsSku.DeserializeAvsSku(property.Value, options);
@@ -158,59 +141,6 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("clusterSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterSize = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AvsPrivateCloudClusterProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterId = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("hosts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            hosts = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -222,11 +152,8 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                properties,
                 sku,
-                clusterSize,
-                provisioningState,
-                clusterId,
-                hosts ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

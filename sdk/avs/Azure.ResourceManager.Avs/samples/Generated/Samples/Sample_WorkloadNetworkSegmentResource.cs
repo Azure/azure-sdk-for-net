@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetSegments.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetSegment.json
             // this example is just showing the usage of "WorkloadNetworks_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_WorkloadNetworksUpdateSegments()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_UpdateSegments.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_UpdateSegments.json
             // this example is just showing the usage of "WorkloadNetworks_UpdateSegments" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,16 +72,19 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData()
             {
-                ConnectedGateway = "/infra/tier-1s/gateway",
-                Subnet = new WorkloadNetworkSegmentSubnet()
+                Properties = new WorkloadNetworkSegmentProperties()
                 {
-                    DhcpRanges =
+                    ConnectedGateway = "/infra/tier-1s/gateway",
+                    Subnet = new WorkloadNetworkSegmentSubnet()
+                    {
+                        DhcpRanges =
 {
 "40.20.0.0-40.20.0.1"
 },
-                    GatewayAddress = "40.20.20.20/16",
+                        GatewayAddress = "40.20.20.20/16",
+                    },
+                    Revision = 1,
                 },
-                Revision = 1,
             };
             ArmOperation<WorkloadNetworkSegmentResource> lro = await workloadNetworkSegment.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkSegmentResource result = lro.Value;
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_WorkloadNetworksDeleteSegment()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_DeleteSegments.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_DeleteSegment.json
             // this example is just showing the usage of "WorkloadNetworks_DeleteSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

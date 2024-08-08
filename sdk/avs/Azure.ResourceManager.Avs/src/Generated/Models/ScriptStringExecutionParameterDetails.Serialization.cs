@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string value = default;
-            string name = default;
             ScriptExecutionParameterType type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Avs.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScriptStringExecutionParameterDetails(name, type, serializedAdditionalRawData, value);
+            return new ScriptStringExecutionParameterDetails(type, name, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<ScriptStringExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

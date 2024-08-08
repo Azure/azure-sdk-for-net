@@ -309,5 +309,17 @@ namespace Azure.ResourceManager.Avs.Mocking
             ScriptExecutionResource.ValidateResourceId(id);
             return new ScriptExecutionResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="IscsiPathResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IscsiPathResource.CreateResourceIdentifier" /> to create an <see cref="IscsiPathResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
+        public virtual IscsiPathResource GetIscsiPathResource(ResourceIdentifier id)
+        {
+            IscsiPathResource.ValidateResourceId(id);
+            return new IscsiPathResource(Client, id);
+        }
     }
 }

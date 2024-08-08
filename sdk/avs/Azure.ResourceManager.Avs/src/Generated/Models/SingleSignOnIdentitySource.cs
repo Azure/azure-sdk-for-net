@@ -59,10 +59,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="primaryServer"> Primary server URL. </param>
         /// <param name="secondaryServer"> Secondary server URL. </param>
         /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
-        /// <param name="username"> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </param>
-        /// <param name="password"> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </param>
+        /// <param name="username">
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </param>
+        /// <param name="password">
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, string primaryServer, string secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Alias = @alias;
@@ -88,14 +94,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The base distinguished name for groups. </summary>
         public string BaseGroupDN { get; set; }
         /// <summary> Primary server URL. </summary>
-        public Uri PrimaryServer { get; set; }
+        public string PrimaryServer { get; set; }
         /// <summary> Secondary server URL. </summary>
-        public Uri SecondaryServer { get; set; }
+        public string SecondaryServer { get; set; }
         /// <summary> Protect LDAP communication using SSL certificate (LDAPS). </summary>
         public SslCertificateStatus? Ssl { get; set; }
-        /// <summary> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </summary>
+        /// <summary>
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </summary>
+        /// <summary>
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </summary>
         public string Password { get; set; }
     }
 }

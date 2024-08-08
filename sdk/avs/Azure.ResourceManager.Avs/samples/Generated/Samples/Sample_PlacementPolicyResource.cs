@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PlacementPoliciesGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/PlacementPolicies_Get.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Get.json
             // this example is just showing the usage of "PlacementPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PlacementPoliciesUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/PlacementPolicies_Update.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Update.json
             // this example is just showing the usage of "PlacementPolicies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,17 +74,20 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             PlacementPolicyPatch patch = new PlacementPolicyPatch()
             {
-                State = PlacementPolicyState.Disabled,
-                VmMembers =
+                Properties = new PlacementPolicyUpdateProperties()
+                {
+                    State = PlacementPolicyState.Disabled,
+                    VmMembers =
 {
 new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128"),new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256")
 },
-                HostMembers =
+                    HostMembers =
 {
 "fakehost22.nyc1.kubernetes.center","fakehost23.nyc1.kubernetes.center","fakehost24.nyc1.kubernetes.center"
 },
-                AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
-                AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+                    AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
+                    AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+                },
             };
             ArmOperation<PlacementPolicyResource> lro = await placementPolicy.UpdateAsync(WaitUntil.Completed, patch);
             PlacementPolicyResource result = lro.Value;
@@ -101,7 +104,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PlacementPoliciesDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/PlacementPolicies_Delete.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Delete.json
             // this example is just showing the usage of "PlacementPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

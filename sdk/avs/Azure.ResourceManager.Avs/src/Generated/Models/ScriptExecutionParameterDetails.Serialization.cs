@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
+    [PersistableModelProxy(typeof(UnknownScriptExecutionParameterDetails))]
     public partial class ScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element, options);
                 }
             }
-            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element, options);
+            return UnknownScriptExecutionParameterDetails.DeserializeUnknownScriptExecutionParameterDetails(element, options);
         }
 
         BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

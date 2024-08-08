@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ScriptExecutionsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/ScriptExecutions_Get.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_Get.json
             // this example is just showing the usage of "ScriptExecutions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ScriptExecutionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/ScriptExecutions_CreateOrUpdate.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_CreateOrUpdate.json
             // this example is just showing the usage of "ScriptExecutions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             ScriptExecutionData data = new ScriptExecutionData()
             {
-                ScriptCmdletId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource"),
-                Parameters =
+                Properties = new ScriptExecutionProperties("P0Y0M0DT0H60M60S")
+                {
+                    ScriptCmdletId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource",
+                    Parameters =
 {
 new ScriptStringExecutionParameterDetails("DomainName")
 {
@@ -84,15 +86,15 @@ Value = "placeholderDomain.local",
 Value = "DC=placeholder, DC=placeholder",
 }
 },
-                HiddenParameters =
+                    HiddenParameters =
 {
 new ScriptSecureStringExecutionParameterDetails("Password")
 {
 SecureValue = "PlaceholderPassword",
 }
 },
-                Timeout = "P0Y0M0DT0H60M60S",
-                Retention = "P0Y0M60DT0H60M60S",
+                    Retention = "P0Y0M60DT0H60M60S",
+                },
             };
             ArmOperation<ScriptExecutionResource> lro = await scriptExecution.UpdateAsync(WaitUntil.Completed, data);
             ScriptExecutionResource result = lro.Value;
@@ -109,7 +111,7 @@ SecureValue = "PlaceholderPassword",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ScriptExecutionsDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/ScriptExecutions_Delete.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_Delete.json
             // this example is just showing the usage of "ScriptExecutions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +139,7 @@ SecureValue = "PlaceholderPassword",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetExecutionLogs_ScriptExecutionsGetExecutionLogs()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/ScriptExecutions_GetExecutionLogs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_GetExecutionLogs.json
             // this example is just showing the usage of "ScriptExecutions_GetExecutionLogs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

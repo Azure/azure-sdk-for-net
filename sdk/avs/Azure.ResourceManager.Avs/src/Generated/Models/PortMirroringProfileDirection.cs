@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Direction of port mirroring profile. </summary>
+    /// <summary> Port Mirroring Direction. </summary>
     public readonly partial struct PortMirroringProfileDirection : IEquatable<PortMirroringProfileDirection>
     {
         private readonly string _value;
@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IngressValue = "INGRESS";
-        private const string EgressValue = "EGRESS";
-        private const string BidirectionalValue = "BIDIRECTIONAL";
+        private const string INGRESSValue = "INGRESS";
+        private const string EGRESSValue = "EGRESS";
+        private const string BIDIRECTIONALValue = "BIDIRECTIONAL";
 
-        /// <summary> INGRESS. </summary>
-        public static PortMirroringProfileDirection Ingress { get; } = new PortMirroringProfileDirection(IngressValue);
-        /// <summary> EGRESS. </summary>
-        public static PortMirroringProfileDirection Egress { get; } = new PortMirroringProfileDirection(EgressValue);
-        /// <summary> BIDIRECTIONAL. </summary>
-        public static PortMirroringProfileDirection Bidirectional { get; } = new PortMirroringProfileDirection(BidirectionalValue);
+        /// <summary> is ingress. </summary>
+        public static PortMirroringProfileDirection INGRESS { get; } = new PortMirroringProfileDirection(INGRESSValue);
+        /// <summary> is egress. </summary>
+        public static PortMirroringProfileDirection EGRESS { get; } = new PortMirroringProfileDirection(EGRESSValue);
+        /// <summary> is bidirectional. </summary>
+        public static PortMirroringProfileDirection BIDIRECTIONAL { get; } = new PortMirroringProfileDirection(BIDIRECTIONALValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are not the same. </summary>

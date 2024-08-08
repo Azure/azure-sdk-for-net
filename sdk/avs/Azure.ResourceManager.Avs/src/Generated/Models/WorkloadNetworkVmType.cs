@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Virtual machine type. </summary>
+    /// <summary> VM type. </summary>
     public readonly partial struct WorkloadNetworkVmType : IEquatable<WorkloadNetworkVmType>
     {
         private readonly string _value;
@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RegularValue = "REGULAR";
-        private const string EdgeValue = "EDGE";
-        private const string ServiceValue = "SERVICE";
+        private const string REGULARValue = "REGULAR";
+        private const string EDGEValue = "EDGE";
+        private const string SERVICEValue = "SERVICE";
 
-        /// <summary> REGULAR. </summary>
-        public static WorkloadNetworkVmType Regular { get; } = new WorkloadNetworkVmType(RegularValue);
-        /// <summary> EDGE. </summary>
-        public static WorkloadNetworkVmType Edge { get; } = new WorkloadNetworkVmType(EdgeValue);
-        /// <summary> SERVICE. </summary>
-        public static WorkloadNetworkVmType Service { get; } = new WorkloadNetworkVmType(ServiceValue);
+        /// <summary> is regular. </summary>
+        public static WorkloadNetworkVmType REGULAR { get; } = new WorkloadNetworkVmType(REGULARValue);
+        /// <summary> is edge. </summary>
+        public static WorkloadNetworkVmType EDGE { get; } = new WorkloadNetworkVmType(EDGEValue);
+        /// <summary> is service. </summary>
+        public static WorkloadNetworkVmType SERVICE { get; } = new WorkloadNetworkVmType(SERVICEValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>

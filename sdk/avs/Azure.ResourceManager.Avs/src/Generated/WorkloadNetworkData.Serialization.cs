@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -27,6 +28,11 @@ namespace Azure.ResourceManager.Avs
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
+            WorkloadNetworkProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -93,6 +100,15 @@ namespace Azure.ResourceManager.Avs
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = WorkloadNetworkProperties.DeserializeWorkloadNetworkProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -123,7 +139,13 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkloadNetworkData(id, name, type, systemData, serializedAdditionalRawData);
+            return new WorkloadNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkData>.Write(ModelReaderWriterOptions options)

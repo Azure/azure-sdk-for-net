@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
-        public AvsPrivateCloudClusterVirtualMachineData()
+        internal AvsPrivateCloudClusterVirtualMachineData()
         {
         }
 
@@ -61,27 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the VM. </param>
-        /// <param name="moRefId"> Virtual machine managed object reference id. </param>
-        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
-        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            MoRefId = moRefId;
-            FolderPath = folderPath;
-            RestrictMovement = restrictMovement;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the VM. </summary>
-        public string DisplayName { get; }
-        /// <summary> Virtual machine managed object reference id. </summary>
-        public string MoRefId { get; }
-        /// <summary> Path to virtual machine's folder starting from datacenter virtual machine folder. </summary>
-        public string FolderPath { get; }
-        /// <summary> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </summary>
-        public VirtualMachineRestrictMovementState? RestrictMovement { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public VirtualMachineProperties Properties { get; }
     }
 }

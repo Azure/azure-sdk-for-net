@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Workload Network Public IP provisioning state. </summary>
     public readonly partial struct WorkloadNetworkPublicIPProvisioningState : IEquatable<WorkloadNetworkPublicIPProvisioningState>
     {
         private readonly string _value;
@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkPublicIPProvisioningState Succeeded { get; } = new WorkloadNetworkPublicIPProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkPublicIPProvisioningState Failed { get; } = new WorkloadNetworkPublicIPProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static WorkloadNetworkPublicIPProvisioningState Building { get; } = new WorkloadNetworkPublicIPProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static WorkloadNetworkPublicIPProvisioningState Deleting { get; } = new WorkloadNetworkPublicIPProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static WorkloadNetworkPublicIPProvisioningState Updating { get; } = new WorkloadNetworkPublicIPProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkPublicIPProvisioningState Canceled { get; } = new WorkloadNetworkPublicIPProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static WorkloadNetworkPublicIPProvisioningState Building { get; } = new WorkloadNetworkPublicIPProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static WorkloadNetworkPublicIPProvisioningState Deleting { get; } = new WorkloadNetworkPublicIPProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static WorkloadNetworkPublicIPProvisioningState Updating { get; } = new WorkloadNetworkPublicIPProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkPublicIPProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkPublicIPProvisioningState left, WorkloadNetworkPublicIPProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkPublicIPProvisioningState"/> values are not the same. </summary>

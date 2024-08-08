@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of GlobalReachConnectionsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public GlobalReachConnectionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List global reach connections in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List GlobalReachConnection resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List global reach connections in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List GlobalReachConnection resources by PrivateCloud. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Get a global reach connection by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Get a global reach connection by name in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Create or update a global reach connection in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
-        /// <param name="data"> A global reach connection in the private cloud. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Create or update a global reach connection in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> The name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
-        /// <param name="data"> A global reach connection in the private cloud. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="globalReachConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Delete a global reach connection in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Delete a global reach connection in a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a GlobalReachConnection. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List global reach connections in a private cloud. </summary>
+        /// <summary> List GlobalReachConnection resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,9 +481,9 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List global reach connections in a private cloud. </summary>
+        /// <summary> List GlobalReachConnection resources by PrivateCloud. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

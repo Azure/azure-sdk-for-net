@@ -59,16 +59,20 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="sku"> The sku to check for trial availability. </param>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckTrialAvailabilityLocationAsync(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsTrialAvailability");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckTrialAvailabilityLocation");
             scope.Start();
             try
             {
@@ -95,16 +99,20 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="sku"> The sku to check for trial availability. </param>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckTrialAvailabilityLocation(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsTrialAvailability");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckTrialAvailabilityLocation");
             scope.Start();
             try
             {
@@ -131,15 +139,19 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckQuotaAvailabilityLocationAsync(string location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckQuotaAvailabilityLocation");
             scope.Start();
             try
             {
@@ -166,15 +178,19 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckQuotaAvailabilityLocation(string location, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckQuotaAvailabilityLocation");
             scope.Start();
             try
             {
@@ -189,7 +205,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// List private clouds in a subscription
+        /// List PrivateCloud resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -197,11 +213,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +235,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// List private clouds in a subscription
+        /// List PrivateCloud resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,11 +243,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

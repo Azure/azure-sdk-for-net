@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
-        public WorkloadNetworkVirtualMachineData()
+        internal WorkloadNetworkVirtualMachineData()
         {
         }
 
@@ -61,19 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the VM. </param>
-        /// <param name="vmType"> Virtual machine type. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkVirtualMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            VmType = vmType;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the VM. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Virtual machine type. </summary>
-        public WorkloadNetworkVmType? VmType { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public WorkloadNetworkVirtualMachineProperties Properties { get; }
     }
 }
