@@ -1,6 +1,7 @@
 # Release History
 
 ## 1.7.0-beta.1 (Unreleased)
+- Upgraded api-version tag from 'package-netapp-2023-11-01' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md
 
 ### Features Added
 
