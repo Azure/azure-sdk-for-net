@@ -14,8 +14,7 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// .
     /// </summary>
-    private IReadOnlyDictionary<Type, object> Proxies
-        => _proxies ??= new Dictionary<Type, object>();
+    private Dictionary<Type, object> Proxies => _proxies ??= new Dictionary<Type, object>();
 
     private static ModelReaderWriterOptions? s_jsonOptions;
     /// <summary>
@@ -48,13 +47,8 @@ public class ModelReaderWriterOptions
     /// </summary>
     public void AddProxy<T>(Type type, IPersistableModel<T> proxy)
     {
-        if (_proxies is null)
-        {
-            _proxies = new Dictionary<Type, object>();
-        }
-
         //multiple of same type?
-        _proxies.Add(type, proxy);
+        Proxies.Add(type, proxy);
     }
 
     /// <summary>
