@@ -13,10 +13,14 @@ extends:
     TimeoutInMinutes: 180
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: '${{ parameters.Location }}'
       Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: 'centraluseuap'
     Clouds: 'Public'
     SupportedClouds: 'Public, Canary'

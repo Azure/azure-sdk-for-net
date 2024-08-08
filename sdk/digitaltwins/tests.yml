@@ -6,6 +6,8 @@ extends:
     ServiceDirectory: digitaltwins
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         Location: westcentralus
     Clouds: Public
