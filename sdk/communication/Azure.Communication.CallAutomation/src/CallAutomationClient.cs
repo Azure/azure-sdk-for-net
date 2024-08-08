@@ -691,7 +691,7 @@ namespace Azure.Communication.CallAutomation
             return configuration == default
                 ? default
                 : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
-                configuration.MediaStreamingAudioChannel);
+                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming);
         }
         private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
