@@ -52,12 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeComponent,
             "otel.status_code",
 
-            SemanticConventions.AttributeRpcService,
             // required - RPC
-            SemanticConventions.AttributeRpcSystem,
-            SemanticConventions.AttributeRpcStatus,
+            // SemanticConventions.AttributeRpcService,
+            // SemanticConventions.AttributeRpcSystem,
+            // SemanticConventions.AttributeRpcStatus,
+            // SemanticConventions.AttributeEndpointAddress,
 
-            SemanticConventions.AttributeEndpointAddress,
             // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
             SemanticConventions.AttributeMessagingDestinationName,

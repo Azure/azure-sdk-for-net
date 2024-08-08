@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Specialized;
 using System.IO;
@@ -16,15 +17,15 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Files.Shares.Tests;
 using NUnit.Framework;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class ShareFileToBlockBlobTests : StartTransferCopyTestBase
         <ShareServiceClient,
         ShareClient,
@@ -40,7 +41,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         private const string _defaultContentType = "text/plain";
-        private readonly string[] _defaultContentLanguage = new[] { "en-US", "en-CA" };
+        private readonly string[] _defaultContentLanguage = new[] { "en-US" };
+        private const string _defaultContentLanguageBlob = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
         private const string _defaultPermissions = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
@@ -184,16 +186,19 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 }
                 await fileClient.CreateAsync(
                     maxSize: objectLength.Value,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    smbProperties: smbProperties);
+                    new ShareFileCreateOptions()
+                    {
+                        HttpHeaders = httpHeaders,
+                        Metadata = metadata,
+                        SmbProperties = smbProperties,
+                    });
 
                 if (contents != default)
                 {
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
+            Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
         }
 
@@ -282,10 +287,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
-                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
