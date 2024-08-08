@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates or updates the specified Network Virtual Appliance Inbound Security Rules. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkVirtualApplianceName"> The name of the Network Virtual Appliance. </param>
         /// <param name="ruleCollectionName"> The name of security rule collection. </param>

@@ -29,11 +29,6 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -93,7 +88,6 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AdminRuleKind kind = "Unknown";
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -105,15 +99,6 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new AdminRuleKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -152,7 +137,6 @@ namespace Azure.ResourceManager.Network.Models
                 type,
                 systemData,
                 kind,
-                etag,
                 serializedAdditionalRawData);
         }
 

@@ -54,6 +54,75 @@ namespace Azure.ResourceManager.Network.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
+        public virtual NetworkManagerCollection GetNetworkManagers()
+        {
+            return GetCachedClient(client => new NetworkManagerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified Network Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(string networkManagerName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Network Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkManagerName"> The name of the network manager. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerResource> GetNetworkManager(string networkManagerName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkManagers().Get(networkManagerName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public virtual ApplicationGatewayCollection GetApplicationGateways()
@@ -1311,75 +1380,6 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
-        public virtual NetworkManagerCollection GetNetworkManagers()
-        {
-            return GetCachedClient(client => new NetworkManagerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(string networkManagerName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkManagerName"> The name of the network manager. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkManagerResource> GetNetworkManager(string networkManagerName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkManagers().Get(networkManagerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>

@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.Network.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _networkManagerClientDiagnostics;
+        private NetworkManagersRestOperations _networkManagerRestClient;
         private ClientDiagnostics _applicationGatewayClientDiagnostics;
         private ApplicationGatewaysRestOperations _applicationGatewayRestClient;
         private ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
@@ -62,8 +64,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private NatGatewaysRestOperations _natGatewayRestClient;
         private ClientDiagnostics _networkInterfaceClientDiagnostics;
         private NetworkInterfacesRestOperations _networkInterfaceRestClient;
-        private ClientDiagnostics _networkManagerClientDiagnostics;
-        private NetworkManagersRestOperations _networkManagerRestClient;
         private ClientDiagnostics _networkProfileClientDiagnostics;
         private NetworkProfilesRestOperations _networkProfileRestClient;
         private ClientDiagnostics _networkSecurityGroupClientDiagnostics;
@@ -135,6 +135,8 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
+        private ClientDiagnostics NetworkManagerClientDiagnostics => _networkManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerResource.ResourceType.Namespace, Diagnostics);
+        private NetworkManagersRestOperations NetworkManagerRestClient => _networkManagerRestClient ??= new NetworkManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkManagerResource.ResourceType));
         private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
         private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationGatewayResource.ResourceType));
         private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
@@ -179,8 +181,6 @@ namespace Azure.ResourceManager.Network.Mocking
         private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NatGatewayResource.ResourceType));
         private ClientDiagnostics NetworkInterfaceClientDiagnostics => _networkInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
         private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkInterfaceResource.ResourceType));
-        private ClientDiagnostics NetworkManagerClientDiagnostics => _networkManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerResource.ResourceType.Namespace, Diagnostics);
-        private NetworkManagersRestOperations NetworkManagerRestClient => _networkManagerRestClient ??= new NetworkManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkManagerResource.ResourceType));
         private ClientDiagnostics NetworkProfileClientDiagnostics => _networkProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfileResource.ResourceType.Namespace, Diagnostics);
         private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkProfileResource.ResourceType));
         private ClientDiagnostics NetworkSecurityGroupClientDiagnostics => _networkSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
@@ -657,6 +657,70 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(string skuName, CancellationToken cancellationToken = default)
         {
             return GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2519,70 +2583,6 @@ namespace Azure.ResourceManager.Network.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

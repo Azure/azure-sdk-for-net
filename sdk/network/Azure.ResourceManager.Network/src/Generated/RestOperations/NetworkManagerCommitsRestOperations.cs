@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2024-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Post a Network Manager Commit. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Post a Network Manager Commit. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
