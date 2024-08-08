@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Added to the sample code to authenticate with the azure in China in the README.md file.
 
 ## 1.12.0 (2024-05-07)
 
