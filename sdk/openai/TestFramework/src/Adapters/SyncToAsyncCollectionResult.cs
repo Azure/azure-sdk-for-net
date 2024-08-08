@@ -2,27 +2,28 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 
 namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
-/// An adapter to make a <see cref="PageableCollection{T}"/> look and work like a <see cref="AsyncPageableCollection{T}"/>. This
-/// simplifies writing test cases.
+/// An adapter to make a <see cref="ResultCollection{T}"/> look and work like a <see cref="AsyncResultCollection{T}"/>. This
+/// simplifies writing test cases
 /// </summary>
-/// <typeparam name="T">The type of the items the enumerator returns.</typeparam>
-public class SyncToAsyncPageableCollection<T> : AsyncPageableCollection<T>
+/// <typeparam name="T">The type of the items the enumerator returns</typeparam>
+public class SyncToAsyncCollectionResult<T> : AsyncCollectionResult<T>
 {
     private bool _responseSet;
-    private PageableCollection<T> _syncCollection;
+    private CollectionResult<T>? _syncCollection;
     private Exception? _ex;
 
     /// <summary>
-    /// Creates a new instance.
+    /// Creates a new instance
     /// </summary>
-    /// <param name="syncCollection">The synchronous collection to wrap.</param>
-    /// <exception cref="ArgumentNullException">If the collection was null.</exception>
-    public SyncToAsyncPageableCollection(PageableCollection<T> syncCollection)
+    /// <param name="syncCollection">The synchronous collection to wrap</param>
+    /// <exception cref="ArgumentNullException">If the collection was null</exception>
+    public SyncToAsyncCollectionResult(CollectionResult<T> syncCollection)
     {
         _syncCollection = syncCollection ?? throw new ArgumentNullException(nameof(syncCollection));
         TrySetRawResponse();
@@ -33,22 +34,26 @@ public class SyncToAsyncPageableCollection<T> : AsyncPageableCollection<T>
     /// </summary>
     /// <param name="ex">The exception to throw.</param>
     /// <exception cref="ArgumentNullException">If the exception was null.</exception>
-    public SyncToAsyncPageableCollection(Exception ex)
+    public SyncToAsyncCollectionResult(Exception ex)
     {
         _ex = ex ?? throw new ArgumentNullException(nameof(ex));
-        _syncCollection = null!;
+        _syncCollection = null;
     }
 
     /// <inheritdoc />
-    public override async IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = null)
+    public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    {
+        return InnerEnumerable(cancellationToken).GetAsyncEnumerator();
+    }
+
+    private async IAsyncEnumerable<T> InnerEnumerable([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (_ex != null)
         {
             ExceptionDispatchInfo.Capture(_ex).Throw();
         }
 
-        IEnumerable<ResultPage<T>> syncEnumerable = _syncCollection.AsPages(continuationToken, pageSizeHint);
-        var asyncWrapper = new SyncToAsyncEnumerator<ResultPage<T>>(syncEnumerable.GetEnumerator());
+        var asyncWrapper = new SyncToAsyncEnumerator<T>(_syncCollection?.GetEnumerator()!, cancellationToken);
         while (await asyncWrapper.MoveNextAsync().ConfigureAwait(false))
         {
             TrySetRawResponse();
@@ -66,7 +71,7 @@ public class SyncToAsyncPageableCollection<T> : AsyncPageableCollection<T>
         // Client result doesn't provide virtual methods so we have to manually set it ourselves here
         try
         {
-            var raw = _syncCollection.GetRawResponse();
+            var raw = _syncCollection?.GetRawResponse();
             if (raw != null)
             {
                 SetRawResponse(raw);

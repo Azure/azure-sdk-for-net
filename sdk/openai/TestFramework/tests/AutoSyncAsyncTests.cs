@@ -98,7 +98,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         const int increment = 2;
 
         MockClient client = WrapClient(new MockClient());
-        AsyncResultCollection<int> coll = client.ResultCollectionAsync(num, increment);
+        AsyncCollectionResult<int> coll = client.ResultCollectionAsync(num, increment);
 
         Assert.IsNotNull(coll);
         Assert.That(coll.GetRawResponse(), Is.Not.Null);
@@ -123,7 +123,7 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
 
         // For now we mimic how the OpenAI and Azure OpenAI libraries work in that no service requests are sent
         // until we try to enumerate the async collections. So exceptions aren't expected initially
-        AsyncResultCollection<int> coll = client.FailResultCollectionAsync(EX_MSG);
+        AsyncCollectionResult<int> coll = client.FailResultCollectionAsync(EX_MSG);
         Assert.That(coll, Is.Not.Null);
 
         IAsyncEnumerator<int> enumerator = coll.GetAsyncEnumerator();
@@ -143,22 +143,19 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
         int expectedPages = (int)Math.Ceiling((double)num / itemsPerPage);
 
         MockClient client = WrapClient(new MockClient());
-        AsyncPageableCollection<int> coll = client.PageableCollectionAsync(num, increment);
-
+        AsyncPageCollection<int> coll = client.PageableCollectionAsync(num, increment, itemsPerPage);
         Assert.IsNotNull(coll);
-        // the response is not yet set since we haven't made a call to the service
-        Assert.Throws<InvalidOperationException>(() => coll.GetRawResponse());
 
         int numPages = 0;
         int numResults = 0;
-        await foreach(ResultPage<int> page in coll.AsPages(pageSizeHint: itemsPerPage))
+        await foreach(PageResult<int> page in coll)
         {
-            Assert.That(coll.GetRawResponse(), Is.Not.Null);
-            Assert.That(coll.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(coll.GetRawResponse().ReasonPhrase, Is.EqualTo("OK"));
+            Assert.That(page.GetRawResponse(), Is.Not.Null);
+            Assert.That(page.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(page.GetRawResponse().ReasonPhrase, Is.EqualTo("OK"));
 
             numPages++;
-            foreach (int actual in page)
+            foreach (int actual in page.Values)
             {
                 Assert.That(actual, Is.EqualTo(numResults * increment));
                 numResults++;
@@ -177,10 +174,10 @@ public class AutoSyncAsyncTests(bool useAsync) : ClientTestBase(useAsync)
 
         // For now we mimic how the OpenAI and Azure OpenAI libraries work in that no service requests are sent
         // until we try to enumerate the async collections. So exceptions aren't expected initially
-        AsyncPageableCollection<int> coll = client.FailPageableCollectionAsync(EX_MSG);
+        AsyncPageCollection<int> coll = client.FailPageableCollectionAsync(EX_MSG);
         Assert.That(coll, Is.Not.Null);
 
-        IAsyncEnumerator<ResultPage<int>> enumerator = coll.AsPages().GetAsyncEnumerator();
+        IAsyncEnumerator<PageResult<int>> enumerator = ((IAsyncEnumerable<PageResult<int>>)coll).GetAsyncEnumerator();
         Assert.That(enumerator, Is.Not.Null);
         ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(() => enumerator.MoveNextAsync().AsTask());
         Assert.That(ex, Is.Not.Null);

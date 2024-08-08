@@ -186,13 +186,13 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return genericTypes[0];
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
         {
-            return typeof(PageableCollection<>).MakeGenericType(genericTypes);
+            return typeof(PageCollection<>).MakeGenericType(genericTypes);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
-            return typeof(ResultCollection<>).MakeGenericType(genericTypes);
+            return typeof(CollectionResult<>).MakeGenericType(genericTypes);
         }
         else
         {
@@ -229,16 +229,16 @@ public class AsyncToSyncInterceptor : IInterceptor
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 result);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
-                typeof(SyncToAsyncPageableCollection<>).MakeGenericType(genericTypes),
+                typeof(SyncToAsyncPageCollection<>).MakeGenericType(genericTypes),
                 result);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
             return Activator.CreateInstance(
-                typeof(SyncToAsyncResultCollection<>).MakeGenericType(genericTypes),
+                typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
                 result);
         }
         else
@@ -279,16 +279,16 @@ public class AsyncToSyncInterceptor : IInterceptor
                 typeof(ValueTask<>).MakeGenericType(genericTypes),
                 failedTask);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageableCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncPageCollection<>), out genericTypes))
         {
             return Activator.CreateInstance(
-                typeof(SyncToAsyncPageableCollection<>).MakeGenericType(genericTypes),
+                typeof(SyncToAsyncPageCollection<>).MakeGenericType(genericTypes),
                 ex);
         }
-        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncResultCollection<>), out genericTypes))
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(AsyncCollectionResult<>), out genericTypes))
         {
             return Activator.CreateInstance(
-                typeof(SyncToAsyncResultCollection<>).MakeGenericType(genericTypes),
+                typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
                 ex);
         }
         else
