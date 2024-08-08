@@ -88,5 +88,5 @@ string resourceGroupName = "myRgName";
 ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
 await resourceGroup.DeleteAsync(WaitUntil.Completed);
 ```
-## Next stepts
+## Next steps
 Take a look at the [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample3_CreatingAVirtualNetwork.md) samples.
