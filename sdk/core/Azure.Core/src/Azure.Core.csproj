@@ -29,8 +29,6 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
-
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
