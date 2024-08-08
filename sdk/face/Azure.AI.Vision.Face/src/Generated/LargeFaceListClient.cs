@@ -25,7 +25,6 @@ namespace Azure.AI.Vision.Face
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -43,19 +42,14 @@ namespace Azure.AI.Vision.Face
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://{resource-name}.cognitiveservices.azure.com).
-        /// </param>
-        /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
-        internal LargeFaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        internal LargeFaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = apiVersion;
         }
 
         /// <summary> Create an empty Large Face List with user-specified largeFaceListId, name, an optional userData and recognitionModel. </summary>
@@ -1591,8 +1585,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             request.Uri = uri;
@@ -1609,8 +1601,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             request.Uri = uri;
@@ -1625,8 +1615,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             if (returnRecognitionModel != null)
@@ -1645,8 +1633,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             request.Uri = uri;
@@ -1663,8 +1649,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists", false);
             if (start != null)
             {
@@ -1690,8 +1674,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/training", false);
@@ -1707,8 +1689,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/train", false);
@@ -1724,8 +1704,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);
@@ -1755,8 +1733,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);
@@ -1786,8 +1762,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
@@ -1804,8 +1778,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
@@ -1822,8 +1794,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces/", false);
@@ -1842,8 +1812,6 @@ namespace Azure.AI.Vision.Face
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/face/", false);
-            uri.AppendRaw(_apiVersion, true);
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(largeFaceListId, true);
             uri.AppendPath("/persistedfaces", false);

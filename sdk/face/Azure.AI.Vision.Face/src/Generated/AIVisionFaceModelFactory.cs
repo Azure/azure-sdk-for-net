@@ -482,6 +482,26 @@ namespace Azure.AI.Vision.Face
             return new FaceGroupingResult(groups?.ToList(), messyGroup?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Face.IdentificationResult"/>. </summary>
+        /// <param name="faceId"> faceId of the query face. </param>
+        /// <param name="candidates"> Identified person candidates for that face (ranked by confidence). Array size should be no larger than input maxNumOfCandidatesReturned. If no person is identified, will return an empty array. </param>
+        /// <returns> A new <see cref="Face.IdentificationResult"/> instance for mocking. </returns>
+        public static IdentificationResult IdentificationResult(Guid faceId = default, IEnumerable<IdentificationCandidate> candidates = null)
+        {
+            candidates ??= new List<IdentificationCandidate>();
+
+            return new IdentificationResult(faceId, candidates?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.IdentificationCandidate"/>. </summary>
+        /// <param name="personId"> personId of candidate person. </param>
+        /// <param name="confidence"> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </param>
+        /// <returns> A new <see cref="Face.IdentificationCandidate"/> instance for mocking. </returns>
+        public static IdentificationCandidate IdentificationCandidate(Guid personId = default, float confidence = default)
+        {
+            return new IdentificationCandidate(personId, confidence, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessSessionContent"/>. </summary>
         /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
         /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
