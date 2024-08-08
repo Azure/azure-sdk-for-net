@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage : IUtf8JsonSerializable, IJsonModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>
+    public partial class EntityLinkingActionResult : IUtf8JsonSerializable, IJsonModel<EntityLinkingActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityLinkingActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,18 +47,6 @@ namespace Azure.AI.Language.Text
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("relations"u8);
-            writer.WriteStartArray();
-            foreach (var item in Relations)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FhirBundle))
-            {
-                writer.WritePropertyName("fhirBundle"u8);
-                writer.WriteObjectValue(FhirBundle, options);
-            }
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
@@ -82,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage IJsonModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityLinkingActionResult IJsonModel<EntityLinkingActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(document.RootElement, options);
+            return DeserializeEntityLinkingActionResult(document.RootElement, options);
         }
 
-        internal static HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityLinkingActionResult DeserializeEntityLinkingActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,9 +93,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<HealthcareEntity> entities = default;
-            IReadOnlyList<HealthcareRelation> relations = default;
-            FhirBundle fhirBundle = default;
+            IReadOnlyList<LinkedEntity> entities = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -139,31 +125,12 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<HealthcareEntity> array = new List<HealthcareEntity>();
+                    List<LinkedEntity> array = new List<LinkedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntity.DeserializeHealthcareEntity(item, options));
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item, options));
                     }
                     entities = array;
-                    continue;
-                }
-                if (property.NameEquals("relations"u8))
-                {
-                    List<HealthcareRelation> array = new List<HealthcareRelation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(HealthcareRelation.DeserializeHealthcareRelation(item, options));
-                    }
-                    relations = array;
-                    continue;
-                }
-                if (property.NameEquals("fhirBundle"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fhirBundle = FhirBundle.DeserializeFhirBundle(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("detectedLanguage"u8))
@@ -181,54 +148,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(
+            return new EntityLinkingActionResult(
                 id,
                 warnings,
                 statistics,
                 entities,
-                relations,
-                fhirBundle,
                 detectedLanguage,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityLinkingActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityLinkingActionResult IPersistableModel<EntityLinkingActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(document.RootElement, options);
+                        return DeserializeEntityLinkingActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityLinkingActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage FromResponse(Response response)
+        internal static EntityLinkingActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(document.RootElement);
+            return DeserializeEntityLinkingActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
