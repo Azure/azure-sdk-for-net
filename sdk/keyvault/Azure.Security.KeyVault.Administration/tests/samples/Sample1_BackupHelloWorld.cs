@@ -72,6 +72,65 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
+        [Ignore("Service is not ready yet")]
+        public async Task PreBackupAndPreRestoreSampleAsync()
+        {
+            var blobStorageUrl = TestEnvironment.StorageUri;
+            var blobContainerName = BlobContainerName;
+            var sasToken = "?" + SasToken;
+
+            #region Snippet:HelloPreFullBackupAsync
+            // Create a Uri with the storage container
+            UriBuilder builder = new UriBuilder(blobStorageUrl)
+            {
+                Path = blobContainerName,
+            };
+
+            // Check for backup readiness.
+            KeyVaultBackupOperation backupOperation = await Client.StartPreBackupAsync(builder.Uri, sasToken);
+
+            // Wait for completion of the PreBackupOperation.
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+
+            // Check if the PreBackupOperation has completed successfully.
+            Uri folderUri = backupOperation.HasValue ? backupResult.Value.FolderUri : null;
+
+            if (folderUri is null)
+            {
+                Console.WriteLine($"Backup operation failed. Status: {backupOperation.GetRawResponse().Status}, Reason: {backupOperation.GetRawResponse().ReasonPhrase}");
+            }
+            #endregion
+
+            Assert.That(folderUri, Is.Not.Null);
+            Assert.That(backupOperation.HasValue, Is.True);
+
+            await WaitForOperationAsync();
+
+            #region Snippet:HelloPreFullRestoreAsync
+            // Check for restore readiness using the backupBlobUri returned from a previous BackupOperation.
+            KeyVaultRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(folderUri, sasToken);
+
+            // Wait for completion of the PreRestoreOperation.
+            Response<KeyVaultRestoreResult> preRestoreResult = await preRestoreOperation.WaitForCompletionAsync();
+
+            // Check if the PreRestoreOperation has completed successfully.
+            if (preRestoreOperation.HasValue)
+            {
+                Console.WriteLine($"Pre-restore operation completed successfully. Status: {preRestoreOperation.GetRawResponse().Status}");
+            }
+            else
+            {
+                Console.WriteLine($"Pre-restore operation failed. Status: {preRestoreOperation.GetRawResponse().Status}, Reason: {preRestoreOperation.GetRawResponse().ReasonPhrase}");
+            }
+            #endregion
+
+            Assert.That(preRestoreOperation.HasValue, Is.True);
+            Assert.That(preRestoreResult.Value.StartTime, Is.Not.EqualTo(default));
+            Assert.That(preRestoreResult.Value.EndTime, Is.Not.EqualTo(default));
+        }
+
+        [RecordedTest]
         [SyncOnly]
         public async Task BackupAndRestoreSampleSync()
         {

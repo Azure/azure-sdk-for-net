@@ -124,6 +124,70 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
+        /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackupAsync)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.PreFullBackupAsync(
+                    VaultUri.AbsoluteUri,
+                    new PreBackupOperationParameters(
+                        blobStorageUri.AbsoluteUri,
+                        sasToken,
+                        useManagedIdentity: sasToken == null
+                        ),
+                    cancellationToken).ConfigureAwait(false);
+
+                // Should this return a KeyVaultBackupOperation?
+                return new KeyVaultBackupOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
+        public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.PreFullBackup(
+                    VaultUri.AbsoluteUri,
+                    new PreBackupOperationParameters(
+                        blobStorageUri.AbsoluteUri,
+                        sasToken,
+                        useManagedIdentity: sasToken == null
+                        ),
+                    cancellationToken);
+
+                // Should this return a KeyVaultBackupOperation?
+                return new KeyVaultBackupOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Initiates a full key restore of the Key Vault.
         /// </summary>
         /// <param name="folderUri">
@@ -154,6 +218,79 @@ namespace Azure.Security.KeyVault.Administration
                             folderName),
                     cancellationToken).ConfigureAwait(false);
 
+                return new KeyVaultRestoreOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a pre-restore check on a Key Vault. This operation checks if it is possible to restore the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="folderUri">
+        /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
+        /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
+        /// An example Uri may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
+        /// </param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
+            scope.Start();
+            try
+            {
+                // Get the folder name from the backupBlobUri returned from a previous BackupOperation
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
+
+                var response = await _restClient.PreFullRestoreOperationAsync(
+                    VaultUri.AbsoluteUri,
+                    new PreRestoreOperationParameters(
+                        new SASTokenParameter(containerUriString, sasToken),
+                        folderUri.AbsoluteUri
+                        ),
+                    cancellationToken).ConfigureAwait(false);
+
+                return new KeyVaultRestoreOperation(this, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiate a pre-restore check on a Key Vault. This operation checks if it is possible to restore the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="folderUri">
+        /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
+        /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
+        /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
+        /// </param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual KeyVaultRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
+            scope.Start();
+            try
+            {
+                // Get the folder name from the backupBlobUri returned from a previous BackupOperation
+                ParseFolderName(folderUri, out string containerUriString, out string folderName);
+
+                var response = _restClient.PreFullRestoreOperation(
+                    VaultUri.AbsoluteUri,
+                    new PreRestoreOperationParameters(
+                        new SASTokenParameter(containerUriString, sasToken),
+                        folderUri.AbsoluteUri
+                        ),
+                    cancellationToken);
                 return new KeyVaultRestoreOperation(this, response);
             }
             catch (Exception ex)

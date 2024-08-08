@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now "V7_6_Preview_1".
 
 ## 4.6.0 (2024-02-14)
 
