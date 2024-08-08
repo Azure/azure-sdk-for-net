@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
 
@@ -174,7 +175,7 @@ namespace Azure.Core.Serialization
                 return true;
             }
 
-            private static bool IsAllowedAnonymousValue<T>(Type type, T value)
+            private static bool IsAllowedAnonymousValue<T>([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type, T value)
             {
                 if (!IsAnonymousType(type))
                 {
