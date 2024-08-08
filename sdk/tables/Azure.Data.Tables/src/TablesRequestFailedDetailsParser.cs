@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +14,6 @@ namespace Azure.Data.Tables
         {
             error = null;
             data = null;
-            if (response.ContentStream == null)
-            {
-                return false;
-            }
 
             try
             {

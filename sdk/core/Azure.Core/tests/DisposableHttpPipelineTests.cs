@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
         public void DisposeWithDisposableTransport([Values(true, false)] bool isOwned)
         {
             var transport = new MockDisposableHttpPipelineTransport();
-            var target = new DisposableHttpPipeline(transport, 0, 0, new[] { new MockPolicy(transport, HttpMessageSanitizer.Default) }, ResponseClassifier.Shared, isOwned);
+            var target = new DisposableHttpPipeline(transport, 0, 0, new[] { new MockPolicy(transport, HttpMessageSanitizer.Default) }, ResponseClassifier.Shared, isOwned, ClientOptions.DefaultNetworkTimeout);
 
             target.Dispose();
             Assert.AreEqual(isOwned, transport.DisposeCalled);
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         public void DisposeWithoutDisposableTransport([Values(true, false)] bool isOwned)
         {
             var transport = new MockHttpPipelineTransport();
-            var target = new DisposableHttpPipeline(transport, 0, 0, new[] { new MockPolicy(transport, HttpMessageSanitizer.Default) }, ResponseClassifier.Shared, isOwned);
+            var target = new DisposableHttpPipeline(transport, 0, 0, new[] { new MockPolicy(transport, HttpMessageSanitizer.Default) }, ResponseClassifier.Shared, isOwned, ClientOptions.DefaultNetworkTimeout);
 
             target.Dispose();
         }

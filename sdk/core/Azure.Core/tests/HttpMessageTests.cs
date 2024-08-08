@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -92,8 +96,8 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(204, isError: true);
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -114,8 +118,8 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(404, isError: false);
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -138,8 +142,8 @@ namespace Azure.Core.Tests
             context.AddClassifier(304, isError: true);
             context.AddClassifier(404, isError: false);
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -193,7 +197,7 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(new StatusCodeHandler(304, true));
 
-            message.ResponseClassifier = context.Apply(ResponseClassifier200204304);
+            message.Apply(context);
 
             // This replaces the base classifier with one that only thinks 404 is a non-error
             // and doesn't have opinions on anything else.
@@ -252,8 +256,8 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(new StatusCodeHandler(204, isError: true));
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -275,8 +279,8 @@ namespace Azure.Core.Tests
             context.AddClassifier(new StatusCodeHandler(204, true));
             context.AddClassifier(204, isError: false);
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -294,8 +298,8 @@ namespace Azure.Core.Tests
         [Test]
         public void AppliesNonStatusCodeClassifier_HeadResponseClassifier()
         {
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(new RequestContext(), HeadResponseClassifier.Instance);
+            HttpMessage message = new HttpMessage(new MockRequest(), HeadResponseClassifier.Instance);
+            message.Apply(new RequestContext());
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -317,8 +321,8 @@ namespace Azure.Core.Tests
             context.AddClassifier(404, true);
             context.AddClassifier(500, false);
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, HeadResponseClassifier.Instance);
+            HttpMessage message = new HttpMessage(new MockRequest(), HeadResponseClassifier.Instance);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -341,8 +345,8 @@ namespace Azure.Core.Tests
             context.AddClassifier(500, false);
             context.AddClassifier(new StatusCodeHandler(404, true));
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, HeadResponseClassifier.Instance);
+            HttpMessage message = new HttpMessage(new MockRequest(), HeadResponseClassifier.Instance);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -364,8 +368,8 @@ namespace Azure.Core.Tests
             context.AddClassifier(new StatusCodeHandler(204, true));
             context.AddClassifier(new StatusCodeHandler(204, false));
 
-            HttpMessage message = new HttpMessage(new MockRequest(), default);
-            message.ApplyRequestContext(context, ResponseClassifier200204304);
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier200204304);
+            message.Apply(context);
 
             message.Response = new MockResponse(204);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -380,7 +384,65 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
+        [Test]
+        public void SettingBaseClassifierSetsHttpMessageClassifier()
+        {
+            MockRequest request = new();
+            HttpMessage message = new(request, ResponseClassifier.Shared);
+            message.Response = new MockResponse(400);
+
+            PipelineMessage pipelineMessage = message;
+            pipelineMessage.ResponseClassifier = PipelineMessageClassifier.Default;
+
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ResponseStreamAccessibleAfterMessageDisposed(bool buffer)
+        {
+            byte[] serverBytes = new byte[1000];
+            new Random().NextBytes(serverBytes);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(new MockClientOptions { Retry = { NetworkTimeout = Timeout.InfiniteTimeSpan } });
+
+            using TestServer testServer = new(async context =>
+            {
+                await context.Response.Body.WriteAsync(serverBytes, 0, serverBytes.Length).ConfigureAwait(false);
+            });
+
+            Response response;
+            using (HttpMessage message = pipeline.CreateMessage())
+            {
+                message.Request.Uri.Reset(testServer.Address);
+                message.BufferResponse = buffer;
+
+                await pipeline.SendAsync(message, default).ConfigureAwait(false);
+
+                response = message.ExtractResponse();
+
+                Assert.IsFalse(message.HasResponse);
+            }
+
+            Assert.NotNull(response.ContentStream);
+
+            byte[] clientBytes = new byte[serverBytes.Length];
+            int readLength = 0;
+            while (readLength < serverBytes.Length)
+            {
+                readLength += await response.ContentStream.ReadAsync(clientBytes, 0, serverBytes.Length);
+            }
+
+            Assert.AreEqual(serverBytes.Length, readLength);
+            CollectionAssert.AreEqual(serverBytes, clientBytes);
+        }
+
         #region Helpers
+        internal class MockClientOptions : ClientOptions
+        {
+        }
+
         private class StatusCodeHandler : ResponseClassificationHandler
         {
             private readonly int _statusCode;

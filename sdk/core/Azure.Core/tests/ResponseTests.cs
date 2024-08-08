@@ -3,15 +3,26 @@
 
 using System;
 using System.IO;
-using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Moq;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class ResponseTests
     {
+        private readonly bool _isAsync;
+
+        public ResponseTests(bool isAsync)
+        {
+            _isAsync = isAsync;
+        }
+
         [Test]
         public void ValueIsAccessible()
         {
@@ -170,6 +181,108 @@ namespace Azure.Core.Tests
             Assert.IsTrue(response.Object.IsError);
         }
 
+        [Test]
+        public void ResponseBuffersContentFromContentStream()
+        {
+            BinaryData mockContent = BinaryData.FromString("Mock content");
+            MemoryStream mockContentStream = new(mockContent.ToArray());
+
+            MockResponse response = new(200);
+            response.ContentStream = mockContentStream;
+
+            Assert.AreEqual(mockContent.ToString(), response.Content.ToString());
+        }
+
+        [Test]
+        public void BufferedResponseContentEmptyWhenNoResponseContent()
+        {
+            MockResponse response = new(200);
+
+            Assert.AreEqual(0, response.Content.ToMemory().Length);
+        }
+
+        [Test]
+        public void BufferedResponseContentAvailableAfterResponseDisposed()
+        {
+            BinaryData mockContent = BinaryData.FromString("Mock content");
+            MemoryStream mockContentStream = new(mockContent.ToArray());
+
+            MockResponse response = new(200);
+            response.ContentStream = mockContentStream;
+
+            Assert.AreEqual(mockContent.ToString(), response.Content.ToString());
+
+            response.Dispose();
+
+            Assert.AreEqual(mockContent.ToString(), response.Content.ToString());
+            Assert.AreEqual(mockContent.ToString(), BinaryData.FromStream(response.ContentStream).ToString());
+        }
+
+        [Test]
+        public void UnbufferedResponseContentThrows()
+        {
+            BinaryData mockContent = BinaryData.FromString("Mock content");
+            MockNetworkStream mockContentStream = new(mockContent.ToArray());
+
+            MockResponse response = new(200);
+            response.ContentStream = mockContentStream;
+
+            Assert.Throws<InvalidOperationException>(() => { var content = response.Content; });
+        }
+
+        [Test]
+        public async Task BufferContentReturnsContentIfBuffered()
+        {
+            BinaryData mockContent = BinaryData.FromString("Mock content");
+            MemoryStream mockContentStream = new(mockContent.ToArray());
+
+            MockResponse response = new(200);
+            response.ContentStream = mockContentStream;
+
+            BinaryData content = await BufferContentAsync(response);
+
+            Assert.AreEqual(response.Content.ToArray(), content.ToArray());
+        }
+
+        [Test]
+        public async Task BufferContentReturnsEmptyWhenNoResponseContent()
+        {
+            MockResponse response = new(200);
+
+            BinaryData content = await BufferContentAsync(response);
+
+            Assert.AreEqual(response.Content.ToArray(), content.ToArray());
+        }
+
+        [Test]
+        public async Task CachedResponseContentReplacedWhenContentStreamReplaced()
+        {
+            BinaryData mockContent = BinaryData.FromString("Mock content");
+            MemoryStream mockContentStream = new(mockContent.ToArray());
+
+            MockResponse response = new(200);
+            response.ContentStream = mockContentStream;
+
+            BinaryData content = await BufferContentAsync(response);
+
+            Assert.AreEqual(response.Content.ToArray(), content.ToArray());
+
+            // Replace content stream
+            response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("Mock content - 2"));
+
+            Assert.AreEqual("Mock content - 2", response.Content.ToString());
+            Assert.AreEqual("Mock content - 2", BinaryData.FromStream(response.ContentStream!).ToString());
+        }
+
+        #region Helpers
+
+        private async Task<BinaryData> BufferContentAsync(Response response)
+        {
+            return _isAsync ?
+                await response.BufferContentAsync() :
+                response.BufferContent();
+        }
+
         internal class TestPayload
         {
             public string Name { get; }
@@ -222,5 +335,37 @@ namespace Azure.Core.Tests
                 throw new System.NotImplementedException();
             }
         }
+
+        private class MockNetworkStream : ReadOnlyStream
+        {
+            private readonly MemoryStream _stream;
+
+            public MockNetworkStream(byte[] content)
+            {
+                _stream = new MemoryStream(content);
+            }
+
+            public override bool CanRead => true;
+
+            public override bool CanSeek => false;
+
+            public override long Length => _stream.Length;
+
+            public override long Position
+            {
+                get => _stream.Position;
+                set => throw new NotSupportedException();
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+                => _stream.Read(buffer, offset, count);
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        #endregion
     }
 }
