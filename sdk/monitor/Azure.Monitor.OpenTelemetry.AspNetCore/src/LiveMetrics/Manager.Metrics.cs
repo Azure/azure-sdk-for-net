@@ -23,6 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
         public MonitoringDataPoint GetDataPoint()
         {
+            LiveMetricsResource ??= LiveMetricsResourceFunc?.Invoke();
+
             var dataPoint = new MonitoringDataPoint(
                 version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                 invariantVersion: 5,
