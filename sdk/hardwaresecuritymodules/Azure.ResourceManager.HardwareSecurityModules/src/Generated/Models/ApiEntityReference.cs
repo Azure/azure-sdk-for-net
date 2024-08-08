@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Cloud Hsm Cluster restore information. </summary>
-    public partial class RestoreProperties
+    /// <summary> The API entity reference. </summary>
+    internal partial class ApiEntityReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProperties"/>. </summary>
-        public RestoreProperties()
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        public ApiEntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProperties"/>. </summary>
-        /// <param name="foldername"> Directory name in Azure Storage Blob where the backup is stored. </param>
-        /// <param name="azureStorageResourceUri"> Azure Blob storage container Uri. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProperties(string foldername, Uri azureStorageResourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiEntityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Foldername = foldername;
-            AzureStorageResourceUri = azureStorageResourceUri;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Directory name in Azure Storage Blob where the backup is stored. </summary>
-        public string Foldername { get; set; }
-        /// <summary> Azure Blob storage container Uri. </summary>
-        public Uri AzureStorageResourceUri { get; set; }
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
-        /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterface(ResourceIdentifier id, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkInterface(ResourceIdentifier resourceId, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            ResourceId = resourceId;
             PrivateIPAddress = privateIPAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public ResourceIdentifier Id { get; }
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Private Ip address of the interface. </summary>
         public string PrivateIPAddress { get; set; }
     }

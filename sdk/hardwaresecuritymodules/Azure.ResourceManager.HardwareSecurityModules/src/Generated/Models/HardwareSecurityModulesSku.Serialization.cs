@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class HardwareSecurityModulesSku : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesSku>
+    public partial class HardwareSecurityModulesSku : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesSku>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

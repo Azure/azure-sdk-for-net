@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Security domain properties information for Cloud HSM cluster. </summary>
-    public partial class CloudHsmClusterSecurityDomainProperties
+    /// <summary> Properties of a private link resource. </summary>
+    public partial class HardwareSecurityModulesPrivateLinkResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
-        public CloudHsmClusterSecurityDomainProperties()
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceProperties"/>. </summary>
+        public HardwareSecurityModulesPrivateLinkResourceProperties()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
-        /// <param name="fipsState"> FIPS state information for security domain. </param>
-        /// <param name="activationStatus"> status of security domain activation. </param>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterSecurityDomainProperties(int? fipsState, string activationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FipsState = fipsState;
-            ActivationStatus = activationStatus;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> FIPS state information for security domain. </summary>
-        public int? FipsState { get; set; }
-        /// <summary> status of security domain activation. </summary>
-        public string ActivationStatus { get; set; }
+        /// <summary> The private link resource group id. </summary>
+        public string GroupId { get; }
+        /// <summary> The private link resource required member names. </summary>
+        public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> The private link resource private link DNS zone name. </summary>
+        public IList<string> RequiredZoneNames { get; }
     }
 }

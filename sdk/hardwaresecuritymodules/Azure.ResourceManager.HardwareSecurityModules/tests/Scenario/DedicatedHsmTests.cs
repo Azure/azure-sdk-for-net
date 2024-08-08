@@ -37,11 +37,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             VirtualNetworkResource vnetResource = await CreateVnet();
             subnetID = vnetResource.Data.Subnets[0].Id;
 
-            DedicatedHsmData dedicatedHsmData = new DedicatedHsmData(Location)
+            HardwareSecurityModulesSku sku = new HardwareSecurityModulesSku()
+            {
+                Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60
+            };
+
+            DedicatedHsmProperties properties = new DedicatedHsmProperties()
             {
                 NetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = subnetID,
+                    SubnetResourceId = subnetID,
                     NetworkInterfaces = {
                         new NetworkInterface() {
                             PrivateIPAddress = "10.0.0.4"
@@ -54,15 +59,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
 
                 ManagementNetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = subnetID,
+                    SubnetResourceId = subnetID,
                     NetworkInterfaces = {
                         new NetworkInterface() {
                             PrivateIPAddress = "10.0.0.6"
                         }
                     }
                 },
-                StampId = "stamp1",
-                SkuName = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
+                StampId = "stamp1"
+            };
+
+            DedicatedHsmData dedicatedHsmData = new DedicatedHsmData(Location, sku, properties)
+            {
                 Tags =
                 {
                     ["Dept"] = "SDK Testing",

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            WritableSubResource subnet = default;
+            ApiEntityReference subnet = default;
             IList<NetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subnet = ApiEntityReference.DeserializeApiEntityReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaces"u8))

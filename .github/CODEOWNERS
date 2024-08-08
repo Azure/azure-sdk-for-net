@@ -958,6 +958,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Hardware Security Modules
+/sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules %Mgmt
+# ServiceOwners:                                                   @emmeliaAra
+
 # PRLabel: %Informatica Data Management
 /sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
 

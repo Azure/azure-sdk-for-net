@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Cloud Hsm Cluster backup information. </summary>
-    public partial class BackupProperties
+    /// <summary> Backup operation Result. </summary>
+    public partial class BackupResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        public BackupProperties()
+        /// <summary> Initializes a new instance of <see cref="BackupResult"/>. </summary>
+        internal BackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        /// <param name="azureStorageResourceUri"> Azure storage Resource Uri. </param>
-        /// <param name="lastBackupOn"> Last Date Time that Customer Enabled Backup was taken. </param>
-        /// <param name="lastBackupStatus"> Status of last backup. </param>
+        /// <summary> Initializes a new instance of <see cref="BackupResult"/>. </summary>
+        /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(Uri azureStorageResourceUri, DateTimeOffset? lastBackupOn, string lastBackupStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupResult(BackupResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureStorageResourceUri = azureStorageResourceUri;
-            LastBackupOn = lastBackupOn;
-            LastBackupStatus = lastBackupStatus;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure storage Resource Uri. </summary>
-        public Uri AzureStorageResourceUri { get; set; }
-        /// <summary> Last Date Time that Customer Enabled Backup was taken. </summary>
-        public DateTimeOffset? LastBackupOn { get; }
-        /// <summary> Status of last backup. </summary>
-        public string LastBackupStatus { get; }
+        /// <summary> Properties of the Cloud HSM Cluster. </summary>
+        public BackupResultProperties Properties { get; }
     }
 }

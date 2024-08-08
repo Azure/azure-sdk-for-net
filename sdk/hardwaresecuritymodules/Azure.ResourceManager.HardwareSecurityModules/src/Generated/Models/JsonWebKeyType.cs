@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string CheckingQuotaValue = "CheckingQuota";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> The dedicated HSM has been full provisioned. </summary>
+        /// <summary> The dedicated HSM has been fully provisioned. </summary>
         public static JsonWebKeyType Succeeded { get; } = new JsonWebKeyType(SucceededValue);
         /// <summary> The dedicated HSM is currently being provisioned. </summary>
         public static JsonWebKeyType Provisioning { get; } = new JsonWebKeyType(ProvisioningValue);

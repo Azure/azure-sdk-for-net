@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfile(WritableSubResource subnet, IList<NetworkInterface> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkProfile(ApiEntityReference subnet, IList<NetworkInterface> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
@@ -65,16 +64,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+        internal ApiEntityReference Subnet { get; set; }
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier SubnetResourceId
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get => Subnet is null ? default : Subnet.ResourceId;
             set
             {
                 if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                    Subnet = new ApiEntityReference();
+                Subnet.ResourceId = value;
             }
         }
 

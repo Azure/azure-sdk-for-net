@@ -4,7 +4,10 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-12-preview' to 'package-2024-06-preview'. Tag detail available at https://github.com/emmeliaAra/azure-rest-api-specs/blob/822584e54ef68907e71ff2919b1045acda1e58ff/specification/hardwaresecuritymodules/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added experimental Bicep serialization.
 
 ### Breaking Changes
 
@@ -19,7 +22,7 @@
 - Upgraded API version to `2023-12-10-preview`.
     - Added support for User Assigned Identity in Azure Cloud HSM
     - Added Backup and Restore Properties in Azure Cloud HSM
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 

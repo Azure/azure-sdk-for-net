@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 return null;
             }
             IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +99,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>(), serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesPrivateLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

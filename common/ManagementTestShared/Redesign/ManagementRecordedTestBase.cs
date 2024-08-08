@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
 
-            return new ArmEnvironment(new Uri(endpoint), SessionEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
+            return new ArmEnvironment(new Uri(endpoint), environment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]

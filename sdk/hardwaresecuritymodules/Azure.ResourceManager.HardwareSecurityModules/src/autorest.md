@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HardwareSecurityModules
 namespace: Azure.ResourceManager.HardwareSecurityModules
-require: https://github.com/Azure/azure-rest-api-specs/blob/9a3161dbc683120d907689209a6eebd450af8c3d/specification/hardwaresecuritymodules/resource-manager/readme.md
-#tag: package-2023-12-preview
+require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/db39221e04397a78418fcab59f68dfa1745c07c5/specification/hardwaresecuritymodules/resource-manager/readme.md
+#tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -34,6 +34,10 @@ rename-mapping:
   NetworkInterface.id: -|arm-id
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
   PrivateLinkResource: HardwareSecurityModulesPrivateLinkData
+
+override-operation-name:
+  CloudHsmClusterBackupStatus_Get: GetCloudHsmClusterBackupStatus
+  CloudHsmClusterRestoreStatus_Get: GetCloudHsmClusterRestoreStatus
 
 acronym-mapping:
   CPU: Cpu
