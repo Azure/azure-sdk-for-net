@@ -26,7 +26,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
     #region General tests
 
-    [TestCase]
+    [Test]
     [Category("Smoke")]
     public async Task DefaultUserAgentStringWorks()
     {
@@ -145,7 +145,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         }
     }
 
-    [Test]
+    [RecordedTest]
     [Category("Smoke")]
     public async Task DefaultAzureCredentialWorks()
     {
