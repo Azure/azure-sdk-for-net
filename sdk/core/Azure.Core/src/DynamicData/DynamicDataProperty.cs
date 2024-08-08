@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq.Expressions;
+using Azure.Core.Json;
 
 namespace Azure.Core.Serialization
 {
@@ -44,6 +46,7 @@ namespace Azure.Core.Serialization
                 return _memberNames;
             }
 
+            [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
             public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
             {
                 UnaryExpression this_ = Expression.Convert(Expression, LimitType);

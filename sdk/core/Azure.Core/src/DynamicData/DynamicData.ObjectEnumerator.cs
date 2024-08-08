@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Json;
 
 namespace Azure.Core.Serialization
@@ -41,7 +42,15 @@ namespace Azure.Core.Serialization
             public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _options);
 
             /// <inheritdoc />
-            public DynamicDataProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value, _options));
+            public DynamicDataProperty Current
+            {
+                [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+                [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+                get
+                {
+                    return new(_enumerator.Current.Name, new(_enumerator.Current.Value, _options));
+                }
+            }
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
