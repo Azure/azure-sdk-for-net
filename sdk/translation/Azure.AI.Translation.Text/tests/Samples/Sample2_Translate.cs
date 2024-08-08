@@ -17,14 +17,12 @@ namespace Azure.AI.Translation.Text.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Sample2_Translate
+    public partial class Sample2_Translate : Sample0_CreateClient
     {
-        private SampleHelper _helper = new SampleHelper();
-
         [Test]
         public void GetTextTranslation()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslation
             try
@@ -50,7 +48,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationOptions()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {
@@ -76,7 +74,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationBySource()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationBySource
             try
@@ -103,7 +101,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationAutoDetect()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAutoDetect
             try
@@ -129,7 +127,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetMultipleTextTranslations()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {
@@ -160,7 +158,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetMultipleTextTranslationsOptions()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetMultipleTextTranslationsOptions
             try
@@ -195,7 +193,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMatrix()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMatrix
             try
@@ -227,7 +225,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMatrixOptions()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMatrixOptions
             try
@@ -258,7 +256,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFormat()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFormat
             try
@@ -287,7 +285,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFilter()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFilter
             try
@@ -317,7 +315,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationMarkup()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMarkup
             try
@@ -347,7 +345,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationProfanity()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationProfanity
             try
@@ -379,7 +377,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationAlignment()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAlignment
             try
@@ -411,7 +409,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationSentences()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationSentences
             try
@@ -444,7 +442,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationFallback()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFallback
             try
@@ -474,7 +472,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTranslationTextTransliterated()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliterated
             try
@@ -507,7 +505,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTranslationTextTransliteratedOptions()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliteratedOptions
             try

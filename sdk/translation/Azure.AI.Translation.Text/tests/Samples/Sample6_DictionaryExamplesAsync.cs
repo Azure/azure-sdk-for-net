@@ -19,12 +19,10 @@ namespace Azure.AI.Translation.Text.Samples
     /// </summary>
     public partial class Sample6_DictionaryExamplesAsync : Sample0_CreateClient
     {
-        private SampleHelper _helper = new SampleHelper();
-
         [Test]
         public async Task GetGrammaticalStructureAsync()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetGrammaticalStructureAsync
             try

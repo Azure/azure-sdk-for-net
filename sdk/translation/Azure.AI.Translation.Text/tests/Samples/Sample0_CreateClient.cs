@@ -19,7 +19,15 @@ namespace Azure.AI.Translation.Text.Samples
     /// </summary>
     public partial class Sample0_CreateClient : SamplesBase<TextTranslationTestEnvironment>
     {
-        private SampleHelper _helper = new SampleHelper();
+        public TextTranslationClient CreateClient()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            string region = TestEnvironment.Region;
+
+            TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
+            return client;
+        }
 
         [Test]
         public void CreateTextTranslationClient()
@@ -122,7 +130,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void HandleBadRequest()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:HandleBadRequest
             try
@@ -139,7 +147,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task HandleBadRequestAsync()
         {
-            TextTranslationClient client = _helper.CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {
