@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Tests
 {
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
 
         public override void OnSendingRequest(HttpMessage message)
         {
+            message.Request.Headers.Add("x-ms-ppe-request", "true");
             if (message.Request.Headers.TryGetValue(AuthorizationHeaderKey, out string authorization))
             {
                 message.Request.Headers.SetValue(UserTokenHeader, authorization);

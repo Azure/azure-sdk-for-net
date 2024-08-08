@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
         }
 
         public AppComplianceAutomationManagementTestBase(bool isAsync)
-            : base(isAsync, RecordedTestMode.Playback)
+            : base(isAsync, RecordedTestMode.Record)
         {
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
         // The App Compliance Automation provider need user token in a separated header in the following scenarios.
         protected void InitializeUserTokenClients()
         {
-            UserTokenPolicy userTokenPolicy = new UserTokenPolicy(TestEnvironment.Credential, TestEnvironment.ResourceManagerUrl + "/.default");
+            UserTokenPolicy userTokenPolicy = new UserTokenPolicy(TestEnvironment.Credential, TestEnvironment.ServiceManagementUrl);
             ArmClientOptions options = new ArmClientOptions();
             options.AddPolicy(userTokenPolicy, HttpPipelinePosition.PerRetry);
             Client = GetArmClient(options);
