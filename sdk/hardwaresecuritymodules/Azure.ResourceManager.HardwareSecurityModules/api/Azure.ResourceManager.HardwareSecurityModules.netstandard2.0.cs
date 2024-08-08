@@ -701,8 +701,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     }
     public partial class RestoreRequestProperties : Azure.ResourceManager.HardwareSecurityModules.Models.BackupRestoreRequestBaseProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties>
     {
-        public RestoreRequestProperties(System.Uri azureStorageBlobContainerUri) : base (default(System.Uri)) { }
-        public string BackupId { get { throw null; } set { } }
+        public RestoreRequestProperties(System.Uri azureStorageBlobContainerUri, string backupId) : base (default(System.Uri)) { }
+        public string BackupId { get { throw null; } }
         Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.RestoreRequestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

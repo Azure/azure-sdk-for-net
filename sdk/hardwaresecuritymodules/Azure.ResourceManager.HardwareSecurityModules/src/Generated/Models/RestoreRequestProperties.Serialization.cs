@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupId))
-            {
-                writer.WritePropertyName("backupId"u8);
-                writer.WriteStringValue(BackupId);
-            }
+            writer.WritePropertyName("backupId"u8);
+            writer.WriteStringValue(BackupId);
             writer.WritePropertyName("azureStorageBlobContainerUri"u8);
             writer.WriteStringValue(AzureStorageBlobContainerUri.AbsoluteUri);
             if (Optional.IsDefined(Token))

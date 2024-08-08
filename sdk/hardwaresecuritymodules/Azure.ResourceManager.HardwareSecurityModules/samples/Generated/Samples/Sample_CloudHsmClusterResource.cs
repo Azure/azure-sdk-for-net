@@ -233,10 +233,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
-            {
-                BackupId = "backupId",
-            };
+            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
             ArmOperation<RestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, restoreRequestProperties: restoreRequestProperties);
             RestoreResult result = lro.Value;
 
@@ -265,10 +262,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
-            {
-                BackupId = "backupId",
-            };
+            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
             ArmOperation<RestoreResult> lro = await cloudHsmCluster.RestoreAsync(WaitUntil.Completed, restoreRequestProperties);
             RestoreResult result = lro.Value;
 
