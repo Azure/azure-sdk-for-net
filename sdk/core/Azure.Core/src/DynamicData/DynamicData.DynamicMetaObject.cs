@@ -19,10 +19,8 @@ namespace Azure.Core.Serialization
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
-#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
         [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
         [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
-#endif
         private class MetaObject : DynamicMetaObject
         {
             private DynamicData _value;
