@@ -2115,6 +2115,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockScope.Object.Dispose();
             Assert.That(managedAuthorizations.Count, Is.Zero, "Disposal should stop managing authorizations.");
+
 #if NET8_0_OR_GREATER
             Assert.That(refreshTimer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan), Is.False, "The timer should have been disposed.");
 #else
