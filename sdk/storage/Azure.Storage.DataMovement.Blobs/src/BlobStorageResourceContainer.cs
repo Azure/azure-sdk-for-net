@@ -157,6 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             // Suffix the backwards slash when searching if there's a prefix specified,
@@ -214,7 +215,7 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             // Source blob type does not matter for container
-            return new BlobSourceCheckpointData(_options?.BlobType);
+            return new BlobSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()

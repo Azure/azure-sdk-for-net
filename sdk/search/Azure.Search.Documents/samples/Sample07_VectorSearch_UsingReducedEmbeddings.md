@@ -13,7 +13,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string deploymentId = "my-text-embedding-3-small";
+string deploymentName = "my-text-embedding-3-small";
 int modelDimensions = 256; // Here's the reduced model dimensions
 
 string indexName = "hotel";
@@ -34,7 +34,7 @@ SearchIndex searchIndex = new(indexName)
         {
             new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
             {
-                Vectorizer = "openai"
+                VectorizerName = "openai"
             }
         },
         Algorithms =
@@ -45,11 +45,11 @@ SearchIndex searchIndex = new(indexName)
         {
             new AzureOpenAIVectorizer("openai")
             {
-                AzureOpenAIParameters  = new AzureOpenAIParameters()
+                Parameters  = new AzureOpenAIVectorizerParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentId = deploymentId,
+                    DeploymentName = deploymentName,
                     ModelName = AzureOpenAIModelName.TextEmbedding3Small
                 }
             }
@@ -100,14 +100,15 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
-    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("my-text-embedding-3-small", new string[] { input })
+    AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("my-text-embedding-3-small");
+
+    EmbeddingGenerationOptions embeddingsOptions = new EmbeddingGenerationOptions()
     {
         Dimensions = 256
     };
-
-    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-    return embeddings.Data[0].Embedding;
+    Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
+    return embedding.Vector;
 }
 ```
 

@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.Files;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Files;
 
@@ -68,8 +67,6 @@ internal partial class AzureFileClient : FileClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ClientResult GetFiles(string purpose, RequestOptions options)
     {
-        Argument.AssertNotNullOrEmpty(purpose, nameof(purpose));
-
         using PipelineMessage message = CreateGetFilesRequestMessage(purpose, options);
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
@@ -77,8 +74,6 @@ internal partial class AzureFileClient : FileClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override async Task<ClientResult> GetFilesAsync(string purpose, RequestOptions options)
     {
-        Argument.AssertNotNullOrEmpty(purpose, nameof(purpose));
-
         using PipelineMessage message = CreateGetFilesRequestMessage(purpose, options);
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }

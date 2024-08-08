@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.3 (2024-08-06)
 
 ### Bugs Fixed
 
-### Other Changes
+- Support multiple SectionTypes in SectionFilter
 
 ## 1.0.0-beta.2 (2023-07-13)
 

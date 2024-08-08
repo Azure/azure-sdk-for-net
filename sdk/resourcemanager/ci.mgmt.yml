@@ -81,6 +81,7 @@ trigger:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
     - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
@@ -89,7 +90,7 @@ trigger:
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
@@ -97,6 +98,7 @@ trigger:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -133,6 +135,7 @@ trigger:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
@@ -275,6 +278,7 @@ pr:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
     - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
@@ -283,7 +287,7 @@ pr:
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
@@ -291,6 +295,7 @@ pr:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -327,6 +332,7 @@ pr:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering

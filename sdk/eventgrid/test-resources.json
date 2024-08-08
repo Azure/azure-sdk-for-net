@@ -37,7 +37,8 @@
     "partnerNamespaceName": "[concat(parameters('baseName'), 'partner-namespace')]",
     "partnerChannelName": "[concat(parameters('baseName'), 'partner-channel')]",
     "partnerTopicName": "[concat(parameters('baseName'), 'partner-topic')]",
-    "eventGridDataSenderRoleId": "d5a91429-5739-47e2-a06b-3470a27159e7"
+    "eventGridDataSenderRoleId": "d5a91429-5739-47e2-a06b-3470a27159e7",
+    "eventGridDataContributorRoleId": "1d8c3fe3-8864-474b-8749-01e3783e8157"
   },
   "resources": [
     {
@@ -218,8 +219,17 @@
         "principalId": "[parameters('testApplicationOid')]",
         "scope": "[resourceGroup().id]"
       }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventGridDataContributorRoleId'))]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventGridDataContributorRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
     }
-
   ],
   "outputs": {
     "EVENTGRID_TOPIC_KEY": {

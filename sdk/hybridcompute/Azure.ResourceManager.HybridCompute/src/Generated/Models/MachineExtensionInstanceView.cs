@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The machine extension name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
+        [WirePath("type")]
         public string MachineExtensionInstanceViewType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; set; }
         /// <summary> Instance view status. </summary>
+        [WirePath("status")]
         public MachineExtensionInstanceViewStatus Status { get; set; }
     }
 }

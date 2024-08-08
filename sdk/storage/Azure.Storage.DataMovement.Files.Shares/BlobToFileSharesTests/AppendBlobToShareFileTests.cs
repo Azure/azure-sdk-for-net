@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Blobs;
-using Azure.Storage.Files.Shares.Tests;
-using Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Blobs.Specialized;
 using System.IO;
@@ -18,10 +18,14 @@ using Azure.Storage.Shared;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
+using Azure.Storage.Blobs.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Test;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
-    [ShareClientTestFixture]
+    [BlobShareClientTestFixture]
     public class AppendBlobToShareFileTests : StartTransferCopyTestBase
         <BlobServiceClient,
         BlobContainerClient,
@@ -37,6 +41,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _fileResourcePrefix = "test-file-";
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
         protected readonly object _serviceVersion;
+        private const string _defaultContentType = "text/plain";
+        private readonly string[] _defaultContentLanguageFile = { "en-US" };
+        private const string _defaultContentLanguageBlob = "en-US";
+        private const string _defaultContentDisposition = "inline";
+        private const string _defaultCacheControl = "no-cache";
+        private readonly Metadata _defaultMetadata = DataProvider.BuildMetadata();
+        private readonly DateTimeOffset _defaultFileCreatedOn = new DateTimeOffset(2024, 4, 1, 9, 5, 55, default);
+        private readonly DateTimeOffset _defaultFileLastWrittenOn = new DateTimeOffset(2024, 4, 1, 12, 16, 6, default);
+        private readonly DateTimeOffset _defaultFileChangedOn = new DateTimeOffset(2024, 4, 1, 13, 30, 3, default);
 
         public AppendBlobToShareFileTests(
             bool async,
@@ -88,7 +101,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default)
         {
             objectName ??= GetNewObjectName();
             AppendBlobClient blobClient = container.GetAppendBlobClient(objectName);
@@ -149,14 +163,59 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
+            Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
         }
 
         protected override StorageResourceItem GetDestinationStorageResourceItem(
             ShareFileClient objectClient,
             TransferPropertiesTestType type = TransferPropertiesTestType.Default)
-            => new ShareFileStorageResource(objectClient);
+        {
+            ShareFileStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(_defaultContentType),
+                    ContentLanguage = new(_defaultContentLanguageFile),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    CacheControl = new(_defaultCacheControl),
+                    FileMetadata = new(_defaultMetadata),
+                    FileCreatedOn = new(_defaultFileCreatedOn),
+                    FileLastWrittenOn = new(_defaultFileLastWrittenOn),
+                    FileChangedOn = new(_defaultFileChangedOn)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(true),
+                    ContentLanguage = new(true),
+                    ContentDisposition = new(true),
+                    CacheControl = new(true),
+                    FileMetadata = new(true),
+                    FileCreatedOn = new(true),
+                    FileLastWrittenOn = new(true),
+                    FileChangedOn = new(true)
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = new(false),
+                    ContentLanguage = new(false),
+                    ContentDisposition = new(false),
+                    CacheControl = new(false),
+                    FileMetadata = new(false),
+                    FileCreatedOn = new(false),
+                    FileLastWrittenOn = new(false),
+                    FileChangedOn = new(false)
+                };
+            }
+            return new ShareFileStorageResource(objectClient, options);
+        }
 
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
@@ -206,46 +265,57 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClientOptions(options);
         }
 
-        protected override Task VerifyPropertiesCopyAsync(
+        protected override async Task VerifyPropertiesCopyAsync(
             DataTransfer transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             AppendBlobClient sourceClient,
             ShareFileClient destinationClient)
         {
-            throw new NotImplementedException();
-        }
+            // Verify completion
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_DefaultProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+            if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
+            {
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_PreserveProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.IsNull(destinationProperties.ContentDisposition);
+                Assert.IsNull(destinationProperties.ContentLanguage);
+                Assert.IsNull(destinationProperties.CacheControl);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
+            {
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_NoPreserveProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
-        }
+                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(_defaultContentLanguageFile, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+            }
+            else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
+                 //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                BlobProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public override Task SourceObjectToDestinationObject_NewProperties()
-        {
-            Assert.Fail("Feature not implemented yet for this source and destination resource.");
-            return Task.CompletedTask;
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+            }
         }
     }
 }

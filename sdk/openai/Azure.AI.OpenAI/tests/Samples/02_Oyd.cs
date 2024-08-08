@@ -21,8 +21,6 @@ namespace Azure.AI.OpenAI.Samples;
 
 public partial class AzureOpenAISamples
 {
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void OnYourDataSearch()
     {
         AzureOpenAIClient azureClient = new(
@@ -47,7 +45,8 @@ public partial class AzureOpenAISamples
         ChatCompletion completion = chatClient.CompleteChat(
             [
                 new UserChatMessage("What are the best-selling Contoso products this month?"),
-            ]);
+            ],
+            options);
 
         AzureChatMessageContext onYourDataContext = completion.GetAzureMessageContext();
 

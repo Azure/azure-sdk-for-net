@@ -669,6 +669,7 @@ namespace Azure.Data.AppConfiguration
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
@@ -677,12 +678,12 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
+                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, tags, conditions, context);
             };
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
+                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, tags, conditions, context);
             }
 
             return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
@@ -700,8 +701,8 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -716,8 +717,8 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -735,8 +736,8 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -753,8 +754,8 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -1251,11 +1252,12 @@ namespace Azure.Data.AppConfiguration
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
@@ -1270,11 +1272,12 @@ namespace Azure.Data.AppConfiguration
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
@@ -1360,6 +1363,52 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(setting, nameof(setting));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="SettingLabel"/>.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            var fields = selector.Fields;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+            var labelFields = new ChangeTrackingList<string>();
+            foreach (SettingLabelFields field in fields)
+            {
+                labelFields.Add(field.ToString());
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="SettingLabel"/>.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<SettingLabel> GetLabels(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            var fields = selector.Fields;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+            var labelFields = new ChangeTrackingList<string>();
+            foreach (SettingLabelFields field in fields)
+            {
+                labelFields.Add(field.ToString());
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)

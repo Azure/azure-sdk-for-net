@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ResourceModifierReference))
+            {
+                writer.WritePropertyName("resourceModifierReference"u8);
+                writer.WriteObjectValue(ResourceModifierReference, options);
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = default;
             IDictionary<string, string> namespaceMappings = default;
             IList<NamespacedName> restoreHookReferences = default;
+            NamespacedName resourceModifierReference = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -285,6 +291,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     restoreHookReferences = array;
                     continue;
                 }
+                if (property.NameEquals("resourceModifierReference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
@@ -308,7 +323,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 persistentVolumeRestoreMode,
                 conflictPolicy,
                 namespaceMappings ?? new ChangeTrackingDictionary<string, string>(),
-                restoreHookReferences ?? new ChangeTrackingList<NamespacedName>());
+                restoreHookReferences ?? new ChangeTrackingList<NamespacedName>(),
+                resourceModifierReference);
         }
 
         BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options)

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI;
-using OpenAI;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
@@ -21,6 +19,7 @@ internal class AzureOpenAIPipelineMessageBuilder
     private string _method;
     private BinaryContent _content;
     private readonly Dictionary<string, string> _headers = [];
+    private  PipelineMessageClassifier _classifier;
     private RequestOptions _options;
     private bool? _bufferResponse;
 
@@ -92,12 +91,18 @@ internal class AzureOpenAIPipelineMessageBuilder
         return this;
     }
 
+    public AzureOpenAIPipelineMessageBuilder WithClassifier(PipelineMessageClassifier classifier)
+    {
+        _classifier = classifier;
+        return this;
+    }
+
     public PipelineMessage Build()
     {
         Argument.AssertNotNullOrWhiteSpace(_method, nameof(_method));
 
         PipelineMessage message = _pipeline.CreateMessage();
-        message.ResponseClassifier = AzureOpenAIClient.PipelineMessageClassifier200;
+        message.ResponseClassifier = _classifier ?? AzureOpenAIClient.PipelineMessageClassifier;
         if (_bufferResponse.HasValue)
         {
             message.BufferResponse = _bufferResponse.Value;

@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname { get; set; }
         /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
+        [WirePath("properties.certificateId")]
         public string CertificateId { get; set; }
         /// <summary> Determines whether gateway requests client certificate. </summary>
+        [WirePath("properties.negotiateClientCertificate")]
         public bool? IsClientCertificateRequired { get; set; }
     }
 }

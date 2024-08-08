@@ -102,16 +102,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Normalizers))
-            {
-                writer.WritePropertyName("normalizers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Normalizers)
-                {
-                    writer.WriteObjectValue<LexicalNormalizer>(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
@@ -177,7 +167,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
-            IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
             SemanticSearch semantic = default;
@@ -299,20 +288,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     charFilters = array;
                     continue;
                 }
-                if (property.NameEquals("normalizers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<LexicalNormalizer> array = new List<LexicalNormalizer>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
-                    }
-                    normalizers = array;
-                    continue;
-                }
                 if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -369,7 +344,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
                 tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
                 charFilters ?? new ChangeTrackingList<CharFilter>(),
-                normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
                 semantic,
