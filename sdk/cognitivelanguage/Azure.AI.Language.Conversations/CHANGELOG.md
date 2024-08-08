@@ -1,6 +1,16 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.1 (2024-08-01)
 
 - Added support for service version 2024-05-01.
 - Added support for service version 2024-05-15-preview.
@@ -10,10 +20,6 @@
 
 ### Breaking Changes
 - Deprecated `ConversationAuthoringClient`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2023-06-13)
 

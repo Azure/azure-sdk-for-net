@@ -1,5 +1,15 @@
 # Release History
 
+## 7.19.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.18.1 (2024-07-31)
 
 ### Other Changes
@@ -34,7 +44,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
 
-- Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+- Reduced the number of allocations of various option types. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
 
 ## 7.18.0-beta.1 (2024-05-08)
 
