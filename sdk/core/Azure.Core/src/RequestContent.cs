@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -21,6 +22,7 @@ namespace Azure.Core
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
+        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
@@ -119,6 +121,21 @@ namespace Azure.Core
             JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
             ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that contains the bytes resulting from writing the value of the
+        /// provided <see cref="IPersistableModel{T}"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any, that indicates what format
+        /// the <paramref name="model"/> will be written in.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
+        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        {
+            Argument.AssertNotNull(model, nameof(model));
+
+            return new ModelRequestContent<T>(model, options ?? ModelWriteWireOptions);
         }
 
         /// <summary>
@@ -344,6 +361,109 @@ namespace Azure.Core
             {
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
+            }
+        }
+
+        private sealed class ModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
+        {
+            private readonly T _model;
+            private readonly ModelReaderWriterOptions _options;
+            private readonly bool _jsonFormatRequestedInOptions;
+
+            // Used when _model is an IJsonModel
+            private UnsafeBufferSequence.Reader? _sequenceReader;
+
+            // Used when _model is an IModel
+            private BinaryData? _data;
+
+            public ModelRequestContent(T model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+                _jsonFormatRequestedInOptions = options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+            }
+
+            private UnsafeBufferSequence.Reader SequenceReader
+            {
+                get
+                {
+                    if (_model is not IJsonModel<T> jsonModel)
+                    {
+                        throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
+                    }
+
+                    using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
+                    using var jsonWriter = new Utf8JsonWriter(sequenceWriter);
+                    jsonModel.Write(jsonWriter, _options);
+                    jsonWriter.Flush();
+                    return sequenceWriter.ExtractReader();
+                }
+            }
+
+            private BinaryData Data
+            {
+                get
+                {
+                    if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
+                    {
+                        throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
+                    }
+
+                    _data ??= _model.Write(_options);
+                    return _data;
+                }
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = _jsonFormatRequestedInOptions && _model is IJsonModel<T> ? SequenceReader.Length : Data.ToMemory().Length;
+
+                return true;
+            }
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
+            private byte[] Bytes => _bytes ??= Data.ToArray();
+#endif
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                Argument.AssertNotNull(stream, nameof(stream));
+
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
+                {
+                    SequenceReader.CopyTo(stream, cancellation);
+                    return;
+                }
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+                stream.Write(Bytes, 0, Bytes.Length);
+#else
+            stream.Write(Data.ToMemory().Span);
+#endif
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                Argument.AssertNotNull(stream, nameof(stream));
+
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
+                {
+                    await SequenceReader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                    return;
+                }
+
+                await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
+            }
+
+            public override void Dispose()
+            {
+                var sequenceReader = _sequenceReader;
+                if (sequenceReader != null)
+                {
+                    _sequenceReader = null;
+                    sequenceReader.Dispose();
+                }
             }
         }
     }

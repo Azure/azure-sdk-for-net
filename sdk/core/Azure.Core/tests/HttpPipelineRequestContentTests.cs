@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -161,6 +163,47 @@ namespace Azure.Core.Tests
             content.WriteTo(destination, default);
 
             CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
+
+        [Test]
+        public void ModelContent()
+        {
+            MockPersistableModel model = new(404, "abcde");
+            using RequestContent content = RequestContent.Create(model);
+
+            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.AreEqual(model.SerializedValue.Length, length);
+
+            MemoryStream stream = new MemoryStream();
+            content.WriteTo(stream, CancellationToken.None);
+
+            Assert.AreEqual(model.SerializedValue.Length, stream.Position);
+
+            BinaryData serializedContent = ((IPersistableModel<object>)model).Write(ModelReaderWriterOptions.Json);
+            Assert.AreEqual(serializedContent.ToArray(), stream.ToArray());
+        }
+
+        [Test]
+        public void JsonModelContent()
+        {
+            MockJsonModel model = new MockJsonModel(404, "abcde");
+            using RequestContent content = RequestContent.Create(model, ModelReaderWriterOptions.Json);
+
+            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.AreEqual(model.Utf8BytesValue.Length, length);
+
+            MemoryStream contentStream = new MemoryStream();
+            content.WriteTo(contentStream, CancellationToken.None);
+
+            Assert.AreEqual(model.Utf8BytesValue.Length, contentStream.Position);
+
+            MemoryStream modelStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(modelStream);
+
+            ((IJsonModel<object>)model).Write(writer, ModelReaderWriterOptions.Json);
+            writer.Flush();
+
+            Assert.AreEqual(model.Utf8BytesValue, contentStream.ToArray());
         }
 
         [Test]
