@@ -25,17 +25,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
-                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                // All of this block should be changed to:
+                // Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                // 
+                var displayName = activity.DisplayName;
+                // If Activity.DisplayName was changed from the original value... (should always be true, except in tests)
+                if (!string.IsNullOrEmpty(displayName)
+                    && !displayName.StartsWith(activity.Source.Name))
+                {   // AspNetCore instrumentation sets DisplayName to spec-compliant span names like $"{httpMethod} {httpRoute}"
+                    // But it can be overwritten by the user (currently only after the Activity stops)
+                    // so this condition should always be true, as long as AspNetCore instrumentation is running.
+                    // Also, any user-set DisplayName must be used #44971
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = displayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+                // This condition and the following condition should both be deleted, they're redundant with logic in AspNetCore instrumentation
+                // (and they should never hit, except in tests without AspNetCore instrumentation)
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
                 else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
-                }
-                else
-                {
-                    Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
 
                 // Set ip in case of server spans only.
