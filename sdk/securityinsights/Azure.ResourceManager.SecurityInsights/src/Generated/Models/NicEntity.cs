@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an network interface entity. </summary>
-    public partial class NicEntity : SecurityInsightsEntityData
+    public partial class NicEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="NicEntity"/>. </summary>
         public NicEntity()

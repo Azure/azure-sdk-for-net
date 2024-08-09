@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<SecurityInsightsEntityData> entities = default;
+            IReadOnlyList<SecurityInsightsEntity> entities = default;
             IReadOnlyList<ConnectedEntity> edges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<SecurityInsightsEntityData> array = new List<SecurityInsightsEntityData>();
+                    List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsEntityData.DeserializeSecurityInsightsEntityData(item, options));
+                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BookmarkExpandResponseValue(entities ?? new ChangeTrackingList<SecurityInsightsEntityData>(), edges ?? new ChangeTrackingList<ConnectedEntity>(), serializedAdditionalRawData);
+            return new BookmarkExpandResponseValue(entities ?? new ChangeTrackingList<SecurityInsightsEntity>(), edges ?? new ChangeTrackingList<ConnectedEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BookmarkExpandResponseValue>.Write(ModelReaderWriterOptions options)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// An Azure resource, which encapsulate the entire info requires to display a data connector page in Azure portal,
     /// and the info required to define data connections.
     /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CustomizableConnectorDefinition"/>.
+    /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
     /// </summary>
     public abstract partial class DataConnectorDefinitionData : ResourceData
     {

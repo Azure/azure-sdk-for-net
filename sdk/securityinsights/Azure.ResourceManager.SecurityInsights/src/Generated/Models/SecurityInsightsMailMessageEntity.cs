@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail message entity. </summary>
-    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntityData
+    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
         public SecurityInsightsMailMessageEntity()

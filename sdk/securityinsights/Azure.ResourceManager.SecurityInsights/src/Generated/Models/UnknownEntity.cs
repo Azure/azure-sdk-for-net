@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Unknown version of Entity. </summary>
-    internal partial class UnknownEntity : SecurityInsightsEntityData
+    internal partial class UnknownEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntity"/>. </summary>
         /// <param name="id"> The id. </param>

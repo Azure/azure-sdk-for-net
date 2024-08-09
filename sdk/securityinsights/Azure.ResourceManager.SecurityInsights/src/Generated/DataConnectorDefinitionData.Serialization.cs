@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Customizable": return CustomizableConnectorDefinition.DeserializeCustomizableConnectorDefinition(element, options);
+                    case "Customizable": return CustomizableConnectorDefinitionData.DeserializeCustomizableConnectorDefinitionData(element, options);
                 }
             }
             return UnknownDataConnectorDefinition.DeserializeUnknownDataConnectorDefinition(element, options);

@@ -211,6 +211,8 @@ rename-mapping:
   TIDataConnector: SecurityInsightsTIDataConnector
   TIDataConnector.properties.tipLookbackPeriod: TipLookbackOn
   UrlEntity: SecurityInsightsUriEntity
+  BookmarkExpandResponse: BookmarkExpandResult
+  CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary

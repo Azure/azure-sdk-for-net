@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class BookmarkExpandResponse : IUtf8JsonSerializable, IJsonModel<BookmarkExpandResponse>
+    public partial class BookmarkExpandResult : IUtf8JsonSerializable, IJsonModel<BookmarkExpandResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BookmarkExpandResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BookmarkExpandResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BookmarkExpandResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BookmarkExpandResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BookmarkExpandResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BookmarkExpandResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        BookmarkExpandResponse IJsonModel<BookmarkExpandResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BookmarkExpandResult IJsonModel<BookmarkExpandResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BookmarkExpandResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BookmarkExpandResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBookmarkExpandResponse(document.RootElement, options);
+            return DeserializeBookmarkExpandResult(document.RootElement, options);
         }
 
-        internal static BookmarkExpandResponse DeserializeBookmarkExpandResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BookmarkExpandResult DeserializeBookmarkExpandResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BookmarkExpandResponse(metaData, value, serializedAdditionalRawData);
+            return new BookmarkExpandResult(metaData, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BookmarkExpandResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BookmarkExpandResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BookmarkExpandResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BookmarkExpandResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BookmarkExpandResponse IPersistableModel<BookmarkExpandResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BookmarkExpandResult IPersistableModel<BookmarkExpandResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BookmarkExpandResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBookmarkExpandResponse(document.RootElement, options);
+                        return DeserializeBookmarkExpandResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BookmarkExpandResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BookmarkExpandResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BookmarkExpandResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BookmarkExpandResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

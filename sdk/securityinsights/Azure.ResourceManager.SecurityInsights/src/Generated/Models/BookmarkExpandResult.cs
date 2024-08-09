@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The entity expansion result operation response. </summary>
-    public partial class BookmarkExpandResponse
+    public partial class BookmarkExpandResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BookmarkExpandResponse"/>. </summary>
-        internal BookmarkExpandResponse()
+        /// <summary> Initializes a new instance of <see cref="BookmarkExpandResult"/>. </summary>
+        internal BookmarkExpandResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BookmarkExpandResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BookmarkExpandResult"/>. </summary>
         /// <param name="metaData"> The metadata from the expansion operation results. </param>
         /// <param name="value"> The expansion result values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BookmarkExpandResponse(ExpansionResultsMetadata metaData, BookmarkExpandResponseValue value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BookmarkExpandResult(ExpansionResultsMetadata metaData, BookmarkExpandResponseValue value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetaData = metaData;
             Value = value;

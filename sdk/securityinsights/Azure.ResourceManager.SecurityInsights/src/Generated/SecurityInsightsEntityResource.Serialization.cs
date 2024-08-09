@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsEntityResource : IJsonModel<SecurityInsightsEntityData>
+    public partial class SecurityInsightsEntityResource : IJsonModel<SecurityInsightsEntity>
     {
-        void IJsonModel<SecurityInsightsEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityData>)Data).Write(writer, options);
+        void IJsonModel<SecurityInsightsEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntity>)Data).Write(writer, options);
 
-        SecurityInsightsEntityData IJsonModel<SecurityInsightsEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityData>)Data).Create(ref reader, options);
+        SecurityInsightsEntity IJsonModel<SecurityInsightsEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntity>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityInsightsEntityData IPersistableModel<SecurityInsightsEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsEntityData>(data, options);
+        SecurityInsightsEntity IPersistableModel<SecurityInsightsEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsEntity>(data, options);
 
-        string IPersistableModel<SecurityInsightsEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsEntity>)Data).GetFormatFromOptions(options);
     }
 }

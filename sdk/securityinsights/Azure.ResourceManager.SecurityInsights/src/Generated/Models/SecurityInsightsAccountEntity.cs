@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an account entity. </summary>
-    public partial class SecurityInsightsAccountEntity : SecurityInsightsEntityData
+    public partial class SecurityInsightsAccountEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
         public SecurityInsightsAccountEntity()

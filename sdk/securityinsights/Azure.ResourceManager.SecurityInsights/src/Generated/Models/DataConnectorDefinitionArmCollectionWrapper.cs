@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="DataConnectorDefinitionArmCollectionWrapper"/>. </summary>
         /// <param name="value">
         /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomizableConnectorDefinition"/>.
+        /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
         /// </param>
         /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Gets the value
         /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomizableConnectorDefinition"/>.
+        /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
         /// </summary>
         public IReadOnlyList<DataConnectorDefinitionData> Value { get; }
         /// <summary> Gets the next link. </summary>

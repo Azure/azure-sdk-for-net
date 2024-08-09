@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an ip entity. </summary>
-    public partial class SecurityInsightsIPEntity : SecurityInsightsEntityData
+    public partial class SecurityInsightsIPEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
         public SecurityInsightsIPEntity()

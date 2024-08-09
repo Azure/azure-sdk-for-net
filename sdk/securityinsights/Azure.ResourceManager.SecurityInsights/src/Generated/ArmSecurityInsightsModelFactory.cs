@@ -270,15 +270,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResult"/>. </summary>
         /// <param name="metaDataAggregations"> The metadata from the expansion operation results. </param>
         /// <param name="value"> The expansion result values. </param>
-        /// <returns> A new <see cref="Models.BookmarkExpandResponse"/> instance for mocking. </returns>
-        public static BookmarkExpandResponse BookmarkExpandResponse(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, BookmarkExpandResponseValue value = null)
+        /// <returns> A new <see cref="Models.BookmarkExpandResult"/> instance for mocking. </returns>
+        public static BookmarkExpandResult BookmarkExpandResult(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, BookmarkExpandResponseValue value = null)
         {
             metaDataAggregations ??= new List<ExpansionResultAggregation>();
 
-            return new BookmarkExpandResponse(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
+            return new BookmarkExpandResult(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExpansionResultAggregation"/>. </summary>
@@ -295,29 +295,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResponseValue"/>. </summary>
         /// <param name="entities">
         /// Array of the expansion result entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="edges"> Array of expansion result connected entities. </param>
         /// <returns> A new <see cref="Models.BookmarkExpandResponseValue"/> instance for mocking. </returns>
-        public static BookmarkExpandResponseValue BookmarkExpandResponseValue(IEnumerable<SecurityInsightsEntityData> entities = null, IEnumerable<ConnectedEntity> edges = null)
+        public static BookmarkExpandResponseValue BookmarkExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<ConnectedEntity> edges = null)
         {
-            entities ??= new List<SecurityInsightsEntityData>();
+            entities ??= new List<SecurityInsightsEntity>();
             edges ??= new List<ConnectedEntity>();
 
             return new BookmarkExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsEntityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntityData"/> instance for mocking. </returns>
-        public static SecurityInsightsEntityData SecurityInsightsEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntity"/> instance for mocking. </returns>
+        public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new SecurityInsightsEntityData(
+            return new SecurityInsightsEntity(
                 id,
                 name,
                 resourceType,
@@ -958,14 +958,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResponseValue"/>. </summary>
         /// <param name="entities">
         /// Array of the expansion result entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="edges"> Array of edges that connects the entity to the list of entities. </param>
         /// <returns> A new <see cref="Models.EntityExpandResponseValue"/> instance for mocking. </returns>
-        public static EntityExpandResponseValue EntityExpandResponseValue(IEnumerable<SecurityInsightsEntityData> entities = null, IEnumerable<EntityEdges> edges = null)
+        public static EntityExpandResponseValue EntityExpandResponseValue(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<EntityEdges> edges = null)
         {
-            entities ??= new List<SecurityInsightsEntityData>();
+            entities ??= new List<SecurityInsightsEntity>();
             edges ??= new List<EntityEdges>();
 
             return new EntityExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
@@ -1563,14 +1563,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesResult"/>. </summary>
         /// <param name="entities">
         /// Array of the incident related entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="metaData"> The metadata from the incident related entities results. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesResult"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentEntitiesResult SecurityInsightsIncidentEntitiesResult(IEnumerable<SecurityInsightsEntityData> entities = null, IEnumerable<SecurityInsightsIncidentEntitiesMetadata> metaData = null)
+        public static SecurityInsightsIncidentEntitiesResult SecurityInsightsIncidentEntitiesResult(IEnumerable<SecurityInsightsEntity> entities = null, IEnumerable<SecurityInsightsIncidentEntitiesMetadata> metaData = null)
         {
-            entities ??= new List<SecurityInsightsEntityData>();
+            entities ??= new List<SecurityInsightsEntity>();
             metaData ??= new List<SecurityInsightsIncidentEntitiesMetadata>();
 
             return new SecurityInsightsIncidentEntitiesResult(entities?.ToList(), metaData?.ToList(), serializedAdditionalRawData: null);
@@ -4029,7 +4029,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 observables?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomizableConnectorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomizableConnectorDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4039,10 +4039,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedUtc"> Gets or sets the connector definition last modified date in UTC format. </param>
         /// <param name="connectorUiConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
         /// <param name="connectionsConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
-        /// <returns> A new <see cref="Models.CustomizableConnectorDefinition"/> instance for mocking. </returns>
-        public static CustomizableConnectorDefinition CustomizableConnectorDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedUtc = null, CustomizableConnectorUiConfig connectorUiConfig = null, CustomizableConnectionsConfig connectionsConfig = null)
+        /// <returns> A new <see cref="Models.CustomizableConnectorDefinitionData"/> instance for mocking. </returns>
+        public static CustomizableConnectorDefinitionData CustomizableConnectorDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedUtc = null, CustomizableConnectorUiConfig connectorUiConfig = null, CustomizableConnectionsConfig connectionsConfig = null)
         {
-            return new CustomizableConnectorDefinition(
+            return new CustomizableConnectorDefinitionData(
                 id,
                 name,
                 resourceType,

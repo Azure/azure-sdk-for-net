@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecurityInsightsEntityData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsEntity>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -290,13 +290,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        SecurityInsightsEntityData value = default;
+                        SecurityInsightsEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecurityInsightsEntityData.DeserializeSecurityInsightsEntityData(document.RootElement);
+                        value = SecurityInsightsEntity.DeserializeSecurityInsightsEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityInsightsEntityData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsEntity)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecurityInsightsEntityData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsEntity> Get(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        SecurityInsightsEntityData value = default;
+                        SecurityInsightsEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecurityInsightsEntityData.DeserializeSecurityInsightsEntityData(document.RootElement);
+                        value = SecurityInsightsEntity.DeserializeSecurityInsightsEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecurityInsightsEntityData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsEntity)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CustomizableConnectorDefinition : IUtf8JsonSerializable, IJsonModel<CustomizableConnectorDefinition>
+    public partial class CustomizableConnectorDefinitionData : IUtf8JsonSerializable, IJsonModel<CustomizableConnectorDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizableConnectorDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizableConnectorDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CustomizableConnectorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomizableConnectorDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizableConnectorDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomizableConnectorDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        CustomizableConnectorDefinition IJsonModel<CustomizableConnectorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CustomizableConnectorDefinitionData IJsonModel<CustomizableConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomizableConnectorDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomizableConnectorDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomizableConnectorDefinition(document.RootElement, options);
+            return DeserializeCustomizableConnectorDefinitionData(document.RootElement, options);
         }
 
-        internal static CustomizableConnectorDefinition DeserializeCustomizableConnectorDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CustomizableConnectorDefinitionData DeserializeCustomizableConnectorDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomizableConnectorDefinition(
+            return new CustomizableConnectorDefinitionData(
                 id,
                 name,
                 type,
@@ -235,35 +235,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 connectionsConfig);
         }
 
-        BinaryData IPersistableModel<CustomizableConnectorDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CustomizableConnectorDefinitionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomizableConnectorDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomizableConnectorDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CustomizableConnectorDefinition IPersistableModel<CustomizableConnectorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CustomizableConnectorDefinitionData IPersistableModel<CustomizableConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCustomizableConnectorDefinition(document.RootElement, options);
+                        return DeserializeCustomizableConnectorDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomizableConnectorDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomizableConnectorDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CustomizableConnectorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomizableConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Connector definition for kind 'Customizable'. </summary>
-    public partial class CustomizableConnectorDefinition : DataConnectorDefinitionData
+    public partial class CustomizableConnectorDefinitionData : DataConnectorDefinitionData
     {
-        /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinition"/>. </summary>
-        public CustomizableConnectorDefinition()
+        /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinitionData"/>. </summary>
+        public CustomizableConnectorDefinitionData()
         {
             Kind = DataConnectorDefinitionKind.Customizable;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="lastModifiedUtc"> Gets or sets the connector definition last modified date in UTC format. </param>
         /// <param name="connectorUiConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
         /// <param name="connectionsConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
-        internal CustomizableConnectorDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorDefinitionKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedUtc, CustomizableConnectorUiConfig connectorUiConfig, CustomizableConnectionsConfig connectionsConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal CustomizableConnectorDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorDefinitionKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedUtc, CustomizableConnectorUiConfig connectorUiConfig, CustomizableConnectionsConfig connectionsConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             CreatedTimeUtc = createdTimeUtc;
             LastModifiedUtc = lastModifiedUtc;

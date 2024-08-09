@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail cluster entity. </summary>
-    public partial class SecurityInsightsMailClusterEntity : SecurityInsightsEntityData
+    public partial class SecurityInsightsMailClusterEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailClusterEntity"/>. </summary>
         public SecurityInsightsMailClusterEntity()
