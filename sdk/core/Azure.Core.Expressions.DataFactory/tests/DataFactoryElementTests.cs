@@ -62,7 +62,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private const string BinaryDataDictionaryJson = """{"key1":{"A":1,"B":true},"key2":{"C":0,"D":"foo"},"key3":null}""";
 
         private const int IntValue = 1;
-        private static readonly BinaryData BinaryDataValue1 = new BinaryData(new TestModel{ A = 1, B = true });
+        private static readonly BinaryData BinaryDataValue1 = new BinaryData(new TestModel { A = 1, B = true });
         private static readonly BinaryData BinaryDataValue2 = new BinaryData(new { C = 0, D = "foo" });
         private static readonly TimeSpan TimeSpanValue = TimeSpan.FromSeconds(5);
         private static readonly DateTimeOffset DateTimeOffsetValue = DateTimeOffset.UtcNow;
@@ -338,7 +338,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void CreateFromMaskedStringLiteral()
         {
             var dfe = DataFactoryElement<string?>.FromSecretString(SecretStringValue);
-            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);;
+            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);
+            ;
             Assert.AreEqual(SecretStringValue, dfe.ToString());
         }
 
@@ -814,6 +815,23 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var doc = JsonDocument.Parse(actual);
             dfe = DataFactoryElementJsonConverter.Deserialize<BinaryData?>(doc.RootElement);
             AssertBinaryDataDfe(dfe!);
+        }
+
+        private const string JsonDatasetReferenceJson = """{"type": "object","properties": {"decimal": {"type": "number"}}}""";
+        [Test]
+        public void DeserializationJsonDataset()
+        {
+            var doc = JsonDocument.Parse("{}");
+            try
+            {
+                var dfe = DataFactoryElementJsonConverter.Deserialize<IList<BinaryData>>(doc.RootElement);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            var doc1 = JsonDocument.Parse(JsonDatasetReferenceJson);
+            var dfe1 = DataFactoryElementJsonConverter.Deserialize<BinaryData>(doc1.RootElement);
         }
 
         [Test]
