@@ -4,8 +4,6 @@
 
 ### Features Added
 
-- Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
-
 ### Breaking Changes
 
 ### Bugs Fixed
