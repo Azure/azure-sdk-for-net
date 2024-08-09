@@ -8,8 +8,6 @@
 
 ### Bugs Fixed
 
-### Other Changes
-
 ## 12.21.2 (2024-08-08)
 
 ### Bugs Fixed
