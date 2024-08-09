@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added support for service API version `7.6-preview.1`.
-- New `StartPreRestoreAsync`, `StartPreRestore`, `StartPreBackupAsync` and `StartPreBackupAsync` methods available in the `KeyVaultBackupClient`.
+- Added new methods `StartPreRestoreAsync`, `StartPreRestore`, `StartPreBackupAsync`, and `StartPreBackupAsync` to the `KeyVaultBackupClient`.
 
 ### Breaking Changes
 
