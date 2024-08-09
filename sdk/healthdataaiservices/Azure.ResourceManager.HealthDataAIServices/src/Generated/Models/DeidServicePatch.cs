@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> RP-specific properties. </summary>
         internal DeidPropertiesUpdate Properties { get; set; }
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public HealthDataAIServicePublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
+        public HealthDataAIServicesPublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
         {
             get => Properties is null ? default : Properties.PublicNetworkAccess;
             set

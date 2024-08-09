@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServiceProperties(HealthDataAIServiceProvisioningState? provisioningState, string serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, HealthDataAIServicePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidServiceProperties(HealthDataAIServicesProvisioningState? provisioningState, Uri serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ServiceUri = serviceUri;
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public HealthDataAIServiceProvisioningState? ProvisioningState { get; }
+        public HealthDataAIServicesProvisioningState? ProvisioningState { get; }
         /// <summary> Deid service url. </summary>
-        public string ServiceUri { get; }
+        public Uri ServiceUri { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public HealthDataAIServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthDataAIServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

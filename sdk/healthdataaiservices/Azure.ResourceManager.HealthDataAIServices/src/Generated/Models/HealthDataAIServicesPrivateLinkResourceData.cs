@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     /// <summary> Private Links for DeidService resource. </summary>
-    public partial class HealthDataAIServicePrivateLinkResourceData : ResourceData
+    public partial class HealthDataAIServicesPrivateLinkResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +47,25 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicePrivateLinkResourceData"/>. </summary>
-        internal HealthDataAIServicePrivateLinkResourceData()
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkResourceData"/>. </summary>
+        public HealthDataAIServicesPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthDataAIServicePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthDataAIServicesPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HealthDataAIServicesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthDataAIServicesPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public HealthDataAIServicesPrivateLinkResourceProperties Properties { get; }
+        public HealthDataAIServicesPrivateLinkResourceProperties Properties { get; set; }
     }
 }

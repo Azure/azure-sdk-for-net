@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HealthDataAIServices
 namespace: Azure.ResourceManager.HealthDataAIServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/55a0dc9e569c8e29200a909f9b914fea75dc14c2/specification/healthdataaiservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cef3d7117a8a761e139f847b9d5a31609f1ac911/specification/healthdataaiservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -56,8 +56,8 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  PrivateLinkResource: HealthDataAIServicePrivateLinkResourceData
-  PrivateEndpointConnectionResource: HealthDataAIServicePrivateEndpointConnectionResource
-  PublicNetworkAccess: HealthDataAIServicePublicNetworkAccess
-  ProvisioningState: HealthDataAIServiceProvisioningState
+  PrivateLinkResource: HealthDataAIServicesPrivateLinkResourceData
+  PrivateEndpointConnectionResource: HealthDataAIServicesPrivateEndpointConnectionResource
+  PublicNetworkAccess: HealthDataAIServicesPublicNetworkAccess
+  ProvisioningState: HealthDataAIServicesProvisioningState
 ```

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            IReadOnlyList<HealthDataAIServicePrivateEndpointConnectionResourceData> value = default;
+            IReadOnlyList<HealthDataAIServicesPrivateEndpointConnectionResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<HealthDataAIServicePrivateEndpointConnectionResourceData> array = new List<HealthDataAIServicePrivateEndpointConnectionResourceData>();
+                    List<HealthDataAIServicesPrivateEndpointConnectionResourceData> array = new List<HealthDataAIServicesPrivateEndpointConnectionResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthDataAIServicePrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicePrivateEndpointConnectionResourceData(item, options));
+                        array.Add(HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(item, options));
                     }
                     value = array;
                     continue;

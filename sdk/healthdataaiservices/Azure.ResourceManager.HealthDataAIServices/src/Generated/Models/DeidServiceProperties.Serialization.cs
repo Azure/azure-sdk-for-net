@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            HealthDataAIServiceProvisioningState? provisioningState = default;
-            string serviceUrl = default;
+            HealthDataAIServicesProvisioningState? provisioningState = default;
+            Uri serviceUrl = default;
             IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = default;
-            HealthDataAIServicePublicNetworkAccess? publicNetworkAccess = default;
+            HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,12 +103,16 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new HealthDataAIServiceProvisioningState(property.Value.GetString());
+                    provisioningState = new HealthDataAIServicesProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceUrl"u8))
                 {
-                    serviceUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -131,7 +135,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = property.Value.GetString().ToHealthDataAIServicePublicNetworkAccess();
+                    publicNetworkAccess = property.Value.GetString().ToHealthDataAIServicesPublicNetworkAccess();
                     continue;
                 }
                 if (options.Format != "W")

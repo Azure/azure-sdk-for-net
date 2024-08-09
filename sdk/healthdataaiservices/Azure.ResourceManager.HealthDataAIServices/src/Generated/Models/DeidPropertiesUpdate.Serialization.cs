@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            HealthDataAIServicePublicNetworkAccess? publicNetworkAccess = default;
+            HealthDataAIServicesPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = property.Value.GetString().ToHealthDataAIServicePublicNetworkAccess();
+                    publicNetworkAccess = property.Value.GetString().ToHealthDataAIServicesPublicNetworkAccess();
                     continue;
                 }
                 if (options.Format != "W")

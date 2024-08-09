@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HealthDataAIServicePrivateEndpointConnectionResources in the DeidService. </summary>
-        /// <returns> An object representing collection of HealthDataAIServicePrivateEndpointConnectionResources and their operations over a HealthDataAIServicePrivateEndpointConnectionResource. </returns>
-        public virtual HealthDataAIServicePrivateEndpointConnectionResourceCollection GetHealthDataAIServicePrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of HealthDataAIServicesPrivateEndpointConnectionResources in the DeidService. </summary>
+        /// <returns> An object representing collection of HealthDataAIServicesPrivateEndpointConnectionResources and their operations over a HealthDataAIServicesPrivateEndpointConnectionResource. </returns>
+        public virtual HealthDataAIServicesPrivateEndpointConnectionResourceCollection GetHealthDataAIServicesPrivateEndpointConnectionResources()
         {
-            return GetCachedClient(client => new HealthDataAIServicePrivateEndpointConnectionResourceCollection(client, Id));
+            return GetCachedClient(client => new HealthDataAIServicesPrivateEndpointConnectionResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HealthDataAIServicePrivateEndpointConnectionResource>> GetHealthDataAIServicePrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthDataAIServicesPrivateEndpointConnectionResource>> GetHealthDataAIServicesPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetHealthDataAIServicePrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthDataAIServicesPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HealthDataAIServicePrivateEndpointConnectionResource> GetHealthDataAIServicePrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthDataAIServicesPrivateEndpointConnectionResource> GetHealthDataAIServicesPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetHealthDataAIServicePrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+            return GetHealthDataAIServicesPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByDeidService</description>
+        /// <description>PrivateLinks_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -438,12 +438,12 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthDataAIServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthDataAIServicePrivateLinkResourceData> GetPrivateLinksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthDataAIServicesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthDataAIServicesPrivateLinkResourceData> GetPrivateLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinksRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinksRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthDataAIServicePrivateLinkResourceData.DeserializeHealthDataAIServicePrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "DeidServiceResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthDataAIServicesPrivateLinkResourceData.DeserializeHealthDataAIServicesPrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "DeidServiceResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByDeidService</description>
+        /// <description>PrivateLinks_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -464,12 +464,12 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthDataAIServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthDataAIServicePrivateLinkResourceData> GetPrivateLinks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthDataAIServicesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthDataAIServicesPrivateLinkResourceData> GetPrivateLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinksRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinksRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthDataAIServicePrivateLinkResourceData.DeserializeHealthDataAIServicePrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "DeidServiceResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthDataAIServicesPrivateLinkResourceData.DeserializeHealthDataAIServicesPrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "DeidServiceResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

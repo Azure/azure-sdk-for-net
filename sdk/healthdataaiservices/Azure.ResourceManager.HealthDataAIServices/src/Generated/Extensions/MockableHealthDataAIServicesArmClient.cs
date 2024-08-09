@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthDataAIServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthDataAIServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual HealthDataAIServicePrivateEndpointConnectionResource GetHealthDataAIServicePrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual HealthDataAIServicesPrivateEndpointConnectionResource GetHealthDataAIServicesPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HealthDataAIServicePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new HealthDataAIServicePrivateEndpointConnectionResource(Client, id);
+            HealthDataAIServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HealthDataAIServicesPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

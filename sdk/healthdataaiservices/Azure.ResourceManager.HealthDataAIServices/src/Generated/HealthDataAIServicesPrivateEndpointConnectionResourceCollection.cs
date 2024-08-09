@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.HealthDataAIServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeidServiceResource"/>.
-    /// To get a <see cref="HealthDataAIServicePrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicePrivateEndpointConnectionResources method from an instance of <see cref="DeidServiceResource"/>.
+    /// A class representing a collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeidServiceResource"/>.
+    /// To get a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicesPrivateEndpointConnectionResources method from an instance of <see cref="DeidServiceResource"/>.
     /// </summary>
-    public partial class HealthDataAIServicePrivateEndpointConnectionResourceCollection : ArmCollection, IEnumerable<HealthDataAIServicePrivateEndpointConnectionResource>, IAsyncEnumerable<HealthDataAIServicePrivateEndpointConnectionResource>
+    public partial class HealthDataAIServicesPrivateEndpointConnectionResourceCollection : ArmCollection, IEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HealthDataAIServicePrivateEndpointConnectionResourceCollection"/> class for mocking. </summary>
-        protected HealthDataAIServicePrivateEndpointConnectionResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> class for mocking. </summary>
+        protected HealthDataAIServicesPrivateEndpointConnectionResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthDataAIServicePrivateEndpointConnectionResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal HealthDataAIServicePrivateEndpointConnectionResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HealthDataAIServicesPrivateEndpointConnectionResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", HealthDataAIServicePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HealthDataAIServicePrivateEndpointConnectionResource.ResourceType, out string healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
-            _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
+            _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", HealthDataAIServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HealthDataAIServicesPrivateEndpointConnectionResource.ResourceType, out string healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
+            _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HealthDataAIServicePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HealthDataAIServicePrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.CreateOrUpdate");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthDataAIServicesArmOperation<HealthDataAIServicePrivateEndpointConnectionResource>(new HealthDataAIServicePrivateEndpointConnectionResourceOperationSource(Client), _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource(Client), _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HealthDataAIServicePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, HealthDataAIServicePrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.CreateOrUpdate");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new HealthDataAIServicesArmOperation<HealthDataAIServicePrivateEndpointConnectionResource>(new HealthDataAIServicePrivateEndpointConnectionResourceOperationSource(Client), _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource>(new HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource(Client), _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<HealthDataAIServicePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthDataAIServicesPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.Get");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthDataAIServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthDataAIServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<HealthDataAIServicePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthDataAIServicesPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.Get");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HealthDataAIServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HealthDataAIServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_ListByDeidService</description>
+        /// <description>PrivateEndpointConnections_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthDataAIServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthDataAIServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthDataAIServicePrivateEndpointConnectionResource(Client, HealthDataAIServicePrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicePrivateEndpointConnectionResourceData(e)), _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthDataAIServicePrivateEndpointConnectionResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(e)), _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_ListByDeidService</description>
+        /// <description>PrivateEndpointConnections_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthDataAIServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthDataAIServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthDataAIServicePrivateEndpointConnectionResource(Client, HealthDataAIServicePrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicePrivateEndpointConnectionResourceData(e)), _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthDataAIServicePrivateEndpointConnectionResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListByDeidServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(e)), _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.Exists");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.Exists");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<HealthDataAIServicePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HealthDataAIServicesPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.GetIfExists");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<HealthDataAIServicePrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new HealthDataAIServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<HealthDataAIServicesPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthDataAIServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HealthDataAIServicePrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual NullableResponse<HealthDataAIServicePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HealthDataAIServicesPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicePrivateEndpointConnectionResourceCollection.GetIfExists");
+            using var scope = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _healthDataAIServicePrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _healthDataAIServicesPrivateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<HealthDataAIServicePrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new HealthDataAIServicePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<HealthDataAIServicesPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthDataAIServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             }
         }
 
-        IEnumerator<HealthDataAIServicePrivateEndpointConnectionResource> IEnumerable<HealthDataAIServicePrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<HealthDataAIServicesPrivateEndpointConnectionResource> IEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HealthDataAIServicePrivateEndpointConnectionResource> IAsyncEnumerable<HealthDataAIServicePrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HealthDataAIServicesPrivateEndpointConnectionResource> IAsyncEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

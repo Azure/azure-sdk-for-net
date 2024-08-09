@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 return null;
             }
-            IReadOnlyList<HealthDataAIServicePrivateLinkResourceData> value = default;
+            IReadOnlyList<HealthDataAIServicesPrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<HealthDataAIServicePrivateLinkResourceData> array = new List<HealthDataAIServicePrivateLinkResourceData>();
+                    List<HealthDataAIServicesPrivateLinkResourceData> array = new List<HealthDataAIServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthDataAIServicePrivateLinkResourceData.DeserializeHealthDataAIServicePrivateLinkResourceData(item, options));
+                        array.Add(HealthDataAIServicesPrivateLinkResourceData.DeserializeHealthDataAIServicesPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

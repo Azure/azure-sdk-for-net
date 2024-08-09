@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthDataAIServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthDataAIServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthDataAIServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthDataAIServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHealthDataAIServicesArmClient.GetHealthDataAIServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthDataAIServicesArmClient.GetHealthDataAIServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HealthDataAIServicePrivateEndpointConnectionResource"/> object. </returns>
-        public static HealthDataAIServicePrivateEndpointConnectionResource GetHealthDataAIServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> object. </returns>
+        public static HealthDataAIServicesPrivateEndpointConnectionResource GetHealthDataAIServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHealthDataAIServicesArmClient(client).GetHealthDataAIServicePrivateEndpointConnectionResource(id);
+            return GetMockableHealthDataAIServicesArmClient(client).GetHealthDataAIServicesPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_ListBySubscription</description>
+        /// <description>DeidServices_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_ListBySubscription</description>
+        /// <description>DeidServices_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
