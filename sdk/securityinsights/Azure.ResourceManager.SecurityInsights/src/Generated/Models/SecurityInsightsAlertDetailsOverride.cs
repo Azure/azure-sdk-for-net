@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         public SecurityInsightsAlertDetailsOverride()
         {
+            AlertDynamicProperties = new ChangeTrackingList<AlertPropertyMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
@@ -55,13 +56,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertDescriptionFormat"> the format containing columns name(s) to override the alert description. </param>
         /// <param name="alertTacticsColumnName"> the column name to take the alert tactics from. </param>
         /// <param name="alertSeverityColumnName"> the column name to take the alert severity from. </param>
+        /// <param name="alertDynamicProperties"> List of additional dynamic properties to override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IList<AlertPropertyMapping> alertDynamicProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertDisplayNameFormat = alertDisplayNameFormat;
             AlertDescriptionFormat = alertDescriptionFormat;
             AlertTacticsColumnName = alertTacticsColumnName;
             AlertSeverityColumnName = alertSeverityColumnName;
+            AlertDynamicProperties = alertDynamicProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string AlertTacticsColumnName { get; set; }
         /// <summary> the column name to take the alert severity from. </summary>
         public string AlertSeverityColumnName { get; set; }
+        /// <summary> List of additional dynamic properties to override. </summary>
+        public IList<AlertPropertyMapping> AlertDynamicProperties { get; }
     }
 }

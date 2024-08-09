@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("count"u8);
-            writer.WriteNumberValue(Count);
             writer.WritePropertyName("entityKind"u8);
             writer.WriteStringValue(EntityKind.ToString());
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            int count = default;
             SecurityInsightsEntityKind entityKind = default;
+            int count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
-                {
-                    count = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("entityKind"u8))
                 {
                     entityKind = new SecurityInsightsEntityKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("count"u8))
+                {
+                    count = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityInsightsIncidentEntitiesMetadata(count, entityKind, serializedAdditionalRawData);
+            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentEntitiesMetadata>.Write(ModelReaderWriterOptions options)

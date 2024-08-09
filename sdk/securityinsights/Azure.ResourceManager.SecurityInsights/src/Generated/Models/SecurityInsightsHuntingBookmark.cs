@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a Hunting bookmark entity. </summary>
-    public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
+    public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
         public SecurityInsightsHuntingBookmark()

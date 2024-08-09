@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a process entity. </summary>
-    public partial class SecurityInsightsProcessEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsProcessEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsProcessEntity"/>. </summary>
         public SecurityInsightsProcessEntity()

@@ -26,21 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exchange))
-            {
-                writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange, options);
-            }
-            if (Optional.IsDefined(SharePoint))
-            {
-                writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue(SharePoint, options);
-            }
-            if (Optional.IsDefined(Teams))
-            {
-                writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue(Teams, options);
-            }
+            writer.WritePropertyName("exchange"u8);
+            writer.WriteObjectValue(Exchange, options);
+            writer.WritePropertyName("sharePoint"u8);
+            writer.WriteObjectValue(SharePoint, options);
+            writer.WritePropertyName("teams"u8);
+            writer.WriteObjectValue(Teams, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,28 +79,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("exchange"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharePoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("teams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value, options);
                     continue;
                 }

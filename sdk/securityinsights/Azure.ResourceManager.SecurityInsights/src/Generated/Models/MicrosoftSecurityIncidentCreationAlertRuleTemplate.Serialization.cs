@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdDateUTC"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateUTC"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDateUTC"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             int? alertRulesCreatedByTemplateCount = default;
-            DateTimeOffset? createdDateUTC = default;
             DateTimeOffset? lastUpdatedDateUTC = default;
+            DateTimeOffset? createdDateUTC = default;
             string description = default;
             string displayName = default;
             IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
@@ -232,15 +232,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertRulesCreatedByTemplateCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("createdDateUTC"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdDateUTC = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("lastUpdatedDateUTC"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -248,6 +239,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 continue;
                             }
                             lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createdDateUTC"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdDateUTC = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 kind,
                 serializedAdditionalRawData,
                 alertRulesCreatedByTemplateCount,
-                createdDateUTC,
                 lastUpdatedDateUTC,
+                createdDateUTC,
                 description,
                 displayName,
                 requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),

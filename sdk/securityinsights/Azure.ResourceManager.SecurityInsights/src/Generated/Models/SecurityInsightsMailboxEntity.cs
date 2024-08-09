@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mailbox entity. </summary>
-    public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         public SecurityInsightsMailboxEntity()

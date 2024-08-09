@@ -125,6 +125,36 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("incidentInfo"u8);
                 writer.WriteObjectValue(IncidentInfo, options);
             }
+            if (Optional.IsCollectionDefined(EntityMappings))
+            {
+                writer.WritePropertyName("entityMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityMappings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Tactics))
+            {
+                writer.WritePropertyName("tactics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tactics)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Techniques))
+            {
+                writer.WritePropertyName("techniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in Techniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -182,6 +212,9 @@ namespace Azure.ResourceManager.SecurityInsights
             DateTimeOffset? queryStartTime = default;
             DateTimeOffset? queryEndTime = default;
             SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
+            IList<BookmarkEntityMappings> entityMappings = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,6 +367,48 @@ namespace Azure.ResourceManager.SecurityInsights
                             incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("entityMappings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<BookmarkEntityMappings> array = new List<BookmarkEntityMappings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(BookmarkEntityMappings.DeserializeBookmarkEntityMappings(item, options));
+                            }
+                            entityMappings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("tactics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
+                            }
+                            tactics = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("techniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            techniques = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -361,6 +436,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 queryStartTime,
                 queryEndTime,
                 incidentInfo,
+                entityMappings ?? new ChangeTrackingList<BookmarkEntityMappings>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
                 etag,
                 serializedAdditionalRawData);
         }

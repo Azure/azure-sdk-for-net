@@ -61,28 +61,28 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="message"> The comment message. </param>
         /// <param name="createdOn"> The time the comment was created. </param>
         /// <param name="lastModifiedOn"> The time the comment was updated. </param>
-        /// <param name="message"> The comment message. </param>
         /// <param name="author"> Describes the client that created the comment. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string message, SecurityInsightsClientInfo author, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, SecurityInsightsClientInfo author, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Message = message;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
-            Message = message;
             Author = author;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The comment message. </summary>
+        public string Message { get; set; }
         /// <summary> The time the comment was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the comment was updated. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The comment message. </summary>
-        public string Message { get; set; }
         /// <summary> Describes the client that created the comment. </summary>
         public SecurityInsightsClientInfo Author { get; }
         /// <summary> Etag of the azure resource. </summary>

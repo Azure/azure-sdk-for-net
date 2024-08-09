@@ -46,8 +46,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
-        public SecurityInsightsAlertsDataTypeOfDataConnector()
+        /// <param name="alerts"> Alerts data type connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alerts"/> is null. </exception>
+        public SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
         {
+            Argument.AssertNotNull(alerts, nameof(alerts));
+
+            Alerts = alerts;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
@@ -64,12 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? AlertsState
         {
-            get => Alerts is null ? default : Alerts.State;
+            get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
             set
             {
-                if (Alerts is null)
-                    Alerts = new DataConnectorDataTypeCommon();
-                Alerts.State = value;
+                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
             }
         }
     }

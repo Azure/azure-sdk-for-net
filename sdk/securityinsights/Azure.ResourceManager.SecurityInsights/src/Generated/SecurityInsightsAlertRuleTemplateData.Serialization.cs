@@ -92,7 +92,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     case "Fusion": return SecurityInsightsFusionAlertRuleTemplate.DeserializeSecurityInsightsFusionAlertRuleTemplate(element, options);
                     case "MicrosoftSecurityIncidentCreation": return MicrosoftSecurityIncidentCreationAlertRuleTemplate.DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(element, options);
+                    case "MLBehaviorAnalytics": return MLBehaviorAnalyticsAlertRuleTemplate.DeserializeMLBehaviorAnalyticsAlertRuleTemplate(element, options);
+                    case "NRT": return NrtAlertRuleTemplate.DeserializeNrtAlertRuleTemplate(element, options);
                     case "Scheduled": return ScheduledAlertRuleTemplate.DeserializeScheduledAlertRuleTemplate(element, options);
+                    case "ThreatIntelligence": return ThreatIntelligenceAlertRuleTemplate.DeserializeThreatIntelligenceAlertRuleTemplate(element, options);
                 }
             }
             return UnknownAlertRuleTemplate.DeserializeUnknownAlertRuleTemplate(element, options);

@@ -56,16 +56,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataTypes))
-            {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes, options);
-            }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Alerts))
+            {
+                writer.WritePropertyName("alerts"u8);
+                writer.WriteObjectValue(Alerts, options);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default;
             string subscriptionId = default;
+            DataConnectorDataTypeCommon alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,18 +167,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("dataTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = SecurityInsightsAlertsDataTypeOfDataConnector.DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = property0.Value.GetString();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("alerts"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
@@ -195,7 +210,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 kind,
                 etag,
                 serializedAdditionalRawData,
-                dataTypes,
+                alerts,
                 subscriptionId);
         }
 

@@ -61,6 +61,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Techniques))
+            {
+                writer.WritePropertyName("techniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in Techniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProviderIncidentUri))
+            {
+                writer.WritePropertyName("providerIncidentUrl"u8);
+                writer.WriteStringValue(ProviderIncidentUri.AbsoluteUri);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,6 +119,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             int? commentsCount = default;
             IReadOnlyList<string> alertProductNames = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
+            IReadOnlyList<string> techniques = default;
+            Uri providerIncidentUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,6 +180,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     tactics = array;
                     continue;
                 }
+                if (property.NameEquals("techniques"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    techniques = array;
+                    continue;
+                }
+                if (property.NameEquals("providerIncidentUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    providerIncidentUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -175,6 +215,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 commentsCount,
                 alertProductNames ?? new ChangeTrackingList<string>(),
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                providerIncidentUrl,
                 serializedAdditionalRawData);
         }
 

@@ -14,14 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
-        public TIDataConnectorDataTypesIndicators()
+        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        public TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/> for deserialization. </summary>
+        internal TIDataConnectorDataTypesIndicators()
         {
         }
     }

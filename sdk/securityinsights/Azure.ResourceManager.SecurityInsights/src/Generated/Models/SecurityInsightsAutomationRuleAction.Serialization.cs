@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AddIncidentTask": return AutomationRuleAddIncidentTaskAction.DeserializeAutomationRuleAddIncidentTaskAction(element, options);
                     case "ModifyProperties": return AutomationRuleModifyPropertiesAction.DeserializeAutomationRuleModifyPropertiesAction(element, options);
                     case "RunPlaybook": return AutomationRuleRunPlaybookAction.DeserializeAutomationRuleRunPlaybookAction(element, options);
                 }

@@ -31,11 +31,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("discoveryLogs"u8);
                 writer.WriteObjectValue(DiscoveryLogs, options);
             }
-            if (Optional.IsDefined(Alerts))
-            {
-                writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue(Alerts, options);
-            }
+            writer.WritePropertyName("alerts"u8);
+            writer.WriteObjectValue(Alerts, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,10 +88,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("alerts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }

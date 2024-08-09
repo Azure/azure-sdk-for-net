@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of incident comments. </summary>
+    /// <summary> The IncidentCommentList. </summary>
     internal partial class IncidentCommentList
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentCommentList"/>. </summary>
-        /// <param name="value"> Array of comments. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentCommentList(IEnumerable<SecurityInsightsIncidentCommentData> value)
         {
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentCommentList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of comments. </param>
-        /// <param name="value"> Array of comments. </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentCommentList(string nextLink, IReadOnlyList<SecurityInsightsIncidentCommentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentCommentList(IReadOnlyList<SecurityInsightsIncidentCommentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of comments. </summary>
-        public string NextLink { get; }
-        /// <summary> Array of comments. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<SecurityInsightsIncidentCommentData> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

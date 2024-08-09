@@ -174,6 +174,71 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Owners))
+            {
+                writer.WritePropertyName("owners"u8);
+                writer.WriteStartArray();
+                foreach (var item in Owners)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NicEntityIds))
+            {
+                writer.WritePropertyName("nicEntityIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in NicEntityIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Site))
+            {
+                writer.WritePropertyName("site"u8);
+                writer.WriteStringValue(Site);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Zone))
+            {
+                writer.WritePropertyName("zone"u8);
+                writer.WriteStringValue(Zone);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Sensor))
+            {
+                writer.WritePropertyName("sensor"u8);
+                writer.WriteStringValue(Sensor);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceSubType))
+            {
+                writer.WritePropertyName("deviceSubType"u8);
+                writer.WriteStringValue(DeviceSubType);
+            }
+            if (Optional.IsDefined(Importance))
+            {
+                writer.WritePropertyName("importance"u8);
+                writer.WriteStringValue(Importance.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurdueLayer))
+            {
+                writer.WritePropertyName("purdueLayer"u8);
+                writer.WriteStringValue(PurdueLayer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAuthorized))
+            {
+                writer.WritePropertyName("isAuthorized"u8);
+                writer.WriteBooleanValue(IsAuthorized.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsProgramming))
+            {
+                writer.WritePropertyName("isProgramming"u8);
+                writer.WriteBooleanValue(IsProgramming.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsScanner))
+            {
+                writer.WritePropertyName("isScanner"u8);
+                writer.WriteBooleanValue(IsScanner.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -237,6 +302,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string ipAddressEntityId = default;
             IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
             IReadOnlyList<string> protocols = default;
+            IReadOnlyList<string> owners = default;
+            IReadOnlyList<string> nicEntityIds = default;
+            string site = default;
+            string zone = default;
+            string sensor = default;
+            string deviceSubType = default;
+            DeviceImportance? importance = default;
+            string purdueLayer = default;
+            bool? isAuthorized = default;
+            bool? isProgramming = default;
+            bool? isScanner = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -412,6 +488,95 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             protocols = array;
                             continue;
                         }
+                        if (property0.NameEquals("owners"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            owners = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("nicEntityIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            nicEntityIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("site"u8))
+                        {
+                            site = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("zone"u8))
+                        {
+                            zone = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sensor"u8))
+                        {
+                            sensor = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceSubType"u8))
+                        {
+                            deviceSubType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("importance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importance = new DeviceImportance(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("purdueLayer"u8))
+                        {
+                            purdueLayer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isAuthorized"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isAuthorized = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isProgramming"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isProgramming = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isScanner"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isScanner = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -446,7 +611,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 hostEntityId,
                 ipAddressEntityId,
                 threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
-                protocols ?? new ChangeTrackingList<string>());
+                protocols ?? new ChangeTrackingList<string>(),
+                owners ?? new ChangeTrackingList<string>(),
+                nicEntityIds ?? new ChangeTrackingList<string>(),
+                site,
+                zone,
+                sensor,
+                deviceSubType,
+                importance,
+                purdueLayer,
+                isAuthorized,
+                isProgramming,
+                isScanner);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)

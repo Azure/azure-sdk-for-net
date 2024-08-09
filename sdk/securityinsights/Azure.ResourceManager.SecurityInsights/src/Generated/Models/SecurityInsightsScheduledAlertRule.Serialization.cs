@@ -117,6 +117,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertDetailsOverride"u8);
                 writer.WriteObjectValue(AlertDetailsOverride, options);
             }
+            if (Optional.IsCollectionDefined(SentinelEntitiesMappings))
+            {
+                writer.WritePropertyName("sentinelEntitiesMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SentinelEntitiesMappings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
@@ -172,6 +182,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SubTechniques))
+            {
+                writer.WritePropertyName("subTechniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubTechniques)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -237,6 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IDictionary<string, string> customDetails = default;
             IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
             SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
+            IList<SentinelEntityMapping> sentinelEntitiesMappings = default;
             string alertRuleTemplateName = default;
             string templateVersion = default;
             string description = default;
@@ -247,6 +268,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool? suppressionEnabled = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
+            IList<string> subTechniques = default;
             SecurityInsightsIncidentConfiguration incidentConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -395,6 +417,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("sentinelEntitiesMappings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SentinelEntityMapping> array = new List<SentinelEntityMapping>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SentinelEntityMapping.DeserializeSentinelEntityMapping(item, options));
+                            }
+                            sentinelEntitiesMappings = array;
+                            continue;
+                        }
                         if (property0.NameEquals("alertRuleTemplateName"u8))
                         {
                             alertRuleTemplateName = property0.Value.GetString();
@@ -479,6 +515,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
+                        if (property0.NameEquals("subTechniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            subTechniques = array;
+                            continue;
+                        }
                         if (property0.NameEquals("incidentConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -515,6 +565,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 customDetails ?? new ChangeTrackingDictionary<string, string>(),
                 entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
                 alertDetailsOverride,
+                sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>(),
                 alertRuleTemplateName,
                 templateVersion,
                 description,
@@ -525,6 +576,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 suppressionEnabled,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>(),
                 incidentConfiguration);
         }
 
