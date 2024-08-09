@@ -2306,7 +2306,11 @@ namespace Azure.Storage.Files.Shares
                                 .EnsureCompleted(),
                             async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
                                 .ConfigureAwait(false),
-                            default, //decodedData => response.Value.Details.ContentCrc = decodedData.TotalCrc.ToArray(),
+                            decodedData =>
+                            {
+                                initialResponse.Value.ContentCrc = new byte[StructuredMessage.Crc64Length];
+                                decodedData.Crc.WriteCrc64(initialResponse.Value.ContentCrc);
+                            },
                             ClientConfiguration.Pipeline.ResponseClassifier,
                             Constants.MaxReliabilityRetries);
                     }

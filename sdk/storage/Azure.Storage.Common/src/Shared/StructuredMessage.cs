@@ -104,7 +104,7 @@ internal static class StructuredMessage
             int expectedBufferSize = GetSegmentFooterSize(flags);
             Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
 
-            crc64 = flags.HasFlag(Flags.StorageCrc64) ? BinaryPrimitives.ReadUInt64LittleEndian(buffer) : default;
+            crc64 = flags.HasFlag(Flags.StorageCrc64) ? buffer.ReadCrc64() : default;
         }
 
         public static int WriteStreamFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
@@ -200,7 +200,7 @@ internal static class StructuredMessage
             int expectedBufferSize = GetSegmentFooterSize(flags);
             Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
 
-            crc64 = flags.HasFlag(Flags.StorageCrc64) ? BinaryPrimitives.ReadUInt64LittleEndian(buffer) : default;
+            crc64 = flags.HasFlag(Flags.StorageCrc64) ? buffer.ReadCrc64() : default;
         }
 
         public static int WriteSegmentFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)

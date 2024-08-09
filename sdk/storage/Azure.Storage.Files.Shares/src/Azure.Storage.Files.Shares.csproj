@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
   </PropertyGroup>
@@ -41,6 +41,7 @@
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ChecksumExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
