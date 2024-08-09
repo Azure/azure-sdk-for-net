@@ -5,6 +5,8 @@ using NUnit.Framework;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -17,6 +19,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override void CompareModels(ResourceProviderData model, ResourceProviderData model2, string format)
         {
             Assert.AreEqual(model.Id, model2.Id);
+            Assert.AreEqual(model.Namespace, model2.Namespace);
+            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
+            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
+            Assert.AreEqual(model.ProviderAuthorizationConsentState, model2.ProviderAuthorizationConsentState);
+            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
         }
 
         protected override string GetExpectedResult(string format) => WirePayload;
@@ -25,6 +32,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             Assert.IsNotNull(model);
             Assert.IsNotNull(model.Id);
+        }
+
+        [Test]
+        public void ValideStjIntegration()
+        {
+            var stjOptions = new JsonSerializerOptions
+            {
+                Converters = { new ModelJsonConverter() }
+            };
+
+            var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
+            var modelFromMrw = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
+
+            Assert.IsNotNull(modelFromStj);
+            Assert.IsNotNull(modelFromMrw);
+
+            CompareModels(modelFromStj!, modelFromMrw!, "J");
+            var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
+            Assert.AreEqual(WirePayload, stjResult);
         }
     }
 }
