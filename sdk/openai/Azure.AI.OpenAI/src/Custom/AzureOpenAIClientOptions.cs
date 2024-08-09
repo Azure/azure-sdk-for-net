@@ -14,18 +14,22 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     internal string Version { get; }
 
     /// <summary>
-    /// Specifies custom authorization scopes to use when authenticating a client with a supplied <see cref="Azure.Core.TokenCredential"/>.
+    /// The authorization audience to use when authenticating with Azure authentication tokens
     /// </summary>
-    public IReadOnlyList<string> TokenAuthorizationScopes
+    /// <remarks>
+    /// By default, the public Azure cloud will be used to authenticate tokens. Modify this value to authenticate tokens
+    /// with other clouds like Azure Government.
+    /// </remarks>
+    public AzureOpenAIAuthorizationAudience? AuthorizationAudience
     {
-        get => _tokenAuthorizationScopes;
+        get => _authorizationAudience;
         set
         {
             AssertNotFrozen();
-            _tokenAuthorizationScopes = value;
+            _authorizationAudience = value;
         }
     }
-    private IReadOnlyList<string> _tokenAuthorizationScopes;
+    private AzureOpenAIAuthorizationAudience? _authorizationAudience;
 
     /// <inheritdoc cref="OpenAIClientOptions.ApplicationId"/>
     public string ApplicationId

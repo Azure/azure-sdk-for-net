@@ -16,8 +16,11 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
 
     public AzureTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
+        Argument.AssertNotNull(credential, nameof(credential));
+        Argument.AssertNotNull(_scopes, nameof(scopes));
+
         _credential = credential;
-        _scopes = scopes?.ToArray() ?? s_defaultAuthorizationScopes;
+        _scopes = scopes.ToArray();
         _refreshOffset = refreshOffset ?? s_defaultRefreshOffset;
     }
 
@@ -74,5 +77,4 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
     }
 
     private static readonly TimeSpan s_defaultRefreshOffset = TimeSpan.FromMinutes(5);
-    private static readonly string[] s_defaultAuthorizationScopes = ["https://cognitiveservices.azure.com/.default"];
 }
