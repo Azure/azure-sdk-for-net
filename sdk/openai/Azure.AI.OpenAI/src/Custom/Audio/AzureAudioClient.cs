@@ -23,7 +23,7 @@ internal partial class AzureAudioClient : AudioClient
         string deploymentName,
         Uri endpoint,
         AzureOpenAIClientOptions options)
-            : base(pipeline, model: deploymentName, endpoint, options)
+            : base(pipeline, model: deploymentName, endpoint, null)
     {
         options ??= new();
         _deploymentName = deploymentName;

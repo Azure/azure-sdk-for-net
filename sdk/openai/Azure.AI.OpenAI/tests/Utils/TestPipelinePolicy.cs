@@ -21,25 +21,15 @@ internal partial class TestPipelinePolicy : PipelinePolicy
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        InvokeActions(message);
+        _processRequestAction?.Invoke(message?.Request);
         ProcessNext(message, pipeline, currentIndex);
+        _processResponseAction?.Invoke(message?.Response);
     }
 
-    public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        InvokeActions(message);
-        return ProcessNextAsync(message, pipeline, currentIndex);
-    }
-
-    private void InvokeActions(PipelineMessage message)
-    {
-        if (message?.Request is not null)
-        {
-            _processRequestAction?.Invoke(message.Request);
-        }
-        if (message?.Response is not null)
-        {
-            _processResponseAction?.Invoke(message.Response);
-        }
+        _processRequestAction?.Invoke(message?.Request);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+        _processResponseAction?.Invoke(message?.Response);
     }
 }
