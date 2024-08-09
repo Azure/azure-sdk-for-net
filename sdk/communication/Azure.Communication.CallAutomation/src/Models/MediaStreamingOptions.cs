@@ -10,12 +10,13 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
         public MediaStreamingOptions(Uri transportUri, MediaStreamingTransport transportType,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
+            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
             MediaStreamingTransport = transportType;
             MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
+            StartMediaStreaming = startMediaStreaming;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
@@ -26,5 +27,8 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingContent MediaStreamingContent { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
         public MediaStreamingAudioChannel MediaStreamingAudioChannel { get; }
+
+        /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
+        public bool? StartMediaStreaming { get; set; }
     }
 }
