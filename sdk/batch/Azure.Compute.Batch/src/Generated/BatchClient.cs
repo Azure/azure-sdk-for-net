@@ -9312,11 +9312,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -9403,11 +9403,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -9772,11 +9772,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -9998,11 +9998,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10040,11 +10040,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10082,7 +10082,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10195,11 +10195,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10417,11 +10417,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10487,11 +10487,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10581,11 +10581,11 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             if (expand != null && !(expand is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("$expand", expand, ",", true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10654,7 +10654,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -10982,7 +10982,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -11166,7 +11166,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -11199,7 +11199,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -11235,7 +11235,7 @@ namespace Azure.Compute.Batch
             }
             if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$select", select, ",", true);
+                uri.AppendQuery("$select", select, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
