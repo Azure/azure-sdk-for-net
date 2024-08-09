@@ -34,5 +34,15 @@ namespace Azure.Provisioning.Storage
         {
             return new BlobService(scope);
         }
+
+        /// <summary>
+        /// Adds a <see cref="FileService"/> to the construct.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <returns></returns>
+        public static FileService AddFileService(this IConstruct scope)
+        {
+            return new FileService(scope);
+        }
     }
 }
