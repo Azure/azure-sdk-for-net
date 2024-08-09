@@ -19,8 +19,18 @@ namespace Azure.AI.Translation.Text.Samples
     /// </summary>
     public partial class Sample0_CreateClient : SamplesBase<TextTranslationTestEnvironment>
     {
+        public TextTranslationClient CreateClient()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            string region = TestEnvironment.Region;
+
+            TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
+            return client;
+        }
+
         [Test]
-        public TextTranslationClient CreateTextTranslationClient()
+        public void CreateTextTranslationClient()
         {
             #region Snippet:CreateTextTranslationClient
 
@@ -35,12 +45,10 @@ namespace Azure.AI.Translation.Text.Samples
 #endif
             TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
             #endregion
-
-            return client;
         }
 
         [Test]
-        public TextTranslationClient CreateTextTranslationClientWithKey()
+        public void CreateTextTranslationClientWithKey()
         {
             #region Snippet:CreateTextTranslationClientWithKey
 
@@ -53,11 +61,10 @@ namespace Azure.AI.Translation.Text.Samples
             TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey));
             #endregion
 
-            return client;
         }
 
         [Test]
-        public TextTranslationClient CreateTextTranslationClientWithRegion()
+        public void CreateTextTranslationClientWithRegion()
         {
             #region Snippet:CreateTextTranslationClientWithRegion
 
@@ -71,11 +78,10 @@ namespace Azure.AI.Translation.Text.Samples
             TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), region);
             #endregion
 
-            return client;
         }
 
         [Test]
-        public TextTranslationClient CreateTextTranslationClientWithEndpoint()
+        public void CreateTextTranslationClientWithEndpoint()
         {
             #region Snippet:CreateTextTranslationClientWithEndpoint
 
@@ -89,11 +95,10 @@ namespace Azure.AI.Translation.Text.Samples
             TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint));
             #endregion
 
-            return client;
         }
 
         [Test]
-        public TextTranslationClient CreateTextTranslationClientWithToken()
+        public void CreateTextTranslationClientWithToken()
         {
             #region Snippet:CreateTextTranslationClientWithToken
 
@@ -103,11 +108,10 @@ namespace Azure.AI.Translation.Text.Samples
 
             #endregion
 
-            return client;
         }
 
         [Test]
-        public TextTranslationClient CreateTextTranslationClientWithAad()
+        public void CreateTextTranslationClientWithAad()
         {
             #region Snippet:CreateTextTranslationClientWithAad
 
@@ -121,13 +125,12 @@ namespace Azure.AI.Translation.Text.Samples
 
             #endregion
 
-            return client;
         }
 
         [Test]
         public void HandleBadRequest()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:HandleBadRequest
             try
@@ -142,9 +145,9 @@ namespace Azure.AI.Translation.Text.Samples
         }
 
         [Test]
-        public async void HandleBadRequestAsync()
+        public async Task HandleBadRequestAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             try
             {

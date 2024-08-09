@@ -85,7 +85,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 new(Path.GetFileName(filePath), glossaryStream, "text/csv")
             };
-            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries, null);
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries);
 
             var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
 
@@ -112,7 +112,7 @@ namespace Azure.AI.Translation.Document.Tests
                 new(Path.GetFileName(filePath), glossaryStream, "text/csv"),
                 new(Path.GetFileName(filePath), glossaryStream, "text/csv")
             };
-            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries, null);
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries);
 
             try
             {

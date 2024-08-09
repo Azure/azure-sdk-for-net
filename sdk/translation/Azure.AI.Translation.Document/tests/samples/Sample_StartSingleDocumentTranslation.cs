@@ -6,13 +6,14 @@ using System.IO;
 using System.Text;
 using Azure.AI.Translation.Document.Tests;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Translation.Document.Samples
 {
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        public SingleDocumentTranslationClient CreateSingleDocumentTranslationClient()
+        public void CreateSingleDocumentTranslationClient()
         {
             #region Snippet:CreateSingleDocumentTranslationClient
 
@@ -25,14 +26,14 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
             SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
-
-            return client;
         }
 
         [Test]
-        public void StartSingleDocumentTranslation()
+        public async Task StartSingleDocumentTranslation()
         {
-            SingleDocumentTranslationClient client = CreateSingleDocumentTranslationClient();
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:StartSingleDocumentTranslation
             try
@@ -41,7 +42,7 @@ namespace Azure.AI.Translation.Document.Samples
                 using Stream fileStream = File.OpenRead(filePath);
                 var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
                 DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
-                var response = client.DocumentTranslate("hi", content);
+                var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
 
                 var requestString = File.ReadAllText(filePath);
                 var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
