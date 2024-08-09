@@ -175,7 +175,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Equal("Http", remoteDependencyData.Type);
             Assert.Equal(isSuccessfulRequest, remoteDependencyData.Success);
 
-            var expectedPropertiesCount = isSuccessfulRequest ? 4 : 5;
+            var expectedPropertiesCount = 4;
+
+            if (!isSuccessfulRequest && !hasException)
+            {
+                expectedPropertiesCount++;
+            }
+
             Assert.Equal(expectedPropertiesCount, remoteDependencyData.Properties.Count);
 
 #if NETFRAMEWORK
@@ -194,8 +200,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             }
 #endif
 
-            Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "network.protocol.version" && kvp.Value == "1.1");
             Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "_MS.ProcessedByMetricExtractors" && kvp.Value == "(Name: X,Ver:'1.1')");
+
+            if (isSuccessfulRequest)
+            {
+                Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "network.protocol.version" && kvp.Value == "1.1");
+            }
 
             if (!isSuccessfulRequest && !hasException)
             {
