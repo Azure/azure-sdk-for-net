@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    /// <summary> Details of the HealthDataAIServices DeidService. </summary>
-    public partial class DeidServiceProperties
+    /// <summary> The template for adding optional properties. </summary>
+    public partial class ManagedServiceIdentityUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,26 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeidServiceProperties"/>. </summary>
-        public DeidServiceProperties()
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        public ManagedServiceIdentityUpdate()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidServiceProperties"/>. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serviceUri"> Deid service url. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServiceProperties(ProvisioningState? provisioningState, Uri serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProvisioningState = provisioningState;
-            ServiceUri = serviceUri;
-            PrivateEndpointConnections = privateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
+            Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> PrivateEndpointConnections { get; }
-        /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> The type of managed identity assigned to this resource. </summary>
+        public ManagedServiceIdentityType? Type { get; set; }
+        /// <summary> The identities assigned to this resource by the user. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

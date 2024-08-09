@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DeidServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="deidServicePropertiei"> Deid service url. </param>
+        /// <param name="serviceUri"> Deid service url. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <returns> A new <see cref="Models.DeidServiceProperties"/> instance for mocking. </returns>
-        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, string deidServicePropertiei = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, Uri serviceUri = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             privateEndpointConnections ??= new List<HealthDataAIServicesPrivateEndpointConnection>();
 
-            return new DeidServiceProperties(provisioningState, deidServicePropertiei, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
+            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HealthDataAIServicesPrivateEndpointConnection"/>. </summary>
