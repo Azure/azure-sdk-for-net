@@ -17,6 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private readonly ConnectionVars _connectionVars;
         private readonly bool _isAadEnabled;
         private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
+        private LiveMetricsResource? _liveMetricsResource;
         private bool _disposedValue;
 
         public Manager(AzureMonitorOptions options, IPlatform platform)
@@ -34,8 +35,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 InitializeState();
             }
         }
-
-        private LiveMetricsResource? LiveMetricsResource { get; set; }
 
         public Func<LiveMetricsResource?>? LiveMetricsResourceFunc { get; set; }
 

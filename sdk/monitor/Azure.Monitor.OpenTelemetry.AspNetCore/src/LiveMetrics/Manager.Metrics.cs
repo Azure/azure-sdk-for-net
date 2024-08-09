@@ -23,13 +23,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
         public MonitoringDataPoint GetDataPoint()
         {
-            LiveMetricsResource ??= LiveMetricsResourceFunc?.Invoke();
+            _liveMetricsResource ??= LiveMetricsResourceFunc?.Invoke();
 
             var dataPoint = new MonitoringDataPoint(
                 version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                 invariantVersion: 5,
-                instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
+                instance: _liveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                roleName: _liveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
                 machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
                 streamId: _streamId,
                 isWebApp: false,
