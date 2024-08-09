@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // required - HTTP V2
             SemanticConventions.AttributeHttpRequestMethod,
             SemanticConventions.AttributeHttpResponseStatusCode,
-            SemanticConventions.AttributeNetworkProtocolVersion,
+            //SemanticConventions.AttributeNetworkProtocolVersion,
             SemanticConventions.AttributeServerAddress,
             SemanticConventions.AttributeServerPort,
             SemanticConventions.AttributeUrlFull,
@@ -45,12 +45,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetPeerName,
             SemanticConventions.AttributeNetPeerIp,
             SemanticConventions.AttributeNetPeerPort,
-            SemanticConventions.AttributeNetTransport,
-            SemanticConventions.AttributeNetHostIp,
+            //SemanticConventions.AttributeNetTransport,
+            //SemanticConventions.AttributeNetHostIp,
             SemanticConventions.AttributeNetHostPort,
             SemanticConventions.AttributeNetHostName,
-            SemanticConventions.AttributeComponent,
-            "otel.status_code",
+            //SemanticConventions.AttributeComponent,
+            //"otel.status_code",
 
             // required - RPC
             // SemanticConventions.AttributeRpcService,

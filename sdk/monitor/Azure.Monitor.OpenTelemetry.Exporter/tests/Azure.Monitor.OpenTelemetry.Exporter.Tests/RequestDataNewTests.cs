@@ -53,8 +53,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.False(requestData.Success);
             Assert.Null(requestData.Source);
-            Assert.True(requestData.Properties.Count == 1);
+            Assert.Equal(2, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
+            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
             Assert.True(requestData.Measurements.Count == 0);
         }
 
@@ -254,9 +255,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
             Assert.True(requestData.Success);
             Assert.Equal("my.servicebus.windows.net/queueName", requestData.Source);
-            Assert.True(requestData.Properties.Count == 1);
+            Assert.Equal(2, requestData.Properties.Count);
             Assert.Equal("bar", requestData.Properties["foo"]);
-            Assert.True(requestData.Measurements.Count == 0);
+            Assert.Equal("OK", requestData.Properties["otel.status_code"]);
+            Assert.Equal(0, requestData.Measurements.Count);
         }
 
         private ActivityLink AddActivityLink(long enqueuedTime)

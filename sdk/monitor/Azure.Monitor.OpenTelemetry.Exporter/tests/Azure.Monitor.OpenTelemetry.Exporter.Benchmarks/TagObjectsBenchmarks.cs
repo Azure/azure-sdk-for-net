@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             _partB_tagObjects = new Dictionary<string, object>
             {
-                [SemanticConventions.AttributeNetHostIp] = "127.0.0.1",
+                ["net.host.ip"] = "127.0.0.1",
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
                 [SemanticConventions.AttributeHttpHostPort] = "8888",

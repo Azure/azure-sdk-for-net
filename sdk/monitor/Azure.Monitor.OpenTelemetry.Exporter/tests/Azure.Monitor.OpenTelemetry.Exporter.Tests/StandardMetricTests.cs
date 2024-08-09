@@ -282,17 +282,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricTelemetry = metricTelemetryItems.Last()!;
             Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
             var metricData = (MetricsData)metricTelemetry.Data.BaseData;
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencySuccessKey, out var isSuccess));
-            Assert.Equal("True", isSuccess);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyResultCodeKey, out var resultCode));
-            Assert.Equal("0", resultCode);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
-            Assert.Equal("True", isAutoCollectedFlag);
+            Assert.Equal(8, metricData.Properties.Count);
+            Assert.Equal("True", metricData.Properties[StandardMetricConstants.DependencySuccessKey]);
+            Assert.Equal("0", metricData.Properties[StandardMetricConstants.DependencyResultCodeKey]);
+            Assert.Equal("True", metricData.Properties[StandardMetricConstants.IsAutoCollectedKey]);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out var cloudRoleName));
-            Assert.Equal("trace.service", cloudRoleName);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
-            Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
+            Assert.Equal("trace.service", metricData.Properties[StandardMetricConstants.CloudRoleNameKey]);
+            Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricData.Properties[StandardMetricConstants.MetricIdKey]);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
             if (isAzureSDKSpan)
             {
@@ -302,8 +298,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 Assert.Equal("messagingsystem", dependencyType);
             }
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
-            Assert.Equal("localhost/destination", dependencyTarget);
+            Assert.Equal("localhost/destination", metricData.Properties[StandardMetricConstants.DependencyTargetKey]);
         }
 
         [Theory]

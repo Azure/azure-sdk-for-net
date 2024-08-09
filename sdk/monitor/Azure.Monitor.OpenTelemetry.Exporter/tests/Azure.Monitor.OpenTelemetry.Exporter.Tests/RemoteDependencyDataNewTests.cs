@@ -95,8 +95,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.True(remoteDependencyData.Properties.Count == 0);
-            Assert.True(remoteDependencyData.Measurements.Count == 0);
+            Assert.Equal(1, remoteDependencyData.Properties.Count);
+            Assert.Equal("OK", remoteDependencyData.Properties["otel.status_code"]);
+            Assert.Equal(0, remoteDependencyData.Measurements.Count);
         }
 
         [Fact]
@@ -151,8 +152,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal("my.servicebus.windows.net/queueName", remoteDependencyData.Target);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
-            Assert.True(remoteDependencyData.Properties.Count == 0);
-            Assert.True(remoteDependencyData.Measurements.Count == 0);
+            Assert.Equal(1, remoteDependencyData.Properties.Count);
+            Assert.Equal("OK", remoteDependencyData.Properties["otel.status_code"]);
+            Assert.Equal(0, remoteDependencyData.Measurements.Count);
         }
     }
 }
