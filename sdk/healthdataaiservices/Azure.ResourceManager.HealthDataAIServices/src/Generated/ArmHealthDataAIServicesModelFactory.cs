@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <returns> A new <see cref="Models.DeidServiceProperties"/> instance for mocking. </returns>
-        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, Uri serviceUri = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static DeidServiceProperties DeidServiceProperties(ProvisioningState? provisioningState = null, string serviceUri = null, IEnumerable<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             privateEndpointConnections ??= new List<HealthDataAIServicesPrivateEndpointConnection>();
 
