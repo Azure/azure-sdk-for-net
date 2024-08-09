@@ -53,21 +53,24 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciPackageVersionInfo"/>. </summary>
         /// <param name="packageType"> Package type. </param>
         /// <param name="version"> Package version. </param>
-        /// <param name="lastUpdated"> Last time this component was updated. </param>
+        /// <param name="lastUpdatedOn"> Last time this component was updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciPackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciPackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageType = packageType;
             Version = version;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Package type. </summary>
+        [WirePath("packageType")]
         public string PackageType { get; set; }
         /// <summary> Package version. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Last time this component was updated. </summary>
-        public DateTimeOffset? LastUpdated { get; set; }
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
     }
 }

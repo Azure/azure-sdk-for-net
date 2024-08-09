@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Key that allow grouping/filtering individual tests. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
         /// <summary> Value of the key that allow grouping/filtering individual tests. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

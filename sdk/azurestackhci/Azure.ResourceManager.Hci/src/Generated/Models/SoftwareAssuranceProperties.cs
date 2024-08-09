@@ -53,21 +53,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
-        /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
+        /// <param name="lastUpdatedOn"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftwareAssuranceStatus = softwareAssuranceStatus;
             SoftwareAssuranceIntent = softwareAssuranceIntent;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Status of the Software Assurance for the cluster. </summary>
-        public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; set; }
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
+        [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }
         /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
-        public DateTimeOffset? LastUpdated { get; }
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

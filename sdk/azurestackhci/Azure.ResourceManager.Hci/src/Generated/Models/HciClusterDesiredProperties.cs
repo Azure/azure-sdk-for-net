@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Desired state of Windows Server Subscription. </summary>
+        [WirePath("windowsServerSubscription")]
         public WindowsServerSubscription? WindowsServerSubscription { get; set; }
         /// <summary> Desired level of diagnostic data emitted by the cluster. </summary>
+        [WirePath("diagnosticLevel")]
         public HciClusterDiagnosticLevel? DiagnosticLevel { get; set; }
     }
 }

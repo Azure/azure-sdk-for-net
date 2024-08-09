@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSKUResourcesByOfferForTheHCICluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/ListSkusByOffer.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListSkusByOffer.json
             // this example is just showing the usage of "Skus_ListByOffer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation and iterate over the result
             await foreach (HciSkuResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSku()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetSku.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetSku.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetSku()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetSku.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetSku.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetSku()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetSku.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetSku.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OfferResource created on azure
-            // for more information of creating OfferResource, please refer to the document of OfferResource
+            // this example assumes you already have this HciClusterOfferResource created on azure
+            // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";
             string offerName = "offer1";
-            ResourceIdentifier offerResourceId = OfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
-            OfferResource offer = client.GetOfferResource(offerResourceId);
+            ResourceIdentifier hciClusterOfferResourceId = HciClusterOfferResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName, offerName);
+            HciClusterOfferResource hciClusterOffer = client.GetHciClusterOfferResource(hciClusterOfferResourceId);
 
             // get the collection of this HciSkuResource
-            HciSkuCollection collection = offer.GetHciSkus();
+            HciSkuCollection collection = hciClusterOffer.GetHciSkus();
 
             // invoke the operation
             string skuName = "sku1";

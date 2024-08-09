@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Gets or sets the properties. </summary>
         internal SoftwareAssuranceChangeRequestProperties Properties { get; set; }
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
+        [WirePath("properties.softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent
         {
             get => Properties is null ? default : Properties.SoftwareAssuranceIntent;

@@ -182,7 +182,7 @@ string targetVersion = "1.0.18062.0"; //replace with extension version you want 
 ResourceIdentifier arcExtensionResourceId = ArcExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, "default", extensionName);
 ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 // Invoke Upgrade operation
-ExtensionUpgradeContent content = new ExtensionUpgradeContent()
+ArcExtensionUpgradeContent content = new ArcExtensionUpgradeContent()
 {
     TargetVersion = targetVersion,
 };

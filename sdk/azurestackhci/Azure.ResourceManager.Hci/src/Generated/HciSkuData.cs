@@ -81,16 +81,22 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Provisioning State. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Identifier of the Publisher for the offer. </summary>
+        [WirePath("properties.publisherId")]
         public string PublisherId { get; set; }
         /// <summary> Identifier of the Offer for the sku. </summary>
+        [WirePath("properties.offerId")]
         public string OfferId { get; set; }
         /// <summary> JSON serialized catalog content of the sku offer. </summary>
+        [WirePath("properties.content")]
         public string Content { get; set; }
         /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
+        [WirePath("properties.contentVersion")]
         public string ContentVersion { get; set; }
         /// <summary> Array of SKU mappings. </summary>
+        [WirePath("properties.skuMappings")]
         public IList<HciSkuMappings> SkuMappings { get; }
     }
 }

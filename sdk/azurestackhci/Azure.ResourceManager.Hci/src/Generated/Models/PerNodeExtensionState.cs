@@ -55,27 +55,32 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="state"> State of Arc Extension in this node. </param>
-        /// <param name="instanceView"> The extension instance view. </param>
+        /// <param name="extensionInstanceView"> The extension instance view. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, HciExtensionInstanceView instanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Extension = extension;
             TypeHandlerVersion = typeHandlerVersion;
             State = state;
-            InstanceView = instanceView;
+            ExtensionInstanceView = extensionInstanceView;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the node in HCI Cluster. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Fully qualified resource ID for the particular Arc Extension on this node. </summary>
+        [WirePath("extension")]
         public string Extension { get; }
         /// <summary> Specifies the version of the script handler. </summary>
+        [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
         /// <summary> State of Arc Extension in this node. </summary>
+        [WirePath("state")]
         public NodeExtensionState? State { get; }
         /// <summary> The extension instance view. </summary>
-        public HciExtensionInstanceView InstanceView { get; }
+        [WirePath("instanceView")]
+        public ArcExtensionInstanceView ExtensionInstanceView { get; }
     }
 }

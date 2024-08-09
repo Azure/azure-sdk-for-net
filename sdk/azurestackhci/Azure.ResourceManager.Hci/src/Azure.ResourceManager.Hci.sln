@@ -1,0 +1,21 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Hci", "Azure.ResourceManager.Hci.csproj", "{6A3C451A-79A1-4E15-904E-4BF611BB4DCA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A3C451A-79A1-4E15-904E-4BF611BB4DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3C451A-79A1-4E15-904E-4BF611BB4DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3C451A-79A1-4E15-904E-4BF611BB4DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3C451A-79A1-4E15-904E-4BF611BB4DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E301649-EC2A-4395-B2F7-D9C07815F46A}
+	EndGlobalSection
+EndGlobal
