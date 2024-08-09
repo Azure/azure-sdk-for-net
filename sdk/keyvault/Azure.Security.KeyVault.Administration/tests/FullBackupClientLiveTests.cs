@@ -51,7 +51,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
-        [Ignore("Service is not ready yet")]
         public async Task PreBackupAndPreRestore()
         {
             var source = new CancellationTokenSource(Timeout);

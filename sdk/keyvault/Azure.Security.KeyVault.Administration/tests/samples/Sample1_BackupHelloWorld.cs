@@ -73,7 +73,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [AsyncOnly]
-        [Ignore("Service is not ready yet")]
         public async Task PreBackupAndPreRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;
