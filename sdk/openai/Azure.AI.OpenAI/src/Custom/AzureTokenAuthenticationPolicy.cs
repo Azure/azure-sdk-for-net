@@ -17,7 +17,7 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
     public AzureTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
-        Argument.AssertNotNull(_scopes, nameof(scopes));
+        Argument.AssertNotNull(scopes, nameof(scopes));
 
         _credential = credential;
         _scopes = scopes.ToArray();
