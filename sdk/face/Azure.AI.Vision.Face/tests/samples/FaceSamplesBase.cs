@@ -40,6 +40,20 @@ namespace Azure.AI.Vision.Face.Samples
             return sessionClient;
         }
 
+        public FaceServiceClient CreateServiceClient()
+        {
+            #region Snippet:CreateFaceServiceClient
+#if SNIPPET
+            Uri endpoint = new Uri("<your endpoint>");
+#else
+            var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            var serviceClient = new FaceServiceClient(endpoint, credential);
+            #endregion
+            return serviceClient;
+        }
+
         public FaceClient CreateClientWithKey()
         {
             #region Snippet:CreateFaceClientWithKey
