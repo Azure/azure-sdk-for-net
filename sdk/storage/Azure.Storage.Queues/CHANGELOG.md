@@ -1,5 +1,22 @@
 # Release History
 
+## 12.20.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.20.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+- Add Queue Permissions enum to represent QueueAccessPolicy.Permissions #37653
+
 ## 12.19.1 (2024-07-25)
 
 ### Bugs Fixed
