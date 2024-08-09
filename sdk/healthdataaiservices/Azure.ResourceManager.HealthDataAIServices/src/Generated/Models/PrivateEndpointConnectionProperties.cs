@@ -48,27 +48,27 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(HealthDataAIServicesPrivateLinkServiceConnectionState connectionState)
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
+        public PrivateEndpointConnectionProperties(HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
-            Argument.AssertNotNull(connectionState, nameof(connectionState));
+            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
 
             GroupIds = new ChangeTrackingList<string>();
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, SubResource privateEndpoint, HealthDataAIServicesPrivateLinkServiceConnectionState connectionState, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, SubResource privateEndpoint, HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public HealthDataAIServicesPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public HealthDataAIServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public HealthDataAIServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
