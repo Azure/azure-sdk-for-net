@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.HealthDataAIServices.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Tests
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
 
             // Get
             DeidServiceResource deidServiceResource = (await rg.GetDeidServices().GetAsync(deidServiceName)).Value;
-            Assert.AreEqual(ProvisioningState.Succeeded, deidServiceResource.Data.Properties.ProvisioningState);
+            Assert.AreEqual(HealthDataAIServiceProvisioningState.Succeeded, deidServiceResource.Data.Properties.ProvisioningState);
             Assert.AreEqual(deidServiceName, deidServiceResource.Data.Name);
             Assert.AreEqual(Location, deidServiceResource.Data.Location);
             Assert.IsTrue(deidServiceResource.Data.Properties.ServiceUri.ToString().Contains("deid"), "ServiceUri should contain 'deid'");

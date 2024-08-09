@@ -1,16 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.HealthDataAIServices;
-using Azure.ResourceManager.HealthDataAIServices.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Tests
@@ -51,10 +47,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
             string privateEndpointName = Recording.GenerateAssetName("deid-pe-");
             PrivateEndpointResource _ = await CreatePrivateEndpoint(privateEndpointName, rg, deidService.Id);
 
-            PrivateEndpointConnectionResourceCollection peCollection = deidService.GetPrivateEndpointConnectionResources();
+            HealthDataAIServicePrivateEndpointConnectionResourceCollection peCollection = deidService.GetHealthDataAIServicePrivateEndpointConnectionResources();
 
             int count = 0;
-            await foreach (PrivateEndpointConnectionResource peI in peCollection.GetAllAsync())
+            await foreach (HealthDataAIServicePrivateEndpointConnectionResource peI in peCollection.GetAllAsync())
             {
                 count++;
                 Assert.IsTrue(peI.Data.Name.StartsWith(privateEndpointName), $"PrivateEndpointConnection ({peI.Data.Name}) name should start with {privateEndpointName}.");
