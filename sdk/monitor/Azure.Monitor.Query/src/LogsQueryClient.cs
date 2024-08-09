@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
@@ -56,6 +57,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
         {
         }
@@ -66,6 +68,7 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LogsQueryClient(Uri endpoint, TokenCredential credential, LogsQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -73,7 +76,16 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsQueryAudience.AzurePublicCloud : options.Audience)}";
+            if (string.IsNullOrEmpty(options.Audience?.ToString()))
+            {
+                options.Audience = endpoint.OriginalString;
+            }
+            else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
+            {
+                throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience which is regionally specific, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
+            }
+
+            var authorizationScope = $"{options.Audience}";
             authorizationScope += "//.default";
             var scopes = new List<string> { authorizationScope };
 
