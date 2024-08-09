@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Contains the custom label classification with detected language results. </summary>
-    public partial class CustomLabelClassificationResultWithDocumentDetectedLanguage
+    /// <summary> Contains the list of detected custom entities result for the documents along with detected language. </summary>
+    public partial class CustomEntitiesActionResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.AI.Language.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResultWithDocumentDetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesActionResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <param name="documents"> Response by document. </param>
+        /// <param name="documents"> Enumeration of the document results with detected language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<ClassificationDocumentResultWithDetectedLanguage> documents)
+        internal CustomEntitiesActionResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<EntityActionResult> documents)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(projectName, nameof(projectName));
@@ -65,14 +65,14 @@ namespace Azure.AI.Language.Text
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResultWithDocumentDetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesActionResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <param name="documents"> Response by document. </param>
+        /// <param name="documents"> Enumeration of the document results with detected language. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<ClassificationDocumentResultWithDetectedLanguage> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomEntitiesActionResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<EntityActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
@@ -82,8 +82,8 @@ namespace Azure.AI.Language.Text
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResultWithDocumentDetectedLanguage"/> for deserialization. </summary>
-        internal CustomLabelClassificationResultWithDocumentDetectedLanguage()
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesActionResult"/> for deserialization. </summary>
+        internal CustomEntitiesActionResult()
         {
         }
 
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Text
         public string ProjectName { get; }
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
-        /// <summary> Response by document. </summary>
-        public IReadOnlyList<ClassificationDocumentResultWithDetectedLanguage> Documents { get; }
+        /// <summary> Enumeration of the document results with detected language. </summary>
+        public IReadOnlyList<EntityActionResult> Documents { get; }
     }
 }

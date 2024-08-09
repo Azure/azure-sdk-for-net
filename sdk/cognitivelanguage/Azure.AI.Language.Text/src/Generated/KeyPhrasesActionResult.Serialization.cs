@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class KeyPhrasesDocumentResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>
+    public partial class KeyPhrasesActionResult : IUtf8JsonSerializable, IJsonModel<KeyPhrasesActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhrasesActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyPhrasesActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhrasesActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.AI.Language.Text
             writer.WriteEndObject();
         }
 
-        KeyPhrasesDocumentResultWithDetectedLanguage IJsonModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyPhrasesActionResult IJsonModel<KeyPhrasesActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhrasesActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement, options);
+            return DeserializeKeyPhrasesActionResult(document.RootElement, options);
         }
 
-        internal static KeyPhrasesDocumentResultWithDetectedLanguage DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyPhrasesActionResult DeserializeKeyPhrasesActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyPhrasesDocumentResultWithDetectedLanguage(
+            return new KeyPhrasesActionResult(
                 id,
                 warnings,
                 statistics,
@@ -157,43 +157,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyPhrasesActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhrasesActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyPhrasesDocumentResultWithDetectedLanguage IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyPhrasesActionResult IPersistableModel<KeyPhrasesActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhrasesActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement, options);
+                        return DeserializeKeyPhrasesActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhrasesDocumentResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhrasesActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyPhrasesDocumentResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyPhrasesActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KeyPhrasesDocumentResultWithDetectedLanguage FromResponse(Response response)
+        internal static KeyPhrasesActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(document.RootElement);
+            return DeserializeKeyPhrasesActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
