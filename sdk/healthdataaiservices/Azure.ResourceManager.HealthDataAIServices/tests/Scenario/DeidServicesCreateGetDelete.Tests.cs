@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
 
             // Get
             DeidServiceResource deidServiceResource = (await rg.GetDeidServices().GetAsync(deidServiceName)).Value;
-            Assert.AreEqual(HealthDataAIServiceProvisioningState.Succeeded, deidServiceResource.Data.Properties.ProvisioningState);
+            Assert.AreEqual(HealthDataAIServicesProvisioningState.Succeeded, deidServiceResource.Data.Properties.ProvisioningState);
             Assert.AreEqual(deidServiceName, deidServiceResource.Data.Name);
             Assert.AreEqual(Location, deidServiceResource.Data.Location);
             Assert.IsTrue(deidServiceResource.Data.Properties.ServiceUri.ToString().Contains("deid"), "ServiceUri should contain 'deid'");

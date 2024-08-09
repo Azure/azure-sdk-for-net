@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Tests
             string privateEndpointName = Recording.GenerateAssetName("deid-pe-");
             PrivateEndpointResource _ = await CreatePrivateEndpoint(privateEndpointName, rg, deidService.Id);
 
-            HealthDataAIServicePrivateEndpointConnectionResourceCollection peCollection = deidService.GetHealthDataAIServicePrivateEndpointConnectionResources();
+            var peCollection = deidService.GetHealthDataAIServicesPrivateEndpointConnectionResources();
 
             int count = 0;
-            await foreach (HealthDataAIServicePrivateEndpointConnectionResource peI in peCollection.GetAllAsync())
+            await foreach (var peI in peCollection.GetAllAsync())
             {
                 count++;
                 Assert.IsTrue(peI.Data.Name.StartsWith(privateEndpointName), $"PrivateEndpointConnection ({peI.Data.Name}) name should start with {privateEndpointName}.");
