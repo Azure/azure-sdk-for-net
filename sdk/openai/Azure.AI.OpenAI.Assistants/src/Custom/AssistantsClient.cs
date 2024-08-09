@@ -24,6 +24,7 @@ public partial class AssistantsClient
     private static readonly string s_openAIEndpoint = "https://api.openai.com/v1";
 
     private readonly string _apiVersion;
+    private string _openAIAssistantVersion = "v1";
     private bool _isConfiguredForAzure;
 
     /// <summary>
@@ -536,6 +537,11 @@ public partial class AssistantsClient
         return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
 
+    public void SetOpenAIAssistantVersion(string version)
+    {
+        _openAIAssistantVersion = version;
+    }
+
     /*
      * CUSTOM CODE DESCRIPTION:
      *
@@ -566,7 +572,7 @@ public partial class AssistantsClient
         else
         {
             uri.AppendPath(operationPath, escape: false);
-            request.Headers.Add("OpenAI-Beta", "assistants=v1");
+            request.Headers.Add("OpenAI-Beta", $"assistants={_openAIAssistantVersion}");
         }
         foreach ((string key, string value) in queryParameters)
         {
