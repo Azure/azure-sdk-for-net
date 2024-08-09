@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_ListByDeidService</description>
+        /// <description>PrivateEndpointConnectionResource_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_ListByDeidService</description>
+        /// <description>PrivateEndpointConnectionResource_ListByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

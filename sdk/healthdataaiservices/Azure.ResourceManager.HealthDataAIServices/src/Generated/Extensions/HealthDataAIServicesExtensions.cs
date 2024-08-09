@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidServices_ListBySubscription</description>
+        /// <description>DeidService_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidServices_ListBySubscription</description>
+        /// <description>DeidService_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

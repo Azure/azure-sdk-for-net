@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateEndpointConnection"/>. </summary>
-        public HealthDataAIServicesPrivateEndpointConnection()
+        internal HealthDataAIServicesPrivateEndpointConnection()
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HealthDataAIServicesPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        /// <summary> The private endpoint connection properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; }
     }
 }

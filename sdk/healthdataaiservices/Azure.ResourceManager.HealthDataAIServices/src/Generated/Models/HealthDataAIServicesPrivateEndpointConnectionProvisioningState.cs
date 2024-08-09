@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static HealthDataAIServicesPrivateEndpointConnectionProvisioningState Succeeded { get; } = new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Connection is being created. </summary>
         public static HealthDataAIServicesPrivateEndpointConnectionProvisioningState Creating { get; } = new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Connection is being deleted. </summary>
         public static HealthDataAIServicesPrivateEndpointConnectionProvisioningState Deleting { get; } = new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Connection provisioning has failed. </summary>
         public static HealthDataAIServicesPrivateEndpointConnectionProvisioningState Failed { get; } = new HealthDataAIServicesPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="HealthDataAIServicesPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HealthDataAIServicesPrivateEndpointConnectionProvisioningState left, HealthDataAIServicesPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
