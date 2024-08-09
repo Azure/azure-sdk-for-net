@@ -20,6 +20,7 @@ omitted_paths:
   - sdk/resourcemanager/*
   - src/*
   - tools/*
+  - sdk/**/tools/*
 
 language: net
 root_check_enabled: True
@@ -88,7 +89,6 @@ known_presence_issues:
 known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
-  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','Track 1']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','Track 1']

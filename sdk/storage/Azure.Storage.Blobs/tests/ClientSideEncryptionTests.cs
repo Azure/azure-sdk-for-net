@@ -73,7 +73,9 @@ namespace Azure.Storage.Blobs.Test
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
             long nonceCounter = 1;
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#if NET8_0_OR_GREATER
+            using var gcm = new AesGcm(key, V2.TagSize);
+#elif NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             using var gcm = new AesGcm(key);
 #else
             using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);
@@ -1378,6 +1380,32 @@ namespace Azure.Storage.Blobs.Test
             await CallCorrectKeyUpdateAsync(blob, useOverrides, mockKey2.Object, mockKeyResolver, version);
 
             // Assert
+            if (IsAsync)
+            {
+                mockKey1.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKeyAsync(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+
+                var mockKey1_firstInvocation = mockKey1.Invocations.First();
+                var mockKey1_lastInvocation = mockKey1.Invocations.Last();
+                var mockKey2_firstInvocation = mockKey2.Invocations.First();
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey1_firstInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKeyAsync), mockKey1_lastInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKeyAsync), mockKey2_firstInvocation.Method.Name);
+            }
+            else
+            {
+                mockKey1.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey1.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+                mockKey2.Verify(k => k.WrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), s_cancellationToken), Times.Once);
+
+                var mockKey1_firstInvocation = mockKey1.Invocations.First();
+                var mockKey1_lastInvocation = mockKey1.Invocations.Last();
+                var mockKey2_firstInvocation = mockKey2.Invocations.First();
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey1_firstInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.UnwrapKey), mockKey1_lastInvocation.Method.Name);
+                Assert.AreEqual(nameof(IKeyEncryptionKey.WrapKey), mockKey2_firstInvocation.Method.Name);
+            }
             await AssertKeyAsync(blob, mockKey2.Object, cek);
         }
 

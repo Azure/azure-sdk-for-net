@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The usages value. </summary>
+        [WirePath("value")]
         public int Value { get; }
         /// <summary> The quota or usages limit types. </summary>
+        [WirePath("usagesType")]
         public QuotaUsagesType? UsagesType { get; }
     }
 }

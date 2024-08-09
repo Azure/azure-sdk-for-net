@@ -181,6 +181,14 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
     }
+    public abstract partial class OperationResult : System.ClientModel.ClientResult
+    {
+        protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public abstract bool IsCompleted { get; protected set; }
+        public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
+        public abstract void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {
