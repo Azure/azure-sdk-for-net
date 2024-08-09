@@ -10,18 +10,27 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Instrumentation.Http;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Tests;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
     [Collection("InstrumentationLibraries")]
     public class HttpClientInstrumentationTests
     {
+        private readonly TelemetryItemOutputHelper _telemetryOutput;
+
+        public HttpClientInstrumentationTests(ITestOutputHelper output)
+        {
+            _telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
         [Theory]
         [InlineData(null, 200)]
         [InlineData("?key=value", 200)]
@@ -103,6 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             tracerProvider.Shutdown();
 
             // ASSERT
+            _telemetryOutput.Write(telemetryItems);
             WaitForActivityExport(telemetryItems, x => x.Name == "RemoteDependency");
             var activity = activities.Single();
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -165,7 +175,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Equal("Http", remoteDependencyData.Type);
             Assert.Equal(isSuccessfulRequest, remoteDependencyData.Success);
 
-            var expectedPropertiesCount = isSuccessfulRequest ? 3 : 4;
+            var expectedPropertiesCount = isSuccessfulRequest ? 4 : 5;
             Assert.Equal(expectedPropertiesCount, remoteDependencyData.Properties.Count);
 
 #if NETFRAMEWORK
@@ -184,6 +194,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             }
 #endif
 
+            Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "network.protocol.version" && kvp.Value == "1.1");
             Assert.Contains(remoteDependencyData.Properties, kvp => kvp.Key == "_MS.ProcessedByMetricExtractors" && kvp.Value == "(Name: X,Ver:'1.1')");
 
             if (!isSuccessfulRequest && !hasException)

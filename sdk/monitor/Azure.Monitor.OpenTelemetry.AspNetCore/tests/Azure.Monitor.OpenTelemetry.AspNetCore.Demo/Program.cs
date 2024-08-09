@@ -8,10 +8,28 @@ using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Instrumentation.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
+builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.FilterHttpRequestMessage = (httpRequestMessage) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        //return true;
+
+        if (httpRequestMessage.RequestUri?.Host.Equals("www.bing.com") ?? false)
+        {
+            return false;
+        }
+
+        return true;
+    };
+});
 
 /*
 builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
@@ -29,6 +47,7 @@ app.MapGet("/", () =>
 
     using var client = new HttpClient();
     var response = client.GetAsync("https://www.bing.com/").Result;
+    var response2 = client.GetAsync("https://www.google.com/").Result;
 
     return $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}";
 });
