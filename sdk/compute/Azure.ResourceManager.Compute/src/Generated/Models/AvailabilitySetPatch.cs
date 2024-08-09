@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(tags, serializedAdditionalRawData)
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
+        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachines = virtualMachines;
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
+            ScheduledEventsPolicy = scheduledEventsPolicy;
         }
 
         /// <summary> Sku of the availability set. </summary>
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
+        /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </summary>
+        public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
     }
 }

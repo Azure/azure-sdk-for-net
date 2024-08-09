@@ -78,8 +78,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.Compute
             ReplicationState = replicationState;
             SourceResourceLocation = sourceResourceLocation;
             SecurityProfile = securityProfile;
+            LogicalSectorSize = logicalSectorSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -135,5 +137,7 @@ namespace Azure.ResourceManager.Compute
         public AzureLocation? SourceResourceLocation { get; }
         /// <summary> Contains the security related information for the resource. </summary>
         public DiskSecurityProfile SecurityProfile { get; }
+        /// <summary> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </summary>
+        public int? LogicalSectorSize { get; }
     }
 }

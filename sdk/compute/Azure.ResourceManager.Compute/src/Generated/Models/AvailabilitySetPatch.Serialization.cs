@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,6 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<WritableSubResource> virtualMachines = default;
             WritableSubResource proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,6 +223,15 @@ namespace Azure.ResourceManager.Compute.Models
                             statuses = array;
                             continue;
                         }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -234,7 +249,8 @@ namespace Azure.ResourceManager.Compute.Models
                 platformFaultDomainCount,
                 virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
                 proximityPlacementGroup,
-                statuses ?? new ChangeTrackingList<InstanceViewStatus>());
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                scheduledEventsPolicy);
         }
 
         BinaryData IPersistableModel<AvailabilitySetPatch>.Write(ModelReaderWriterOptions options)
