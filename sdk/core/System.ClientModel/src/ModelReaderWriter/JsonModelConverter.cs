@@ -46,8 +46,12 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override IJsonModel<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, _options)!;
+        var iJsonModel = ModelReaderWriter.GetObjectInstance(typeToConvert) as IJsonModel<object>;
+        if (iJsonModel is null)
+        {
+            throw new InvalidOperationException($"Either {typeToConvert.Name} or the proxy defined needs to implement IJsonModel");
+        }
+        return (IJsonModel<object>)iJsonModel.Create(ref reader, _options);
     }
 
     /// <inheritdoc/>
