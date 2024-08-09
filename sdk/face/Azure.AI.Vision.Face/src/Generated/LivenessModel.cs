@@ -22,19 +22,13 @@ namespace Azure.AI.Vision.Face
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string V20200215Preview01Value = "2020-02-15-preview.01";
-        private const string V20211112Preview03Value = "2021-11-12-preview.03";
         private const string V20221015Preview04Value = "2022-10-15-preview.04";
-        private const string V20230302Preview05Value = "2023-03-02-preview.05";
+        private const string V20231220Preview06Value = "2023-12-20-preview.06";
 
-        /// <summary> 2020-02-15-preview.01. </summary>
-        public static LivenessModel V20200215Preview01 { get; } = new LivenessModel(V20200215Preview01Value);
-        /// <summary> 2021-11-12-preview.03. </summary>
-        public static LivenessModel V20211112Preview03 { get; } = new LivenessModel(V20211112Preview03Value);
         /// <summary> 2022-10-15-preview.04. </summary>
         public static LivenessModel V20221015Preview04 { get; } = new LivenessModel(V20221015Preview04Value);
-        /// <summary> 2023-03-02-preview.05. </summary>
-        public static LivenessModel V20230302Preview05 { get; } = new LivenessModel(V20230302Preview05Value);
+        /// <summary> 2023-12-20-preview.06. </summary>
+        public static LivenessModel V20231220Preview06 { get; } = new LivenessModel(V20231220Preview06Value);
         /// <summary> Determines if two <see cref="LivenessModel"/> values are the same. </summary>
         public static bool operator ==(LivenessModel left, LivenessModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivenessModel"/> values are not the same. </summary>
