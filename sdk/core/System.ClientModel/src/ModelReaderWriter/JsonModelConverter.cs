@@ -12,13 +12,13 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-internal class JsonModelConverter : JsonConverter<IJsonModel<object>>
+public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 {
     /// <summary>
     /// Gets the <see cref="ModelReaderWriterOptions"/> used to read and write models.
     /// </summary>
-    public ModelReaderWriterOptions Options { get; }
+    private ModelReaderWriterOptions _options { get; }
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -32,7 +32,7 @@ internal class JsonModelConverter : JsonConverter<IJsonModel<object>>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     public JsonModelConverter(ModelReaderWriterOptions options)
     {
-        Options = options;
+        _options = options;
     }
 
     /// <inheritdoc/>
@@ -47,7 +47,7 @@ internal class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, Options)!;
+        return (IJsonModel<object>)ModelReaderWriter.Read(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, _options)!;
     }
 
     /// <inheritdoc/>
@@ -55,6 +55,6 @@ internal class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        value.Write(writer, Options);
+        value.Write(writer, _options);
     }
 }

@@ -39,7 +39,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var stjOptions = new JsonSerializerOptions
             {
-                Converters = { new ModelJsonConverter() }
+                Converters = { new JsonModelConverter() }
             };
 
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
