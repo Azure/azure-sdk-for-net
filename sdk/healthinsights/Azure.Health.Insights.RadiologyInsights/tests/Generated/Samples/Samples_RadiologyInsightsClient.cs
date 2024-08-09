@@ -19,23 +19,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion()
+        public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                patients = new object[]
-            {
-new
-{
-id = "<id>",
-}
-            },
-            });
-            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
+            using RequestContent content = RequestContent.Create(new object());
+            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -46,23 +37,14 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Async()
+        public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                patients = new object[]
-            {
-new
-{
-id = "<id>",
-}
-            },
-            });
-            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
+            using RequestContent content = RequestContent.Create(new object());
+            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -73,39 +55,33 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Convenience()
+        public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-            });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
+            RadiologyInsightsJob resource = new RadiologyInsightsJob();
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Convenience_Async()
+        public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-            });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
+            RadiologyInsightsJob resource = new RadiologyInsightsJob();
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters()
+        public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -113,12 +89,14 @@ new PatientRecord("<id>")
 
             using RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
+                jobData = new
+                {
+                    patients = new object[]
             {
 new
 {
 id = "<id>",
-info = new
+details = new
 {
 sex = "female",
 birthDate = "2022-05-10",
@@ -284,7 +262,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T18:57:31.2311892Z",
+createdAt = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -300,11 +278,11 @@ orderedProcedures = new object[]
 {
 new
 {
+description = "<description>",
 extension = new object[]
 {
 null
 },
-description = "<description>",
 }
 },
 encounterId = "<encounterId>",
@@ -318,31 +296,32 @@ value = "<value>",
 },
 }
             },
-                configuration = new
-                {
-                    verbose = true,
-                    includeEvidence = true,
-                    inferenceTypes = new object[]
+                    configuration = new
+                    {
+                        verbose = true,
+                        includeEvidence = true,
+                        inferenceTypes = new object[]
             {
 "ageMismatch"
             },
-                    inferenceOptions = new
-                    {
-                        followupRecommendationOptions = new
+                        inferenceOptions = new
                         {
-                            includeRecommendationsWithNoSpecifiedModality = true,
-                            includeRecommendationsInReferences = true,
-                            provideFocusedSentenceEvidence = true,
+                            followupRecommendationOptions = new
+                            {
+                                includeRecommendationsWithNoSpecifiedModality = true,
+                                includeRecommendationsInReferences = true,
+                                provideFocusedSentenceEvidence = true,
+                            },
+                            findingOptions = new
+                            {
+                                provideFocusedSentenceEvidence = true,
+                            },
                         },
-                        findingOptions = new
-                        {
-                            provideFocusedSentenceEvidence = true,
-                        },
+                        locale = "<locale>",
                     },
-                    locale = "<locale>",
                 },
             });
-            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -433,7 +412,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Async()
+        public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -441,12 +420,14 @@ value = "<value>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                patients = new object[]
+                jobData = new
+                {
+                    patients = new object[]
             {
 new
 {
 id = "<id>",
-info = new
+details = new
 {
 sex = "female",
 birthDate = "2022-05-10",
@@ -612,7 +593,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T18:57:31.2311892Z",
+createdAt = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -628,11 +609,11 @@ orderedProcedures = new object[]
 {
 new
 {
+description = "<description>",
 extension = new object[]
 {
 null
 },
-description = "<description>",
 }
 },
 encounterId = "<encounterId>",
@@ -646,31 +627,32 @@ value = "<value>",
 },
 }
             },
-                configuration = new
-                {
-                    verbose = true,
-                    includeEvidence = true,
-                    inferenceTypes = new object[]
+                    configuration = new
+                    {
+                        verbose = true,
+                        includeEvidence = true,
+                        inferenceTypes = new object[]
             {
 "ageMismatch"
             },
-                    inferenceOptions = new
-                    {
-                        followupRecommendationOptions = new
+                        inferenceOptions = new
                         {
-                            includeRecommendationsWithNoSpecifiedModality = true,
-                            includeRecommendationsInReferences = true,
-                            provideFocusedSentenceEvidence = true,
+                            followupRecommendationOptions = new
+                            {
+                                includeRecommendationsWithNoSpecifiedModality = true,
+                                includeRecommendationsInReferences = true,
+                                provideFocusedSentenceEvidence = true,
+                            },
+                            findingOptions = new
+                            {
+                                provideFocusedSentenceEvidence = true,
+                            },
                         },
-                        findingOptions = new
-                        {
-                            provideFocusedSentenceEvidence = true,
-                        },
+                        locale = "<locale>",
                     },
-                    locale = "<locale>",
                 },
             });
-            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
+            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -761,17 +743,19 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Convenience()
+        public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsJob resource = new RadiologyInsightsJob
+            {
+                JobData = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
-Info = new PatientDetails
+Details = new PatientDetails
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
@@ -874,7 +858,7 @@ ImplicitRules = "<implicitRules>",
 Language = "<language>",
 }},
 },
-Encounters = {new Encounter("<id>")
+Encounters = {new PatientEncounter("<id>")
 {
 Period = new TimePeriod
 {
@@ -883,12 +867,12 @@ End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
-PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-Authors = {new DocumentAuthor
+CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Authors = {new ClinicalDocumentAuthor
 {
 Id = "<id>",
 FullName = "<fullName>",
@@ -898,54 +882,57 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
 Code = default,
 Description = "<description>",
+Extension = {default},
 }},
 EncounterId = "<encounterId>",
 },
 }},
 }
             })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
                 {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
+                    Configuration = new RadiologyInsightsModelConfiguration
                     {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
+                        Verbose = true,
+                        IncludeEvidence = true,
+                        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                        InferenceOptions = new RadiologyInsightsInferenceOptions
                         {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
+                            FollowupRecommendationOptions = new FollowupRecommendationOptions
+                            {
+                                IncludeRecommendationsWithNoSpecifiedModality = true,
+                                IncludeRecommendationsInReferences = true,
+                                ProvideFocusedSentenceEvidence = true,
+                            },
+                            FindingOptions = new FindingOptions
+                            {
+                                ProvideFocusedSentenceEvidence = true,
+                            },
                         },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
+                        Locale = "<locale>",
                     },
-                    Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Convenience_Async()
+        public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsJob resource = new RadiologyInsightsJob
+            {
+                JobData = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
-Info = new PatientDetails
+Details = new PatientDetails
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
@@ -1048,7 +1035,7 @@ ImplicitRules = "<implicitRules>",
 Language = "<language>",
 }},
 },
-Encounters = {new Encounter("<id>")
+Encounters = {new PatientEncounter("<id>")
 {
 Period = new TimePeriod
 {
@@ -1057,12 +1044,12 @@ End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
-PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-Authors = {new DocumentAuthor
+CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Authors = {new ClinicalDocumentAuthor
 {
 Id = "<id>",
 FullName = "<fullName>",
@@ -1072,38 +1059,39 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
 Code = default,
 Description = "<description>",
+Extension = {default},
 }},
 EncounterId = "<encounterId>",
 },
 }},
 }
             })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
                 {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
+                    Configuration = new RadiologyInsightsModelConfiguration
                     {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
+                        Verbose = true,
+                        IncludeEvidence = true,
+                        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                        InferenceOptions = new RadiologyInsightsInferenceOptions
                         {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
+                            FollowupRecommendationOptions = new FollowupRecommendationOptions
+                            {
+                                IncludeRecommendationsWithNoSpecifiedModality = true,
+                                IncludeRecommendationsInReferences = true,
+                                ProvideFocusedSentenceEvidence = true,
+                            },
+                            FindingOptions = new FindingOptions
+                            {
+                                ProvideFocusedSentenceEvidence = true,
+                            },
                         },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
+                        Locale = "<locale>",
                     },
-                    Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }
