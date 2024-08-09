@@ -55,5 +55,11 @@ namespace Azure.Storage.Files.Shares
         public ShareRootSquash? RootSquash => _response.Headers.TryGetValue("x-ms-root-squash", out string value) ? value.ToShareRootSquash() : null;
         /// <summary> Version 2023-08-03 and newer. Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled. This header is only returned for shares, not for snapshots. </summary>
         public bool? EnableSnapshotVirtualDirectoryAccess => _response.Headers.TryGetValue("x-ms-enable-snapshot-virtual-directory-access", out bool? value) ? value : null;
+        /// <summary> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </summary>
+        public bool? PaidBurstingEnabled => _response.Headers.TryGetValue("x-ms-share-paid-bursting-enabled", out bool? value) ? value : null;
+        /// <summary> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </summary>
+        public long? PaidBurstingMaxIops => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-iops", out long? value) ? value : null;
+        /// <summary> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </summary>
+        public long? PaidBurstingMaxBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? value) ? value : null;
     }
 }

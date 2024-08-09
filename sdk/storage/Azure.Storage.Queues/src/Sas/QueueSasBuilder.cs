@@ -231,26 +231,34 @@ namespace Azure.Storage.Sas
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
+            => ToSasQueryParameters(sharedKeyCredential, out _);
+
+        /// <summary>
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
+        /// shared access signature values to produce the proper SAS query
+        /// parameters for authenticating requests.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SasQueryParameters"/> used for authenticating
+        /// requests.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential, out string stringToSign)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            stringToSign = ToStringToSign(sharedKeyCredential);
 
-            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = string.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
-                Identifier,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version);
-            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
-            var p = SasQueryParametersInternals.Create(
+            string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            SasQueryParameters p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -263,6 +271,34 @@ namespace Azure.Storage.Sas
                 permissions: Permissions,
                 signature: signature);
             return p;
+        }
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(StorageSharedKeyCredential)"/>.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        private string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
+                Identifier,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version);
         }
 
         /// <summary>

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for list SIM groups API service call. </summary>
+    /// <summary>
+    /// Response for list SIM groups API service call.
+    /// Serialized Name: SimGroupListResult
+    /// </summary>
     internal partial class SimGroupListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimGroupListResult"/>. </summary>
-        /// <param name="value"> A list of SIM groups in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of SIM groups in a resource group.
+        /// Serialized Name: SimGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: SimGroupListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimGroupListResult(IReadOnlyList<MobileNetworkSimGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SIM groups in a resource group. </summary>
+        /// <summary>
+        /// A list of SIM groups in a resource group.
+        /// Serialized Name: SimGroupListResult.value
+        /// </summary>
         public IReadOnlyList<MobileNetworkSimGroupData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: SimGroupListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

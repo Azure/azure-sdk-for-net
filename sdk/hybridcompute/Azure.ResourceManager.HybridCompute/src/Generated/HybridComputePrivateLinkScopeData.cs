@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        [WirePath("properties")]
         public HybridComputePrivateLinkScopeProperties Properties { get; set; }
     }
 }
