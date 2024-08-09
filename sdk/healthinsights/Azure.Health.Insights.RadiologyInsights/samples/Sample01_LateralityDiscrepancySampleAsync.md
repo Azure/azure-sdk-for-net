@@ -1,6 +1,6 @@
 # How to extract the description of a laterality discrepancy inference using an asynchronous call
 
-In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the coding list of the laterality discrepancy inference and print the code, display and system properties of the codes.
+In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the coding list of the laterality discrepancy inference and print the code, display and system properties of the codes.
 
 ## Creating a PatientRecord with Details, Encounter, and Document Content
 To create a comprehensive patient record, instantiate a `PatientRecord` object with the patient’s details, encounter information, and document content. This record includes the patient’s birth date, sex, encounter class, period, and associated clinical documents, such as radiology reports. The `PatientRecord` object is then populated with these details to ensure all relevant patient information is accurately captured and organized.
