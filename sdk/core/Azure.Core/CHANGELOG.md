@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- `TokenRequestContext` added the `IsProofOfPossessionEnabled`, `ResourceRequestMethod`, and `ResourceRequestUri` properties to support Proof of Possession tokens.
+- `AccessToken` added the `TokenType` property to support distinguishing Bearer tokens from Proof of Possession (PoP) tokens.
+
 ### Breaking Changes
 
 ### Bugs Fixed
