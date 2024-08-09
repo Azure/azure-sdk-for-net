@@ -1,10 +1,5 @@
 # Release History
 
-## 12.21.2 (2024-08-08)
-- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
-
-### Bugs Fixed
-
 ## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
@@ -14,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.21.2 (2024-08-08)
+
+### Bugs Fixed
+- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
 
 ## 12.22.0-beta.1 (2024-08-06)
 
