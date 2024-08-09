@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
     public partial class DocumentIntelligenceSamples
     {
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45413")]
         public async Task ComposeModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -94,14 +96,14 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             string purchaseOrderModelId = Guid.NewGuid().ToString();
 #endif
-            var componentModelIds = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails(officeSuppliesModelId),
-                new ComponentDocumentModelDetails(officeEquipmentModelId),
-                new ComponentDocumentModelDetails(furnitureModelId),
-                new ComponentDocumentModelDetails(cleaningSuppliesModelId)
+                { "officeSupplies", new DocumentTypeDetails() { ModelId = officeSuppliesModelId } },
+                { "officeEquipment", new DocumentTypeDetails() { ModelId = officeEquipmentModelId } },
+                { "furniture", new DocumentTypeDetails() { ModelId = furnitureModelId } },
+                { "cleaningSupplies", new DocumentTypeDetails() { ModelId = cleaningSuppliesModelId } }
             };
-            var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, componentModelIds)
+            var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, "classifierId", docTypes)
             {
                 Description = "Composed Purchase order"
             };

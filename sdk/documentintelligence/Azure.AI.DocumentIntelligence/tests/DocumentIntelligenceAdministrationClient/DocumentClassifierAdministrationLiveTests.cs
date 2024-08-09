@@ -167,6 +167,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region List
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45414")]
         public async Task GetClassifiers()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();

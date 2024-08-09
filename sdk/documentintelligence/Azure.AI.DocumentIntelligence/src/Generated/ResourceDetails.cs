@@ -47,25 +47,20 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="ResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>
-        internal ResourceDetails(CustomDocumentModelsDetails customDocumentModels, QuotaDetails customNeuralDocumentModelBuilds)
+        /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
+        internal ResourceDetails(CustomDocumentModelsDetails customDocumentModels)
         {
             Argument.AssertNotNull(customDocumentModels, nameof(customDocumentModels));
-            Argument.AssertNotNull(customNeuralDocumentModelBuilds, nameof(customNeuralDocumentModelBuilds));
 
             CustomDocumentModels = customDocumentModels;
-            CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDetails(CustomDocumentModelsDetails customDocumentModels, QuotaDetails customNeuralDocumentModelBuilds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceDetails(CustomDocumentModelsDetails customDocumentModels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomDocumentModels = customDocumentModels;
-            CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,7 +71,5 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Details regarding custom document models. </summary>
         public CustomDocumentModelsDetails CustomDocumentModels { get; }
-        /// <summary> Quota used, limit, and next reset date/time. </summary>
-        public QuotaDetails CustomNeuralDocumentModelBuilds { get; }
     }
 }

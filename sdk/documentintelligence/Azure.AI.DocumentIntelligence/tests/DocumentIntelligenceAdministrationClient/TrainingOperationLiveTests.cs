@@ -101,6 +101,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         [TestCase(WaitUntil.Started)]
         [TestCase(WaitUntil.Completed)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45413")]
         public async Task ComposeModelOperationCanParseOperationId(WaitUntil waitUntil)
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
@@ -110,13 +111,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableModel0 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
             await using var disposableModel1 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var componentModels = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails(disposableModel0.ModelId),
-                new ComponentDocumentModelDetails(disposableModel1.ModelId)
+                { "model0", new DocumentTypeDetails() { ModelId = disposableModel0.ModelId } },
+                { "model1", new DocumentTypeDetails() { ModelId = disposableModel1.ModelId } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, componentModels);
+            var content = new ComposeDocumentModelContent(modelId, classifierId: null, docTypes);
 
             Operation<DocumentModelDetails> operation = null;
             string operationId;

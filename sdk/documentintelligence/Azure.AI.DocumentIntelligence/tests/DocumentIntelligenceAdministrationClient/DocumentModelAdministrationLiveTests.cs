@@ -206,6 +206,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region Compose
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45413")]
         public async Task ComposeModel()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
@@ -217,13 +218,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableModel0 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
             await using var disposableModel1 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var componentModels = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails(disposableModel0.ModelId),
-                new ComponentDocumentModelDetails(disposableModel1.ModelId)
+                { "model0", new DocumentTypeDetails() { ModelId = disposableModel0.ModelId } },
+                { "model1", new DocumentTypeDetails() { ModelId = disposableModel1.ModelId } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, componentModels)
+            var content = new ComposeDocumentModelContent(modelId, classifierId: null, docTypes)
             {
                 Description = description,
                 Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
@@ -274,18 +275,19 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45413")]
         public void ComposeModelCanParseError()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            var componentModels = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails("00000000-0000-0000-0000-000000000000"),
-                new ComponentDocumentModelDetails("00000000-0000-0000-0000-000000000001")
+                { "model0", new DocumentTypeDetails() { ModelId = "00000000-0000-0000-0000-000000000000" } },
+                { "model1", new DocumentTypeDetails() { ModelId = "00000000-0000-0000-0000-000000000001" } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, componentModels);
+            var content = new ComposeDocumentModelContent(modelId, classifierId: null, docTypes);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, content));
 

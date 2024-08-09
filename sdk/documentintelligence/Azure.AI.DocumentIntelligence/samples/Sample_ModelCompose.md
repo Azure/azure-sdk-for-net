@@ -75,14 +75,14 @@ When a purchase order happens, the employee in charge uploads the document to ou
 
 ```C# Snippet:DocumentIntelligenceSampleComposeModel
 string purchaseOrderModelId = "<purchaseOrderModelId>";
-var componentModelIds = new List<ComponentDocumentModelDetails>()
+var docTypes = new Dictionary<string, DocumentTypeDetails>()
 {
-    new ComponentDocumentModelDetails(officeSuppliesModelId),
-    new ComponentDocumentModelDetails(officeEquipmentModelId),
-    new ComponentDocumentModelDetails(furnitureModelId),
-    new ComponentDocumentModelDetails(cleaningSuppliesModelId)
+    { "officeSupplies", new DocumentTypeDetails() { ModelId = officeSuppliesModelId } },
+    { "officeEquipment", new DocumentTypeDetails() { ModelId = officeEquipmentModelId } },
+    { "furniture", new DocumentTypeDetails() { ModelId = furnitureModelId } },
+    { "cleaningSupplies", new DocumentTypeDetails() { ModelId = cleaningSuppliesModelId } }
 };
-var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, componentModelIds)
+var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, "classifierId", docTypes)
 {
     Description = "Composed Purchase order"
 };
