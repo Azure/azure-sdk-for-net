@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="properties"> RP-specific properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -66,12 +67,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Updatable managed service identity. </summary>
-        public ManagedServiceIdentityUpdate Identity { get; set; }
         /// <summary> RP-specific properties. </summary>
         internal DeidPropertiesUpdate Properties { get; set; }
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public PublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
+        public HealthDataAIServicePublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess
         {
             get => Properties is null ? default : Properties.PublicNetworkAccess;
             set

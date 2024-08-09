@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

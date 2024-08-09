@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     public static partial class ArmHealthDataAIServicesModelFactory
     {
         public static Azure.ResourceManager.HealthDataAIServices.DeidServiceData DeidServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties DeidServiceProperties(Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState?), string serviceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.HealthDataAIServices.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthDataAIServices.Models.PublicNetworkAccess?)) { throw null; }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties DeidServiceProperties(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState? provisioningState = default(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState?), System.Uri serviceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePublicNetworkAccess?)) { throw null; }
         public static Azure.ResourceManager.HealthDataAIServices.HealthDataAIServicePrivateEndpointConnectionResourceData HealthDataAIServicePrivateEndpointConnectionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData HealthDataAIServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection HealthDataAIServicesPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties HealthDataAIServicesPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnectionProvisioningState?)) { throw null; }
     }
     public partial class DeidServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServicePatch>
     {
         public DeidServicePatch() { }
-        public Azure.ResourceManager.HealthDataAIServices.Models.PublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePublicNetworkAccess? DeidPropertiesUpdatePublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         Azure.ResourceManager.HealthDataAIServices.Models.DeidServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     {
         public DeidServiceProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HealthDataAIServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public string ServiceUri { get { throw null; } }
+        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Uri ServiceUri { get { throw null; } }
         Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.DeidServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -176,18 +176,46 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     }
     public partial class HealthDataAIServicePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>
     {
-        internal HealthDataAIServicePrivateLinkResourceData() { }
-        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties Properties { get { throw null; } }
+        public HealthDataAIServicePrivateLinkResourceData() { }
+        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicePrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthDataAIServiceProvisioningState : System.IEquatable<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthDataAIServiceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState left, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState left, Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServiceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum HealthDataAIServicePublicNetworkAccess
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
     public partial class HealthDataAIServicesPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection>
     {
-        internal HealthDataAIServicesPrivateEndpointConnection() { }
-        public Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } }
+        public HealthDataAIServicesPrivateEndpointConnection() { }
+        public Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -235,10 +263,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     }
     public partial class HealthDataAIServicesPrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties>
     {
-        internal HealthDataAIServicesPrivateLinkResourceProperties() { }
+        public HealthDataAIServicesPrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -257,76 +285,17 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType SystemAndUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType left, Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType left, Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ManagedServiceIdentityUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>
-    {
-        public ManagedServiceIdentityUpdate() { }
-        public Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-        Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.ManagedServiceIdentityUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>
     {
-        public PrivateEndpointConnectionProperties(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
+        public PrivateEndpointConnectionProperties(Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState connectionState) { }
+        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.HealthDataAIServices.Models.HealthDataAIServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthDataAIServices.Models.PrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState left, Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState left, Azure.ResourceManager.HealthDataAIServices.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum PublicNetworkAccess
-    {
-        Enabled = 0,
-        Disabled = 1,
     }
 }

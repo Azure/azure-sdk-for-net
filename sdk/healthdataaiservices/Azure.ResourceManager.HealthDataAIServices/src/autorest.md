@@ -7,12 +7,13 @@ azure-arm: true
 csharp: true
 library-name: HealthDataAIServices
 namespace: Azure.ResourceManager.HealthDataAIServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/2ba531c681a30df892eea30f2dc9e06ed21d4a95/specification/healthdataaiservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/55a0dc9e569c8e29200a909f9b914fea75dc14c2/specification/healthdataaiservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

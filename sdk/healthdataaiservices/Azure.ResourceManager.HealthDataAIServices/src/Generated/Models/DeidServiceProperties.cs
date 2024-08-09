@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServiceProperties(ProvisioningState? provisioningState, string serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidServiceProperties(HealthDataAIServiceProvisioningState? provisioningState, Uri serviceUri, IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> privateEndpointConnections, HealthDataAIServicePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ServiceUri = serviceUri;
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HealthDataAIServiceProvisioningState? ProvisioningState { get; }
         /// <summary> Deid service url. </summary>
-        public string ServiceUri { get; }
+        public Uri ServiceUri { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<HealthDataAIServicesPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthDataAIServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

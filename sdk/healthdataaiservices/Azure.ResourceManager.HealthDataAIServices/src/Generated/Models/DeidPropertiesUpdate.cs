@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> Initializes a new instance of <see cref="DeidPropertiesUpdate"/>. </summary>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidPropertiesUpdate(PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidPropertiesUpdate(HealthDataAIServicePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets allow or disallow public network access to resource. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthDataAIServicePublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

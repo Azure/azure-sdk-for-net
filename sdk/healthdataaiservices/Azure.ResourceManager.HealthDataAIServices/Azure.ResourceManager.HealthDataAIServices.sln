@@ -7,8 +7,6 @@ Project("{00975638-DE6E-4B00-B9B1-3021E4B3570D}") = "Azure.ResourceManager.Healt
 EndProject
 Project("{00975638-DE6E-4B00-B9B1-3021E4B3570D}") = "Azure.ResourceManager.HealthDataAIServices.Tests", "tests\Azure.ResourceManager.HealthDataAIServices.Tests.csproj", "{64C076FF-8308-4C5B-A551-C90287B009D2}"
 EndProject
-Project("{00975638-DE6E-4B00-B9B1-3021E4B3570D}") = "Azure.ResourceManager.HealthDataAIServices.Samples", "samples\Azure.ResourceManager.HealthDataAIServices.Samples.csproj", "{2097C7D2-1C71-4B42-A3F4-940F8F3DF01B}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
