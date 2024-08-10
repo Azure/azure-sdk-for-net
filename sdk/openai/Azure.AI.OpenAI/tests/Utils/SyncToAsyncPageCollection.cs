@@ -7,6 +7,8 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.AI.OpenAI.Tests.Utils
 {
@@ -15,17 +17,18 @@ namespace Azure.AI.OpenAI.Tests.Utils
     /// simplifies writing test cases.
     /// </summary>
     /// <typeparam name="T">The type of the items the enumerator returns.</typeparam>
-    public class SyncToAsyncPageableCollection<T> : AsyncPageableCollection<T>
+    public class SyncToAsyncPageCollection<T> : AsyncPageCollection<T>
     {
-        private PageableCollection<T> _syncCollection;
+        private PageCollection<T>? _syncCollection;
         private Exception? _ex;
+        private PageResult<T>? _currentPage;
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="syncCollection">The synchronous collection to wrap.</param>
         /// <exception cref="ArgumentNullException">If the collection was null.</exception>
-        public SyncToAsyncPageableCollection(PageableCollection<T> syncCollection)
+        public SyncToAsyncPageCollection(PageCollection<T> syncCollection)
         {
             _syncCollection = syncCollection ?? throw new ArgumentNullException(nameof(syncCollection));
         }
@@ -35,41 +38,31 @@ namespace Azure.AI.OpenAI.Tests.Utils
         /// </summary>
         /// <param name="ex">The exception to throw.</param>
         /// <exception cref="ArgumentNullException">If the exception was null.</exception>
-        public SyncToAsyncPageableCollection(Exception ex)
+        public SyncToAsyncPageCollection(Exception ex)
         {
             _ex = ex ?? throw new ArgumentNullException(nameof(ex));
-            _syncCollection = null!;
+            _syncCollection = null;
         }
 
         /// <inheritdoc />
-        public override async IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = null)
+        protected override Task<PageResult<T>> GetCurrentPageAsyncCore()
+            => Task.FromResult(_currentPage ?? throw new InvalidOperationException("Please call MoveNextAsync first."));
+
+        /// <inheritdoc />
+        protected override async IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default)
         {
+            await Task.Delay(0).ConfigureAwait(false);
+
             if (_ex != null)
             {
                 ExceptionDispatchInfo.Capture(_ex).Throw();
             }
 
-            IEnumerable<ResultPage<T>> syncEnumerable = _syncCollection.AsPages(continuationToken, pageSizeHint);
-            var asyncWrapper = new SyncToAsyncEnumerator<ResultPage<T>>(syncEnumerable.GetEnumerator());
-            while (await asyncWrapper.MoveNextAsync().ConfigureAwait(false))
+            foreach (PageResult<T> page in _syncCollection!)
             {
-                TrySetRawResponse();
-                yield return asyncWrapper.Current;
+                _currentPage = page;
+                yield return page;
             }
-        }
-
-        private void TrySetRawResponse()
-        {
-            // Client result doesn't provide virtual methods so we have to manually set it ourselves here
-            try
-            {
-                var raw = _syncCollection.GetRawResponse();
-                if (raw != null)
-                {
-                    SetRawResponse(raw);
-                }
-            }
-            catch (Exception) { /* dont' care */ }
         }
     }
 }

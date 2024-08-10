@@ -16,7 +16,7 @@ public static partial class AzureChatCompletionExtensions
     public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
-            chatCompletion._serializedAdditionalRawData,
+            chatCompletion.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
 
@@ -24,7 +24,7 @@ public static partial class AzureChatCompletionExtensions
     public static ContentFilterResultForResponse GetContentFilterResultForResponse(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(
-            chatCompletion.Choices?[0]?._serializedAdditionalRawData,
+            chatCompletion.Choices?[0]?.SerializedAdditionalRawData,
             "content_filter_results");
     }
 
@@ -32,7 +32,7 @@ public static partial class AzureChatCompletionExtensions
     public static AzureChatMessageContext GetAzureMessageContext(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<AzureChatMessageContext>(
-            chatCompletion.Choices?[0]?.Message?._serializedAdditionalRawData,
+            chatCompletion.Choices?[0]?.Message?.SerializedAdditionalRawData,
             "context");
     }
 }

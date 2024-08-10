@@ -112,14 +112,14 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         }
 
 
-        AsyncPageableCollection<VectorStore> response = SyncOrAsync(client,
-            c => c.GetVectorStores(ListOrder.NewestFirst),
-            c => c.GetVectorStoresAsync(ListOrder.NewestFirst));
+        AsyncPageCollection<VectorStore> response = SyncOrAsync(client,
+            c => c.GetVectorStores(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst }),
+            c => c.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = ListOrder.NewestFirst }));
         Assert.That(response, Is.Not.Null);
 
         int lastIdSeen = int.MaxValue;
         int count = 0;
-        await foreach (VectorStore vectorStore in response)
+        await foreach (VectorStore vectorStore in response.GetAllValuesAsync())
         {
             Assert.That(vectorStore.Id, Is.Not.Null);
             if (vectorStore.Name?.StartsWith("Test Vector Store ") == true)
@@ -169,10 +169,10 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         Thread.Sleep(1000);
 
         int count = 0;
-        AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
+        AsyncPageCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
             c => c.GetFileAssociations(vectorStore),
             c => c.GetFileAssociationsAsync(vectorStore));
-        await foreach (VectorStoreFileAssociation association in response)
+        await foreach (VectorStoreFileAssociation association in response.GetAllValuesAsync())
         {
             count++;
             Assert.That(association.FileId, Is.Not.EqualTo(files[0].Id));
@@ -205,10 +205,10 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             b => b.Status != VectorStoreBatchFileJobStatus.InProgress);
         Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.Completed));
 
-        AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
+        AsyncPageCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
             c => c.GetFileAssociations(batchJob),
             c => c.GetFileAssociationsAsync(batchJob));
-        await foreach (VectorStoreFileAssociation association in response)
+        await foreach (VectorStoreFileAssociation association in response.GetAllValuesAsync())
         {
             Assert.Multiple(() =>
             {

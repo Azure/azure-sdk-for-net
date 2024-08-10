@@ -98,11 +98,19 @@ public partial class AzureMachineLearningIndexChatDataSource : AzureChatDataSour
     /// <summary>
     /// Creates a new instance of <see cref="AzureMachineLearningIndexChatDataSource"/>.
     /// </summary>
-    public AzureMachineLearningIndexChatDataSource()
+    public AzureMachineLearningIndexChatDataSource() : base(type: "azure_ml_index", serializedAdditionalRawData: null)
     {
-        Type = "azure_ml_index";
         InternalParameters = new();
-        _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+    }
+
+    // CUSTOM: Made internal.
+    /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatDataSource"/>. </summary>
+    /// <param name="internalParameters"> The parameter information to control the use of the Azure Machine Learning Index data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal AzureMachineLearningIndexChatDataSource(InternalAzureMachineLearningIndexChatDataSourceParameters internalParameters)
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatDataSource"/>. </summary>
@@ -110,7 +118,8 @@ public partial class AzureMachineLearningIndexChatDataSource : AzureChatDataSour
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal AzureMachineLearningIndexChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureMachineLearningIndexChatDataSourceParameters internalParameters) : base(type, serializedAdditionalRawData)
+    internal AzureMachineLearningIndexChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureMachineLearningIndexChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

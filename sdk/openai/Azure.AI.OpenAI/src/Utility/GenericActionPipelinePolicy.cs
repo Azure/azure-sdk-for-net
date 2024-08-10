@@ -7,22 +7,26 @@ namespace Azure.AI.OpenAI;
 
 internal partial class GenericActionPipelinePolicy : PipelinePolicy
 {
-    private Action<PipelineMessage> _processMessageAction;
+    private Action<PipelineRequest> _requestAction;
+    private Action<PipelineResponse> _responseAction;
 
-    public GenericActionPipelinePolicy(Action<PipelineMessage> processMessageAction)
+    public GenericActionPipelinePolicy(Action<PipelineRequest> requestAction = null, Action<PipelineResponse> responseAction = null)
     {
-        _processMessageAction = processMessageAction;
+        _requestAction = requestAction;
+        _responseAction = responseAction;
     }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        _processMessageAction(message);
+        _requestAction?.Invoke(message.Request);
         ProcessNext(message, pipeline, currentIndex);
+        _responseAction?.Invoke(message.Response);
     }
 
-    public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        _processMessageAction(message);
-        return ProcessNextAsync(message, pipeline, currentIndex);
+        _requestAction?.Invoke(message.Request);
+        await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        _responseAction?.Invoke(message.Response);
     }
 }

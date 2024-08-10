@@ -8,7 +8,7 @@ namespace Azure.AI.OpenAI;
 [CodeGenModel("AzureContentFilterResultForChoiceProtectedMaterialCodeCitation")] public partial class ContentFilterProtectedMaterialCitedResult { }
 [CodeGenModel("AzureContentFilterResultForPromptContentFilterResults")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResults { }
 [CodeGenModel("AzureContentFilterResultForPromptContentFilterResultsError")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError { }
-[CodeGenModel("ContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
+[CodeGenModel("AzureContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
 [CodeGenModel("AzureContentFilterSeverityResult")] public partial class ContentFilterSeverityResult
 {
     [CodeGenMember("Severity")]

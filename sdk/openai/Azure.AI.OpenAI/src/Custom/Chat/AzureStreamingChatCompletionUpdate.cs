@@ -18,7 +18,7 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
         if (chatUpdate.Choices?.Count > 0)
         {
             return AdditionalPropertyHelpers.GetAdditionalProperty<AzureChatMessageContext>(
-                chatUpdate.Choices[0].Delta?._serializedAdditionalRawData,
+                chatUpdate.Choices[0].Delta?.SerializedAdditionalRawData,
                 "context");
         }
         return null;
@@ -28,7 +28,7 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
     public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this StreamingChatCompletionUpdate chatUpdate)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
-            chatUpdate._serializedAdditionalRawData,
+            chatUpdate.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
 
@@ -36,7 +36,7 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
     public static ContentFilterResultForResponse GetContentFilterResultForResponse(this StreamingChatCompletionUpdate chatUpdate)
     {
         return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(
-            chatUpdate?.Choices?.ElementAtOrDefault(0)?._serializedAdditionalRawData,
+            chatUpdate?.Choices?.ElementAtOrDefault(0)?.SerializedAdditionalRawData,
             "content_filter_results");
     }
 }

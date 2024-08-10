@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="ImageContentFilterResultForResponse"/>. </summary>
         internal ImageContentFilterResultForResponse()
         {
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI
             Violence = violence;
             Hate = hate;
             SelfHarm = selfHarm;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

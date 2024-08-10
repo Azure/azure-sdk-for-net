@@ -1,6 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+global using OpenAI;
+global using OpenAI.Assistants;
+global using OpenAI.Audio;
+global using OpenAI.Batch;
+global using OpenAI.Chat;
+global using OpenAI.Embeddings;
+global using OpenAI.Files;
+global using OpenAI.FineTuning;
+global using OpenAI.Images;
+global using OpenAI.Models;
+global using OpenAI.Moderations;
+global using OpenAI.VectorStores;
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
@@ -15,18 +28,6 @@ using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.Images;
 using Azure.AI.OpenAI.VectorStores;
 using Azure.Core;
-using OpenAI;
-using OpenAI.Assistants;
-using OpenAI.Audio;
-using OpenAI.Batch;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
-using OpenAI.Files;
-using OpenAI.FineTuning;
-using OpenAI.Images;
-using OpenAI.Models;
-using OpenAI.Moderations;
-using OpenAI.VectorStores;
 
 #pragma warning disable AZC0007
 
@@ -330,13 +331,14 @@ public partial class AzureOpenAIClient : OpenAIClient
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
         Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly);
-        return new GenericActionPipelinePolicy(message =>
-        {
-            if (message?.Request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
+        return new GenericActionPipelinePolicy(
+            requestAction: request =>
             {
-                message.Request.Headers.Set(s_userAgentHeaderKey, telemetryDetails.ToString());
-            }
-        });
+                if (request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
+                {
+                    request.Headers.Set(s_userAgentHeaderKey, telemetryDetails.ToString());
+                }
+            });
     }
 
     private static readonly string s_aoaiEndpointEnvironmentVariable = "AZURE_OPENAI_ENDPOINT";

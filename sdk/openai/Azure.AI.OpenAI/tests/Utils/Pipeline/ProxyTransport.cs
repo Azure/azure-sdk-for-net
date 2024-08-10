@@ -51,9 +51,7 @@ public class ProxyTransport : PipelineTransport
         HttpClientHandler handler = new()
         {
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
-            UseCookies = Core.AppContextSwitchHelper.GetConfigValue(
-                "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
-                "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES"),
+            UseCookies = false,
             AllowAutoRedirect = false
         };
 

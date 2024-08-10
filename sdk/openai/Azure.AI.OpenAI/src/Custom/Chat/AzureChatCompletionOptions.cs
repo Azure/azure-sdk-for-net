@@ -13,15 +13,14 @@ public static partial class AzureChatCompletionOptionsExtensions
     [Experimental("AOAI001")]
     public static void AddDataSource(this ChatCompletionOptions options, AzureChatDataSource dataSource)
     {
-        options._serializedAdditionalRawData ??= new ChangeTrackingDictionary<string, BinaryData>();
         IList<AzureChatDataSource> existingSources
             = AdditionalPropertyHelpers.GetAdditionalListProperty<AzureChatDataSource>(
-                options._serializedAdditionalRawData,
+                options.SerializedAdditionalRawData,
                 "data_sources")
             ?? new ChangeTrackingList<AzureChatDataSource>();
         existingSources.Add(dataSource);
         AdditionalPropertyHelpers.SetAdditionalProperty(
-            options._serializedAdditionalRawData,
+            options.SerializedAdditionalRawData,
             "data_sources",
             existingSources);
     }
@@ -30,7 +29,7 @@ public static partial class AzureChatCompletionOptionsExtensions
     public static IReadOnlyList<AzureChatDataSource> GetDataSources(this ChatCompletionOptions options)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<AzureChatDataSource>(
-            options._serializedAdditionalRawData,
+            options.SerializedAdditionalRawData,
             "data_sources") as IReadOnlyList<AzureChatDataSource>;
     }
 }

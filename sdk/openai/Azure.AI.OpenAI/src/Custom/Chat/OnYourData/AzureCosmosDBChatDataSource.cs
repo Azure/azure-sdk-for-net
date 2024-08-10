@@ -105,11 +105,19 @@ public partial class AzureCosmosDBChatDataSource : AzureChatDataSource
     /// <summary>
     /// Initializes a new instance of <see cref="AzureCosmosDBChatDataSource"/>.
     /// </summary>
-    public AzureCosmosDBChatDataSource()
+    public AzureCosmosDBChatDataSource() : base(type: "azure_cosmos_db", serializedAdditionalRawData: null)
     {
-        Type = "azure_cosmos_db";
         InternalParameters = new();
-        _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+    }
+
+    // CUSTOM: Made internal.
+    /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatDataSource"/>. </summary>
+    /// <param name="internalParameters"> The parameter information to control the use of the Azure CosmosDB data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal AzureCosmosDBChatDataSource(InternalAzureCosmosDBChatDataSourceParameters internalParameters) : this()
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatDataSource"/>. </summary>
@@ -117,7 +125,8 @@ public partial class AzureCosmosDBChatDataSource : AzureChatDataSource
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal AzureCosmosDBChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureCosmosDBChatDataSourceParameters internalParameters) : base(type, serializedAdditionalRawData)
+    internal AzureCosmosDBChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureCosmosDBChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

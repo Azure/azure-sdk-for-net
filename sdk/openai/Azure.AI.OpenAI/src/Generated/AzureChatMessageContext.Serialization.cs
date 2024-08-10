@@ -21,12 +21,12 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Intent))
+            if (SerializedAdditionalRawData?.ContainsKey("intent") != true && Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent);
             }
-            if (Optional.IsCollectionDefined(Citations))
+            if (SerializedAdditionalRawData?.ContainsKey("citations") != true && Optional.IsCollectionDefined(Citations))
             {
                 writer.WritePropertyName("citations"u8);
                 writer.WriteStartArray();
@@ -36,15 +36,19 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllRetrievedDocuments))
+            if (SerializedAdditionalRawData?.ContainsKey("all_retrieved_documents") != true && Optional.IsDefined(AllRetrievedDocuments))
             {
                 writer.WritePropertyName("all_retrieved_documents"u8);
                 writer.WriteObjectValue(AllRetrievedDocuments, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -116,6 +120,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }

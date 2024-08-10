@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encodedApiKey"></param>
         internal InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedApiKey) : base(type, serializedAdditionalRawData)

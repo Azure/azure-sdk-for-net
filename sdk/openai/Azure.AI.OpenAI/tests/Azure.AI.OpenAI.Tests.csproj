@@ -23,6 +23,12 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(UseExternalLib)' == 'true'">
+    <Reference Include="OpenAI">
+      <HintPath>..\..\external\lib\netstandard2.0\OpenAI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
   <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
