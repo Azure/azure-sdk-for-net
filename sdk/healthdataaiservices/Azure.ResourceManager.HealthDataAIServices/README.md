@@ -1,6 +1,6 @@
 # Microsoft Azure HealthDataAIServices management client library for .NET
 
-> Azure.Health.Deidentification is a managed service that enables users to tag, redact, or surrogate health data.
+> Azure Health Deidentification is a managed service that enables users to tag, redact, or surrogate health data.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
