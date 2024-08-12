@@ -57,7 +57,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
                 AnalyzeTextSentimentResult AnalyzeTextSentimentResult = (AnalyzeTextSentimentResult)response.Value;
 
-                foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
+                foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
                 {
                     Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
                     Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
         {
             Dictionary<string, int> complaints = new();
-            foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
+            foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
             {
                 foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
                 {
