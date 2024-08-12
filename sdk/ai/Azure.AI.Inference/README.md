@@ -182,8 +182,8 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 
 The following types or messages are supported: `SystemMessage`,`UserMessage`, `AssistantMessage`, `ToolMessage`. See also samples:
 
-* [Sample5_ChatCompletionsWithImageUrl.md](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) for usage of `UserMessage` that includes sending an image URL.
-* [Sample7_ChatCompletionsWithTools.md](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) for usage of `ToolMessage`.
+* [Sample5_ChatCompletionsWithImageUrl.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample5_ChatCompletionsWithImageUrl.md) for usage of `UserMessage` that includes sending an image URL.
+* [Sample7_ChatCompletionsWithTools.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample7_ChatCompletionsWithTools.md) for usage of `ToolMessage`.
 
 Alternatively, you can read a `BinaryData` object based on a JSON string instead of using the strongly typed classes like `ChatRequestSystemMessage` and `ChatRequestUserMessage`:
 

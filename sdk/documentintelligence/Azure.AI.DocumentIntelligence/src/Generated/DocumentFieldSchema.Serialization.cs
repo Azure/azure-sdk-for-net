@@ -96,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
             string description = default;
             string example = default;
             DocumentFieldSchema items = default;
-            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
+            IDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
