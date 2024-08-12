@@ -17,7 +17,7 @@ public readonly partial struct AzureOpenAIAudience : IEquatable<AzureOpenAIAudie
     /// Initializes a new instance of the <see cref="AzureOpenAIAudience"/> object.
     /// </summary>
     /// <remarks>
-    /// Please consider using one of the known, valid values like <see cref="AzurePublic"/> or <see cref="AzureGovernment"/>.
+    /// Please consider using one of the known, valid values like <see cref="AzurePublicCloud"/> or <see cref="AzureGovernment"/>.
     /// </remarks>
     /// <param name="value">
     /// The Microsoft Entra audience to use when forming authorization scopes.
@@ -32,12 +32,12 @@ public readonly partial struct AzureOpenAIAudience : IEquatable<AzureOpenAIAudie
     }
 
     private const string AzurePublicCloudValue = "https://cognitiveservices.azure.com/.default";
-    private const string AzureGovernmentCloudValue = "https://cognitiveservices.azure.us/.default";
+    private const string AzureGovernmentValue = "https://cognitiveservices.azure.us/.default";
 
     /// <summary>
     /// The authorization audience used to connect to the public Azure cloud. Default if not otherwise specified.
     /// </summary>
-    public static AzureOpenAIAudience AzurePublic { get; } = new AzureOpenAIAudience(AzurePublicCloudValue);
+    public static AzureOpenAIAudience AzurePublicCloud { get; } = new AzureOpenAIAudience(AzurePublicCloudValue);
 
     /// <summary>
     /// The authorization audience used to authenticate with the Azure Government cloud.
@@ -46,7 +46,7 @@ public readonly partial struct AzureOpenAIAudience : IEquatable<AzureOpenAIAudie
     /// For more information, please refer to
     /// <see href="https://learn.microsoft.com/azure/azure-government/documentation-government-cognitiveservices" />.
     /// </remarks>
-    public static AzureOpenAIAudience AzureGovernment { get; } = new AzureOpenAIAudience(AzureGovernmentCloudValue);
+    public static AzureOpenAIAudience AzureGovernment { get; } = new AzureOpenAIAudience(AzureGovernmentValue);
 
     /// <summary> Determines if two <see cref="AzureOpenAIAudience"/> values are the same. </summary>
     public static bool operator ==(AzureOpenAIAudience left, AzureOpenAIAudience right) => left.Equals(right);

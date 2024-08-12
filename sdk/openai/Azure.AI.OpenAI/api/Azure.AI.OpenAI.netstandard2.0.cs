@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public AzureOpenAIAudience(string value) { throw null; }
         public static Azure.AI.OpenAI.AzureOpenAIAudience AzureGovernment { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureOpenAIAudience AzurePublic { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.AzureOpenAIAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

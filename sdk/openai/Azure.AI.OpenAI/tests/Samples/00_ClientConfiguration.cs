@@ -52,11 +52,20 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
         #endregion
+    }
+
+    public void UseCustomAuthorizationScope()
+    {
         #region Snippet:ConfigureClient:CustomAudience
         AzureOpenAIClientOptions optionsWithCustomAudience = new()
         {
             Audience = "https://cognitiveservices.azure.com/.default",
         };
         #endregion
+
+        AzureOpenAIClient azureClient = new(
+        new Uri("https://your-azure-openai-resource.com"),
+        new DefaultAzureCredential());
+            ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
     }
 }

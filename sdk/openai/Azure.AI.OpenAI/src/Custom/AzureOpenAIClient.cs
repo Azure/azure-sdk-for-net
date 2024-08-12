@@ -274,7 +274,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     {
         Argument.AssertNotNull(credential, nameof(credential));
         string authorizationScope = options?.Audience?.ToString()
-            ?? AzureOpenAIAudience.AzurePublic.ToString();
+            ?? AzureOpenAIAudience.AzurePublicCloud.ToString();
         return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, [authorizationScope]), options);
     }
 
