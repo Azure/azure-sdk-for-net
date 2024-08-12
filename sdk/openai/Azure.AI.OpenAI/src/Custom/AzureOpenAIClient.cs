@@ -273,8 +273,8 @@ public partial class AzureOpenAIClient : OpenAIClient
     internal static ClientPipeline CreatePipeline(TokenCredential credential, AzureOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
-        string authorizationScope = options?.AuthorizationAudience?.ToString()
-            ?? AzureOpenAIAuthorizationAudience.AzurePublicCloud.ToString();
+        string authorizationScope = options?.Audience?.ToString()
+            ?? AzureOpenAIAudience.AzurePublic.ToString();
         return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, [authorizationScope]), options);
     }
 

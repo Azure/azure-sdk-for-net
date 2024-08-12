@@ -20,7 +20,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     /// By default, the public Azure cloud will be used to authenticate tokens. Modify this value to authenticate tokens
     /// with other clouds like Azure Government.
     /// </remarks>
-    public AzureOpenAIAuthorizationAudience? AuthorizationAudience
+    public AzureOpenAIAudience? Audience
     {
         get => _authorizationAudience;
         set
@@ -29,7 +29,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
             _authorizationAudience = value;
         }
     }
-    private AzureOpenAIAuthorizationAudience? _authorizationAudience;
+    private AzureOpenAIAudience? _authorizationAudience;
 
     /// <inheritdoc cref="OpenAIClientOptions.ApplicationId"/>
     public string ApplicationId
