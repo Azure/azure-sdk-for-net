@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- The SDK now directly supports alternative authentication audiences, including Azure Government. This can be specified by providing an appropriate `AzureOpenAIAudience` value to the `AzureOpenAIClientOptions.Audience` property when creating a client. See the client configuration section of the readme for more details.
+- The library now directly supports alternative authentication audiences, including Azure Government. This can be specified by providing an appropriate `AzureOpenAIAudience` value to the `AzureOpenAIClientOptions.Audience` property when creating a client. See the client configuration section of the README for more details.
 
 ### Breaking Changes
 
