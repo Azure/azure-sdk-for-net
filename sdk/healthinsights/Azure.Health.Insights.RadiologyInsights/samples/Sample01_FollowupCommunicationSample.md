@@ -150,5 +150,5 @@ foreach (MedicalProfessionalType recipient in recipientList)
 {
     Console.Write("      " + recipient);
 }
-Console.Write("   Aknowledged: " + followupCommunicationInference.WasAcknowledged);
+Console.Write("   Acknowledged: " + followupCommunicationInference.WasAcknowledged);
 ```
