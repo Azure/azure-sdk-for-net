@@ -3,10 +3,6 @@
 [Health Insights][health_insights] is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
 
 
-Use the client library to:
-
-* [Get secret](https://docs.microsoft.com/azure)
-
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Health.Insights.RadiologyInsights/) | [API reference documentation](https://learn.microsoft.com/en-in/rest/api/cognitiveservices/healthinsights/radiology-insights) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/)
 ## Getting started
 
