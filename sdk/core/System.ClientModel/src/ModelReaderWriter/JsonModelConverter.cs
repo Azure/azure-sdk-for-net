@@ -10,6 +10,10 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// A generic converter which allows <see cref="JsonSerializer"/> to be able to write and read any models that implement <see cref="IJsonModel{T}"/>.
 /// </summary>
+/// <remarks>
+/// Since <see cref="IJsonModel{T}"/> defines what the serialized shape should look like the <see cref="JsonSerializerOptions"/> are ignored
+/// except for those pertaining to indentation formatting.
+/// </remarks>
 [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #pragma warning disable AZC0014 // Avoid using banned types in public API
 public class JsonModelConverter : JsonConverter<IJsonModel<object>>
