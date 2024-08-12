@@ -11,11 +11,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
-    internal class DnsRecordData : DnsServiceClientTestBase
+    internal class DnsRecordDataTest : DnsServiceClientTestBase
     {
         private DnsZoneResource _dnsZone;
 
-        public DnsRecordData(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DnsRecordDataTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
