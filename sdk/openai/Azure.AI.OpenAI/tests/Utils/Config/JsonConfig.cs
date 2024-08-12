@@ -28,6 +28,7 @@ public class JsonConfig : IConfiguration
         PropertyNamingPolicy = JsonOptions.SnakeCaseLower,
         DictionaryKeyPolicy = JsonOptions.SnakeCaseLower,
         WriteIndented = true,
+        AllowTrailingCommas = true,
 #if NETFRAMEWORK
         IgnoreNullValues = true,
 #else
