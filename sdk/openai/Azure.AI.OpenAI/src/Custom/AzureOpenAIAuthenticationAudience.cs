@@ -21,7 +21,7 @@ public readonly partial struct AzureOpenAIAuthorizationAudience : IEquatable<Azu
     /// Please consider using one of the known, valid values like <see cref="AzurePublicCloud"/> or <see cref="AzureGovernmentCloud"/>.
     /// </remarks>
     /// <param name="value">
-    /// The Azure Active Directory audience to use when forming authorization scopes.
+    /// The Microsoft Entra audience to use when forming authorization scopes.
     /// For Azure OpenAI, this value corresponds to a URL that identifies the Azure cloud where the resource is located.
     /// For more information: <see href="https://docs.microsoft.com/azure/azure-government/documentation-government-cognitiveservices" />.
     /// </param>
