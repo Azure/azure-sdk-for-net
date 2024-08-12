@@ -24,6 +24,7 @@ public class ClientRetryPolicy : PipelinePolicy
 
     private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
+    private const string RetryAfterHeaderName = "Retry-After";
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
@@ -270,8 +271,18 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </returns>
     protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
-        // Default implementation is exponential backoff
-        return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
+        // Default implementation is exponential backoff, unless the response
+        // has a retry-after header.
+        double nextDelayMilliseconds = (1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds;
+
+        if (message.Response is not null &&
+            TryGetRetryAfter(message.Response, out TimeSpan retryAfter) &&
+            retryAfter.TotalMilliseconds > nextDelayMilliseconds)
+        {
+            return retryAfter;
+        }
+
+        return TimeSpan.FromMilliseconds(nextDelayMilliseconds);
     }
 
     /// <summary>
@@ -307,5 +318,27 @@ public class ClientRetryPolicy : PipelinePolicy
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         }
+    }
+
+    private static bool TryGetRetryAfter(PipelineResponse response, out TimeSpan value)
+    {
+        // See: https://www.rfc-editor.org/rfc/rfc7231#section-7.1.3
+        if (response.Headers.TryGetValue(RetryAfterHeaderName, out string? retryAfter))
+        {
+            if (int.TryParse(retryAfter, out var delaySeconds))
+            {
+                value = TimeSpan.FromSeconds(delaySeconds);
+                return true;
+            }
+
+            if (DateTimeOffset.TryParse(retryAfter, out DateTimeOffset retryAfterDate))
+            {
+                value = retryAfterDate - DateTimeOffset.Now;
+                return true;
+            }
+        }
+
+        value = default;
+        return false;
     }
 }

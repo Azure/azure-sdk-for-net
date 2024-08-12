@@ -10,7 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md
+#tag: package-2023-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -23,7 +24,7 @@ deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
+#mgmt-debug: 
 #  show-serialized-names: true
 
 list-exception:
@@ -48,6 +49,10 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus/{deploymentStatusId}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
@@ -78,6 +83,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: WebSiteSlotSourceControl
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: WebSiteSlotHybridConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}: WebSiteSlotExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}: WorkflowRunActionRepetition
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}: WorkflowRunActionScopeRepetition
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sitecontainers/{containerName}: SiteContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sitecontainers/{containerName}:  SiteSlotSiteContainer
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
@@ -98,7 +107,6 @@ override-operation-name:
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
-  AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
   StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
   StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
@@ -128,6 +136,10 @@ override-operation-name:
   WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
   WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
   WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
+  WebApps_ListInstanceProcessThreads: GetSiteInstanceProcessThreads
+  WebApps_ListProcessThreads: GetSiteProcessThreads
+  WebApps_ListProcessThreadsSlot: GetSiteSlotProcessThreads
+  WebApps_ListInstanceProcessThreadsSlot: GetSiteSlotInstanceProcessThreads
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -142,6 +154,9 @@ format-by-name-rules:
 
 keep-plural-enums:
 - StackPreferredOS
+
+irregular-plural-words:
+  status: status
 
 acronym-mapping:
   CPU: Cpu
@@ -226,7 +241,6 @@ rename-mapping:
   AddressResponse.properties.serviceIpAddress: -|ip-address
   EndpointDetail.ipAddress: -|ip-address
   IpSecurityRestriction.ipAddress: IPAddressOrCidr
-  Operation.idL -|arm-id: -|arm-id
   AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses: -|ip-address
   AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses: -|ip-address
   AseV3NetworkingConfiguration.properties.externalInboundIpAddresses: -|ip-address
@@ -370,7 +384,112 @@ rename-mapping:
   CloningInfo.sourceWebAppLocation: -|azure-location
   AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
   WebSiteInstanceStatus.properties.healthCheckUrl: healthCheckUrlString
-
+  # Ambiguity property name due to the faltten
+  OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
+  AseV3NetworkingConfiguration.properties.ftpEnabled: IsFtpEnabled
+  AseV3NetworkingConfiguration.properties.remoteDebugEnabled: IsRemoteDebugEnabled
+  TriggeredWebJob.properties.storageAccountRequired: IsStorageAccountRequired
+  Site.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  Site.properties.vnetImagePullEnabled: IsVnetImagePullEnabled
+  Site.properties.vnetContentShareEnabled: IsVnetContentShareEnabled
+  Site.properties.vnetBackupRestoreEnabled: IsVnetBackupRestoreEnabled
+  WorkflowTriggerHistory.properties.fired: IsFired
+  IpAddress: WebAppIPAddress
+  IpAddressRange: WebAppIPAddressRange
+  JsonSchema: WebAppJsonSchema
+  Request: WebAppRequest
+  Response: WebAppResponse
+  Scale: ContainerAppScale
+  ScaleRule: ContainerAppScaleRule
+  ScaleRuleAuth: ContainerAppScaleRuleAuth
+  Template: ContainerAppTemplate
+  VolumeMount.readOnly: IsReadOnly
+  DatabaseConnection: StaticSiteDatabaseConnection
+  DatabaseConnection.properties.resourceId: -|arm-id
+  DatabaseConnectionOverview: StaticSiteDatabaseConnectionOverview
+  DatabaseConnectionOverview.resourceId: -|arm-id
+  DatabaseConnectionPatchRequest: StaticSiteDatabaseConnectionPatchContent
+  DatabaseConnectionPatchRequest.properties.resourceId: -|arm-id
+  RequestHistory: WebAppRequestHistory
+  RequestHistoryProperties: WebAppRequestHistoryProperties
+  StaticSiteBasicAuthPropertiesARMResource: StaticSiteBasicAuthProperties
+  StaticSiteLinkedBackend: StaticSiteLinkedBackendInfo
+  StaticSiteLinkedBackendARMResource: StaticSiteLinkedBackend
+  StaticSiteLinkedBackendARMResource.properties.backendResourceId: -|arm-id
+  AseRegion: AppServiceAseRegion
+  AseRegion.properties.dedicatedHost: IsDedicatedHostEnabled
+  AseRegion.properties.standard: IsStandard
+  AseRegion.properties.zoneRedundant: IsZoneRedundantEnabled
+  AuthenticationType: FunctionAppStorageAccountAuthenticationType
+  AuthType: SiteContainerAuthType
+  AzureResourceErrorInfo: WorkflowExpressionResourceErrorInfo
+  AzureStorageProtocol: AppServiceStorageProtocol
+  BasicAuthName: StaticSiteBasicAuthName
+  ContentHash: WebAppContentHash
+  ContentLink: WebAppContentLink
+  Dapr.enabled: IsEnabled
+  DaprConfig: AppDaprConfig
+  DaprConfig.enableApiLogging: IsApiLoggingEnabled
+  DaprConfig.enabled: IsEnabled
+  DaprLogLevel: AppDaprLogLevel
+  DayOfWeek: WebAppDayOfWeek
+  DefaultAction: SiteDefaultAction
+  EnvironmentVariable: WebAppEnvironmentVariable
+  ErrorInfo: WebAppErrorInfo
+  ErrorResponse: WebAppErrorResponse
+  ErrorResponse.error: ErrorInfo
+  ErrorProperties: WebAppErrorProperties
+  Expression: WorkflowExpression
+  ExpressionRoot: WorkflowExpressionRoot
+  FunctionsAlwaysReadyConfig: FunctionAppAlwaysReadyConfig
+  FunctionsDeploymentStorage: FunctionAppStorage
+  FunctionsDeploymentStorageAuthentication: FunctionAppStorageAuthentication
+  FunctionsRuntime: FunctionAppRuntime
+  FunctionsScaleAndConcurrency: FunctionAppScaleAndConcurrency
+  FunctionStorageType: FunctionAppStorageType
+  KeyType: WebAppKeyType
+  ParameterType: WebAppParameterType
+  RecurrenceFrequency: WorkflowRecurrenceFrequency
+  RecurrenceSchedule: WorkflowRecurrenceSchedule
+  RegenerateActionParameter: WorkflowRegenerateActionContent
+  RepetitionIndex: WorkflowRunActionRepetitionIndex
+  ResourceConfig: FunctionAppResourceConfig
+  ResourceReference: WorkflowResourceReference
+  ResourceReference.id: -|arm-id
+  ResourceReference.type: -|resource-type
+  RetryHistory: WebAppRetryHistory
+  RunActionCorrelation: WebAppRunActionCorrelation
+  RunCorrelation: WebAppRunCorrelation
+  RuntimeName: FunctionAppRuntimeName
+  TlsCipherSuites: AppServiceTlsCipherSuite
+  TlsCipherSuites.TLS_AES_256_GCM_SHA384: TlsAes256GcmSha384
+  TlsCipherSuites.TLS_AES_128_GCM_SHA256: TlsAes128GcmSha256
+  TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384: TlsECDiffieHellmanECDsaWithAes256GcmSha384
+  TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256: TlsECDiffieHellmanECDsaWithAes128CbcSha256
+  TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256: TlsECDiffieHellmanECDsaWithAes128GcmSha256
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384: TlsECDiffieHellmanRsaWithAes256GcmSha384
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256: TlsECDiffieHellmanRsaWithAes128GcmSha256
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384: TlsECDiffieHellmanRsaWithAes256CbcSha384
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256: TlsECDiffieHellmanRsaWithAes128CbcSha256
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA: TlsECDiffieHellmanRsaWithAes256CbcSha
+  TlsCipherSuites.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA: TlsECDiffieHellmanRsaWithAes128CbcSha
+  TlsCipherSuites.TLS_RSA_WITH_AES_256_GCM_SHA384: TlsRsaWithAes256GcmSha384
+  TlsCipherSuites.TLS_RSA_WITH_AES_128_GCM_SHA256: TlsRsaWithAes128GcmSha256
+  TlsCipherSuites.TLS_RSA_WITH_AES_256_CBC_SHA256: TlsRsaWithAes256CbcSha256
+  TlsCipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA256: TlsRsaWithAes128CbcSha256
+  TlsCipherSuites.TLS_RSA_WITH_AES_256_CBC_SHA: TlsRsaWithAes256CbcSha
+  TlsCipherSuites.TLS_RSA_WITH_AES_128_CBC_SHA: TlsRsaWithAes128CbcSha
+  UpgradeAvailability: AppServiceEnvironmentUpgradeAvailability
+  UpgradePreference: AppServiceEnvironmentUpgradePreference
+  VolumeMount: SiteContainerVolumeMount
+  Workflow: WorkflowData
+  WorkflowOutputParameter: WorkflowOutputContent
+  WorkflowParameter: WorkflowContent
+  WorkflowTriggerListCallbackUrlQueries: WorkflowTriggerListCallbackUriQueries
+  WorkflowTriggerListCallbackUrlQueries.sp: SasPermission
+  WorkflowTriggerListCallbackUrlQueries.sv: SasVersion
+  WorkflowTriggerListCallbackUrlQueries.sig: SasSignature
+  WorkflowTriggerListCallbackUrlQueries.se: SasTimestamp
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
@@ -431,7 +550,6 @@ rename-mapping:
   AzureStaticWebApps: AppServiceStaticWebAppsProvider
   AzureStaticWebAppsRegistration: AppServiceStaticWebAppsRegistration
   AzureStorageInfoValue: AppServiceStorageAccessInfo
-  AzureStoragePropertyDictionary: AppServiceStorageDictionaryResourceData
   AzureStorageState: AppServiceStorageAccountState
   AzureStorageType: AppServiceStorageType
   AzureTableStorageApplicationLogsConfig: AppServiceTableStorageApplicationLogsConfig
@@ -488,6 +606,10 @@ rename-mapping:
   VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
   VnetValidationTestFailure: VirtualNetworkValidationTestFailure
   KeyInfoProperties: WebAppKeyInfoProperties
+  ProcessThreadInfo: WebAppProcessThreadInfo
+  ProcessThreadProperties: WebAppProcessThreadProperties
+  ProcessThreadProperties.href: -|uri
+  ProcessInfo.properties.threads: ProcessThreads
   # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
   DomainCollection: AppServiceDomainListResult
   IdentifierCollection: AppServiceIdentifierListResult
@@ -527,7 +649,7 @@ rename-mapping:
   PrivateEndpointConnectionCollection: RemotePrivateEndpointConnectionListResult
   ProcessInfoCollection: ProcessInfoListResult
   ProcessModuleInfoCollection: ProcessModuleInfoListResult
-  ProcessThreadInfoCollection: ProcessThreadInfoListResult
+  ProcessThreadInfoCollection: WebAppProcessThreadInfoListResult
   PublicCertificateCollection: PublicCertificateListResult
   PublishingCredentialsPoliciesCollection: PublishingCredentialsPoliciesListResult
   RecommendationCollection: AppServiceRecommendationListResult
@@ -569,7 +691,6 @@ rename-mapping:
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
-  - ApiKeyVaultReferenceData
   - ArmPlan
   - BillingMeter
   - BlobStorageTokenStore
@@ -615,6 +736,8 @@ directive:
   - remove-operation: AppServiceEnvironments_ChangeVnet
   - remove-operation: AppServiceEnvironments_Resume
   - remove-operation: AppServiceEnvironments_Suspend
+  # - remove-operation: WebApps_GetAuthSettingsV2WithoutSecrets
+  # - remove-operation: WebApps_GetAuthSettingsV2WithoutSecretsSlot
 # these operations are apparently not operations in Microsoft.Web RP. Instead, their paths look like operations on resource groups
   - remove-operation: ValidateMove
   - remove-operation: Move
@@ -857,4 +980,75 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
     transform: >
         $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+  # The Enum name "StorageType" is shared by artifactsStorageType, cause the apicompat error
+  - from: CommonDefinitions.json
+    where: $.definitions.FunctionsDeployment.properties.storage.properties.type
+    transform: >
+        $["x-ms-enum"] = {
+                "name": "functionStorageType",
+                "modelAsString": true
+              };
+  # Remove ContainerApps.json, ContainerAppsRevisions.json since Container Apps has been separated into another SDK
+  - from: ContainerApps.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: ContainerAppsRevisions.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  # Reuse defined DayOfWeek
+  - from: WebApps.json
+    where: $.definitions.RecurrenceSchedule.properties.weekDays
+    transform: >
+        $.items = {
+            "$ref": "#/definitions/DayOfWeek",
+            "description": "The days of the week."
+          };
+  # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result 
+  - from: WebApps.json
+    where: $.definitions
+    transform: >
+        $.ProcessThreadProperties = {
+            "description": "Process Thread properties.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int32",
+                "description": "Thread ID.",
+                "type": "integer",
+                "readOnly": true
+              },
+              "href": {
+                "description": "HRef URI.",
+                "type": "string"
+              },
+              "state": {
+                "description": "Thread state.",
+                "type": "string"
+              }
+            }
+          };
+  - from: WebApps.json
+    where: $.definitions.ProcessThreadInfo
+    transform: >
+        $.properties = {
+            "properties": {
+              "$ref": "#/definitions/ProcessThreadProperties",
+              "description": "ProcessThreadInfo resource specific properties",
+              "type": "object"
+            }
+          };
+  - from: WebApps.json
+    where: $.definitions.ProcessInfo
+    transform: >
+        $.properties.properties.properties.threads.items = {
+            "$ref": "#/definitions/ProcessThreadProperties"
+          };
 ```

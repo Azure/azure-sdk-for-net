@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary> Properties of the Guest configuration assignment. </summary>
+        [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
     }
 }

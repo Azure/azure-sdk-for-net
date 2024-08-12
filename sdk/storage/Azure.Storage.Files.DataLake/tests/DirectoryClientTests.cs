@@ -251,7 +251,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -280,7 +279,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -335,6 +333,34 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadDirClient.ExistsAsync(),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_EscapeName()
+        {
+            // Arrange
+            string directoryName = "!*'();[]:@&%=+$,#äÄöÖüÜß";
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            DataLakeDirectoryClient directory = InstrumentClient(test.Container.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            // Act
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = directory.FileSystemName,
+                DirectoryOrFilePath = directoryName
+            };
+            DataLakeDirectoryClient freshDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            bool exists = await freshDirectoryClient.ExistsAsync();
+            Assert.True(exists);
+            Assert.AreEqual(directoryName, freshDirectoryClient.Name);
         }
 
         [RecordedTest]
@@ -6143,8 +6169,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = directoryClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = directoryClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
@@ -6161,6 +6189,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -6189,8 +6218,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IsDirectory = true,
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(serviceUri)
@@ -6206,6 +6237,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

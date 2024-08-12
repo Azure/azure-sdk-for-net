@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </summary>
+        [WirePath("maximumDuration")]
         public TimeSpan MaximumDuration { get; }
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>
+        [WirePath("rebootSetting")]
         public VmGuestPatchRebootSetting RebootSetting { get; }
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
+        [WirePath("windowsParameters")]
         public HybridComputeWindowsParameters WindowsParameters { get; set; }
         /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
+        [WirePath("linuxParameters")]
         public HybridComputeLinuxParameters LinuxParameters { get; set; }
     }
 }

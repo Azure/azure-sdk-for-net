@@ -1,8 +1,16 @@
 # Release History
 
-## 12.0.0-beta.5 (Unreleased)
+## 12.0.0-beta.6 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.5 (2024-07-16)
 
 ### Breaking Changes
 - Renamed `StorageResourceProperties` to `StorageResourceItemProperties`
@@ -13,8 +21,6 @@
 
 ### Bugs Fixed
 - Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.
-
-### Other Changes
 
 ## 12.0.0-beta.4 (2023-12-05)
 

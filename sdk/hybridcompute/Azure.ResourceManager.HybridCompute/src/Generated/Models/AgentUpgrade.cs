@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the version info w.r.t AgentUpgrade for the machine. </summary>
+        [WirePath("desiredVersion")]
         public string DesiredVersion { get; set; }
         /// <summary> The correlation ID passed in from RSM per upgrade. </summary>
+        [WirePath("correlationId")]
         public Guid? CorrelationId { get; set; }
         /// <summary> Specifies if RSM should try to upgrade this machine. </summary>
+        [WirePath("enableAutomaticUpgrade")]
         public bool? IsAutomaticUpgradeEnabled { get; set; }
         /// <summary> Specifies the version of the last attempt. </summary>
+        [WirePath("lastAttemptDesiredVersion")]
         public string LastAttemptDesiredVersion { get; }
         /// <summary> Timestamp of last upgrade attempt. </summary>
+        [WirePath("lastAttemptTimestamp")]
         public DateTimeOffset? LastAttemptedOn { get; }
         /// <summary> Specifies the status of Agent Upgrade. </summary>
+        [WirePath("lastAttemptStatus")]
         public LastAttemptStatusEnum? LastAttemptStatus { get; }
         /// <summary> Failure message of last upgrade attempt if any. </summary>
+        [WirePath("lastAttemptMessage")]
         public string LastAttemptMessage { get; }
     }
 }

@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
@@ -151,7 +156,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        }
                     }
                     errors = array;
                     continue;
@@ -298,7 +310,12 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine("[");
                         foreach (var item in Errors)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  errors: ");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
                         }
                         builder.AppendLine("  ]");
                     }

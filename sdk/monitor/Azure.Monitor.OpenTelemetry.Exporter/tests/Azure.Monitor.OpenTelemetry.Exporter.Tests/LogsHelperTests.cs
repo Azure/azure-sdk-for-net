@@ -503,6 +503,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedAttributeValue, actualAttributeValue);
         }
 
+        [Fact]
+        public void DuplicateKeysInLogRecordAttributesAndLogScope2()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeScopes = true;
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+
+            const string expectedScopeKey = "Some scope key";
+            const string expectedScopeValue = "Some scope value";
+            const string duplicateScopeValue = "Some duplicate scope value";
+            const string duplicateScopeValue2 = "Another duplicate scope value";
+
+            // Act.
+            using (logger.BeginScope(new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>(expectedScopeKey, expectedScopeValue),
+                new KeyValuePair<string, object>(expectedScopeKey, duplicateScopeValue),
+            }))
+            {
+                logger.LogInformation($"Some log information message. {{{expectedScopeKey}}}.", duplicateScopeValue2);
+            }
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.Equal(2, properties.Count);
+            Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
+            Assert.Equal(duplicateScopeValue2, actualScopeValue);
+        }
+
         private class CustomObject
         {
             public override string ToString()
