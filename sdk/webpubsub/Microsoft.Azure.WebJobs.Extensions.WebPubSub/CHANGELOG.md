@@ -1,12 +1,8 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
-
+## 1.8.0 (Unreleased)
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added MQTT client events support.
 
 ### Other Changes
 

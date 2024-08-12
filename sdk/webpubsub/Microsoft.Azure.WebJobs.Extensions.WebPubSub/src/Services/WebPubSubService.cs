@@ -22,9 +22,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public WebPubSubServiceClient Client => _client;
 
-        internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null)
+        internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null, WebPubSubClientProtocol clientProtocol = WebPubSubClientProtocol.Default)
         {
-            var url = _client.GetClientAccessUri(userId: userId, roles: roles);
+            var url = _client.GetClientAccessUri(userId: userId, roles: roles, clientProtocol: clientProtocol);
 
             return new WebPubSubConnection(url);
         }

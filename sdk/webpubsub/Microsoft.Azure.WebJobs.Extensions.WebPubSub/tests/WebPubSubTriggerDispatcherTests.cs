@@ -1,14 +1,18 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
@@ -123,9 +127,155 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(expectedCode, response.StatusCode);
         }
 
-        private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null)
+        // three event types * (in-process and isolated-process)
+
+        private static IEnumerable<object[]> TestHandleMqttConnectRequest_InProcessModelTestData = new object[][]
         {
-            var funcName = $"{hub}.{type}.{eventName}".ToLower();
+            new object[]{ new MqttConnectEventResponse("userId",new string[] {"group1", "group2"}, new string[] {"webpubsub.joinLeaveGroup"}) { Mqtt = new() { UserProperties = new MqttUserProperty[] { new("a", "b") } } },5, HttpStatusCode.OK, "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"code\":0,\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}"},
+            new object[]{new MqttConnectEventErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, "not authorized"),4, HttpStatusCode.Unauthorized, "{\"mqtt\":{\"code\":5,\"reason\":\"not authorized\",\"userProperties\":null},\"code\":1,\"errorMessage\":\"not authorized\"}",  },
+            new object[]{ CreateMqttConnectErrorResponse(MqttV500ConnectReasonCode.NotAuthorized, new MqttUserProperty[] {new MqttUserProperty("a", "b")}),5, HttpStatusCode.Unauthorized, " {\"mqtt\":{\"code\":135,\"reason\":\"reason\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"code\":1,\"errorMessage\":\"not authorized\"}",  }
+        };
+
+        private static MqttConnectEventErrorResponse CreateMqttConnectErrorResponse(MqttV500ConnectReasonCode reasonCode, MqttUserProperty[] userProperties)
+        {
+            var res = new MqttConnectEventErrorResponse(reasonCode, "reason");
+            res.Mqtt.UserProperties = userProperties;
+            return res;
+        }
+
+        [TestCaseSource(nameof(TestHandleMqttConnectRequest_InProcessModelTestData))]
+        public async Task TestHandleMqttConnectRequest_InProcessModel(WebPubSubEventResponse responseObj, int actualProtocolVersion, HttpStatusCode expectedStatusCode, string expectedResponseBody)
+        {
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + actualProtocolVersion.ToString() + ",\"username\":null,\"password\":null,\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":null,\"content\":null}]}";
+            var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
+            connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
+
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            await wpsListener.StartAsync(default);
+            mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
+                {
+                    var tcs = (functionData.TriggerValue as WebPubSubTriggerEvent).TaskCompletionSource;
+                    tcs.SetResult(responseObj);
+                })
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var httpResponse = await dispatcher.ExecuteAsync(connectHttpRequest);
+            Assert.AreEqual(expectedStatusCode, httpResponse.StatusCode);
+            var actualBody = await httpResponse.Content.ReadAsStringAsync();
+            Console.WriteLine(actualBody);
+            Assert.AreEqual(expectedResponseBody, actualBody);
+        }
+
+        private static readonly IEnumerable<object[]> TestHandleMqttConnectRequest_IsolatedProcessModelTestData = new object[][]
+        {
+            new object[]{ "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}", 5, HttpStatusCode.OK, "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"code\":0,\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}"},
+            new object[]{ "{\"mqtt\":{\"code\":5,\"reason\":\"not authorized\",\"userProperties\":null},\"code\":1,\"errorMessage\":\"not authorized\"}", 4, HttpStatusCode.Unauthorized, "{\"mqtt\":{\"code\":5,\"reason\":\"not authorized\",\"userProperties\":null},\"code\":1,\"errorMessage\":\"not authorized\"}",  },
+            new object[]{ "{\"mqtt\":{\"code\":135,\"reason\":\"reason\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"errorMessage\":\"reason\"}", 5, HttpStatusCode.Unauthorized, "{\"mqtt\":{\"code\":135,\"reason\":\"reason\",\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"code\":1,\"errorMessage\":\"reason\"}",  }
+        };
+
+        [TestCaseSource(nameof(TestHandleMqttConnectRequest_IsolatedProcessModelTestData))]
+        public async Task TestHandleMqttConnectRequest_IsolatedProcessModel(string responseObj, int actualProtocolVersion, HttpStatusCode expectedStatusCode, string expectedResponseBody)
+        {
+            var payload = "{\"mqtt\":{\"protocolVersion\":" + actualProtocolVersion.ToString() + ",\"username\":null,\"password\":null,\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"claims\":{\"iat\":[\"1723005952\"],\"exp\":[\"1726605954\"],\"aud\":[\"ws://localhost:8080/clients/mqtt/hubs/simplechat\"],\"http://schemas.microsoft.com/ws/2008/06/identity/claims/role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"user1\"],\"role\":[\"webpubsub.sendToGroup\",\"webpubsub.joinLeaveGroup\"],\"nameid\":[\"user1\"]},\"query\":{\"access_token\":[\"REDATED\"]},\"headers\":{\"Connection\":[\"Upgrade\"],\"Host\":[\"localhost:8080\"],\"Upgrade\":[\"websocket\"],\"Sec-WebSocket-Version\":[\"13\"],\"Sec-WebSocket-Key\":[\"REDATED\"],\"Sec-WebSocket-Extensions\":[\"permessage-deflate; client_max_window_bits\"],\"Sec-WebSocket-Protocol\":[\"mqtt\"]},\"subprotocols\":[\"mqtt\"],\"clientCertificates\":[{\"thumbprint\":null,\"content\":null}]}";
+            var connectHttpRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connect", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(payload));
+            connectHttpRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
+
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            await wpsListener.StartAsync(default);
+            mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
+                {
+                    var tcs = (functionData.TriggerValue as WebPubSubTriggerEvent).TaskCompletionSource;
+                    tcs.SetResult(JsonConvert.DeserializeObject(responseObj));
+                })
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var httpResponse = await dispatcher.ExecuteAsync(connectHttpRequest);
+            Assert.AreEqual(expectedStatusCode, httpResponse.StatusCode);
+            var actualBody = await httpResponse.Content.ReadAsStringAsync();
+            Console.WriteLine(actualBody);
+            Assert.AreEqual(expectedResponseBody, actualBody);
+        }
+
+        [TestCase]
+        public async Task TestHandleMqttConnectedEvent()
+        {
+            var connectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "connected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt);
+            connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
+            connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connected", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            await wpsListener.StartAsync(default);
+            mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
+                {
+                    var triggerEvent = (functionData.TriggerValue as WebPubSubTriggerEvent);
+                    if (triggerEvent.ConnectionContext is MqttConnectionContext mqttContext)
+                    {
+                        Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
+                        Assert.AreEqual("sessionId", mqttContext.SessionId);
+                        Assert.AreEqual("clientId", mqttContext.ConnectionId);
+                    }
+                    else
+                    {
+                        Assert.Fail("ConnectionContext is not MqttContext");
+                    }
+
+                    var tcs = triggerEvent.TaskCompletionSource;
+                    tcs.SetResult(null);
+
+                    // Make sure the serialization of MqttConnectedEventRequest is correct, used in isolated-process models.
+                    var expected = "{\"connectionContext\":{\"physicalConnectionId\":\"physicalConnectionId\",\"sessionId\":\"sessionId\",\"eventType\":0,\"eventName\":\"connected\",\"hub\":\"testhub\",\"connectionId\":\"clientId\",\"userId\":\"testuser\",\"signature\":\"sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561\",\"origin\":\"localhost\",\"states\":{},\"headers\":{\"ce-hub\":[\"testhub\"],\"ce-type\":[\"azure.webpubsub.sys.connected\"],\"ce-eventName\":[\"connected\"],\"ce-connectionId\":[\"clientId\"],\"ce-signature\":[\"sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561\"],\"WebHook-Request-Origin\":[\"localhost\"],\"ce-userId\":[\"testuser\"],\"ce-subprotocol\":[\"mqtt\"],\"ce-physicalConnectionId\":[\"physicalConnectionId\",\"physicalConnectionId\"],\"ce-sessionId\":[\"sessionId\",\"sessionId\"]}}}";
+                    Assert.AreEqual(expected, JsonConvert.SerializeObject(triggerEvent.Request));
+                })
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var httpResponse = await dispatcher.ExecuteAsync(connectedRequest);
+        }
+
+        [TestCase]
+        public async Task TestHandleMqttDisonnectedEvent()
+        {
+            var body = " {\"mqtt\":{\"initiatedByClient\":false,\"disconnectPacket\":{\"code\":128,\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}},\"reason\":\"reason\",\"connectionContext\":null}";
+            var disconnectedRequest = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.System, "disconnected", "clientId", ValidSignature, origin: new string[] { TestOrigin }, subProtocols: new string[] { "mqtt" }, clientProtocol: WebPubSubClientProtocol.Mqtt, payload: Encoding.UTF8.GetBytes(body));
+            disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttPhysicalConnectionId, "physicalConnectionId");
+            disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
+            var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "disconnected", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            await wpsListener.StartAsync(default);
+            mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
+                {
+                    var triggerEvent = (functionData.TriggerValue as WebPubSubTriggerEvent);
+                    if (triggerEvent.ConnectionContext is MqttConnectionContext mqttContext)
+                    {
+                        Assert.AreEqual("physicalConnectionId", mqttContext.PhysicalConnectionId);
+                        Assert.AreEqual("sessionId", mqttContext.SessionId);
+                        Assert.AreEqual("clientId", mqttContext.ConnectionId);
+                    }
+                    else
+                    {
+                        Assert.Fail("ConnectionContext is not MqttContext");
+                    }
+
+                    var tcs = triggerEvent.TaskCompletionSource;
+                    tcs.SetResult(null);
+
+                    // Make sure the serialization of MqttConnectedEventRequest is correct, used in isolated-process models.
+                    var expected = "{\"mqtt\":{\"initiatedByClient\":false,\"disconnectPacket\":{\"code\":128,\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]}},\"reason\":\"reason\",\"connectionContext\":{\"physicalConnectionId\":\"physicalConnectionId\",\"sessionId\":\"sessionId\",\"eventType\":0,\"eventName\":\"disconnected\",\"hub\":\"testhub\",\"connectionId\":\"clientId\",\"userId\":\"testuser\",\"signature\":\"sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561\",\"origin\":\"localhost\",\"states\":{},\"headers\":{\"ce-hub\":[\"testhub\"],\"ce-type\":[\"azure.webpubsub.sys.disconnected\"],\"ce-eventName\":[\"disconnected\"],\"ce-connectionId\":[\"clientId\"],\"ce-signature\":[\"sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561\"],\"WebHook-Request-Origin\":[\"localhost\"],\"ce-userId\":[\"testuser\"],\"ce-subprotocol\":[\"mqtt\"],\"ce-physicalConnectionId\":[\"physicalConnectionId\",\"physicalConnectionId\"],\"ce-sessionId\":[\"sessionId\",\"sessionId\"]}}}";
+                    Assert.AreEqual(expected, JsonConvert.SerializeObject(triggerEvent.Request));
+                })
+                .Returns(Task.FromResult(new FunctionResult(true)));
+            var httpResponse = await dispatcher.ExecuteAsync(disconnectedRequest);
+        }
+
+        private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerClientProtocol clientProtocol = WebPubSubTriggerClientProtocol.All)
+        {
+            var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
             var wpsOptions = new WebPubSubFunctionsOptions
             {
                 ConnectionString = connectionString
