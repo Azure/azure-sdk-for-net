@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,8 +45,21 @@ public abstract class OperationResult : ClientResult
     /// </summary>
     /// <value>A token that can be used to rehydrate the operation, for example
     /// to monitor its progress or to obtain its final result, from a process
-    /// different thatn the one that started the operation.</value>
+    /// different than the one that started the operation.</value>
     public abstract ContinuationToken? RehydrationToken { get; protected set; }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public abstract Task<ClientResult> UpdateStatusAsync(RequestOptions? options = default);
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="options"></param>
+    public abstract ClientResult UpdateStatus(RequestOptions? options = default);
 
     /// <summary>
     /// Waits for the operation to complete processing on the service.
@@ -59,7 +73,21 @@ public abstract class OperationResult : ClientResult
     /// </remarks>
     /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
     /// was cancelled.</exception>
-    public abstract Task WaitForCompletionAsync(CancellationToken cancellationToken = default);
+    public virtual async Task WaitForCompletionAsync(CancellationToken cancellationToken = default)
+    {
+        PollingInterval pollingInterval = new();
+
+        while (!IsCompleted)
+        {
+            PipelineResponse response = GetRawResponse();
+
+            await pollingInterval.WaitAsync(response, cancellationToken).ConfigureAwait(false);
+
+            ClientResult result = await UpdateStatusAsync(cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+
+            SetRawResponse(result.GetRawResponse());
+        }
+    }
 
     /// <summary>
     /// Waits for the operation to complete processing on the service.
@@ -73,5 +101,19 @@ public abstract class OperationResult : ClientResult
     /// </remarks>
     /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
     /// was cancelled.</exception>
-    public abstract void WaitForCompletion(CancellationToken cancellationToken = default);
+    public virtual void WaitForCompletion(CancellationToken cancellationToken = default)
+    {
+        PollingInterval pollingInterval = new();
+
+        while (!IsCompleted)
+        {
+            PipelineResponse response = GetRawResponse();
+
+            pollingInterval.Wait(response, cancellationToken);
+
+            ClientResult result = UpdateStatus(cancellationToken.ToRequestOptions());
+
+            SetRawResponse(result.GetRawResponse());
+        }
+    }
 }
