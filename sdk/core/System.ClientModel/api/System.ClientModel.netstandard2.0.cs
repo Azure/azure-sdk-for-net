@@ -89,11 +89,6 @@ namespace System.ClientModel
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
         public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
-    public enum ReturnWhen
-    {
-        Completed = 0,
-        Started = 1,
-    }
 }
 namespace System.ClientModel.Primitives
 {
