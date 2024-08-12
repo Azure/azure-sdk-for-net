@@ -6,8 +6,8 @@
   "baselines": {
     "default": {
       "name": "default",
-      "createdDate": "2024-08-08 08:40:59Z",
-      "lastUpdatedDate": "2024-08-08 08:40:59Z"
+      "createdDate": "2024-08-12 08:38:01Z",
+      "lastUpdatedDate": "2024-08-12 08:38:01Z"
     }
   },
   "results": {
@@ -21,9 +21,9 @@
       ],
       "tool": "credscan",
       "ruleId": "CSCAN-MSFT0090",
-      "createdDate": "2024-08-08 08:40:59Z",
-      "expirationDate": "2025-01-25 08:47:37Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-08 08:47:37Z"
+      "createdDate": "2024-08-12 08:38:01Z",
+      "expirationDate": "2025-01-29 08:44:29Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-12 08:44:29Z"
     },
     "d4f7155a1fdbb51586b1df1db99d10918b19e33652b121fc75739fa6de6d45b6": {
       "signature": "d4f7155a1fdbb51586b1df1db99d10918b19e33652b121fc75739fa6de6d45b6",
@@ -35,9 +35,9 @@
       ],
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
-      "createdDate": "2024-08-08 08:40:59Z",
-      "expirationDate": "2025-01-25 08:47:37Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-08 08:47:37Z"
+      "createdDate": "2024-08-12 08:38:01Z",
+      "expirationDate": "2025-01-29 08:44:29Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-12 08:44:29Z"
     },
     "7ddf82f0e77bef937bf1836284def42c6212aa203dce55147e07eb1c91ccceaa": {
       "signature": "7ddf82f0e77bef937bf1836284def42c6212aa203dce55147e07eb1c91ccceaa",
@@ -49,9 +49,9 @@
       ],
       "tool": "credscan",
       "ruleId": "CSCAN-GENERAL0020",
-      "createdDate": "2024-08-08 08:40:59Z",
-      "expirationDate": "2025-01-25 08:47:37Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-08 08:47:37Z"
+      "createdDate": "2024-08-12 08:38:01Z",
+      "expirationDate": "2025-01-29 08:44:29Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2024-08-12 08:44:29Z"
     }
   }
 }
