@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             AppComplianceReportEvidenceResource evidenceResource = response.Value;
             Assert.AreEqual(evidenceName, evidenceResource.Data.Name);
 
-
             // Get evidence
             // Get evidence: send request
             AppComplianceReportEvidenceResource getResult = await appComplianceReportEvidence.GetAsync();
@@ -68,9 +67,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             Assert.AreEqual(evidenceName, getResult.Data.Name);
 
             // download evidence current ppe cannot download evidence
-            // EvidenceFileDownloadContent content = new EvidenceFileDownloadContent();
-            // EvidenceFileDownloadResult download = await appComplianceReportEvidence.DownloadAsync(content);
-            // Assert.IsNotNull(download);
+            EvidenceFileDownloadContent content = new EvidenceFileDownloadContent();
+            EvidenceFileDownloadResult download = await appComplianceReportEvidence.DownloadAsync(content);
+            Assert.IsNotNull(download);
 
             // Delete evidence
             // Delete evidence: send request

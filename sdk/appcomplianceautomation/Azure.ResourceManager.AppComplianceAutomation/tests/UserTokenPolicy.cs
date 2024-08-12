@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            message.Request.Headers.Add("x-ms-ppe-request", "true");
             if (message.Request.Headers.TryGetValue(AuthorizationHeaderKey, out string authorization))
             {
                 message.Request.Headers.SetValue(UserTokenHeader, authorization);
