@@ -1,5 +1,19 @@
 # Release History
 
+## 1.1.0-beta.7 (Unreleased)
+
+### Features Added
+
+- Added `JsonModelConverter` to allow integration with System.Text.Json.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Removed `ReturnWhen` enum in favor of using bool `waitUntilCompleted` parameter in third-party client LRO method signatures.
+
 ## 1.1.0-beta.6 (2024-08-01)
 
 ### Features Added
