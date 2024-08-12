@@ -64,28 +64,28 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 if (inference is FollowupRecommendationInference followupRecommendationInference)
                 {
                     #region Snippet:Followup_Recommendation_Sync_Tests_Samples_FollowupRecommendationInference
-                    Console.Write("Follow Up Recommendation Inference found");
+                    Console.WriteLine("Follow Up Recommendation Inference found");
                     IReadOnlyList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
-                    Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
-                    Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
-                    Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
-                    Console.Write("   Is hedging: " + followupRecommendationInference.IsHedging);
-                    Console.Write("   Is option: " + followupRecommendationInference.IsOption);
+                    Console.WriteLine("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
+                    Console.WriteLine("   Is conditional: " + followupRecommendationInference.IsConditional);
+                    Console.WriteLine("   Is guideline: " + followupRecommendationInference.IsGuideline);
+                    Console.WriteLine("   Is hedging: " + followupRecommendationInference.IsHedging);
+                    Console.WriteLine("   Is option: " + followupRecommendationInference.IsOption);
 
                     ProcedureRecommendation recommendedProcedure = followupRecommendationInference.RecommendedProcedure;
                     if (recommendedProcedure is GenericProcedureRecommendation)
                     {
-                        Console.Write("   Generic procedure recommendation:");
+                        Console.WriteLine("   Generic procedure recommendation:");
                         GenericProcedureRecommendation genericProcedureRecommendation = (GenericProcedureRecommendation)recommendedProcedure;
-                        Console.Write("      Procedure codes: ");
+                        Console.WriteLine("      Procedure codes: ");
                         FhirR4CodeableConcept code = genericProcedureRecommendation.Code;
                         DisplayCodes(code, 3);
                     }
                     if (recommendedProcedure is ImagingProcedureRecommendation)
                     {
-                        Console.Write("   Imaging procedure recommendation: ");
+                        Console.WriteLine("   Imaging procedure recommendation: ");
                         ImagingProcedureRecommendation imagingProcedureRecommendation = (ImagingProcedureRecommendation)recommendedProcedure;
-                        Console.Write("      Procedure codes: ");
+                        Console.WriteLine("      Procedure codes: ");
                         IReadOnlyList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
                         if (procedureCodes != null)
                         {
@@ -95,21 +95,20 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                             }
                         }
 
-                        Console.Write("      Imaging procedure: ");
+                        Console.WriteLine("      Imaging procedure: ");
                         IReadOnlyList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
                         foreach (ImagingProcedure imagingProcedure in imagingProcedures)
                         {
-                            Console.Write("         Modality");
+                            Console.WriteLine("         Modality");
                             FhirR4CodeableConcept modality = imagingProcedure.Modality;
                             DisplayCodes(modality, 4);
-                            Console.Write("            Evidence: " + ExtractEvidence(modality.Extension));
+                            Console.WriteLine("            Evidence: " + ExtractEvidence(modality.Extension));
 
-                            Console.Write("         Anatomy");
+                            Console.WriteLine("         Anatomy");
                             FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
                             DisplayCodes(anatomy, 4);
-                            Console.Write("            Evidence: " + ExtractEvidence(anatomy.Extension));
+                            Console.WriteLine("            Evidence: " + ExtractEvidence(anatomy.Extension));
                         }
-                        Console.Write(" Recommended procedure: " + recommendedProcedure);
                         #endregion
                     }
                 }
@@ -138,7 +137,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
                 #endregion
@@ -180,7 +179,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (offset > 0 && length > 0)
             {
-                evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
+                evidence = DOC_CONTENT.Substring(offset, Math.Min(length, DOC_CONTENT.Length - offset));
             }
             #endregion
             return evidence;

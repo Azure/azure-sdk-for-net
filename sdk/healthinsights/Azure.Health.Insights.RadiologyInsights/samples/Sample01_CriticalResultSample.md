@@ -145,7 +145,7 @@ foreach (RadiologyInsightsInference inference in inferences)
 {
     if (inference is CriticalResultInference criticalResultInference)
     {
-        Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+        Console.WriteLine("Critical Result Inference found: " + criticalResultInference.Result.Description);
     }
 }
 ```

@@ -65,9 +65,9 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 if (inference is AgeMismatchInference ageMismatchInference)
                 {
-                    Console.Write("Age Mismatch Inference found: ");
+                    Console.WriteLine("Age Mismatch Inference found: ");
                     IReadOnlyList<FhirR4Extension> extensions = ageMismatchInference.Extension;
-                    Console.Write("   Evidence: " + ExtractEvidence(extensions));
+                    Console.WriteLine("   Evidence: " + ExtractEvidence(extensions));
                 }
             }
             #endregion
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (offset > 0 && length > 0)
             {
-                evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
+                evidence = DOC_CONTENT.Substring(offset, Math.Min(length, DOC_CONTENT.Length - offset));
             }
             #endregion
             return evidence;

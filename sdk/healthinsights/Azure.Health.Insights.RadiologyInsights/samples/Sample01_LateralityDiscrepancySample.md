@@ -124,10 +124,10 @@ Below code is used to display information about a discrepancy found in the later
 ```C# Snippet:Laterality_Discrepancy_Sync_Tests_Samples_LateralityDiscrepancyInference
 FhirR4CodeableConcept lateralityIndication = lateralityDiscrepancyInference.LateralityIndication;
 IList<FhirR4Coding> codingList = lateralityIndication.Coding;
-Console.Write("Laterality Discrepancy Inference found: ");
+Console.WriteLine("Laterality Discrepancy Inference found: ");
 var discrepancyType = lateralityDiscrepancyInference.DiscrepancyType;
 foreach (FhirR4Coding fhirR4Coding in codingList)
 {
-    Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + "), type: " + discrepancyType);
+    Console.WriteLine("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + "), type: " + discrepancyType);
 }
 ```

@@ -66,10 +66,10 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     #region Snippet:Sex_Mismatch_Sync_Tests_Samples_SexMismatchInference
                     FhirR4CodeableConcept sexIndication = sexMismatchInference.SexIndication;
                     IList<FhirR4Coding> codingList = sexIndication.Coding;
-                    Console.Write("SexMismatch Inference found: ");
+                    Console.WriteLine("SexMismatch Inference found: ");
                     foreach (FhirR4Coding coding in codingList)
                     {
-                        Console.Write("   Coding: " + coding.System + ", " + coding.Code + ", " + coding.Display);
+                        Console.WriteLine("   Coding: " + coding.System + ", " + coding.Code + ", " + coding.Display);
                     }
                     #endregion
                 }

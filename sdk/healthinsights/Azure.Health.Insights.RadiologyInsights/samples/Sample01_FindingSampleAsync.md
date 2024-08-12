@@ -137,18 +137,18 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 ## Displaying Information About Medical Findings
 Below code is used to display information about a medical finding. The code retrieves the finding, which is represented as a FhirR4Observation object. This object is part of the Fast Healthcare Interoperability Resources (FHIR) standard and is used to represent observations made about a patient. The code then retrieves a list of categories associated with the finding. Each category is represented as a FhirR4CodeableConcept object, which is also part of the FHIR standard and is used to represent coded or textual clinical information. The code then prints out each category. The code also retrieves the code associated with the finding and prints it out. This code is a unique identifier for the specific type of finding. Next, the code retrieves a list of interpretations associated with the finding. Each interpretation is also represented as a FhirR4CodeableConcept object. If this list is not empty, the code then prints out each interpretation. The code then retrieves a list of components associated with the finding. Each component is represented as a FhirR4ObservationComponent object, which is part of the FHIR standard and is used to represent a component of an observation. For each component, the code prints out the code associated with the component and the value of the component, which is also represented as a FhirR4CodeableConcept object. Finally, the code displays additional information about the finding inference using the displaySectionInfo function.
 ```C# Snippet:Finding_Async_Tests_Samples_FindingInference
-        Console.Write("Finding Inference found");
+        Console.WriteLine("Finding Inference found");
         FhirR4Observation finding = findingInference.Finding;
         IReadOnlyList<FhirR4CodeableConcept> categoryList = finding.Category;
         foreach (FhirR4CodeableConcept category in categoryList)
         {
-            Console.Write("   Category: ");
+            Console.WriteLine("   Category: ");
             DisplayCodes(category, 2);
         }
-        Console.Write("   Code: ");
+        Console.WriteLine("   Code: ");
         FhirR4CodeableConcept code = finding.Code;
         DisplayCodes(code, 2);
-        Console.Write("   Interpretation: ");
+        Console.WriteLine("   Interpretation: ");
         IReadOnlyList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
         if (interpretationList != null)
         {
@@ -157,13 +157,13 @@ Below code is used to display information about a medical finding. The code retr
                 DisplayCodes(interpretation, 2);
             }
         }
-        Console.Write("   Component: ");
+        Console.WriteLine("   Component: ");
         IReadOnlyList<FhirR4ObservationComponent> componentList = finding.Component;
         foreach (FhirR4ObservationComponent component in componentList)
         {
             FhirR4CodeableConcept componentCode = component.Code;
             DisplayCodes(componentCode, 2);
-            Console.Write("      Value codeable concept: ");
+            Console.WriteLine("      Value codeable concept: ");
             FhirR4CodeableConcept valueCodeableConcept = component.ValueCodeableConcept;
             DisplayCodes(valueCodeableConcept, 4);
         }
@@ -179,13 +179,13 @@ foreach (FhirR4Extension extension in extensionList)
 {
     if (extension.Url != null && extension.Url.Equals("section"))
     {
-        Console.Write("   Section:");
+        Console.WriteLine("   Section:");
         IList<FhirR4Extension> subextensionList = extension.Extension;
         if (subextensionList != null)
         {
             foreach (FhirR4Extension subextension in subextensionList)
             {
-                Console.Write("      " + subextension.Url + ": " + subextension.ValueString);
+                Console.WriteLine("      " + subextension.Url + ": " + subextension.ValueString);
             }
         }
     }
@@ -203,7 +203,7 @@ if (codingList != null)
 {
     foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```

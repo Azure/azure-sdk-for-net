@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 if (inference is CriticalResultInference criticalResultInference)
                 {
-                    Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+                    Console.WriteLine("Critical Result Inference found: " + criticalResultInference.Result.Description);
                 }
             }
             #endregion

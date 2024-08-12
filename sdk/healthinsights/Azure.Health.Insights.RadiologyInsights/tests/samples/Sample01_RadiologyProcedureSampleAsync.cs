@@ -65,35 +65,35 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 if (inference is RadiologyProcedureInference radiologyProcedureInference)
                 {
                     #region Snippet:Radiology_Procedure_Async_Tests_Samples_RadiologyProcedureInference
-                    Console.Write("Radiology Procedure Inference found");
-                    Console.Write("   Procedure codes:");
+                    Console.WriteLine("Radiology Procedure Inference found");
+                    Console.WriteLine("   Procedure codes:");
                     IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
                     foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
                     {
                         DisplayCodes(procedureCode, 2);
                     }
 
-                    Console.Write("   Imaging procedures:");
+                    Console.WriteLine("   Imaging procedures:");
                     IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
                     foreach (ImagingProcedure imagingProcedure in imagingProcedures)
                     {
-                        Console.Write("      Modality: ");
+                        Console.WriteLine("      Modality: ");
                         FhirR4CodeableConcept modality = imagingProcedure.Modality;
                         DisplayCodes(modality, 3);
-                        Console.Write("      Anatomy: ");
+                        Console.WriteLine("      Anatomy: ");
                         FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
                         DisplayCodes(anatomy, 3);
-                        Console.Write("      Laterality: ");
+                        Console.WriteLine("      Laterality: ");
                         FhirR4CodeableConcept laterality = imagingProcedure.Laterality;
                         DisplayCodes(laterality, 3);
                     }
 
-                    Console.Write("   Ordered procedures:");
+                    Console.WriteLine("   Ordered procedures:");
                     OrderedProcedure orderedProcedure = radiologyProcedureInference.OrderedProcedure;
                     FhirR4CodeableConcept code = orderedProcedure.Code;
                     DisplayCodes(code, 2);
-                    Console.Write("   Description: " + orderedProcedure.Description);
+                    Console.WriteLine("   Description: " + orderedProcedure.Description);
                     #endregion
                 }
             }
@@ -121,7 +121,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
                 #endregion

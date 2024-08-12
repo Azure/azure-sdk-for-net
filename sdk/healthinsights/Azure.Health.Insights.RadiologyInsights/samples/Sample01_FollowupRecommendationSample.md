@@ -143,28 +143,28 @@ Below code is used to display information about a follow-up recommendation for a
 
 The code then identifies the specific procedure that is being recommended. This could be a generic procedure or an imaging procedure. If it's a generic procedure, the code prints out the unique code associated with the procedure. If it's an imaging procedure, the code prints out the unique codes associated with the procedure, as well as details about the imaging procedures that are being recommended. This includes the modality (the method or type of imaging used), the anatomy (the specific part of the body that is to be imaged), and the evidence supporting the use of each modality and anatomy. In summary, this code is used to print out a detailed report on a follow-up recommendation for a patient, including the evidence supporting the recommendation, the characteristics of the recommendation, and the details of the recommended procedure. This can be useful in a healthcare setting for communicating complex medical recommendations. The code uses the Fast Healthcare Interoperability Resources (FHIR) standard to represent and exchange this information. The `FhirR4CodeableConcept` and `FhirR4Extension` objects in the code are part of the FHIR standard and are used to represent coded or textual clinical information.
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_FollowupRecommendationInference
-Console.Write("Follow Up Recommendation Inference found");
+Console.WriteLine("Follow Up Recommendation Inference found");
 IReadOnlyList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
-Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
-Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
-Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
-Console.Write("   Is hedging: " + followupRecommendationInference.IsHedging);
-Console.Write("   Is option: " + followupRecommendationInference.IsOption);
+Console.WriteLine("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
+Console.WriteLine("   Is conditional: " + followupRecommendationInference.IsConditional);
+Console.WriteLine("   Is guideline: " + followupRecommendationInference.IsGuideline);
+Console.WriteLine("   Is hedging: " + followupRecommendationInference.IsHedging);
+Console.WriteLine("   Is option: " + followupRecommendationInference.IsOption);
 
 ProcedureRecommendation recommendedProcedure = followupRecommendationInference.RecommendedProcedure;
 if (recommendedProcedure is GenericProcedureRecommendation)
 {
-    Console.Write("   Generic procedure recommendation:");
+    Console.WriteLine("   Generic procedure recommendation:");
     GenericProcedureRecommendation genericProcedureRecommendation = (GenericProcedureRecommendation)recommendedProcedure;
-    Console.Write("      Procedure codes: ");
+    Console.WriteLine("      Procedure codes: ");
     FhirR4CodeableConcept code = genericProcedureRecommendation.Code;
     DisplayCodes(code, 3);
 }
 if (recommendedProcedure is ImagingProcedureRecommendation)
 {
-    Console.Write("   Imaging procedure recommendation: ");
+    Console.WriteLine("   Imaging procedure recommendation: ");
     ImagingProcedureRecommendation imagingProcedureRecommendation = (ImagingProcedureRecommendation)recommendedProcedure;
-    Console.Write("      Procedure codes: ");
+    Console.WriteLine("      Procedure codes: ");
     IReadOnlyList<FhirR4CodeableConcept> procedureCodes = imagingProcedureRecommendation.ProcedureCodes;
     if (procedureCodes != null)
     {
@@ -174,21 +174,20 @@ if (recommendedProcedure is ImagingProcedureRecommendation)
         }
     }
 
-    Console.Write("      Imaging procedure: ");
+    Console.WriteLine("      Imaging procedure: ");
     IReadOnlyList<ImagingProcedure> imagingProcedures = imagingProcedureRecommendation.ImagingProcedures;
     foreach (ImagingProcedure imagingProcedure in imagingProcedures)
     {
-        Console.Write("         Modality");
+        Console.WriteLine("         Modality");
         FhirR4CodeableConcept modality = imagingProcedure.Modality;
         DisplayCodes(modality, 4);
-        Console.Write("            Evidence: " + ExtractEvidence(modality.Extension));
+        Console.WriteLine("            Evidence: " + ExtractEvidence(modality.Extension));
 
-        Console.Write("         Anatomy");
+        Console.WriteLine("         Anatomy");
         FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
         DisplayCodes(anatomy, 4);
-        Console.Write("            Evidence: " + ExtractEvidence(anatomy.Extension));
+        Console.WriteLine("            Evidence: " + ExtractEvidence(anatomy.Extension));
     }
-    Console.Write(" Recommended procedure: " + recommendedProcedure);
 ```
 
 ## Displaying Medical Codes from a CodeableConcept Object
@@ -203,7 +202,7 @@ if (codingList != null)
 {
     foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```
@@ -239,6 +238,6 @@ foreach (FhirR4Extension iExtension in subExtensions)
 }
 if (offset > 0 && length > 0)
 {
-    evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
+    evidence = DOC_CONTENT.Substring(offset, Math.Min(length, DOC_CONTENT.Length - offset));
 }
 ```

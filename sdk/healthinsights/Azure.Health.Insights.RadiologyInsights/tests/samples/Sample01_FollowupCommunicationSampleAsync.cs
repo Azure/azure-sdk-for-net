@@ -65,20 +65,20 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 if (inference is FollowupCommunicationInference followupCommunicationInference)
                 {
                     #region Snippet:Followup_Communication_Async_Tests_Samples_FollowupCommunicationInference
-                    Console.Write("Followup Communication Inference found");
-                    Console.Write("   Date/time: ");
+                    Console.WriteLine("Followup Communication Inference found");
+                    Console.WriteLine("   Date/time: ");
                     IReadOnlyList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
                     foreach (DateTimeOffset dateTime in dateTimeList)
                     {
-                        Console.Write("      " + dateTime);
+                        Console.WriteLine("      " + dateTime);
                     }
-                    Console.Write("   Recipient: ");
+                    Console.WriteLine("   Recipient: ");
                     IReadOnlyList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
                     foreach (MedicalProfessionalType recipient in recipientList)
                     {
-                        Console.Write("      " + recipient);
+                        Console.WriteLine("      " + recipient);
                     }
-                    Console.Write("   Acknowledged: " + followupCommunicationInference.WasAcknowledged);
+                    Console.WriteLine("   Acknowledged: " + followupCommunicationInference.WasAcknowledged);
                     #endregion
                 }
             }

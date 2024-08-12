@@ -118,17 +118,17 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 Following code is used to display information about medical discrepancy found in a patient’s order. The code retrieves the type of order that was placed. This could be a specific type of test or procedure that was ordered by a healthcare provider. The details of this order type, including its unique code and human-readable description, are then printed out. The code then retrieves a list of body parts that were present in the order but were not found or addressed during the procedure. For each of these missing body parts, the code prints out the details, including the unique code and human-readable description. Finally, the code retrieves a list of measurements for the missing body parts that were present in the order but were not taken or addressed during the procedure. For each of these missing measurements, the code prints out the details, including the unique code and human-readable description.
 
 ```C# Snippet:Limited_Order_Async_Tests_Samples_LimitedOrderDiscrepancyInference
-Console.Write("Limited Order Discrepancy Inference found: ");
+Console.WriteLine("Limited Order Discrepancy Inference found: ");
 FhirR4CodeableConcept orderType = limitedOrderDiscrepancyInference.OrderType;
 DisplayCodes(orderType, 1);
 IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
-Console.Write("   Present body parts:");
+Console.WriteLine("   Present body parts:");
 foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
 {
     DisplayCodes(missingBodyPart, 2);
 }
 IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
-Console.Write("   Present body part measurements:");
+Console.WriteLine("   Present body part measurements:");
 foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
 {
     DisplayCodes(missingBodyPartMeasurement, 2);
@@ -147,7 +147,7 @@ if (codingList != null)
 {
     foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```

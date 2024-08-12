@@ -63,18 +63,18 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             {
                 if (inference is FindingInference findingInference)
                 {
-                    Console.Write("Finding Inference found");
+                    Console.WriteLine("Finding Inference found");
                     FhirR4Observation finding = findingInference.Finding;
                     IReadOnlyList<FhirR4CodeableConcept> categoryList = finding.Category;
                     foreach (FhirR4CodeableConcept category in categoryList)
                     {
-                        Console.Write("   Category: ");
+                        Console.WriteLine("   Category: ");
                         DisplayCodes(category, 2);
                     }
-                    Console.Write("   Code: ");
+                    Console.WriteLine("   Code: ");
                     FhirR4CodeableConcept code = finding.Code;
                     DisplayCodes(code, 2);
-                    Console.Write("   Interpretation: ");
+                    Console.WriteLine("   Interpretation: ");
                     IReadOnlyList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
                     if (interpretationList != null)
                     {
@@ -83,13 +83,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                             DisplayCodes(interpretation, 2);
                         }
                     }
-                    Console.Write("   Component: ");
+                    Console.WriteLine("   Component: ");
                     IReadOnlyList<FhirR4ObservationComponent> componentList = finding.Component;
                     foreach (FhirR4ObservationComponent component in componentList)
                     {
                         FhirR4CodeableConcept componentCode = component.Code;
                         DisplayCodes(componentCode, 2);
-                        Console.Write("      Value codeable concept: ");
+                        Console.WriteLine("      Value codeable concept: ");
                         FhirR4CodeableConcept valueCodeableConcept = component.ValueCodeableConcept;
                         DisplayCodes(valueCodeableConcept, 4);
                     }
@@ -116,13 +116,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     if (extension.Url != null && extension.Url.Equals("section"))
                     {
-                        Console.Write("   Section:");
+                        Console.WriteLine("   Section:");
                         IList<FhirR4Extension> subextensionList = extension.Extension;
                         if (subextensionList != null)
                         {
                             foreach (FhirR4Extension subextension in subextensionList)
                             {
-                                Console.Write("      " + subextension.Url + ": " + subextension.ValueString);
+                                Console.WriteLine("      " + subextension.Url + ": " + subextension.ValueString);
                             }
                         }
                     }
@@ -146,7 +146,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
                 #endregion

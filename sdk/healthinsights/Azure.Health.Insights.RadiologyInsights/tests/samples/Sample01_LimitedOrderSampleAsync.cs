@@ -45,17 +45,17 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 if (inference is LimitedOrderDiscrepancyInference limitedOrderDiscrepancyInference)
                 {
                     #region Snippet:Limited_Order_Async_Tests_Samples_LimitedOrderDiscrepancyInference
-                    Console.Write("Limited Order Discrepancy Inference found: ");
+                    Console.WriteLine("Limited Order Discrepancy Inference found: ");
                     FhirR4CodeableConcept orderType = limitedOrderDiscrepancyInference.OrderType;
                     DisplayCodes(orderType, 1);
                     IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
-                    Console.Write("   Present body parts:");
+                    Console.WriteLine("   Present body parts:");
                     foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
                     {
                         DisplayCodes(missingBodyPart, 2);
                     }
                     IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
-                    Console.Write("   Present body part measurements:");
+                    Console.WriteLine("   Present body part measurements:");
                     foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
                     {
                         DisplayCodes(missingBodyPartMeasurement, 2);
@@ -86,7 +86,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
                 #endregion

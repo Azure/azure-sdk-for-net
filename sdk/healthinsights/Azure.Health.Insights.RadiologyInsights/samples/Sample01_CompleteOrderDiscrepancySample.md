@@ -144,17 +144,17 @@ foreach (RadiologyInsightsInference inference in inferences)
 {
     if (inference is CompleteOrderDiscrepancyInference completeOrderDiscrepancyInference)
     {
-        Console.Write("Complete Order Discrepancy Inference found: ");
+        Console.WriteLine("Complete Order Discrepancy Inference found: ");
         FhirR4CodeableConcept orderType = completeOrderDiscrepancyInference.OrderType;
         DisplayCodes(orderType, 1);
         IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
-        Console.Write("   Missing body parts:");
+        Console.WriteLine("   Missing body parts:");
         foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
         {
             DisplayCodes(missingBodyPart, 2);
         }
         IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
-        Console.Write("   Missing body part measurements:");
+        Console.WriteLine("   Missing body part measurements:");
         foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
         {
             DisplayCodes(missingBodyPartMeasurement, 2);
@@ -174,7 +174,7 @@ if (codingList != null)
 {
     foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```

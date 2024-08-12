@@ -137,18 +137,18 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 ## Displaying Follow-Up Communication Details
 Following code is used to display information about a follow-up communication. It refers to a situation where the code has inferred that a follow-up communication has occurred based on the patient’s medical data. The code retrieves a list of dates and times when the communication occurred. These are represented as DateTimeOffset objects, which include both a date and time, and information about the time zone relative to Coordinated Universal Time (UTC). The code then prints out each date and time in the list. The code also retrieves a list of recipients of the communication. These are represented as MedicalProfessionalType objects, which could represent different types of healthcare professionals such as doctors, nurses, or specialists. The code then prints out each recipient in the list. Finally, the code checks whether the communication was acknowledged and prints out this information. This could indicate whether the recipient of the communication has confirmed that they received and understood the communication. From the result loop over the inferences and display the datetime, recipient and acknowledgement of the followup communication inferences. 
 ```C# Snippet:Followup_Communication_Sync_Tests_Samples_FollowupCommunicationInference
-Console.Write("Followup Communication Inference found");
-Console.Write("   Date/time: ");
+Console.WriteLine("Followup Communication Inference found");
+Console.WriteLine("   Date/time: ");
 IReadOnlyList<DateTimeOffset> dateTimeList = followupCommunicationInference.CommunicatedAt;
 foreach (DateTimeOffset dateTime in dateTimeList)
 {
-    Console.Write("      " + dateTime);
+    Console.WriteLine("      " + dateTime);
 }
-Console.Write("   Recipient: ");
+Console.WriteLine("   Recipient: ");
 IReadOnlyList<MedicalProfessionalType> recipientList = followupCommunicationInference.Recipient;
 foreach (MedicalProfessionalType recipient in recipientList)
 {
-    Console.Write("      " + recipient);
+    Console.WriteLine("      " + recipient);
 }
-Console.Write("   Acknowledged: " + followupCommunicationInference.WasAcknowledged);
+Console.WriteLine("   Acknowledged: " + followupCommunicationInference.WasAcknowledged);
 ```

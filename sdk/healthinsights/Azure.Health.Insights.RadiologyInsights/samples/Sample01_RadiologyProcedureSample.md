@@ -137,33 +137,33 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 ## Extracting and Displaying Radiology Procedure Codes
 Below code we extract the procedure codes from the radiology procedure inference. Procedure codes are specific codes that are used to identify the procedures that have been performed. Each procedure has a unique code associated with it. Imaging procedures refers to the specific imaging procedures that were performed during the radiology procedure. Details about the modality (the method or type of imaging used), the anatomy (the specific part of the body that was imaged), and the laterality (which side of the body was imaged) are included. Ordered Procedures refers to the procedures that were specifically ordered by a healthcare provider. The report includes the code of the ordered procedure and a description of it.
 ```C# Snippet:Radiology_Procedure_Sync_Tests_Samples_RadiologyProcedureInference
-Console.Write("Radiology Procedure Inference found");
-Console.Write("   Procedure codes:");
+Console.WriteLine("Radiology Procedure Inference found");
+Console.WriteLine("   Procedure codes:");
 IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
 foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
 {
     DisplayCodes(procedureCode, 2);
 }
-Console.Write("   Imaging procedures:");
+Console.WriteLine("   Imaging procedures:");
 IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
 foreach (ImagingProcedure imagingProcedure in imagingProcedures)
 {
-    Console.Write("      Modality: ");
+    Console.WriteLine("      Modality: ");
     FhirR4CodeableConcept modality = imagingProcedure.Modality;
     DisplayCodes(modality, 3);
-    Console.Write("      Anatomy: ");
+    Console.WriteLine("      Anatomy: ");
     FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
     DisplayCodes(anatomy, 3);
-    Console.Write("      Laterality: ");
+    Console.WriteLine("      Laterality: ");
     FhirR4CodeableConcept laterality = imagingProcedure.Laterality;
     DisplayCodes(laterality, 3);
 }
-Console.Write("   Ordered procedures:");
+Console.WriteLine("   Ordered procedures:");
 OrderedProcedure orderedProcedure = radiologyProcedureInference.OrderedProcedure;
 FhirR4CodeableConcept code = orderedProcedure.Code;
 DisplayCodes(code, 2);
-Console.Write("   Description: " + orderedProcedure.Description);
+Console.WriteLine("   Description: " + orderedProcedure.Description);
 ```
 
 ## Displaying Medical Codes from a CodeableConcept Object
@@ -177,7 +177,7 @@ if (codingList != null)
 {
     foreach (FhirR4Coding fhirR4Coding in codingList)
     {
-        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        Console.WriteLine(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
     }
 }
 ```
