@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Reevaluate response object. </summary>
-    public partial class ReevaluateResponse
+    /// <summary> Information regarding pull request for protected branches. </summary>
+    public partial class PullRequestInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReevaluateResponse"/>. </summary>
-        internal ReevaluateResponse()
+        /// <summary> Initializes a new instance of <see cref="PullRequestInfo"/>. </summary>
+        internal PullRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReevaluateResponse"/>. </summary>
-        /// <param name="lastEvaluatedTimeUtc"> The time stamp (UTC) when the recommendation was last evaluated. </param>
+        /// <summary> Initializes a new instance of <see cref="PullRequestInfo"/>. </summary>
+        /// <param name="uri"> URL of pull request. </param>
+        /// <param name="state"> State of the pull request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReevaluateResponse(DateTimeOffset? lastEvaluatedTimeUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PullRequestInfo(Uri uri, State? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LastEvaluatedTimeUtc = lastEvaluatedTimeUtc;
+            Uri = uri;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time stamp (UTC) when the recommendation was last evaluated. </summary>
-        public DateTimeOffset? LastEvaluatedTimeUtc { get; }
+        /// <summary> URL of pull request. </summary>
+        public Uri Uri { get; }
+        /// <summary> State of the pull request. </summary>
+        public State? State { get; }
     }
 }

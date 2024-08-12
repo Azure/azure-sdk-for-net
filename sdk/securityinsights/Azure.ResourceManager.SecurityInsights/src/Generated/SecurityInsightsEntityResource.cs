@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> The parameters required to execute an expand operation on the given entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EntityExpandResponse>> ExpandAsync(EntityExpandContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EntityExpandResult>> ExpandAsync(EntityExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> The parameters required to execute an expand operation on the given entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EntityExpandResponse> Expand(EntityExpandContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EntityExpandResult> Expand(EntityExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

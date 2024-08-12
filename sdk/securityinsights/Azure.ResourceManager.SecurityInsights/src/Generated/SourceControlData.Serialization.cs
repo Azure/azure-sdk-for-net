@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights
             RepositoryAccess repositoryAccess = default;
             RepositoryResourceInfo repositoryResourceInfo = default;
             DeploymentInfo lastDeploymentInfo = default;
-            PullRequest pullRequest = default;
+            PullRequestInfo pullRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            pullRequest = PullRequest.DeserializePullRequest(property0.Value, options);
+                            pullRequest = PullRequestInfo.DeserializePullRequestInfo(property0.Value, options);
                             continue;
                         }
                     }

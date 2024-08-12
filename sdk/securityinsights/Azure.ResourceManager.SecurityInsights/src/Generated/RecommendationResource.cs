@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReevaluateResponse>> RecommendationReevaluateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReevaluateResult>> RecommendationReevaluateAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _reevaluateClientDiagnostics.CreateScope("RecommendationResource.RecommendationReevaluate");
             scope.Start();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReevaluateResponse> RecommendationReevaluate(CancellationToken cancellationToken = default)
+        public virtual Response<ReevaluateResult> RecommendationReevaluate(CancellationToken cancellationToken = default)
         {
             using var scope = _reevaluateClientDiagnostics.CreateScope("RecommendationResource.RecommendationReevaluate");
             scope.Start();

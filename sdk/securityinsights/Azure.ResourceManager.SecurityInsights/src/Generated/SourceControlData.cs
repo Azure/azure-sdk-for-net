@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, Models.Version? version, string displayName, string description, RepoType repoType, IList<Models.ContentType> contentTypes, Repository repository, ServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, DeploymentInfo lastDeploymentInfo, PullRequest pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, Models.Version? version, string displayName, string description, RepoType repoType, IList<Models.ContentType> contentTypes, Repository repository, ServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, DeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IdPropertiesId = idPropertiesId;
             Version = version;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Information regarding the latest deployment for the source control. </summary>
         public DeploymentInfo LastDeploymentInfo { get; }
         /// <summary> Information regarding the pull request of the source control. </summary>
-        public PullRequest PullRequest { get; }
+        public PullRequestInfo PullRequest { get; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

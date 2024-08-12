@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ReevaluateResponse : IUtf8JsonSerializable, IJsonModel<ReevaluateResponse>
+    public partial class ReevaluateResult : IUtf8JsonSerializable, IJsonModel<ReevaluateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReevaluateResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReevaluateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReevaluateResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReevaluateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReevaluateResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReevaluateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        ReevaluateResponse IJsonModel<ReevaluateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReevaluateResult IJsonModel<ReevaluateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReevaluateResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReevaluateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReevaluateResponse(document.RootElement, options);
+            return DeserializeReevaluateResult(document.RootElement, options);
         }
 
-        internal static ReevaluateResponse DeserializeReevaluateResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReevaluateResult DeserializeReevaluateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReevaluateResponse(lastEvaluatedTimeUtc, serializedAdditionalRawData);
+            return new ReevaluateResult(lastEvaluatedTimeUtc, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReevaluateResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReevaluateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReevaluateResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReevaluateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReevaluateResponse IPersistableModel<ReevaluateResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReevaluateResult IPersistableModel<ReevaluateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReevaluateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReevaluateResponse(document.RootElement, options);
+                        return DeserializeReevaluateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReevaluateResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReevaluateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReevaluateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReevaluateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

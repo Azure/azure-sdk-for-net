@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="entityId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EntityExpandResponse>> ExpandAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, EntityExpandContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityExpandResult>> ExpandAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, EntityExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        EntityExpandResponse value = default;
+                        EntityExpandResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EntityExpandResponse.DeserializeEntityExpandResponse(document.RootElement);
+                        value = EntityExpandResult.DeserializeEntityExpandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="entityId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EntityExpandResponse> Expand(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, EntityExpandContent content, CancellationToken cancellationToken = default)
+        public Response<EntityExpandResult> Expand(string subscriptionId, string resourceGroupName, string workspaceName, string entityId, EntityExpandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -435,9 +435,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        EntityExpandResponse value = default;
+                        EntityExpandResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EntityExpandResponse.DeserializeEntityExpandResponse(document.RootElement);
+                        value = EntityExpandResult.DeserializeEntityExpandResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

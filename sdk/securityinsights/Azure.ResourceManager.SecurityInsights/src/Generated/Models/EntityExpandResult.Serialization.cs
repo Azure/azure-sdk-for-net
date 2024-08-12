@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EntityExpandResponse : IUtf8JsonSerializable, IJsonModel<EntityExpandResponse>
+    public partial class EntityExpandResult : IUtf8JsonSerializable, IJsonModel<EntityExpandResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityExpandResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityExpandResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntityExpandResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityExpandResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityExpandResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityExpandResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        EntityExpandResponse IJsonModel<EntityExpandResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityExpandResult IJsonModel<EntityExpandResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityExpandResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityExpandResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityExpandResponse(document.RootElement, options);
+            return DeserializeEntityExpandResult(document.RootElement, options);
         }
 
-        internal static EntityExpandResponse DeserializeEntityExpandResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityExpandResult DeserializeEntityExpandResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntityExpandResponse(metaData, value, serializedAdditionalRawData);
+            return new EntityExpandResult(metaData, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EntityExpandResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityExpandResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EntityExpandResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityExpandResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntityExpandResponse IPersistableModel<EntityExpandResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityExpandResult IPersistableModel<EntityExpandResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityExpandResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEntityExpandResponse(document.RootElement, options);
+                        return DeserializeEntityExpandResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityExpandResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityExpandResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntityExpandResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityExpandResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

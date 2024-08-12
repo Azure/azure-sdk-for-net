@@ -944,15 +944,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResult"/>. </summary>
         /// <param name="metaDataAggregations"> The metadata from the expansion operation results. </param>
         /// <param name="value"> The expansion result values. </param>
-        /// <returns> A new <see cref="Models.EntityExpandResponse"/> instance for mocking. </returns>
-        public static EntityExpandResponse EntityExpandResponse(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, EntityExpandResponseValue value = null)
+        /// <returns> A new <see cref="Models.EntityExpandResult"/> instance for mocking. </returns>
+        public static EntityExpandResult EntityExpandResult(IEnumerable<ExpansionResultAggregation> metaDataAggregations = null, EntityExpandResponseValue value = null)
         {
             metaDataAggregations ??= new List<ExpansionResultAggregation>();
 
-            return new EntityExpandResponse(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
+            return new EntityExpandResult(metaDataAggregations != null ? new ExpansionResultsMetadata(metaDataAggregations?.ToList(), serializedAdditionalRawData: null) : null, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResponseValue"/>. </summary>
@@ -1822,12 +1822,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReevaluateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReevaluateResult"/>. </summary>
         /// <param name="lastEvaluatedTimeUtc"> The time stamp (UTC) when the recommendation was last evaluated. </param>
-        /// <returns> A new <see cref="Models.ReevaluateResponse"/> instance for mocking. </returns>
-        public static ReevaluateResponse ReevaluateResponse(DateTimeOffset? lastEvaluatedTimeUtc = null)
+        /// <returns> A new <see cref="Models.ReevaluateResult"/> instance for mocking. </returns>
+        public static ReevaluateResult ReevaluateResult(DateTimeOffset? lastEvaluatedTimeUtc = null)
         {
-            return new ReevaluateResponse(lastEvaluatedTimeUtc, serializedAdditionalRawData: null);
+            return new ReevaluateResult(lastEvaluatedTimeUtc, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/>. </summary>
@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SourceControlData"/> instance for mocking. </returns>
-        public static SourceControlData SourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string idPropertiesId = null, Version? version = null, string displayName = null, string description = null, RepoType repoType = default, IEnumerable<ContentType> contentTypes = null, Repository repository = null, ServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, DeploymentInfo lastDeploymentInfo = null, PullRequest pullRequest = null, ETag? etag = null)
+        public static SourceControlData SourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string idPropertiesId = null, Version? version = null, string displayName = null, string description = null, RepoType repoType = default, IEnumerable<ContentType> contentTypes = null, Repository repository = null, ServicePrincipal servicePrincipal = null, RepositoryAccess repositoryAccess = null, RepositoryResourceInfo repositoryResourceInfo = null, DeploymentInfo lastDeploymentInfo = null, PullRequestInfo pullRequest = null, ETag? etag = null)
         {
             contentTypes ??= new List<ContentType>();
 
@@ -2027,13 +2027,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PullRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PullRequestInfo"/>. </summary>
         /// <param name="uri"> URL of pull request. </param>
         /// <param name="state"> State of the pull request. </param>
-        /// <returns> A new <see cref="Models.PullRequest"/> instance for mocking. </returns>
-        public static PullRequest PullRequest(Uri uri = null, State? state = null)
+        /// <returns> A new <see cref="Models.PullRequestInfo"/> instance for mocking. </returns>
+        public static PullRequestInfo PullRequestInfo(Uri uri = null, State? state = null)
         {
-            return new PullRequest(uri, state, serializedAdditionalRawData: null);
+            return new PullRequestInfo(uri, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Warning"/>. </summary>

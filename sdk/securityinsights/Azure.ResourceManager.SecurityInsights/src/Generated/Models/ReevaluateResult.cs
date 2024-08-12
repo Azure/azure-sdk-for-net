@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Information regarding pull request for protected branches. </summary>
-    public partial class PullRequest
+    /// <summary> Reevaluate response object. </summary>
+    public partial class ReevaluateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PullRequest"/>. </summary>
-        internal PullRequest()
+        /// <summary> Initializes a new instance of <see cref="ReevaluateResult"/>. </summary>
+        internal ReevaluateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PullRequest"/>. </summary>
-        /// <param name="uri"> URL of pull request. </param>
-        /// <param name="state"> State of the pull request. </param>
+        /// <summary> Initializes a new instance of <see cref="ReevaluateResult"/>. </summary>
+        /// <param name="lastEvaluatedTimeUtc"> The time stamp (UTC) when the recommendation was last evaluated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PullRequest(Uri uri, State? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReevaluateResult(DateTimeOffset? lastEvaluatedTimeUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
-            State = state;
+            LastEvaluatedTimeUtc = lastEvaluatedTimeUtc;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> URL of pull request. </summary>
-        public Uri Uri { get; }
-        /// <summary> State of the pull request. </summary>
-        public State? State { get; }
+        /// <summary> The time stamp (UTC) when the recommendation was last evaluated. </summary>
+        public DateTimeOffset? LastEvaluatedTimeUtc { get; }
     }
 }

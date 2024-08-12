@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class PullRequest : IUtf8JsonSerializable, IJsonModel<PullRequest>
+    public partial class PullRequestInfo : IUtf8JsonSerializable, IJsonModel<PullRequestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PullRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PullRequestInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PullRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PullRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PullRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PullRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PullRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PullRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        PullRequest IJsonModel<PullRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PullRequestInfo IJsonModel<PullRequestInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PullRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PullRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PullRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PullRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePullRequest(document.RootElement, options);
+            return DeserializePullRequestInfo(document.RootElement, options);
         }
 
-        internal static PullRequest DeserializePullRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PullRequestInfo DeserializePullRequestInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PullRequest(url, state, serializedAdditionalRawData);
+            return new PullRequestInfo(url, state, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PullRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PullRequestInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PullRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PullRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PullRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PullRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PullRequest IPersistableModel<PullRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PullRequestInfo IPersistableModel<PullRequestInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PullRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PullRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePullRequest(document.RootElement, options);
+                        return DeserializePullRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PullRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PullRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PullRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PullRequestInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
