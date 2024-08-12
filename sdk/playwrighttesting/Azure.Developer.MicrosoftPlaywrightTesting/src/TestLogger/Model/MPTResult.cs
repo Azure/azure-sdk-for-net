@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 
@@ -29,10 +30,14 @@ internal class MPTError
 }
 internal class RawTestResult
 {
-    internal List<RawTestStep> Steps { get; set; } = new List<RawTestStep>();
-    internal string? errors { get; set; }
-    internal string? stdErr { get; set; }
-    internal string? stdOut { get; set; }
+    [JsonPropertyName("steps")]
+    public List<RawTestStep> Steps { get; set; } = new List<RawTestStep>();
+    [JsonPropertyName("errors")]
+    public string? errors { get; set; }
+    [JsonPropertyName("stdErr")]
+    public string? stdErr { get; set; }
+    [JsonPropertyName("stdOut")]
+    public string? stdOut { get; set; }
 }
 
 internal class TokenDetails

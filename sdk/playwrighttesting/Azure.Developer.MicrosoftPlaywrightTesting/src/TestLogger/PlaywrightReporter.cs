@@ -1,24 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Blobs;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
-using Azure.Storage.Blobs;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client;
 using Microsoft.IdentityModel.JsonWebTokens;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Clients;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using Newtonsoft.Json;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using System.IO;
+using System.Text.Json;
+using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -32,13 +34,12 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
     private HttpClient? _httpClient;
 
-    private TestReportingClient? _testReportingClient;
+    private ReportingTestResultsClient? _reportingTestResultsClient;
+    private ReportingTestRunsClient? _reportingTestRunsClient;
 
     private static readonly JsonWebTokenHandler s_tokenHandler = new();
 
     private readonly LogLevel _logLevel = LogLevel.Debug;
-
-    private readonly string _apiVersion = PlaywrightConstants.ReportingAPIVersion_2024_05_20_preview;
 
     internal static string EnableConsoleLog { get => Environment.GetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_DEBUG) ?? "false"; set { } }
 
@@ -103,13 +104,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     {
         InitializePlaywrightReporter(e.TestRunCriteria.TestRunSettings);
         LogMessage("Test Run start Handler");
-        if (!IsInitialized || _testReportingClient == null)
+        if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
             return;
         }
-        var testResultsJson = JsonConvert.SerializeObject(e);
-        LogMessage(testResultsJson);
 
         var startTime = TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
         LogMessage("Test Run start time: " + startTime);
@@ -117,11 +116,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var runName = "TestRun#" + startTime; // TODO discuss approach
         var run = new TestRunDtoV2
         {
-            TestRunId = RunId,
+            TestRunId = RunId!,
             DisplayName = runName,
             StartTime = startTime,
-            CreatorId = TokenDetails!.oid,
-            CreatorName = TokenDetails.userName,
+            CreatorId = TokenDetails!.oid ?? "",
+            CreatorName = TokenDetails.userName ?? "",
             //CloudRunEnabled = "false",
             CloudReportingEnabled = "true",
             Summary = new TestRunSummary
@@ -134,10 +133,10 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             },
             CiConfig = new CIConfig // TODO fetch dynamically
             {
-                Branch = CIInfo!.Branch,
-                Author = CIInfo.Author,
-                CommitId = CIInfo.CommitId,
-                RevisionUrl = CIInfo.RevisionUrl
+                Branch = CIInfo!.Branch ?? "",
+                Author = CIInfo.Author ?? "",
+                CommitId = CIInfo.CommitId ?? "",
+                RevisionUrl = CIInfo.RevisionUrl ?? ""
             },
             TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
             {
@@ -172,20 +171,14 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             }
         };
         var token = "Bearer " + AccessToken;
-        TestRunDtoV2 response;
+        TestRunDtoV2? response = null;
         try
         {
-            var testRunBodyJson = JsonConvert.SerializeObject(run);
-            LogMessage("TestRunInput" + testRunBodyJson);
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            response = _testReportingClient.WorkspacesTestRunsPatchAsync( // Add retry
-                WorkspaceId,
-                RunId,
-                token,
-                corelationId,
-                _apiVersion,
-                run).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            Response apiResponse = _reportingTestRunsClient.PatchTestRunInfo(WorkspaceId, RunId, RequestContent.Create(run), "application/json", token, corelationId);
+            if (apiResponse.Content != null)
+            {
+                response = apiResponse.Content!.ToObject<TestRunDtoV2>(new JsonObjectSerializer());
+            }
         }
         catch (Exception ex)
         {
@@ -194,25 +187,18 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
         if (response != null)
         {
-            var testRunJson = JsonConvert.SerializeObject(response);
-            LogMessage("TestRunResponse" + testRunJson);
-            this.TestRun = response;
+            TestRun = response;
 
             // Start shard
             corelationId = Guid.NewGuid().ToString();
-            TestRunShardDto response1;
+            TestRunShardDto? response1 = null;
             try
             {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                response1 = _testReportingClient.WorkspacesTestRunsShardsAsync(
-                    WorkspaceId,
-                    RunId,
-                    "1",
-                    token,
-                    corelationId,
-                    _apiVersion,
-                    shard).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                Response apiResponse = _reportingTestRunsClient.PatchTestRunShardInfo(WorkspaceId, RunId, "1", RequestContent.Create(shard), "application/json", token, corelationId);
+                if (apiResponse.Content != null)
+                {
+                    response1 = apiResponse.Content!.ToObject<TestRunShardDto>(new JsonObjectSerializer());
+                }
             }
             catch (Exception ex)
             {
@@ -221,8 +207,6 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             }
             if (response1 != null)
             {
-                var testRunShardJson = JsonConvert.SerializeObject(response);
-                LogMessage("TestRunShardResponse" + testRunShardJson);
                 TestRunShard = shard; // due to wrong response type TODO
             }
             else
@@ -248,14 +232,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal void TestResultHandler(object? sender, TestResultEventArgs e)
     {
         LogMessage("Test Result Handler");
-        if (!IsInitialized || _testReportingClient == null)
+        if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
             return;
         }
-        var testResultsJson = JsonConvert.SerializeObject(e);
-        LogMessage(testResultsJson);
-
         TestResults? testResult = GetTestCaseResultData(e.Result);
         // Set various counts (passed tests, failed tests, total tests)
         if (testResult != null)
@@ -283,14 +264,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal void TestRunCompleteHandler(object? sender, TestRunCompleteEventArgs e)
     {
         LogMessage("Test Run End Handler");
-        if (!IsInitialized || _testReportingClient == null || TestRun == null)
+        if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null || TestRun == null)
         {
             LogErrorMessage("Test Run setup issue exiting handler");
             return;
         }
-        var testResultsJson = JsonConvert.SerializeObject(e);
-        LogMessage(testResultsJson);
-        LogMessage(JsonConvert.SerializeObject(TestResults));
         // Upload TestResults
         var corelationId = Guid.NewGuid().ToString();
         var token = "Bearer " + AccessToken;
@@ -298,14 +276,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var body = new UploadTestResultsRequest() { Value = TestResults };
         try
         {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            _testReportingClient.WorkspacesTestResultsUploadBatchAsync(
-                WorkspaceId,
-                token,
-                corelationId,
-                _apiVersion,
-                body).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            _reportingTestResultsClient.UploadBatchTestResults(WorkspaceId, RequestContent.Create(JsonSerializer.Serialize(body)), token, corelationId, null);
             LogMessage("Test Result Uploaded");
         }
         catch (Exception ex)
@@ -314,25 +285,24 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         corelationId = Guid.NewGuid().ToString();
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        TestResultsUri sasUri = _testReportingClient.WorkspacesTestRunsResulturiAsync(
-            WorkspaceId,
-            RunId,
-            token,
-            corelationId,
-            _apiVersion).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        TestResultsUri? sasUri = null;
+        Response response = _reportingTestRunsClient.GetTestRunResultsUri(WorkspaceId, RunId, token, corelationId, null);
+        var serializer = new JsonObjectSerializer();
+        if (response.Content != null)
+        {
+            sasUri = response.Content.ToObject<TestResultsUri>(serializer);
+        }
         if (sasUri != null && !string.IsNullOrEmpty(sasUri.Uri))
         {
             LogMessage("Test Run Uri: " + sasUri.ToString());
             foreach (TestResults testResult in TestResults)
             {
-                if (RawTestResultsMap.TryGetValue(testResult.TestExecutionId, out RawTestResult? rawResult) && rawResult != null)
+                if (RawTestResultsMap.TryGetValue(testResult.TestExecutionId!, out RawTestResult? rawResult) && rawResult != null)
                 {
                     // Upload rawResult to blob storage using sasUri
-                    var rawTestResultJson = JsonConvert.SerializeObject(rawResult);
+                    var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                     var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                    UploadBuffer(sasUri.Uri, rawTestResultJson, filePath);
+                    UploadBuffer(sasUri.Uri!, rawTestResultJson, filePath);
                 }
                 else
                 {
@@ -342,7 +312,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
         else
         {
-            Logger.Log(true, LogLevel.Error, "MPT API error: failed to upload artifacts");
+            LogMessage("MPT API error: failed to upload artifacts");
         }
         LogMessage("Test Results uploaded");
         // Update TestRun with CLIENT_COMPLETE
@@ -355,7 +325,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
     private bool UpdateTestRun(TestRunCompleteEventArgs e)
     {
-        if (!IsInitialized || _testReportingClient == null || TestRun == null || TestRunShard == null)
+        if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null || TestRun == null || TestRunShard == null)
             return false;
         DateTime testRunStartedOn = DateTime.MinValue;
         DateTime testRunEndedOn = DateTime.UtcNow;
@@ -390,22 +360,11 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             Status = result
         };
         TestRunShard.UploadCompleted = "true";
-        var testRunShardJson = JsonConvert.SerializeObject(TestRunShard);
-        LogMessage(testRunShardJson);
         var token = "Bearer " + AccessToken;
         var corelationId = Guid.NewGuid().ToString();
         try
         {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            _testReportingClient.WorkspacesTestRunsShardsAsync(
-                WorkspaceId,
-                RunId,
-                "1",
-                token,
-                corelationId,
-                _apiVersion,
-                TestRunShard).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            _reportingTestRunsClient.PatchTestRunShardInfo(WorkspaceId, RunId, "1", RequestContent.Create(TestRunShard), "application/json", token, corelationId);
         }
         catch (Exception ex)
         {
@@ -430,8 +389,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         {
             ArtifactsPath = new List<string>(),
 
-            AccountId = WorkspaceId,
-            RunId = RunId,
+            AccountId = WorkspaceId!,
+            RunId = RunId!,
             TestExecutionId = GetExecutionId(testResultSource).ToString()
         };
         testCaseResultData.TestCombinationId = testCaseResultData.TestExecutionId; // TODO check
@@ -445,7 +404,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries
         testCaseResultData.WebTestConfig = new WebTestConfig
         {
-            JobName = CIInfo!.JobId,
+            JobName = CIInfo!.JobId ?? "",
             //ProjectName = "playwright-dotnet", // TODO no project concept NA??
             //BrowserName = "chromium", // TODO check if possible to get from test
             Os = GetCurrentOS(),
@@ -558,7 +517,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
         var rawTestResult = new RawTestResult
         {
-            errors = JsonConvert.SerializeObject(errors),
+            errors = JsonSerializer.Serialize(errors),
             stdErr = testResultSource?.ErrorStackTrace ?? string.Empty
         };
         return rawTestResult;
@@ -625,24 +584,6 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
         Dictionary<string, object> runParameters = XmlRunSettingsUtilities.GetTestRunParameters(xmlSettings);
         runParameters.TryGetValue(RunSettingKey.RUN_ID, out var runId);
-        runParameters.TryGetValue(RunSettingKey.DEFAULT_AUTH, out var defaultAuth);
-        runParameters.TryGetValue(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE, out var azureTokenCredential);
-        runParameters.TryGetValue(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID, out var managedIdentityClientId);
-        runParameters.TryGetValue(RunSettingKey.ENABLE_GITHUB_SUMMARY, out var enableGithubSummary);
-        string? enableGithubSummaryString = enableGithubSummary?.ToString();
-        EnableGithubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
-
-        PlaywrightServiceSettings? playwrightServiceSettings = null;
-        try
-        {
-            playwrightServiceSettings = new(runId: runId?.ToString(), defaultAuth: defaultAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine("Failed to initialize PlaywrightServiceSettings: " + ex.Message);
-            Environment.Exit(1);
-        }
-
         // If run id is not provided and not set via env, try fetching it from CI info.
         CIInfo = CiInfoProvider.GetCIInfo();
         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID)) && !string.IsNullOrEmpty(CIInfo.RunId) && string.IsNullOrEmpty(runId?.ToString()))
@@ -652,6 +593,24 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         else
         {
             PlaywrightService.GetDefaultRunId(); // will not set run id if already present in the environment variable
+        }
+
+        runParameters.TryGetValue(RunSettingKey.DEFAULT_AUTH, out var defaultAuth);
+        runParameters.TryGetValue(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE, out var azureTokenCredential);
+        runParameters.TryGetValue(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID, out var managedIdentityClientId);
+        runParameters.TryGetValue(RunSettingKey.ENABLE_GITHUB_SUMMARY, out var enableGithubSummary);
+        string? enableGithubSummaryString = enableGithubSummary?.ToString();
+
+        EnableGithubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
+        PlaywrightServiceSettings? playwrightServiceSettings = null;
+        try
+        {
+            playwrightServiceSettings = new(runId: runId?.ToString(), defaultAuth: defaultAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Failed to initialize PlaywrightServiceSettings: " + ex.Message);
+            Environment.Exit(1);
         }
 
         // setup entra rotation handlers
@@ -688,7 +647,9 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         PortalUrl = PlaywrightConstants.PortalBaseUrl + WorkspaceId + PlaywrightConstants.ReportingRoute + RunId;
 
         _httpClient = new HttpClient();
-        _testReportingClient = new TestReportingClient(BaseUrl, _httpClient);
+        var baseUri = new Uri(BaseUrl!);
+        _reportingTestRunsClient = new ReportingTestRunsClient(baseUri);
+        _reportingTestResultsClient = new ReportingTestResultsClient(baseUri);
 
         IsInitialized = true;
 
@@ -702,13 +663,13 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             string markdownContent = @$"
 #### Results:
 
-![pass](https://img.shields.io/badge/status-passed-brightgreen) **Passed:** {TestRunShard!.ResultsSummary.NumPassedTests}
+![pass](https://img.shields.io/badge/status-passed-brightgreen) **Passed:** {TestRunShard!.ResultsSummary!.NumPassedTests}
 
-![fail](https://img.shields.io/badge/status-failed-red) **Failed:** {TestRunShard!.ResultsSummary.NumFailedTests}
+![fail](https://img.shields.io/badge/status-failed-red) **Failed:** {TestRunShard.ResultsSummary.NumFailedTests}
 
 ![flaky](https://img.shields.io/badge/status-flaky-yellow) **Flaky:** {"0"}
 
-![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {TestRunShard!.ResultsSummary.NumSkippedTests}
+![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {TestRunShard.ResultsSummary.NumSkippedTests}
 
 #### For more details, visit the [service dashboard]({Uri.EscapeUriString(PortalUrl!)}).
 ";
