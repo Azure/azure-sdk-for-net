@@ -1,4 +1,4 @@
-# How to extract the description of a finding inference using a asynchronous call
+# How to extract the description of a finding inference using an asynchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the categories, interpretations and components of the finding inference.
 

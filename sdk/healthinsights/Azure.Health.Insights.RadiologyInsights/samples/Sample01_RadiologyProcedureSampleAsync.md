@@ -1,4 +1,4 @@
-# How to extract the description of a radiology procedure inference using a asynchronous call
+# How to extract the description of a radiology procedure inference using an asynchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the procedure codes, imaging procedures and ordered procedure from the radiology procedure inference and print their code details.
 
