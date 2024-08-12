@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 #if BlobDataMovementSDK
 extern alias BaseBlobs;
+#elif ShareDataMovementSDK
+extern alias BaseShares;
 #endif
 using System;
 
@@ -23,7 +25,7 @@ using ServiceVersion =
 #elif BlobDataMovementSDK
     BaseBlobs::Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #elif ShareDataMovementSDK
-    Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion;
+    BaseShares::Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion;
 #else
     // If you see this error, you've included this shared source file from a
     // client library that it doesn't know how to help you with.  Either add

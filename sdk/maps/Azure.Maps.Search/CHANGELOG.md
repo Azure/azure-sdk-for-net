@@ -1,14 +1,6 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Other Changes
-
-## 1.0.0-beta.6 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -17,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.1 (2024-08-06)
+
+### Features Added
+
+- Support Search API `2023-06-01`
 
 ## 1.0.0-beta.5 (2024-05-07)
 
