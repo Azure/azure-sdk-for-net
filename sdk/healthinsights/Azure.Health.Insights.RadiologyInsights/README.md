@@ -7,8 +7,7 @@ Use the client library to:
 
 * [Get secret](https://docs.microsoft.com/azure)
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/)
-
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Health.Insights.RadiologyInsights/) | [API reference documentation](https://learn.microsoft.com/en-in/rest/api/cognitiveservices/healthinsights/radiology-insights) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/)
 ## Getting started
 
 ### Prerequisites
@@ -89,7 +88,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ### Additional documentation
 
-For more extensive documentation on Azure Health Insights Radiology Insights, see the [Radiology Insights documentation][radiology_insights_docs] on docs.microsoft.com.
+For more extensive documentation on Azure Health Insights Radiology Insights, see the [Radiology Insights documentation][radiology_insights_docs] on learn.microsoft.com.
 
 ## Contributing
 
@@ -121,3 +120,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]:https://learn.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
