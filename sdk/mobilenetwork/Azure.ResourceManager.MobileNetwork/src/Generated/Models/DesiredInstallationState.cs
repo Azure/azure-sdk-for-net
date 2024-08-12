@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The desired installation state of the packet core. </summary>
+    /// <summary>
+    /// The desired installation state of the packet core.
+    /// Serialized Name: DesiredInstallationState
+    /// </summary>
     public readonly partial struct DesiredInstallationState : IEquatable<DesiredInstallationState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string UninstalledValue = "Uninstalled";
         private const string InstalledValue = "Installed";
 
-        /// <summary> Don't install the packet core. </summary>
+        /// <summary>
+        /// Don't install the packet core.
+        /// Serialized Name: DesiredInstallationState.Uninstalled
+        /// </summary>
         public static DesiredInstallationState Uninstalled { get; } = new DesiredInstallationState(UninstalledValue);
-        /// <summary> Install the packet core. </summary>
+        /// <summary>
+        /// Install the packet core.
+        /// Serialized Name: DesiredInstallationState.Installed
+        /// </summary>
         public static DesiredInstallationState Installed { get; } = new DesiredInstallationState(InstalledValue);
         /// <summary> Determines if two <see cref="DesiredInstallationState"/> values are the same. </summary>
         public static bool operator ==(DesiredInstallationState left, DesiredInstallationState right) => left.Equals(right);

@@ -89,11 +89,6 @@ namespace System.ClientModel
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
         public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
-    public enum ReturnWhen
-    {
-        Completed = 0,
-        Started = 1,
-    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -171,6 +166,14 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
+    {
+        public JsonModelConverter() { }
+        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public static partial class ModelReaderWriter
     {
