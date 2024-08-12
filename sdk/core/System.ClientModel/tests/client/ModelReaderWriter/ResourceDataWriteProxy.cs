@@ -119,7 +119,7 @@ namespace System.ClientModel.Tests.Client
 
         string IPersistableModel<ResourceProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Write((ResourceProviderData)options.WriteContext!, writer, options);
+        void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Write((ResourceProviderData)options.ProxiedModel!, writer, options);
 
         BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
         {

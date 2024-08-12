@@ -105,5 +105,32 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
             Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
         }
+
+        [Test]
+        public void ProxyWithStjSerialization()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy(typeof(ResourceProviderData), new ResourceDataWriteProxy());
+
+            var stjOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter(options) }
+            };
+
+            var model = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
+            Assert.NotNull(model);
+            var json = JsonSerializer.Serialize(model, stjOptions);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed-MissingId.json")).TrimEnd(), json);
+            Assert.AreNotEqual(WirePayload, json);
+
+            var model2 = JsonSerializer.Deserialize<ResourceProviderData>(json, stjOptions);
+            Assert.NotNull(model2);
+            Assert.NotNull(model2!.Id);
+            Assert.AreEqual("TestValue", model2.Id);
+            Assert.AreEqual(model!.Namespace, model2.Namespace);
+            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
+            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
+            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
+        }
     }
 }

@@ -12,9 +12,9 @@ public class ModelReaderWriterOptions
 {
     private Dictionary<Type, object>? _proxies;
     /// <summary>
-    /// .
+    /// Gets the proxies that are registered.
     /// </summary>
-    private Dictionary<Type, object> Proxies => _proxies ??= new Dictionary<Type, object>();
+    public IReadOnlyDictionary<Type, object> Proxies => _proxies ??= new Dictionary<Type, object>();
 
     private static ModelReaderWriterOptions? s_jsonOptions;
     /// <summary>
@@ -43,40 +43,43 @@ public class ModelReaderWriterOptions
     public string Format { get; }
 
     /// <summary>
-    /// .
+    /// Registers an <see cref="IPersistableModel{T}"/> proxy to be used when reading or writing a model.
     /// </summary>
+    /// <param name="type"> The <see cref="Type"/> that will be proxied when asked to be read or written. </param>
+    /// <param name="proxy"> The <see cref="IPersistableModel{T}"/> proxy that will be used to read or write the model. </param>
     public void AddProxy<T>(Type type, IPersistableModel<T> proxy)
     {
         //multiple of same type?
-        Proxies.Add(type, proxy);
+        if (_proxies is null)
+            _proxies = new Dictionary<Type, object>();
+
+        _proxies.Add(type, proxy);
     }
 
     /// <summary>
-    /// .
+    /// Gets or Sets the model that is currently being proxied.
     /// </summary>
-    public object? WriteContext { get; private set; }
+    /// <remarks>
+    /// Whenever a proxy is used for a given type, the model being proxied is set here.
+    /// The value does not need to be cleared after setting it will be overwritten on the next use.
+    /// </remarks>
+    public object? ProxiedModel { get; set; }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    public IPersistableModel<T> GetPersistableInterface<T>(IPersistableModel<T> model)
+    internal IPersistableModel<T> GetPersistableInterface<T>(IPersistableModel<T> model)
     {
-        WriteContext = model;
-        return Proxies.TryGetValue(typeof(T), out var proxy) && proxy is IPersistableModel<T> proxyAsT ? proxyAsT : model;
+        ProxiedModel = model;
+        if (_proxies is null)
+            return model;
+
+        return Proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IPersistableModel<T> proxyAsT ? proxyAsT : model;
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    public IJsonModel<T> GetJsonInterface<T>(IJsonModel<T> model)
+    internal IJsonModel<T> GetJsonInterface<T>(IJsonModel<T> model)
     {
-        WriteContext = model;
-        return Proxies.TryGetValue(typeof(T), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
+        ProxiedModel = model;
+        if (_proxies is null)
+            return model;
+
+        return Proxies.TryGetValue(model.GetType(), out var proxy) && proxy is IJsonModel<T> proxyAsT ? proxyAsT : model;
     }
 }
