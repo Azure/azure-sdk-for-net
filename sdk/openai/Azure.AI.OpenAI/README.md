@@ -53,7 +53,7 @@ AzureOpenAIClient azureClient = new(
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
 ```
 
-**Using tokens with Azure Government or other clouds**
+##### Configure client for Azure sovereign cloud**
 
 If your Entra credentials are issued by another entity that Azure Public Cloud, you can set the `Audience` property on `OpenAIClientOptions` to modify the token authorization scope used for requests.
 
