@@ -138,8 +138,8 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 From the result loop over the inferences and extract the sex indication. Sex Indication is of type FhirR4CodeableConcept which is a part of the FHIR (Fast Healthcare Interoperability Resources) standard, used for exchanging healthcare information electronically. Using the extracted sex indication we get a list of FhirR4Coding objects named codingList. The FhirR4Coding class is another part of the FHIR standard, typically used to represent coded types of data. The codingList is being assigned the Coding property from the sexIndication object. This Coding property contains a list of codes related to the sex indication which we then print.
 
 ```C# Snippet:Sex_Mismatch_Sync_Tests_Samples_SexMismatchInference
-FhirR4CodeableConcept sexIndeication = sexMismatchInference.SexIndication;
-IList<FhirR4Coding> codingList = sexIndeication.Coding;
+FhirR4CodeableConcept sexIndication = sexMismatchInference.SexIndication;
+IList<FhirR4Coding> codingList = sexIndication.Coding;
 Console.Write("SexMismatch Inference found: ");
 foreach (FhirR4Coding coding in codingList)
 {

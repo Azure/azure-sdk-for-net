@@ -1,4 +1,4 @@
-# How to extract the description of a Age Mismatch Inference using a synchronous call
+# How to extract the description of a complete order discrepancy inference using a synchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a synchronous request and use the result returned to extract the order type, missing body parts and missing body part measurements of the complete order discrepancy inference.
 

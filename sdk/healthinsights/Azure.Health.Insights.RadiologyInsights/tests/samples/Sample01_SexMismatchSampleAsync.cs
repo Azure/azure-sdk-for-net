@@ -65,8 +65,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 if (inference is SexMismatchInference sexMismatchInference)
                 {
                     #region Snippet:Sex_Mismatch_Async_Tests_Samples_SexMismatchInference
-                    FhirR4CodeableConcept sexIndeication = sexMismatchInference.SexIndication;
-                    IList<FhirR4Coding> codingList = sexIndeication.Coding;
+                    FhirR4CodeableConcept sexIndication = sexMismatchInference.SexIndication;
+                    IList<FhirR4Coding> codingList = sexIndication.Coding;
                     Console.Write("SexMismatch Inference found: ");
                     foreach (FhirR4Coding coding in codingList)
                     {
