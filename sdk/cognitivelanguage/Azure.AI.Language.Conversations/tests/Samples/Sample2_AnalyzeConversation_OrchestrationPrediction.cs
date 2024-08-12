@@ -27,13 +27,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             projectName = TestEnvironment.OrchestrationProjectName;
             deploymentName = TestEnvironment.OrchestrationDeploymentName;
 #endif
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
                         text: "How are you?")),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     StringIndexType = StringIndexType.Utf16CodeUnit,
                 });
@@ -71,13 +71,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             string projectName = TestEnvironment.OrchestrationProjectName;
             string deploymentName = TestEnvironment.OrchestrationDeploymentName;
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "1",
                         text: "How are you?")),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
                 StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -168,13 +168,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string projectName = TestEnvironment.OrchestrationProjectName;
             string deploymentName = TestEnvironment.OrchestrationDeploymentName;
 
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "1",
                         text: "How are you?")),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -209,13 +209,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public async Task AnalyzeConversationOrchestrationPredictionConversationAsync()
         {
             ConversationAnalysisClient client = Client;
-            AnalyzeConversationInput data = new ConversationalInput(
+            AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "1",
                         text: "Send an email to Carol about tomorrow's demo")),
-                new ConversationActionContent(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName)
+                new ConversationLanguageUnderstandingActionContent(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName)
                 {
                     StringIndexType = StringIndexType.Utf16CodeUnit,
                 });

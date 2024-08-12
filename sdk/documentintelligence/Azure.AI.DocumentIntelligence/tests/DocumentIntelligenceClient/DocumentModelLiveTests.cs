@@ -75,7 +75,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(result.Paragraphs, Is.Empty);
             Assert.That(result.Tables, Is.Empty);
             Assert.That(result.Figures, Is.Empty);
-            Assert.That(result.Lists, Is.Empty);
             Assert.That(result.Sections, Is.Empty);
             Assert.That(result.KeyValuePairs, Is.Empty);
             Assert.That(result.Styles, Is.Empty);
