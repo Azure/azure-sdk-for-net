@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class DnsCnameRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsCnameRecordInfo>
+    public partial class DnsCnameRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsCnameRecordInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsCnameRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
